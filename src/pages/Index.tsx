@@ -8,32 +8,25 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, CheckCircle2, TrendingDown, Package } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-marketplace.jpg";
-
 const Index = () => {
-  const { addItem, totalItems } = useCart();
+  const {
+    addItem,
+    totalItems
+  } = useCart();
   const navigate = useNavigate();
-
   const featuredProducts = mockProducts.slice(0, 4);
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <Navbar cartItemCount={totalItems} />
       
       <main>
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-hero">
           <div className="absolute inset-0 opacity-10">
-            <img 
-              src={heroImage}
-              alt="Warehouse"
-              className="h-full w-full object-cover"
-            />
+            <img src={heroImage} alt="Warehouse" className="h-full w-full object-cover" />
           </div>
           <div className="container relative mx-auto px-4 py-24 lg:py-32">
             <div className="max-w-3xl">
-              <Badge variant="accent" className="mb-6 text-sm px-4 py-1.5">
-                B2B Marketplace
-              </Badge>
+              <Badge variant="accent" className="mb-6 text-sm px-4 py-1.5">Comeback Goods B2B Marketplace</Badge>
               <h1 className="mb-6 text-5xl font-bold text-primary-foreground lg:text-6xl">
                 Premium Products at Imperfect Prices
               </h1>
@@ -42,20 +35,11 @@ const Index = () => {
                 Minor imperfections, major savings.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button 
-                  variant="accent" 
-                  size="lg" 
-                  className="gap-2"
-                  onClick={() => navigate("/products")}
-                >
+                <Button variant="accent" size="lg" className="gap-2" onClick={() => navigate("/products")}>
                   Browse Products
                   <ArrowRight className="h-5 w-5" />
                 </Button>
-                <Button 
-                  variant="secondary" 
-                  size="lg"
-                  onClick={() => navigate("/products")}
-                >
+                <Button variant="secondary" size="lg" onClick={() => navigate("/products")}>
                   Learn More
                 </Button>
               </div>
@@ -117,21 +101,11 @@ const Index = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {featuredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={addItem}
-                />
-              ))}
+              {featuredProducts.map(product => <ProductCard key={product.id} product={product} onAddToCart={addItem} />)}
             </div>
 
             <div className="text-center">
-              <Button 
-                variant="default" 
-                size="lg"
-                onClick={() => navigate("/products")}
-              >
+              <Button variant="default" size="lg" onClick={() => navigate("/products")}>
                 View All Products
               </Button>
             </div>
@@ -147,12 +121,7 @@ const Index = () => {
             <p className="mb-8 text-xl text-primary-foreground/90 max-w-2xl mx-auto">
               Join thousands of buyers discovering incredible deals on quality inventory
             </p>
-            <Button 
-              variant="accent" 
-              size="lg" 
-              className="gap-2"
-              onClick={() => navigate("/products")}
-            >
+            <Button variant="accent" size="lg" className="gap-2" onClick={() => navigate("/products")}>
               Explore Marketplace
               <ArrowRight className="h-5 w-5" />
             </Button>
@@ -166,8 +135,6 @@ const Index = () => {
           <p>© 2025 ImperfectDeals. Connecting buyers with quality surplus inventory.</p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
