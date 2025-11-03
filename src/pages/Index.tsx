@@ -27,8 +27,8 @@ const Index = () => {
           <div className="container relative mx-auto px-4 py-24 lg:py-32">
             <div className="max-w-3xl">
               <Badge variant="accent" className="mb-6 text-sm px-4 py-1.5">Comeback Goods B2B Marketplace</Badge>
-              <h1 className="mb-6 text-5xl font-bold text-primary-foreground lg:text-6xl">
-                Premium Products at Imperfect Prices
+              <h1 className="mb-6 text-5xl font-black text-primary-foreground lg:text-7xl uppercase tracking-tight">
+                Tiny Imperfections. <span className="text-accent">Huge</span> Savings.
               </h1>
               <p className="mb-8 text-xl text-primary-foreground/90">
                 Connect with verified suppliers offering quality inventory at massive discounts. 
@@ -132,7 +132,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t bg-card py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2025 ImperfectDeals. Connecting buyers with quality surplus inventory.</p>
+          <p>© 2025 Comeback Goods. Tiny imperfections, huge savings.</p>
         </div>
       </footer>
     </div>;
