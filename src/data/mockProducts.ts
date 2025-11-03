@@ -3,11 +3,11 @@ import { Product } from "@/types/product";
 export const mockProducts: Product[] = [
   {
     id: "1",
-    name: "Premium Wireless Headphones",
-    description: "High-quality noise-canceling headphones with minor packaging damage",
-    category: "Electronics",
-    originalPrice: 299,
-    discountedPrice: 149,
+    name: "Ceramic Planters",
+    description: "Beautiful overstock planters. Minimum order quantity: 100",
+    category: "Home & Garden",
+    originalPrice: 150,
+    discountedPrice: 75,
     discountPercentage: 50,
     supplier: {
       id: "s1",
@@ -16,9 +16,9 @@ export const mockProducts: Product[] = [
       verified: true,
     },
     inStock: true,
-    imageUrl: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+    imageUrl: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800",
     condition: "like-new",
-    quantity: 45,
+    quantity: 100,
   },
   {
     id: "2",
