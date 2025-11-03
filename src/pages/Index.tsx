@@ -30,7 +30,8 @@ const Index = () => {
               <h1 className="mb-6 text-5xl font-black text-primary-foreground lg:text-7xl uppercase tracking-tight">
                 Tiny Imperfections. <span className="text-accent">Huge</span> Savings.
               </h1>
-              <p className="mb-8 text-xl text-primary-foreground/90">Tiny Imperfections. Huge Savings. Private Network.</p>
+              <p className="mb-8 text-xl text-primary-foreground/90 font-bold">Tiny Imperfections. Huge Savings.
+Private Marketplace.</p>
               <div className="flex flex-wrap gap-4">
                 <Button variant="accent" size="lg" className="gap-2" onClick={() => navigate("/products")}>
                   Browse Products
