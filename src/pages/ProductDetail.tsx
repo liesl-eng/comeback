@@ -97,22 +97,6 @@ const ProductDetail = () => {
                     {product.quantity} units
                   </Badge>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Supplier</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold">{product.supplier.name}</span>
-                    {product.supplier.verified && (
-                      <CheckCircle2 className="h-4 w-4 text-success" />
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Rating</span>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-accent text-accent" />
-                    <span className="font-semibold">{product.supplier.rating}</span>
-                  </div>
-                </div>
               </CardContent>
             </Card>
 

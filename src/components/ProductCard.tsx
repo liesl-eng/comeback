@@ -25,12 +25,6 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           <Badge variant="accent" className="absolute right-3 top-3 font-bold">
             {product.discountPercentage}% OFF
           </Badge>
-          {product.supplier.verified && (
-            <Badge variant="success" className="absolute left-3 top-3 gap-1">
-              <CheckCircle2 className="h-3 w-3" />
-              Verified
-            </Badge>
-          )}
         </div>
       </Link>
       <CardContent className="p-4">
@@ -58,9 +52,6 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             Save ${savings}
           </span>
         </div>
-        <p className="text-xs text-muted-foreground mt-1">
-          by {product.supplier.name}
-        </p>
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Button
