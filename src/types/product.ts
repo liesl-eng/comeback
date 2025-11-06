@@ -1,3 +1,11 @@
+export interface WholesaleOption {
+  type: 'single' | 'case' | 'pallet';
+  unitsPerPurchase: number;
+  pricePerUnit: number;
+  originalPricePerUnit: number;
+  moq: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -11,6 +19,10 @@ export interface Product {
   imageUrl: string;
   condition: 'like-new' | 'minor-defects' | 'cosmetic-damage' | 'refurbished';
   quantity: number;
+  brand?: string;
+  sku?: string;
+  conditionDetails?: string;
+  wholesaleOptions?: WholesaleOption[];
 }
 
 export interface Supplier {
