@@ -5,7 +5,7 @@ const parsePrice = (priceStr: string): number => {
   return parseFloat(priceStr.replace(/[$,]/g, ''));
 };
 
-// CSV data parsed from Arhaus product catalog
+// CSV data from multiple suppliers
 const csvData = `VELLA TALL VASE 2 TONE,Arhaus,https://cdn.shopify.com/s/files/1/0711/6419/9198/files/Vella_TabletopVase_6003006_White_F-1-3mobile.jpg?v=1725392901,$22.00,$100,25
 VELLA BOWL 2 TONE,Arhaus,https://cdn.shopify.com/s/files/1/0711/6419/9198/files/Vella_TabletopVase_6003005_White_F-1-2tablet.jpg?v=1707860395,$22.00,$100,24
 WOODEN PEDESTAL NAT,Arhaus,https://cdn.shopify.com/s/files/1/0711/6419/9198/files/JocelynPedestal-6002272-Natural-12_Lx10_W-P01-tablet-1.jpg?v=1724962923,$55.00,$250,40
@@ -125,7 +125,80 @@ TURIN SLPCVR ARCHR STORM LINEN,Arhaus,https://cdn.shopify.com/s/files/1/0711/641
 TURIN SLPCVR ARCHR SAND LINEN,Arhaus,https://upload.wikimedia.org/wikipedia/commons/3/3d/Arhaus_logo.jpg,$132.00,$600,24
 TURIN SLP SD CHR WHITE LINEN,Arhaus,https://storage.googleapis.com/floorfound-prod-cdn/br_home/products/images/c289efac-96ef-441d-9fd9-0b5aa9a6e43c.jpg,$175.78,$799,30
 TURIN SLP SD CHR TAUPE LINEN,Arhaus,https://upload.wikimedia.org/wikipedia/commons/3/3d/Arhaus_logo.jpg,$121.00,$550,30
-TURIN SLP SD CHR STORM LINEN,Arhaus,https://cdn.shopify.com/s/files/1/0711/6419/9198/files/ASlipcovered_DiningChair_6002558_ALinen_Storm_TQ-1-2tablet.jpg?v=1709937483,$118.80,$540,37`;
+TURIN SLP SD CHR STORM LINEN,Arhaus,https://cdn.shopify.com/s/files/1/0711/6419/9198/files/ASlipcovered_DiningChair_6002558_ALinen_Storm_TQ-1-2tablet.jpg?v=1709937483,$118.80,$540,37
+E26 T30x300 4W 30x300mm LED Light Bulb Clear,Zuo Modern,http://images.salsify.com/image/upload/s--_h9KHzZW--/35e265a5157b7d2e51d30c1f7416c96c2bb44c5a.jpg,$7.06,$30.00,115
+E26 G80 6W 110x80mm LED Light Bulb Frosted White,Zuo Modern,http://images.salsify.com/image/upload/s--dOIKCy5d--/aca60fb0b5e04f35835eb36bf9b3246c35938ea4.jpg,$3.46,$15.00,154
+E26 ST64 4W 146x64mm LED Light Bulb Clear,Zuo Modern,http://images.salsify.com/image/upload/s--8ZVkF5jh--/959f6e7f0acc207f1d59bbfa7b831224d92781f8.jpg,$3.46,$15.00,47
+Wize Table Art Natural,Zuo Modern,http://images.salsify.com/image/upload/s--m5TP0lt0--/a5uj3060hfv9smjlpiwv.jpg,$45.60,$135.00,23
+Fan Table Art Gold,Zuo Modern,http://images.salsify.com/image/upload/s--OdHIH7V2--/asgy9nsohxmc6z9mlxel.jpg,$45.60,$150.00,19
+Lobo Mirror Natural,Zuo Modern,http://images.salsify.com/image/upload/s--z0xjubDC--/fnf8x22gabnlqqdcnzzn.jpg,$57.60,$210.00,53
+Toto Mirror Antique Brown,Zuo Modern,http://images.salsify.com/image/upload/s--YaPdmgeg--/ean4w7rugmwx2qonbnwt.jpg,$57.60,$240.00,51
+Kin Mirror Bronze,Zuo Modern,http://images.salsify.com/image/upload/s--h43-CTqF--/h9jir9bi5ikhxrnesx8l.jpg,$69.60,$300.00,35
+Tolix Mirror Antique Gold & Black,Zuo Modern,http://images.salsify.com/image/upload/s--MEIrWK58--/zcnjgoijsm9rj6tegpeo.jpg,$81.60,$255.00,6
+Saroni Mirror Shelf Antique Gray,Zuo Modern,http://images.salsify.com/image/upload/s--L-VVpNKZ--/a1tdkj2ykuoghz3fwo8u.jpg,$45.60,$150.00,17
+Rand Mirror Bronze,Zuo Modern,http://images.salsify.com/image/upload/s--mtWRevzo--/86c0288a92a38da9eb77a1795d60df466ae5120b.jpg,$45.60,$165.00,49
+Peralta Mirror Shelf Brass & Brown,Zuo Modern,http://images.salsify.com/image/upload/s--hCrZLOT7--/11545d92ab944ca03c1ad0d82cef3685810bef44.jpg,$57.60,$270.00,20
+Dimond Mirror Gold,Zuo Modern,http://images.salsify.com/image/upload/s--fWTy_qi6--/52a045afff4837a481a4e73e7c7d501d4a1fa36f.jpg,$57.60,$285.00,93
+Capell Mirror Antique Gray,Zuo Modern,http://images.salsify.com/image/upload/s--B-2-M0oR--/f2a77bfeb2e2e15b4f97391b5c91f214ebd91059.jpg,$69.60,$225.00,38
+Bernis Mirror Brass,Zuo Modern,http://images.salsify.com/image/upload/s--9BnSyFxy--/zfyuzmi00gvar6fyd2c6.jpg,$33.60,$120.00,33
+Comet Round Mirror Black & Gold,Zuo Modern,http://images.salsify.com/image/upload/s--GGi3fIRk--/cca61c6fbd44ea75bac9c5c354f87f703d33cdf2.jpg,$45.60,$165.00,26
+Glow Round Mirror Gold,Zuo Modern,http://images.salsify.com/image/upload/s--K_Moh_ng--/34b31e1f959b6013bc06a6d8592ef69d6cf3706c.jpg,$105.60,$420.00,9
+Luna Round Mirror Black,Zuo Modern,http://images.salsify.com/image/upload/s--AFmnD3wO--/dfceab1d55668dc4a130d8f041d600443ff9949b.jpg,$57.60,$240.00,78
+ASHCROFT QUEEN BED,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/4c13faa2-69c6-453d-89a0-b5e26d1ce31a.jpg,$523.08,"$1,453.00",1
+ASHCROFT KING BED,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/26f888fb-749f-4734-a38c-0007183cce05.jpg,$583.20,"$3,650.00",16
+TERRA CORNER CHAIR PERFORMANCE FABRIC NOCTURNAL SKY,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/95a61324-fe4f-4f87-87ab-139b46b998d9.jpg,$248.40,"$1,550.00",5
+CLAY SLIPPER CHAIR NUBUCK LEATHER BLACK,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/4a4f8344-db33-4f79-9a6a-b713e39760db.jpg,$483.12,"$2,550.00",7
+CLAY CORNER CHAIR PERFORMANCE FABRIC NOCTURNAL SKY,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/da273501-0468-4191-8f83-7b3a31df99a1.jpg,$286.20,"$1,799.00",1
+NAPOLI LEATHER BARSTOOL BLACK,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/857169dd-c4c4-4601-8f87-b20b1900f832.jpg,$129.60,$815.00,1
+MONTEGO QUEEN BED,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/9b403525-ac8f-41a1-9ba5-f4d2624a5e11.jpg,$385.56,"$1,071.00",1
+FORM OTTOMAN VANTAGE BLACK LEATHER,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/687096fc-c7e0-457f-b0d4-626b061e266d.jpg,$181.80,$939.00,5
+FORM SLIPPER CHAIR VANTAGE BLACK LEATHER,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/fa16a6e0-d758-41a9-93f7-2ffc8efec778.jpg,$277.56,"$1,449.00",31
+FORM CORNER CHAIR VANTAGE BLACK LEATHER,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/afb13668-cb77-496d-a867-ace019cecfac.jpg,$333.72,"$1,699.00",14
+ROMY OTTOMAN FOREST SHADE,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/40a8dd73-52bf-4a49-8d9b-2ca44ba8ff76.jpg,$155.52,$969.00,1
+EVANDER DINING STOOL,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/f8616a12-77a2-4c66-9b4b-04b329e1c6d6.jpg,$192.96,$999.00,30
+EVANDER DINING STOOL RUSTIC BROWN,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/44e2775f-72d5-4cc1-92c7-6f258a30ca06.jpg,$192.96,$999.00,19
+AUGUST COUNTER TABLE SMALL,Moe's Home Collection,https://storage.googleapis.com/floorfound-prod-cdn/moes/products/images/1dd64b13-1e62-4d6f-b2b4-3f9a1eeeda8f.jpg,$383.76,"$2,450.00",5
+Yosemite King-size Upholstered Footboard Storage Bed in Cafe,Modus Furniture,"https://images.salsify.com/images/h_9999,w_9999,c_limit/e_trim/cs_srgb,h_2048,w_2048,c_limit/dn_72/q_auto/5c5e53976ef54484c6b186d3ad9766f67e8c7a77/Modus_Furniture_Yosemite_Upholstered_Footboard_Storage_Bed_in_Cafe_655450150616_7YC9S__Image_1.jpg",$499.00,"$4,119",3
+Yosemite California King-size Upholstered Footboard Storage Bed in Cafe,Modus Furniture,"https://images.salsify.com/images/e_trim/cs_srgb,h_2048,w_2048,c_limit/dn_72/q_auto/5c5e53976ef54484c6b186d3ad9766f67e8c7a77/Modus_Furniture_Yosemite_Upholstered_Footboard_Storage_Bed_in_Cafe_655450150616_7YC9S_Image01.jpg",$499.00,"$4,129",7
+Yosemite King-size Upholstered Panel Bed in Cafe,Modus Furniture,"https://images.salsify.com/images/h_9999,w_9999,c_limit/e_trim/cs_srgb,h_2048,w_2048,c_limit/dn_72/q_auto/9b2767e69994a17cbeedb1d3798a332941b67080/Modus_Furniture_Yosemite_Upholstered_Wood_Panel_Bed_in_Cafe_655450126277_7YC9P__Image_1.jpg",$349.00,"$3,049",3
+Yosemite Queen-size Upholstered Footboard Storage Bed in Cafe,Modus Furniture,"https://images.salsify.com/images/h_9999,w_9999,c_limit/e_trim/cs_srgb,h_2048,w_2048,c_limit/dn_72/q_auto/5c5e53976ef54484c6b186d3ad9766f67e8c7a77/Modus_Furniture_Yosemite_Upholstered_Footboard_Storage_Bed_in_Cafe_655450150616_7YC9S__Image_1.jpg",$449.00,"$3,239",4
+Yosemite California King-size Upholstered Panel Bed in Cafe,Modus Furniture,"https://images.salsify.com/images/h_9999,w_9999,c_limit/e_trim/cs_srgb,h_2048,w_2048,c_limit/dn_72/q_auto/9b2767e69994a17cbeedb1d3798a332941b67080/Modus_Furniture_Yosemite_Upholstered_Wood_Panel_Bed_in_Cafe_655450126277_7YC9P__Image_1.jpg",$349.00,"$3,049",5
+Yosemite Queen-size Upholstered Panel Bed in Cafe,Modus Furniture,"https://images.salsify.com/images/h_9999,w_9999,c_limit/e_trim/cs_srgb,h_2048,w_2048,c_limit/dn_72/q_auto/9b2767e69994a17cbeedb1d3798a332941b67080/Modus_Furniture_Yosemite_Upholstered_Wood_Panel_Bed_in_Cafe_655450126277_7YC9P__Image_1.jpg",$299.00,"$2,109",4
+Townsend Solid Wood Console Table in Java,Modus Furniture,"https://images.salsify.com/images/e_trim/cs_srgb,h_2048,w_2048,c_limit/dn_72/q_auto/3477c077a605fc663a9806bcc63a3dcef803fb73/Modus_Furniture_Townsend_Solid_Wood_Console_Table_in_Java_655450170898_8T0623_Image01.jpg",$199.00,"$1,869",15
+William King-Size Panel Bed in Dusty Dawn,Modus Furniture,"https://images.salsify.com/images/h_9999,w_9999,c_limit/e_trim/cs_srgb,h_2048,w_2048,c_limit/dn_72/q_auto/d6908631031068be3d8850b865d861581943bcde/Modus_Furniture_William_Solid_Wood_Panel_Bed_in_Dusty_Dawn_655450333446_FYBVA__Image_1.jpg",$99.00,"$3,049",27
+Takota Dark Brown Rectangular Oak Wood w/ Birch Wood Legs Extendable Dining Table,Mercana,https://marketplace.mercana.com/images/0089005_70890-AB_A.jpeg,"$1,440.00","$3,899",8
+Soma Textured Black Acacia Wood Round Dining Table,Mercana,https://marketplace.mercana.com/images/0094259_70883-AB_A.jpeg,$408.00,"$1,209",6
+Tucson Natural Wood w/ Round Black Oak Top Side Table,Mercana,https://marketplace.mercana.com/images/0089706_70889-AB_A.jpeg,$243.00,$549,6
+Valence 3 Piece (W/ 2 x Ottoman) Castlerock Gray Modular Sofa Set,Mercana,https://marketplace.mercana.com/images/0060958_70054-E_A.jpeg,$600.00,"$1,999",2
+Rialto Rectangular Two-Tone Black and Brown Solid Wood Dining Table,Mercana,https://marketplace.mercana.com/images/0087664_70558-AB_A.jpeg,$870.00,"$3,199",6
+Tanner Marble & Gold Metal Bistro Table,Mercana,https://marketplace.mercana.com/images/0061006_69938-AB_A.jpeg,$406.80,"$1,509",18
+Tanner Marble & Matte Black Bistro Table,Mercana,https://marketplace.mercana.com/images/0065557_69912-AB_A.jpeg,$381.00,"$1,449",15
+Athens 48.0L x 28.0W x 16.0H Light Brown Wood and White Marble Coffee Table,Mercana,https://marketplace.mercana.com/images/0079687_69911-AB_A.jpeg,$388.08,"$1,149",2
+Svend 111.4L x 68.0W x 33.9H Tan Leather Left Chaise Sectional Sofa,Mercana,https://marketplace.mercana.com/images/0056375_69692-AB_A.jpeg,"$3,044.88","$7,899",6
+"D'Arcy 111""L x 70""D x 33""H Tan Leather Right Chaise Sectional",Mercana,https://marketplace.mercana.com/images/0055449_69646-AB_A.jpeg,"$2,850.00","$7,599",13
+Felicity 36.0L x 36.0W x 16.0H Marble Top W/Iron Frame Coffee Table,Mercana,https://marketplace.mercana.com/images/0048740_69253-AB_A.jpeg,$408.00,"$1,389",22
+Lorlei 20.0L x 20.0W x 23.8H White Marble Top W/Antique Gold Iron Legs End and Side Table,Mercana,https://marketplace.mercana.com/images/0048737_69247-AB_A.jpeg,$258.48,$849,14
+"Jacinta 36"" Round Glass Top Metal and Marble Pedestal Coffee Table",Mercana,https://marketplace.mercana.com/images/0035437_69052-AB_A.jpeg,$431.28,"$1,399",14
+Shale III 50L x 20W Black Live-Edge Slate and Iron Console Table,Mercana,https://marketplace.mercana.com/images/0035435_69050-AB_A.jpeg,$366.48,"$1,169",3
+"Tanner II 48"" Round White Marble Top Black Metal Base Dining Table",Mercana,https://marketplace.mercana.com/images/0035447_68849-AB_A.jpeg,$435.00,"$1,349",19
+Tanner I 71L x 35W Rectangular White Marble W/ Metal Base Dining Table,Mercana,https://marketplace.mercana.com/images/0047850_68848-AB_A.jpeg,$575.28,"$1,769",8
+"Nathan 36""x36"" Square White Marble Top Black Metal Base Coffee Table",Mercana,https://marketplace.mercana.com/images/0035426_68842-AB_A.jpeg,$345.00,"$1,069",2
+"Zyler Marble Side Table, Gold Base",Inspired Home,http://images.salsify.com/image/upload/s--G3Y3ZVcm--/awiwxgzgvjvqwimtqhxg.jpg,$32.58,$181,1
+"Zyler Marble Side Table, Black Base",Inspired Home,http://images.salsify.com/image/upload/s--KQdmDTM2--/zxzomvyrwaycebrhv412.jpg,$27.54,$153,1
+"Monette Faux Linen Modular Armless Seat Sofa, Pink",Inspired Home,http://images.salsify.com/image/upload/s--JjqN5cQ9--/qcrtzrw10bcaqzhwmq4z.jpg,$90.18,$501,1
+"Monette Faux Linen Modular Armless Seat Sofa, Navy",Inspired Home,http://images.salsify.com/image/upload/s--sHvBqAck--/f9u97j2c5txstl781p9s.jpg,$90.18,$501,3
+"Monette Faux Linen Modular Left Arm Seat Sofa, Navy",Inspired Home,http://images.salsify.com/image/upload/s--lQBTXT7k--/augct4yvjfseu5hgibwz.jpg,$94.50,$525,2
+"Willington 3 Seat Button Tufted Velvet Sofa with Casters, Teal",Inspired Home,http://images.salsify.com/image/upload/s--iRLvicO3--/lfbv1byna74ymdttedhd.jpg,$153.18,$851,1
+"Monette Faux Linen Modular Ottoman, Navy",Inspired Home,http://images.salsify.com/image/upload/s--_hkcZbat--/na59hh11uyjpeffhdwpz.jpg,$75.42,$419,1
+"Ella Velvet Cube Storage Ottoman w/ Knob Chrome Nailhead Trim, Blush",Inspired Home,http://images.salsify.com/image/upload/s--OzB78GUp--/w7vr4rdisr9imomsdjgn.jpg,$14.40,$80,1
+"Giovanni Velvet Left Facing Chaise Sectional w/ Storage, Hunter Green",Inspired Home,http://images.salsify.com/image/upload/s--et84JGbR--/yd7x5m1tgj0jqxfoahza.jpg,$288.54,"$1,603",2
+"Daryl 4 door Sideboard with Gold Handle and Metal Frame in High Gloss Lacquer Finish, White",Inspired Home,http://images.salsify.com/image/upload/s--M-HwoH1J--/coptlfckjmg2oobnhqhb.jpg,$145.62,$809,1
+"Daryl 4 door Sideboard with Chrome Handle and Metal Frame in Veneer Finish, Ash Grey",Inspired Home,http://images.salsify.com/image/upload/s--Em6WHY7r--/civdj5rw0rrwzall3j1n.jpg,$130.86,$727,1
+"Belen 3 Door Sideboard with Gold Handle and Leg Tip, White",Inspired Home,http://images.salsify.com/image/upload/s--IfJh1dH7--/e9hg9hajtyckpt2szhcr.jpg,$121.32,$674,1
+"Belen 4 Door Sideboard with Gold Handle and Leg Tip, White",Inspired Home,http://images.salsify.com/image/upload/s--CxeM-FlG--/vhmkk2afp1hkngvjhuk3.jpg,$129.60,$720,1
+"Belen 3 Door Sideboard with Gold Handle and Leg Tip, Navy",Inspired Home,http://images.salsify.com/image/upload/s--9GQSxMJs--/caujg9ho0n2lwviwtgyk.jpg,$114.48,$636,3
+"Belen 4 Door Sideboard with Gold Handle and Leg Tip, Black",Inspired Home,http://images.salsify.com/image/upload/s--0GzmwQZQ--/v6kikz6yyubvwhf5rshn.jpg,$152.64,$848,1
+"Belen 2 Door Sideboard with Gold Handle and Leg Tip, Black",Inspired Home,http://images.salsify.com/image/upload/s--jIYfG9kj--/zfqsuztrl1fdeugt9nfs.jpg,$90.72,$504,1`;
 
 // Parse CSV and create products
 export const mockProducts: Product[] = csvData
