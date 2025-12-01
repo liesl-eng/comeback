@@ -16,6 +16,20 @@ const Products = () => {
     ? mockProducts.filter((p) => p.category === selectedCategory)
     : mockProducts;
 
+  // Group products by brand and sort brands alphabetically
+  const productsByBrand = filteredProducts.reduce((acc, product) => {
+    const brand = product.brand;
+    if (!acc[brand]) {
+      acc[brand] = [];
+    }
+    acc[brand].push(product);
+    return acc;
+  }, {} as Record<string, typeof filteredProducts>);
+
+  const sortedBrands = Object.keys(productsByBrand).sort((a, b) => 
+    a.localeCompare(b)
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar cartItemCount={totalItems} />
@@ -34,7 +48,7 @@ const Products = () => {
             onClick={() => setSelectedCategory(null)}
             size="sm"
           >
-            All Categories
+            All Brands
           </Button>
           {categories.map((category) => (
             <Button
@@ -48,7 +62,7 @@ const Products = () => {
           ))}
         </div>
 
-        <div className="mb-4 flex items-center gap-2">
+        <div className="mb-8 flex items-center gap-2">
           <Badge variant="secondary" className="text-sm">
             {filteredProducts.length} products found
           </Badge>
@@ -57,14 +71,33 @@ const Products = () => {
           </Badge>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onAddToCart={addItem}
-            />
-          ))}
+        {/* Brand Sections */}
+        <div className="space-y-12">
+          {sortedBrands.map((brand) => {
+            const brandProducts = productsByBrand[brand];
+            return (
+              <section key={brand} className="scroll-mt-8">
+                <div className="mb-6 border-b pb-3">
+                  <h2 className="text-3xl font-bold text-foreground">
+                    {brand}
+                  </h2>
+                  <p className="text-muted-foreground mt-1">
+                    {brandProducts.length} {brandProducts.length === 1 ? 'product' : 'products'}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {brandProducts.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onAddToCart={addItem}
+                    />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
       </main>
     </div>
