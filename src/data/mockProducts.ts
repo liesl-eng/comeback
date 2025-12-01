@@ -25,12 +25,12 @@ const parseCSV = (csvText: string): Product[] => {
   const lines = csvText.trim().split('\n');
   const products: Product[] = [];
   
-  // Skip header row (line 0) and any blank lines
-  for (let i = 1; i < lines.length; i++) {
+  // Skip first two rows (empty row and header)
+  for (let i = 2; i < lines.length; i++) {
     const line = lines[i].trim();
-    if (!line) continue;
+    if (!line || line === ',,,,,') continue;
     
-    // Handle CSV with potential quoted fields
+    // Handle CSV with potential quoted fields - improved parser
     const parts: string[] = [];
     let current = '';
     let inQuotes = false;
@@ -40,6 +40,7 @@ const parseCSV = (csvText: string): Product[] => {
       
       if (char === '"') {
         inQuotes = !inQuotes;
+        // Don't include the quote character itself
       } else if (char === ',' && !inQuotes) {
         parts.push(current.trim());
         current = '';
@@ -49,6 +50,7 @@ const parseCSV = (csvText: string): Product[] => {
     }
     parts.push(current.trim());
     
+    // Need at least 6 fields: Name, Brand, Image URL, Price, MSRP, Units Available
     if (parts.length < 6) continue;
     
     const name = parts[0];
