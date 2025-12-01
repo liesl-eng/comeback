@@ -60,14 +60,17 @@ const parseCSV = (csvText: string): Product[] => {
     const msrpStr = parts[4];
     const quantityStr = parts[5];
     
-    // Skip if essential fields are missing or invalid
-    if (!name || !brand || !priceStr || !msrpStr || msrpStr === 'N/A') continue;
+    // Skip if essential fields are missing
+    if (!name || !brand) continue;
+    
+    // Skip if price or MSRP are missing or invalid
+    if (!priceStr || !msrpStr || msrpStr === 'N/A' || priceStr === '$0.00') continue;
     
     const price = parsePrice(priceStr);
     const msrp = parsePrice(msrpStr);
     const quantity = parseQuantity(quantityStr);
     
-    // Skip if price is 0
+    // Skip if parsed price is 0
     if (price === 0 || msrp === 0) continue;
     
     // Calculate discount percentage
@@ -88,7 +91,7 @@ const parseCSV = (csvText: string): Product[] => {
         verified: true,
       },
       inStock: quantity > 0,
-      imageUrl: imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Arhaus_logo.jpg',
+      imageUrl: imageUrl && imageUrl !== 'N/A' ? imageUrl : 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Arhaus_logo.jpg',
       condition: 'like-new' as const,
       quantity,
       brand,
