@@ -198,7 +198,25 @@ Tanner I 71L x 35W Rectangular White Marble W/ Metal Base Dining Table,Mercana,h
 "Belen 4 Door Sideboard with Gold Handle and Leg Tip, White",Inspired Home,http://images.salsify.com/image/upload/s--CxeM-FlG--/vhmkk2afp1hkngvjhuk3.jpg,$129.60,$720,1
 "Belen 3 Door Sideboard with Gold Handle and Leg Tip, Navy",Inspired Home,http://images.salsify.com/image/upload/s--9GQSxMJs--/caujg9ho0n2lwviwtgyk.jpg,$114.48,$636,3
 "Belen 4 Door Sideboard with Gold Handle and Leg Tip, Black",Inspired Home,http://images.salsify.com/image/upload/s--0GzmwQZQ--/v6kikz6yyubvwhf5rshn.jpg,$152.64,$848,1
-"Belen 2 Door Sideboard with Gold Handle and Leg Tip, Black",Inspired Home,http://images.salsify.com/image/upload/s--jIYfG9kj--/zfqsuztrl1fdeugt9nfs.jpg,$90.72,$504,1`;
+"Belen 2 Door Sideboard with Gold Handle and Leg Tip, Black",Inspired Home,http://images.salsify.com/image/upload/s--jIYfG9kj--/zfqsuztrl1fdeugt9nfs.jpg,$90.72,$504,1
+NutriBullet 1200W Ultra Personal Blender,NutriBullet,https://assets.wsimgs.com/wsimgs/ab/images/dp/wcm/202537/0028/img27xl.jpg,$22.00,$109.99,"8,370"
+NutriBullet 600W  Personal Blender,NutriBullet,https://media.kohlsimg.com/is/image/kohls/1098808_Gray?wid=1500&hei=1500&op_sharpen=1,$12.87,$64.37,"2,715"
+NutriBullet 900W Pro Personal Blender Matte White,NutriBullet,https://cb.scene7.com/is/image/Crate/NutribulletProMtWhtSSF25_VND?$web_pdp_main_carousel_high$,$20.93,$104.65,"2,523"
+NutriBullet 900W Pro Black  Personal Blender,NutriBullet,https://i5.walmartimages.com/seo/Nutribullet-Pro-32-oz-900-Watt-Personal-Blender-Matte-Black-NB9-0901AK_0aa47484-8b12-4bc1-96b3-a1da2c0cbb5a.378b4202b152138c02c853eb5065f5bf.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF,$14.60,$73.00,983
+NutriBullet Juicer Machine 800W,NutriBullet,https://slimages.macysassets.com/is/image/MCY/products/9/optimized/18109569_fpx.tif?op_sharpen=1&wid=700&fit=fit,1&fmt=webp,$22.00,$110.00,799
+Restore 1,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_1_charcoal.jpg,$20.00,$99.99,2049
+Restore 1,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_1_charcoal.jpg,$20.00,$99.99,96
+Restore 1,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_1_charcoal.jpg,$20.00,$99.99,842
+Restore 1,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_1_charcoal.jpg,$20.00,$99.99,6064
+Restore 2,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_2_charcoal_1.jpg,$34.00,$169.99,44
+Restore 2,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_2_charcoal_1.jpg,$34.00,$169.99,80
+Restore 2,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_2_charcoal_1.jpg,$34.00,$169.99,4425
+Restore 2,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_2_charcoal_1.jpg,$34.00,$169.99,51
+Restore 2,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_2_charcoal_1.jpg,$34.00,$169.99,207
+Restore 2,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_2_charcoal_1.jpg,$34.00,$169.99,1223
+Restore 2,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_2_charcoal_1.jpg,$34.00,$169.99,35
+Restore 2,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_2_charcoal_1.jpg,$34.00,$169.99,278
+Restore 3,Hatch,https://media.hatchsleep.com/media/catalog/product/cache/9ea3eae6c3e92726b76fcc14e2f0f425/r/e/restore_3_putty_1.jpg,$34.00,$169.99,1275`;
 
 // Parse CSV and create products
 export const mockProducts: Product[] = csvData
