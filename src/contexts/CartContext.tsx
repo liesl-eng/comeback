@@ -22,7 +22,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       const existingItem = currentItems.find((item) => item.product.id === product.id);
       
       if (existingItem) {
-        toast.success("Updated cart quantity");
+        toast.success("Updated order request quantity");
         return currentItems.map((item) =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
@@ -30,14 +30,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         );
       }
       
-      toast.success("Added to cart");
+      toast.success("Item added to order request");
       return [...currentItems, { product, quantity: 1 }];
     });
   };
 
   const removeItem = (productId: string) => {
     setItems((currentItems) => currentItems.filter((item) => item.product.id !== productId));
-    toast.success("Removed from cart");
+    toast.success("Removed from order request");
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
@@ -55,7 +55,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => {
     setItems([]);
-    toast.success("Cart cleared");
+    toast.success("Order request cleared");
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
