@@ -52,6 +52,11 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             {product.discountPercentage}% OFF
           </span>
         </div>
+        <div className="mt-2">
+          <span className="text-xs text-muted-foreground">
+            {product.quantity} units available
+          </span>
+        </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Button
