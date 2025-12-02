@@ -25,10 +25,30 @@ const About = () => {
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold mb-8">About Comeback Goods</h1>
           
-          <div className="prose prose-lg text-muted-foreground space-y-6">
-            <p>
-              Content coming soon. This page will contain background information about Comeback Goods.
-            </p>
+          <p className="text-xl text-foreground mb-8">
+            Comeback Goods works directly with brands for high quality, slightly imperfect goods.
+          </p>
+
+          <h2 className="text-2xl font-semibold mb-6">Why buy from us?</h2>
+          
+          <div className="space-y-6">
+            <div className="border-l-4 border-primary pl-6">
+              <p className="text-lg text-muted-foreground">
+                <span className="font-semibold text-foreground">We work directly with brands.</span> No weird third-party middlemen here.
+              </p>
+            </div>
+            
+            <div className="border-l-4 border-primary pl-6">
+              <p className="text-lg text-muted-foreground">
+                <span className="font-semibold text-foreground">Our quality checks? Legit.</span> The same people who inspect the brand's products inspect ours.
+              </p>
+            </div>
+            
+            <div className="border-l-4 border-primary pl-6">
+              <p className="text-lg text-muted-foreground">
+                <span className="font-semibold text-foreground">You're saving a perfectly good product from limbo.</span> And getting an awesome deal.
+              </p>
+            </div>
           </div>
         </div>
       </main>
