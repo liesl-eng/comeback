@@ -167,160 +167,114 @@ const ProductDetail = () => {
             </Card>
           </div>
 
-          {/* Wholesale Ordering Table */}
+          {/* Wholesale Ordering Section */}
           <div>
             <Card>
               <CardContent className="p-6">
                 <h2 className="text-2xl font-bold mb-6">Wholesale Ordering</h2>
                 
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left py-3 px-2 font-semibold text-sm">Purchase Type</th>
-                        <th className="text-left py-3 px-2 font-semibold text-sm">Unit Details</th>
-                        <th className="text-left py-3 px-2 font-semibold text-sm">Price/Unit</th>
-                        <th className="text-left py-3 px-2 font-semibold text-sm">MOQ</th>
-                        <th className="text-center py-3 px-2 font-semibold text-sm">Quantity</th>
-                        <th className="text-center py-3 px-2 font-semibold text-sm">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {product.wholesaleOptions?.map((option) => {
-                        const qty = quantities[option.type] || option.moq;
-                        return (
-                          <tr key={option.type} className="border-b hover:bg-muted/50 transition-colors">
-                            <td className="py-4 px-2">
-                              <span className="font-semibold capitalize">
-                                {getPurchaseTypeLabel(option.type)}
-                              </span>
-                            </td>
-                            <td className="py-4 px-2 text-sm text-muted-foreground">
-                              {option.unitsPerPurchase === 1 
-                                ? '1 unit'
-                                : `${option.unitsPerPurchase} units/${option.type}`
-                              }
-                            </td>
-                            <td className="py-4 px-2">
-                              <div className="flex flex-col gap-1">
-                                <span className="text-lg font-bold text-accent">
-                                  ${option.pricePerUnit}
-                                </span>
-                                <span className="text-xs text-muted-foreground line-through">
-                                  ${option.originalPricePerUnit}
-                                </span>
-                              </div>
-                            </td>
-                            <td className="py-4 px-2">
-                              <Badge variant="outline" className="text-xs">
-                                {option.moq}
-                              </Badge>
-                            </td>
-                            <td className="py-4 px-2">
-                              <div className="flex items-center justify-center gap-2">
-                                <Button
-                                  variant="outline"
-                                  size="icon"
-                                  className="h-8 w-8"
-                                  onClick={() => updateQuantity(option.type, -option.unitsPerPurchase)}
-                                >
-                                  <Minus className="h-4 w-4" />
-                                </Button>
-                                <span className="font-semibold min-w-[3ch] text-center">
-                                  {qty}
-                                </span>
-                                <Button
-                                  variant="outline"
-                                  size="icon"
-                                  className="h-8 w-8"
-                                  onClick={() => updateQuantity(option.type, option.unitsPerPurchase)}
-                                >
-                                  <Plus className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            </td>
-                            <td className="py-4 px-2">
-                              <Button
-                                variant="accent"
-                                size="sm"
-                                className="w-full gap-1"
-                                onClick={() => handleAddToCart(option)}
-                              >
-                                <ShoppingCart className="h-4 w-4" />
-                                Add
-                              </Button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                      
-                      {/* Fallback if no wholesale options */}
-                      {(!product.wholesaleOptions || product.wholesaleOptions.length === 0) && (
-                        <tr>
-                          <td colSpan={6} className="py-8 text-center text-muted-foreground">
-                            <div className="space-y-4">
-                              <p>Standard pricing available</p>
-                              <div className="flex flex-col items-center gap-2">
-                                <div className="flex items-baseline gap-2">
-                                  <span className="text-3xl font-bold text-accent">
-                                    ${product.discountedPrice}
-                                  </span>
-                                  <span className="text-lg text-muted-foreground line-through">
-                                    ${product.originalPrice}
-                                  </span>
-                                </div>
-                                <Button
-                                  variant="accent"
-                                  size="lg"
-                                  className="gap-2"
-                                  onClick={() => {
-                                    addItem(product);
-                                    toast.success(
-                                      <div className="flex flex-col gap-2">
-                                        <p className="font-semibold">Item added to order request!</p>
-                                        <div className="flex gap-2">
-                                          <Button
-                                            size="sm"
-                                            variant="outline"
-                                            onClick={() => navigate("/products")}
-                                            className="flex-1"
-                                          >
-                                            Continue Shopping
-                                          </Button>
-                                          <Button
-                                            size="sm"
-                                            variant="accent"
-                                            onClick={() => navigate("/cart")}
-                                            className="flex-1"
-                                          >
-                                            View Cart
-                                          </Button>
-                                        </div>
-                                      </div>,
-                                      { duration: 5000 }
-                                    );
-                                  }}
-                                >
-                                  <ShoppingCart className="h-5 w-5" />
-                                  Add to Cart
-                                </Button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-
-                {product.wholesaleOptions && product.wholesaleOptions.length > 0 && (
-                  <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm text-muted-foreground">
-                      <strong>Note:</strong> Larger quantities offer better per-unit pricing. 
-                      All orders must meet minimum order quantities (MOQ).
-                    </p>
+                <div className="space-y-6">
+                  {/* Price Display */}
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-2">Unit Price</p>
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-4xl font-bold text-accent">
+                        ${product.discountedPrice}
+                      </span>
+                      <span className="text-xl text-muted-foreground line-through">
+                        ${product.originalPrice}
+                      </span>
+                    </div>
                   </div>
-                )}
+
+                  {/* Quantity Selector */}
+                  <div>
+                    <label className="text-sm font-semibold mb-3 block">Quantity:</label>
+                    <div className="flex items-center gap-3">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-12 w-12"
+                        onClick={() => {
+                          const currentQty = quantities['default'] || 1;
+                          setQuantities(prev => ({ ...prev, default: Math.max(1, currentQty - 1) }));
+                        }}
+                      >
+                        <Minus className="h-5 w-5" />
+                      </Button>
+                      <span className="text-2xl font-bold min-w-[4ch] text-center">
+                        {quantities['default'] || 1}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-12 w-12"
+                        onClick={() => {
+                          const currentQty = quantities['default'] || 1;
+                          setQuantities(prev => ({ ...prev, default: currentQty + 1 }));
+                        }}
+                      >
+                        <Plus className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Total Display */}
+                  <div className="pt-4 border-t">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-lg font-semibold">Total:</span>
+                      <span className="text-3xl font-bold text-accent">
+                        ${((quantities['default'] || 1) * product.discountedPrice).toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Order Button */}
+                  <Button
+                    variant="accent"
+                    size="lg"
+                    className="w-full gap-2 text-lg h-14"
+                    onClick={() => {
+                      const qty = quantities['default'] || 1;
+                      for (let i = 0; i < qty; i++) {
+                        addItem(product);
+                      }
+                      toast.success(
+                        <div className="flex flex-col gap-2">
+                          <p className="font-semibold">Added {qty} units to order request!</p>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => navigate("/products")}
+                              className="flex-1"
+                            >
+                              Continue Shopping
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="accent"
+                              onClick={() => navigate("/cart")}
+                              className="flex-1"
+                            >
+                              View Cart
+                            </Button>
+                          </div>
+                        </div>,
+                        { duration: 5000 }
+                      );
+                      setQuantities(prev => ({ ...prev, default: 1 }));
+                    }}
+                  >
+                    <ShoppingCart className="h-5 w-5" />
+                    Request to Order
+                  </Button>
+
+                  {/* Optional Minimum Order Note */}
+                  <p className="text-sm text-muted-foreground text-center">
+                    Brand minimum: $2,000 per order
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </div>
