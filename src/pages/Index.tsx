@@ -37,7 +37,7 @@ const Index = () => {
                   Browse Products
                   <ArrowRight className="h-5 w-5" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate("/products")}>
+                <Button variant="secondary" size="lg" onClick={() => navigate("/about")}>
                   Learn More
                 </Button>
               </div>
