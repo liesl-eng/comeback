@@ -54,7 +54,7 @@ const ProductDetail = () => {
 
     toast.success(
       <div className="flex flex-col gap-2">
-        <p className="font-semibold">Added {qty} units to cart!</p>
+        <p className="font-semibold">Added {qty} units to order request!</p>
         <div className="flex gap-2">
           <Button
             size="sm"
@@ -277,7 +277,7 @@ const ProductDetail = () => {
                                     addItem(product);
                                     toast.success(
                                       <div className="flex flex-col gap-2">
-                                        <p className="font-semibold">Added to cart!</p>
+                                        <p className="font-semibold">Item added to order request!</p>
                                         <div className="flex gap-2">
                                           <Button
                                             size="sm"
