@@ -62,12 +62,9 @@ const Products = () => {
           ))}
         </div>
 
-        <div className="mb-8 flex items-center gap-2">
+        <div className="mb-8">
           <Badge variant="secondary" className="text-sm">
             {filteredProducts.length} products found
-          </Badge>
-          <Badge variant="success" className="text-sm">
-            Average {Math.round(filteredProducts.reduce((acc, p) => acc + p.discountPercentage, 0) / filteredProducts.length)}% savings
           </Badge>
         </div>
 

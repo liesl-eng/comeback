@@ -97,7 +97,7 @@ const ProductDetail = () => {
             className="gap-2 mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
-            Return to Catalog
+            See The Whole Catalog
           </Button>
           
           <div className="flex flex-wrap items-center gap-3">
