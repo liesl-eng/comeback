@@ -58,6 +58,9 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
               {product.quantity} units available
             </span>
           </div>
+          <p className="text-xs text-muted-foreground mt-2">
+            $2,000 minimum per brand
+          </p>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
