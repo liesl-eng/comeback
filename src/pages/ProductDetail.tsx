@@ -151,14 +151,14 @@ const ProductDetail = () => {
                   )}
                   <div>
                     <p className="text-xs text-muted-foreground">Condition</p>
-                    <Badge variant="secondary" className="capitalize mt-1">
+                    <Badge variant="secondary" className="capitalize mt-1 text-base font-bold px-4 py-1.5">
                       {product.condition.replace("-", " ")}
                     </Badge>
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Available</p>
-                    <Badge variant="success" className="mt-1">
-                      <Package className="h-3 w-3 mr-1" />
+                    <Badge variant="success" className="mt-1 text-base font-bold px-4 py-1.5">
+                      <Package className="h-5 w-5 mr-1.5" />
                       {product.quantity} units
                     </Badge>
                   </div>
