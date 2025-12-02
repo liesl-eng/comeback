@@ -14,7 +14,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   const savings = product.originalPrice - product.discountedPrice;
 
   return (
-    <Card className="group overflow-hidden transition-all hover:shadow-hover">
+    <Card className="group overflow-hidden transition-all hover:shadow-hover flex flex-col">
       <Link to={`/product/${product.id}`}>
         <div className="relative aspect-square overflow-hidden bg-muted">
           <img
@@ -27,7 +27,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           </Badge>
         </div>
       </Link>
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex-1 flex flex-col">
         <Link to={`/product/${product.id}`}>
           <div className="mb-2">
             <Badge variant="outline" className="mb-2 text-xs">
@@ -36,12 +36,12 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             <h3 className="font-semibold text-foreground line-clamp-1 group-hover:text-accent transition-colors">
               {product.name}
             </h3>
-            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+            <p className="text-sm text-muted-foreground mt-1 line-clamp-2 min-h-[2.5rem]">
               {product.description}
             </p>
           </div>
         </Link>
-        <div className="mt-3">
+        <div className="mt-auto pt-3">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-foreground">
               ${product.discountedPrice}
