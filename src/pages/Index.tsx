@@ -26,12 +26,12 @@ const Index = () => {
           </div>
           <div className="container relative mx-auto px-4 py-24 lg:py-32">
             <div className="max-w-3xl">
-              <Badge variant="accent" className="mb-6 text-sm px-4 py-1.5">Comeback Goods B2B Marketplace</Badge>
-              <h1 className="mb-6 text-5xl font-black text-primary-foreground lg:text-7xl uppercase tracking-tight">
-                Tiny Imperfections. <span className="text-accent">Huge</span> Savings.
+              <h1 className="mb-4 text-5xl font-black text-primary-foreground lg:text-7xl uppercase tracking-tight">
+                TINY IMPERFECTIONS. <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-8 text-xl text-primary-foreground/90 font-bold">Tiny Imperfections. Huge Savings.
-Private Marketplace.</p>
+              <p className="mb-8 text-2xl text-primary-foreground/80 font-medium">
+                Private Marketplace
+              </p>
               <div className="flex flex-wrap gap-4">
                 <Button variant="accent" size="lg" className="gap-2" onClick={() => navigate("/products")}>
                   Browse Products
