@@ -58,12 +58,9 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
               {product.quantity} units available
             </span>
           </div>
-          <p className="text-xs text-muted-foreground mt-2">
-            $2,000 minimum per brand
-          </p>
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0">
+      <CardFooter className="p-4 pt-0 flex flex-col gap-2">
         <Button
           variant="accent"
           className="w-full gap-2"
@@ -72,6 +69,9 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           <ShoppingCart className="h-4 w-4" />
           Request to Order
         </Button>
+        <p className="text-xs text-muted-foreground text-center">
+          $2,000 minimum per brand (Arhaus, Mercana, etc.)
+        </p>
       </CardFooter>
     </Card>
   );
