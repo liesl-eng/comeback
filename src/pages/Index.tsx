@@ -30,7 +30,7 @@ const Index = () => {
                 TINY IMPERFECTIONS. <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
               <p className="mb-6 text-2xl text-primary-foreground/80 font-medium">
-                Private Marketplace
+                Private Marketplace.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button variant="accent" size="lg" className="gap-2" onClick={() => navigate("/products")}>
