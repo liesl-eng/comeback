@@ -48,8 +48,8 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           <span className="text-sm text-muted-foreground line-through">
             ${product.originalPrice}
           </span>
-          <span className="text-sm font-semibold text-success">
-            Save ${savings}
+          <span className="text-lg font-bold text-success">
+            {product.discountPercentage}% OFF
           </span>
         </div>
       </CardContent>
@@ -60,7 +60,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           onClick={() => onAddToCart?.(product)}
         >
           <ShoppingCart className="h-4 w-4" />
-          Add to Cart
+          Request to Order
         </Button>
       </CardFooter>
     </Card>
