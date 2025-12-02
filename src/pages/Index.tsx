@@ -24,15 +24,15 @@ const Index = () => {
           <div className="absolute inset-0 opacity-10">
             <img src={heroImage} alt="Warehouse" className="h-full w-full object-cover" />
           </div>
-          <div className="container relative mx-auto px-4 py-24 lg:py-32">
-            <div className="max-w-3xl">
-              <h1 className="mb-4 text-5xl font-black text-primary-foreground lg:text-7xl uppercase tracking-tight">
+          <div className="container relative mx-auto px-4 py-12 lg:py-16">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="mb-3 text-5xl font-black text-primary-foreground lg:text-7xl uppercase tracking-tight">
                 TINY IMPERFECTIONS. <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-8 text-2xl text-primary-foreground/80 font-medium">
+              <p className="mb-6 text-2xl text-primary-foreground/80 font-medium">
                 Private Marketplace
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 justify-center">
                 <Button variant="accent" size="lg" className="gap-2" onClick={() => navigate("/products")}>
                   Browse Products
                   <ArrowRight className="h-5 w-5" />
