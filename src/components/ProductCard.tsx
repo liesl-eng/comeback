@@ -41,21 +41,23 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             </p>
           </div>
         </Link>
-        <div className="mt-3 flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-foreground">
-            ${product.discountedPrice}
-          </span>
-          <span className="text-sm text-muted-foreground line-through">
-            ${product.originalPrice}
-          </span>
-          <span className="text-lg font-bold text-success">
-            {product.discountPercentage}% OFF
-          </span>
-        </div>
-        <div className="mt-2">
-          <span className="text-xs text-muted-foreground">
-            {product.quantity} units available
-          </span>
+        <div className="mt-3">
+          <div className="flex items-baseline gap-2">
+            <span className="text-2xl font-bold text-foreground">
+              ${product.discountedPrice}
+            </span>
+            <span className="text-sm text-muted-foreground line-through">
+              ${product.originalPrice}
+            </span>
+            <span className="text-lg font-bold text-success">
+              {product.discountPercentage}% OFF
+            </span>
+          </div>
+          <div className="mt-1.5">
+            <span className="text-xs text-muted-foreground">
+              {product.quantity} units available
+            </span>
+          </div>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
