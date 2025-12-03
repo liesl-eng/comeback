@@ -53,6 +53,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             <span className="text-2xl font-bold text-foreground">
               ${product.discountedPrice}
             </span>
+            <span className="text-sm text-muted-foreground">Each</span>
             <span className="text-sm text-muted-foreground line-through">
               ${product.originalPrice}
             </span>
