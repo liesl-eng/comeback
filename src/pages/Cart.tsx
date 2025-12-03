@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { formatPrice } from "@/lib/utils";
 
 const Cart = () => {
   const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
@@ -100,13 +101,13 @@ const Cart = () => {
                         </Button>
                       </div>
 
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-3 md:mt-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-3 md:mt-4">
                         <div className="flex items-baseline gap-2">
                           <span className="text-lg md:text-xl font-bold">
-                            ${item.product.discountedPrice}
+                            {formatPrice(item.product.discountedPrice)}
                           </span>
                           <span className="text-xs md:text-sm text-muted-foreground line-through">
-                            ${item.product.originalPrice}
+                            {formatPrice(item.product.originalPrice)}
                           </span>
                         </div>
 
@@ -147,22 +148,22 @@ const Cart = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Items ({totalItems})</span>
-                    <span className="font-semibold">${totalPrice.toFixed(2)}</span>
+                    <span className="font-semibold">{formatPrice(totalPrice)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Total Savings</span>
-                    <span className="font-semibold text-success">-${totalSavings.toFixed(2)}</span>
+                    <span className="font-semibold text-success">-{formatPrice(totalSavings)}</span>
                   </div>
                   <div className="pt-4 border-t">
                     <div className="flex justify-between text-lg">
                       <span className="font-bold">Total</span>
-                      <span className="font-bold">${totalPrice.toFixed(2)}</span>
+                      <span className="font-bold">{formatPrice(totalPrice)}</span>
                     </div>
                   </div>
                 </div>
 
                 <Badge variant="success" className="w-full justify-center py-2">
-                  You're saving ${totalSavings.toFixed(2)} on this order!
+                  You're saving {formatPrice(totalSavings)} on this order!
                 </Badge>
               </CardContent>
               

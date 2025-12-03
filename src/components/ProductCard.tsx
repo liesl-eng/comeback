@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types/product";
 import { ShoppingCart, CheckCircle2 } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 interface ProductCardProps {
@@ -51,11 +52,11 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
         <div className="mt-auto pt-3">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-foreground">
-              ${product.discountedPrice}
+              {formatPrice(product.discountedPrice)}
             </span>
             <span className="text-sm text-muted-foreground">Each</span>
             <span className="text-sm text-muted-foreground line-through">
-              ${product.originalPrice}
+              {formatPrice(product.originalPrice)}
             </span>
             <span className="text-lg font-bold text-success">
               {product.discountPercentage}% OFF
