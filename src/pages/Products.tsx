@@ -8,13 +8,17 @@ import { Badge } from "@/components/ui/badge";
 
 const Products = () => {
   const { addItem, totalItems } = useCart();
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = ["Furniture", "Decor", "Textiles", "Lighting", "Tabletop", "Outdoor"];
+  const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).sort((a, b) => a.localeCompare(b));
   
-  const filteredProducts = selectedCategory
-    ? mockProducts.filter((p) => p.category === selectedCategory)
-    : mockProducts;
+  const filteredProducts = mockProducts.filter((p) => {
+    const matchesBrand = !selectedBrand || p.brand === selectedBrand;
+    const matchesCategory = !selectedCategory || p.category === selectedCategory;
+    return matchesBrand && matchesCategory;
+  });
 
   // Group products by brand and sort brands alphabetically
   const productsByBrand = filteredProducts.reduce((acc, product) => {
@@ -42,24 +46,52 @@ const Products = () => {
           </p>
         </div>
 
-        <div className="mb-6 flex flex-wrap gap-2">
-          <Button
-            variant={selectedCategory === null ? "default" : "outline"}
-            onClick={() => setSelectedCategory(null)}
-            size="sm"
-          >
-            All Brands
-          </Button>
-          {categories.map((category) => (
+        {/* Brand Filters */}
+        <div className="mb-4">
+          <p className="text-sm font-medium text-muted-foreground mb-2">Brand</p>
+          <div className="flex flex-wrap gap-2">
             <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category)}
+              variant={selectedBrand === null ? "default" : "outline"}
+              onClick={() => setSelectedBrand(null)}
               size="sm"
             >
-              {category}
+              All Brands
             </Button>
-          ))}
+            {brands.map((brand) => (
+              <Button
+                key={brand}
+                variant={selectedBrand === brand ? "default" : "outline"}
+                onClick={() => setSelectedBrand(brand)}
+                size="sm"
+              >
+                {brand}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Category Filters */}
+        <div className="mb-6">
+          <p className="text-sm font-medium text-muted-foreground mb-2">Category</p>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant={selectedCategory === null ? "default" : "outline"}
+              onClick={() => setSelectedCategory(null)}
+              size="sm"
+            >
+              All Categories
+            </Button>
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category)}
+                size="sm"
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
         </div>
 
         <div className="mb-8">
