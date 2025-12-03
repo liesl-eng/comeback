@@ -12,7 +12,7 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = Array.from(new Set(mockProducts.map((p) => p.category))).filter(Boolean).sort((a, b) => a.localeCompare(b));
-  const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(Boolean).sort((a, b) => a.localeCompare(b));
+  const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
   
   const filteredProducts = mockProducts.filter((p) => {
     const matchesBrand = !selectedBrand || p.brand === selectedBrand;
