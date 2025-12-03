@@ -69,13 +69,13 @@ const Index = () => {
         <section className="py-10 md:py-16 bg-gradient-hero">
           <div className="container mx-auto px-4 text-center">
             <h2 className="mb-3 md:mb-4 text-2xl md:text-4xl font-bold text-primary-foreground">
-              Ready to Start Saving?
+              Stretch your budget, not your standards.
             </h2>
             <p className="mb-6 md:mb-8 text-base md:text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-              Join thousands of buyers discovering incredible deals on quality inventory
+              Join thousands of buyers discovering incredible deals on quality pieces.
             </p>
             <Button variant="accent" size="lg" className="gap-2" onClick={() => navigate("/products")}>
-              Explore Marketplace
+              Browse Products
               <ArrowRight className="h-5 w-5" />
             </Button>
           </div>
