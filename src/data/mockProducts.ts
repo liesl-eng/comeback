@@ -25,8 +25,14 @@ const parseCSV = (csvText: string): Product[] => {
   const lines = csvText.trim().split('\n');
   const products: Product[] = [];
   
-  // Skip first two rows (empty row and header)
-  for (let i = 2; i < lines.length; i++) {
+  // Check header to determine format (with or without Category column)
+  const headerLine = lines[0]?.toLowerCase() || '';
+  const hasCategory = headerLine.includes('category');
+  
+  // Start from line 1 (skip header) or line 2 if there's an empty row
+  const startIndex = lines[1]?.trim() === '' || lines[1]?.startsWith(',,,') ? 2 : 1;
+  
+  for (let i = startIndex; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line || line === ',,,,,') continue;
     
@@ -40,7 +46,6 @@ const parseCSV = (csvText: string): Product[] => {
       
       if (char === '"') {
         inQuotes = !inQuotes;
-        // Don't include the quote character itself
       } else if (char === ',' && !inQuotes) {
         parts.push(current.trim());
         current = '';
@@ -50,15 +55,30 @@ const parseCSV = (csvText: string): Product[] => {
     }
     parts.push(current.trim());
     
-    // Need at least 6 fields: Name, Brand, Image URL, Price, MSRP, Units Available
-    if (parts.length < 6) continue;
+    // Parse based on format
+    let name: string, brand: string, category: string, imageUrl: string, priceStr: string, msrpStr: string, quantityStr: string;
     
-    const name = parts[0];
-    const brand = parts[1];
-    const imageUrl = parts[2];
-    const priceStr = parts[3];
-    const msrpStr = parts[4];
-    const quantityStr = parts[5];
+    if (hasCategory && parts.length >= 7) {
+      // New format: Name, Brand, Category, Image URL, Price, MSRP, Units Available
+      name = parts[0];
+      brand = parts[1];
+      category = parts[2];
+      imageUrl = parts[3];
+      priceStr = parts[4];
+      msrpStr = parts[5];
+      quantityStr = parts[6];
+    } else if (parts.length >= 6) {
+      // Old format: Name, Brand, Image URL, Price, MSRP, Units Available
+      name = parts[0];
+      brand = parts[1];
+      category = brand; // fallback to brand as category
+      imageUrl = parts[2];
+      priceStr = parts[3];
+      msrpStr = parts[4];
+      quantityStr = parts[5];
+    } else {
+      continue;
+    }
     
     // Skip if essential fields are missing
     if (!name || !brand) continue;
@@ -80,7 +100,7 @@ const parseCSV = (csvText: string): Product[] => {
       id: `${brand}-${i}`,
       name,
       description: `Premium ${name.toLowerCase()} from ${brand}`,
-      category: brand,
+      category: category || brand,
       originalPrice: msrp,
       discountedPrice: price,
       discountPercentage,
