@@ -10,7 +10,7 @@ const Products = () => {
   const { addItem, totalItems } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const categories = Array.from(new Set(mockProducts.map((p) => p.category)));
+  const categories = ["Furniture", "Decor", "Textiles", "Lighting", "Tabletop", "Outdoor"];
   
   const filteredProducts = selectedCategory
     ? mockProducts.filter((p) => p.category === selectedCategory)
