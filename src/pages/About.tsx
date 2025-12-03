@@ -47,7 +47,7 @@ const About = () => {
             
             <div className="border-l-4 border-primary pl-4 md:pl-6">
               <p className="text-base md:text-lg text-muted-foreground">
-                <span className="font-semibold text-foreground">You're saving a perfectly good product from limbo.</span> And getting an awesome deal.
+                <span className="font-semibold text-foreground">You're saving a perfectly good products from limbo.</span> And getting an awesome deal.
               </p>
             </div>
           </div>
