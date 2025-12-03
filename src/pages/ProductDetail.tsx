@@ -3,10 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { mockProducts } from "@/data/mockProducts";
 import { useCart } from "@/contexts/CartContext";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShoppingCart, ArrowLeft, Package, Minus, Plus } from "lucide-react";
+import { ShoppingCart, ArrowLeft, Package, Minus, Plus, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { WholesaleOption } from "@/types/product";
 import { formatPrice } from "@/lib/utils";
@@ -15,7 +16,7 @@ const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addItem, totalItems } = useCart();
-  
+  const { isFavorite, toggleFavorite } = useFavorites();
   const product = mockProducts.find((p) => p.id === id);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
@@ -130,6 +131,20 @@ const ProductDetail = () => {
               <Badge variant="accent" className="absolute right-4 top-4 text-lg font-bold px-4 py-2">
                 {product.discountPercentage}% OFF
               </Badge>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute left-4 top-4 h-10 w-10 rounded-full bg-background/80 hover:bg-background"
+                onClick={() => toggleFavorite(product.id)}
+              >
+                <Heart
+                  className={`h-6 w-6 transition-colors ${
+                    isFavorite(product.id)
+                      ? "fill-accent text-accent"
+                      : "text-muted-foreground hover:text-accent"
+                  }`}
+                />
+              </Button>
             </div>
 
             <Card>

@@ -1,10 +1,11 @@
-import { ShoppingCart, Search, Menu, X } from "lucide-react";
+import { ShoppingCart, Search, Menu, X, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 interface NavbarProps {
   cartItemCount?: number;
@@ -12,6 +13,7 @@ interface NavbarProps {
 
 const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
   const navigate = useNavigate();
+  const { totalFavorites } = useFavorites();
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -58,11 +60,27 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
             </div>
           </form>
 
-          {/* Right: Navigation (Desktop) */}
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
             <Link to="/products">
               <Button variant="accent" size="sm">
                 Browse Products
+              </Button>
+            </Link>
+            <Link to="/favorites">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="relative p-2"
+              >
+                <Heart className={`h-5 w-5 ${totalFavorites > 0 ? "fill-accent text-accent" : ""}`} />
+                {totalFavorites > 0 && (
+                  <Badge
+                    variant="accent"
+                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                  >
+                    {totalFavorites}
+                  </Badge>
+                )}
               </Button>
             </Link>
             <Link to="/cart">
@@ -85,8 +103,25 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
             </Link>
           </div>
 
-          {/* Mobile: Cart + Menu */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile: Favorites + Cart + Menu */}
+          <div className="flex md:hidden items-center gap-1">
+            <Link to="/favorites">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="relative p-2"
+              >
+                <Heart className={`h-5 w-5 ${totalFavorites > 0 ? "fill-accent text-accent" : ""}`} />
+                {totalFavorites > 0 && (
+                  <Badge
+                    variant="accent"
+                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                  >
+                    {totalFavorites}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
             <Link to="/cart">
               <Button
                 variant="ghost"
