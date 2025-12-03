@@ -44,8 +44,8 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
             </div>
           </Link>
 
-          {/* Center: Search Bar (Desktop) */}
-          <form onSubmit={handleSearch} className="flex-1 max-w-md mx-4 hidden md:flex">
+          {/* Center: Search Bar */}
+          <form onSubmit={handleSearch} className="flex-1 max-w-md mx-2 md:mx-4">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -53,7 +53,7 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
                 placeholder="Find Your Goods"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 w-full"
+                className="pl-10 pr-4 w-full text-sm"
               />
             </div>
           </form>
@@ -118,18 +118,6 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
-            <form onSubmit={handleSearch}>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Find Your Goods"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 w-full"
-                />
-              </div>
-            </form>
             <div className="flex flex-col gap-2">
               <Link to="/products" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="accent" className="w-full">
