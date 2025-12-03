@@ -30,9 +30,16 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
       <CardContent className="p-4 flex-1 flex flex-col">
         <Link to={`/product/${product.id}`}>
           <div className="mb-2">
-            <Badge variant="outline" className="mb-2 text-xs">
-              {product.category}
-            </Badge>
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {product.brand && (
+                <Badge variant="secondary" className="text-xs">
+                  {product.brand}
+                </Badge>
+              )}
+              <Badge variant="outline" className="text-xs">
+                {product.category}
+              </Badge>
+            </div>
             <h3 className="font-semibold text-foreground line-clamp-1 group-hover:text-accent transition-colors">
               {product.name}
             </h3>
