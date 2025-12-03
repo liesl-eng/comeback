@@ -2,9 +2,10 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types/product";
-import { ShoppingCart, CheckCircle2 } from "lucide-react";
+import { ShoppingCart, Heart } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 interface ProductCardProps {
   product: Product;
@@ -13,21 +14,41 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   const savings = product.originalPrice - product.discountedPrice;
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   return (
     <Card className="group overflow-hidden transition-all hover:shadow-hover flex flex-col">
-      <Link to={`/product/${product.id}`}>
-        <div className="relative aspect-square overflow-hidden bg-muted">
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+      <div className="relative">
+        <Link to={`/product/${product.id}`}>
+          <div className="aspect-square overflow-hidden bg-muted">
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="h-full w-full object-cover transition-transform group-hover:scale-105"
+            />
+          </div>
+        </Link>
+        <Badge variant="accent" className="absolute right-3 top-3 font-bold">
+          {product.discountPercentage}% OFF
+        </Badge>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute left-3 top-3 h-9 w-9 rounded-full bg-background/80 hover:bg-background"
+          onClick={(e) => {
+            e.preventDefault();
+            toggleFavorite(product.id);
+          }}
+        >
+          <Heart
+            className={`h-5 w-5 transition-colors ${
+              isFavorite(product.id)
+                ? "fill-accent text-accent"
+                : "text-muted-foreground hover:text-accent"
+            }`}
           />
-          <Badge variant="accent" className="absolute right-3 top-3 font-bold">
-            {product.discountPercentage}% OFF
-          </Badge>
-        </div>
-      </Link>
+        </Button>
+      </div>
       <CardContent className="p-4 flex-1 flex flex-col">
         <Link to={`/product/${product.id}`}>
           <div className="mb-2">
