@@ -24,7 +24,7 @@ const About = () => {
         </Button>
 
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8">About Comeback Goods</h1>
+          <h1 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8">About <span className="text-accent">Comeback Goods</span></h1>
           
           <p className="text-lg md:text-xl text-foreground mb-6 md:mb-8">
             Comeback Goods works directly with brands for high quality, slightly imperfect goods.
