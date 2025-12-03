@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import comebackLogo from "@/assets/comeback-goods-logo.tiff";
+import comebackLogo from "@/assets/comeback-goods-logo.png";
 
 interface NavbarProps {
   cartItemCount?: number;
