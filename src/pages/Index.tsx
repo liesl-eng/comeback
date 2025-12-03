@@ -27,7 +27,7 @@ const Index = () => {
               <h1 className="mb-4 md:mb-6 text-3xl sm:text-4xl md:text-5xl font-black text-primary-foreground lg:text-7xl uppercase tracking-tight">
                 TINY IMPERFECTIONS. <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-4 md:mb-6 text-lg md:text-2xl text-primary-foreground/90 font-bold">
+              <p className="mb-4 md:mb-6 text-xl md:text-3xl text-primary-foreground/90 font-bold">
                 Private Marketplace.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
