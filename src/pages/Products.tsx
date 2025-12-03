@@ -11,7 +11,7 @@ const Products = () => {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Textiles', 'Tabletop', 'Smart Home & Wellness'];
+  const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Textiles', 'Tabletop', 'Home & Wellness Tech'];
   const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
   
   const filteredProducts = mockProducts.filter((p) => {
