@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
@@ -10,15 +9,11 @@ import { Badge } from "@/components/ui/badge";
 const Products = () => {
   const { addItem, totalItems } = useCart();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-
-  // Read search query from URL on mount and when it changes
-  useEffect(() => {
-    const search = searchParams.get("search") || "";
-    setSearchQuery(search);
-  }, [searchParams]);
+  
+  // Read filters from URL params
+  const selectedBrand = searchParams.get("brand") || null;
+  const selectedCategory = searchParams.get("category") || null;
+  const searchQuery = searchParams.get("search") || "";
 
   const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Textiles', 'Home & Wellness Tech'];
   const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
@@ -30,17 +25,20 @@ const Products = () => {
     return matchesBrand && matchesCategory && matchesSearch;
   });
 
-  // Clear search when clicking a filter
+  // Update URL params for brand filter
   const handleBrandSelect = (brand: string | null) => {
-    setSelectedBrand(brand);
-    if (searchQuery) {
-      setSearchParams({});
-      setSearchQuery("");
-    }
+    const newParams = new URLSearchParams();
+    if (brand) newParams.set("brand", brand);
+    if (selectedCategory) newParams.set("category", selectedCategory);
+    setSearchParams(newParams);
   };
 
+  // Update URL params for category filter
   const handleCategorySelect = (category: string | null) => {
-    setSelectedCategory(category);
+    const newParams = new URLSearchParams();
+    if (selectedBrand) newParams.set("brand", selectedBrand);
+    if (category) newParams.set("category", category);
+    setSearchParams(newParams);
   };
 
   return (
