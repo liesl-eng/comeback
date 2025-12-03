@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import comebackLogo from "@/assets/comeback-goods-logo.tiff";
 
 interface NavbarProps {
   cartItemCount?: number;
@@ -26,13 +27,20 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
       <div className="container mx-auto px-6">
         <div className="flex h-20 items-center justify-between gap-4">
           {/* Left: Logo + Tagline */}
-          <Link to="/" className="flex flex-col flex-shrink-0">
-            <span className="text-2xl font-bold text-foreground tracking-tight">
-              Comeback Goods
-            </span>
-            <span className="text-xs text-muted-foreground mt-0.5">
-              Wholesale marketplace for slightly imperfect goods
-            </span>
+          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+            <img 
+              src={comebackLogo} 
+              alt="Comeback Goods" 
+              className="h-12 w-12 rounded-full object-cover"
+            />
+            <div className="flex flex-col">
+              <span className="text-2xl font-bold text-foreground tracking-tight">
+                Comeback Goods
+              </span>
+              <span className="text-xs text-muted-foreground mt-0.5">
+                Wholesale marketplace for slightly imperfect goods
+              </span>
+            </div>
           </Link>
 
           {/* Center: Search Bar */}
