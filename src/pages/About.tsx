@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, TrendingDown, CheckCircle2, Package } from "lucide-react";
+import { ArrowLeft, TrendingDown, BadgeCheck, Leaf } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const About = () => {
@@ -57,11 +57,11 @@ const About = () => {
             <Card className="border-none shadow-card">
               <CardContent className="p-4 md:p-6 text-center">
                 <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-accent/10">
-                  <TrendingDown className="h-5 w-5 md:h-6 md:w-6 text-accent" />
+                  <BadgeCheck className="h-5 w-5 md:h-6 md:w-6 text-accent" />
                 </div>
-                <h3 className="mb-2 text-lg md:text-xl font-bold">Average 55% Savings</h3>
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Curated, top-notch home goods</h3>
                 <p className="text-sm md:text-base text-muted-foreground">
-                  Access deeply discounted inventory from verified suppliers across all categories
+                  Verified suppliers and ready-to-ship direct from brands' warehouses
                 </p>
               </CardContent>
             </Card>
@@ -69,11 +69,11 @@ const About = () => {
             <Card className="border-none shadow-card">
               <CardContent className="p-4 md:p-6 text-center">
                 <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-success/10">
-                  <CheckCircle2 className="h-5 w-5 md:h-6 md:w-6 text-success" />
+                  <TrendingDown className="h-5 w-5 md:h-6 md:w-6 text-success" />
                 </div>
-                <h3 className="mb-2 text-lg md:text-xl font-bold">Verified Suppliers</h3>
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Less-than-wholesale pricing</h3>
                 <p className="text-sm md:text-base text-muted-foreground">
-                  All suppliers are vetted and rated by our community of buyers
+                  Save up to 90% off retail and stretch your budget further
                 </p>
               </CardContent>
             </Card>
@@ -81,11 +81,11 @@ const About = () => {
             <Card className="border-none shadow-card sm:col-span-2 md:col-span-1">
               <CardContent className="p-4 md:p-6 text-center">
                 <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-primary/10">
-                  <Package className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                  <Leaf className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                 </div>
-                <h3 className="mb-2 text-lg md:text-xl font-bold">Quality Guaranteed</h3>
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Sustainable sourcing</h3>
                 <p className="text-sm md:text-base text-muted-foreground">
-                  All products are functional with transparent condition reporting
+                  Furnish your business responsibly with high quality items while lowering costs
                 </p>
               </CardContent>
             </Card>
