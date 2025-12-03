@@ -1,15 +1,5 @@
-Name,Brand,Image URL,Price,MSRP,Units Available
-,,,,,
-Restore 1,Hatch Sleep,Restore 1,$20.00,$99.99,2049
-Restore 1,Hatch Sleep,Restore 1,$20.00,$99.99,96
-Restore 1,Hatch Sleep,Restore 1,$20.00,$99.99,842
-Restore 1,Hatch Sleep,Restore 1,$20.00,$99.99,6064
-Restore 2,Hatch Sleep,Restore 2,$34.00,$169.99,44
-Restore 2,Hatch Sleep,Restore 2,$34.00,$169.99,80
-Restore 2,Hatch Sleep,Restore 2,$34.00,$169.99,4425
-Restore 2,Hatch Sleep,Restore 2,$34.00,$169.99,51
-Restore 2,Hatch Sleep,Restore 2,$34.00,$169.99,207
-Restore 2,Hatch Sleep,Restore 2,$34.00,$169.99,1223
-Restore 2,Hatch Sleep,Restore 2,$34.00,$169.99,35
-Restore 2,Hatch Sleep,Restore 2,$34.00,$169.99,278
-Restore 3,Hatch Sleep,Restore 3,$34.00,$169.99,1275
+Name,Brand,Category,Image URL,Price,MSRP,Units Available
+,,,,,,
+Hatch Restore 1,Hatch,Smart Home & Wellness,"https://m.media-amazon.com/images/I/51nV0mKYRWL._AC_UF1000,1000_QL80_.jpg",$20.00,$99.99,"6,400"
+Hatch Restore 2,Hatch,Smart Home & Wellness,"https://m.media-amazon.com/images/I/81JzAzh9YwL._AC_UF350,350_QL80_.jpg",$34.00,$169.99,"4,357"
+Hatch Restore 3,Hatch,Smart Home & Wellness,https://www.hatch.co/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F98401%2F1735102111-restore-3-putty-carousel-6.png&w=3840&q=75,$34.00,$169.99,198
