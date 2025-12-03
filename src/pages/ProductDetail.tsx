@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingCart, ArrowLeft, Package, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { WholesaleOption } from "@/types/product";
+import { formatPrice } from "@/lib/utils";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -188,10 +189,10 @@ const ProductDetail = () => {
                     <p className="text-sm text-muted-foreground mb-2">Unit Price</p>
                     <div className="flex items-baseline gap-3">
                       <span className="text-4xl font-bold text-accent">
-                        ${product.discountedPrice}
+                        {formatPrice(product.discountedPrice)}
                       </span>
                       <span className="text-xl text-muted-foreground line-through">
-                        ${product.originalPrice}
+                        {formatPrice(product.originalPrice)}
                       </span>
                     </div>
                   </div>
@@ -233,7 +234,7 @@ const ProductDetail = () => {
                     <div className="flex items-baseline justify-between">
                       <span className="text-lg font-semibold">Total:</span>
                       <span className="text-3xl font-bold text-accent">
-                        ${((quantities['default'] || 1) * product.discountedPrice).toFixed(2)}
+                        {formatPrice((quantities['default'] || 1) * product.discountedPrice)}
                       </span>
                     </div>
                   </div>
