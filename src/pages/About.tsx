@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, TrendingDown, BadgeCheck, Leaf } from "lucide-react";
+import { ArrowLeft, TrendingDown, BadgeCheck, Leaf, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const About = () => {
@@ -89,6 +89,19 @@ const About = () => {
                 </p>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Contact Us Section */}
+          <div className="mb-8 md:mb-12 text-center">
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">Contact Us</h2>
+            <p className="text-muted-foreground mb-4">Have questions? We'd love to hear from you.</p>
+            <a 
+              href="mailto:hello@comebackgoods.com" 
+              className="inline-flex items-center gap-2 text-accent hover:underline font-medium"
+            >
+              <Mail className="h-5 w-5" />
+              hello@comebackgoods.com
+            </a>
           </div>
 
           <div className="text-center">
