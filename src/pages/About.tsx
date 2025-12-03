@@ -13,10 +13,10 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <Navbar cartItemCount={totalItems} />
       
-      <main className="container mx-auto px-4 py-12">
+      <main className="container mx-auto px-4 py-8 md:py-12">
         <Button
           variant="ghost"
-          className="mb-8 gap-2"
+          className="mb-6 md:mb-8 gap-2 -ml-2"
           onClick={() => navigate("/")}
         >
           <ArrowLeft className="h-4 w-4" />
@@ -24,67 +24,67 @@ const About = () => {
         </Button>
 
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8">About Comeback Goods</h1>
+          <h1 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8">About Comeback Goods</h1>
           
-          <p className="text-xl text-foreground mb-8">
+          <p className="text-lg md:text-xl text-foreground mb-6 md:mb-8">
             Comeback Goods works directly with brands for high quality, slightly imperfect goods.
           </p>
 
-          <h2 className="text-2xl font-semibold mb-6">Why buy from us?</h2>
+          <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Why buy from us?</h2>
           
-          <div className="space-y-6 mb-12">
-            <div className="border-l-4 border-primary pl-6">
-              <p className="text-lg text-muted-foreground">
+          <div className="space-y-4 md:space-y-6 mb-8 md:mb-12">
+            <div className="border-l-4 border-primary pl-4 md:pl-6">
+              <p className="text-base md:text-lg text-muted-foreground">
                 <span className="font-semibold text-foreground">We work directly with brands.</span> No weird third-party middlemen here.
               </p>
             </div>
             
-            <div className="border-l-4 border-primary pl-6">
-              <p className="text-lg text-muted-foreground">
+            <div className="border-l-4 border-primary pl-4 md:pl-6">
+              <p className="text-base md:text-lg text-muted-foreground">
                 <span className="font-semibold text-foreground">Our quality checks? Legit.</span> The same people who inspect the brand's products inspect ours.
               </p>
             </div>
             
-            <div className="border-l-4 border-primary pl-6">
-              <p className="text-lg text-muted-foreground">
+            <div className="border-l-4 border-primary pl-4 md:pl-6">
+              <p className="text-base md:text-lg text-muted-foreground">
                 <span className="font-semibold text-foreground">You're saving a perfectly good product from limbo.</span> And getting an awesome deal.
               </p>
             </div>
           </div>
 
           {/* Benefits Section */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
             <Card className="border-none shadow-card">
-              <CardContent className="p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent/10">
-                  <TrendingDown className="h-6 w-6 text-accent" />
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-accent/10">
+                  <TrendingDown className="h-5 w-5 md:h-6 md:w-6 text-accent" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Average 55% Savings</h3>
-                <p className="text-muted-foreground">
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Average 55% Savings</h3>
+                <p className="text-sm md:text-base text-muted-foreground">
                   Access deeply discounted inventory from verified suppliers across all categories
                 </p>
               </CardContent>
             </Card>
 
             <Card className="border-none shadow-card">
-              <CardContent className="p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-success/10">
-                  <CheckCircle2 className="h-6 w-6 text-success" />
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-success/10">
+                  <CheckCircle2 className="h-5 w-5 md:h-6 md:w-6 text-success" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Verified Suppliers</h3>
-                <p className="text-muted-foreground">
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Verified Suppliers</h3>
+                <p className="text-sm md:text-base text-muted-foreground">
                   All suppliers are vetted and rated by our community of buyers
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-card">
-              <CardContent className="p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                  <Package className="h-6 w-6 text-primary" />
+            <Card className="border-none shadow-card sm:col-span-2 md:col-span-1">
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-primary/10">
+                  <Package className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Quality Guaranteed</h3>
-                <p className="text-muted-foreground">
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Quality Guaranteed</h3>
+                <p className="text-sm md:text-base text-muted-foreground">
                   All products are functional with transparent condition reporting
                 </p>
               </CardContent>

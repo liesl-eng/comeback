@@ -1,8 +1,8 @@
-import { ShoppingCart, Search } from "lucide-react";
+import { ShoppingCart, Search, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
 
@@ -11,39 +11,40 @@ interface NavbarProps {
 }
 
 const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
-  const location = useLocation();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+      setMobileMenuOpen(false);
     }
   };
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container mx-auto px-6">
-        <div className="flex h-20 items-center justify-between gap-4">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex h-16 md:h-20 items-center justify-between gap-2 md:gap-4">
           {/* Left: Logo + Tagline */}
-          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+          <Link to="/" className="flex items-center gap-2 md:gap-3 flex-shrink-0">
             <img 
               src={comebackLogo} 
               alt="Comeback Goods" 
-              className="h-12 w-12 rounded-full object-cover"
+              className="h-10 w-10 md:h-12 md:w-12 rounded-full object-cover"
             />
             <div className="flex flex-col">
-              <span className="text-2xl font-bold text-foreground tracking-tight">
+              <span className="text-lg md:text-2xl font-bold text-foreground tracking-tight">
                 Comeback Goods
               </span>
-              <span className="text-xs text-muted-foreground mt-0.5">
+              <span className="text-[10px] md:text-xs text-muted-foreground mt-0.5 hidden sm:block">
                 B2B Marketplace
               </span>
             </div>
           </Link>
 
-          {/* Center: Search Bar */}
+          {/* Center: Search Bar (Desktop) */}
           <form onSubmit={handleSearch} className="flex-1 max-w-md mx-4 hidden md:flex">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -57,13 +58,10 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
             </div>
           </form>
 
-          {/* Right: Navigation */}
-          <div className="flex items-center gap-3 flex-shrink-0">
+          {/* Right: Navigation (Desktop) */}
+          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
             <Link to="/products">
-              <Button
-                variant="accent"
-                size="sm"
-              >
+              <Button variant="accent" size="sm">
                 Browse Products
               </Button>
             </Link>
@@ -86,7 +84,66 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
               </Button>
             </Link>
           </div>
+
+          {/* Mobile: Cart + Menu */}
+          <div className="flex md:hidden items-center gap-2">
+            <Link to="/cart">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="relative p-2"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {cartItemCount > 0 && (
+                  <Badge
+                    variant="accent"
+                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                  >
+                    {cartItemCount}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="p-2"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t py-4 space-y-4">
+            <form onSubmit={handleSearch}>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Find Your Goods"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 pr-4 w-full"
+                />
+              </div>
+            </form>
+            <div className="flex flex-col gap-2">
+              <Link to="/products" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="accent" className="w-full">
+                  Browse Products
+                </Button>
+              </Link>
+              <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" className="w-full">
+                  About
+                </Button>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

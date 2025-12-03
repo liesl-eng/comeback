@@ -45,21 +45,21 @@ const Cart = () => {
     <div className="min-h-screen bg-background">
       <Navbar cartItemCount={totalItems} />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-6 md:py-8">
         <Button
           variant="ghost"
           onClick={() => navigate("/products")}
-          className="mb-6 gap-2"
+          className="mb-4 md:mb-6 gap-2 -ml-2"
         >
           <ArrowLeft className="h-4 w-4" />
           Continue Shopping
         </Button>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center justify-between mb-4">
-              <h1 className="text-3xl font-bold">Shopping Cart</h1>
-              <Button variant="ghost" onClick={clearCart} className="gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+              <h1 className="text-2xl md:text-3xl font-bold">Shopping Cart</h1>
+              <Button variant="ghost" onClick={clearCart} className="gap-2 self-start sm:self-auto">
                 <Trash2 className="h-4 w-4" />
                 Clear Cart
               </Button>
@@ -67,9 +67,9 @@ const Cart = () => {
 
             {items.map((item) => (
               <Card key={item.product.id}>
-                <CardContent className="p-4">
-                  <div className="flex gap-4">
-                    <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                <CardContent className="p-3 md:p-4">
+                  <div className="flex gap-3 md:gap-4">
+                    <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden bg-muted flex-shrink-0">
                       <img
                         src={item.product.imageUrl}
                         alt={item.product.name}
@@ -80,10 +80,10 @@ const Cart = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2">
                         <div>
-                          <h3 className="font-semibold text-lg line-clamp-1">
+                          <h3 className="font-semibold text-base md:text-lg line-clamp-1">
                             {item.product.name}
                           </h3>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-muted-foreground">
                             {item.product.supplier.name}
                           </p>
                           <Badge variant="outline" className="mt-1 text-xs">
@@ -93,18 +93,19 @@ const Cart = () => {
                         <Button
                           variant="ghost"
                           size="icon"
+                          className="h-8 w-8"
                           onClick={() => removeItem(item.product.id)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
 
-                      <div className="flex items-center justify-between mt-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-3 md:mt-4">
                         <div className="flex items-baseline gap-2">
-                          <span className="text-xl font-bold">
+                          <span className="text-lg md:text-xl font-bold">
                             ${item.product.discountedPrice}
                           </span>
-                          <span className="text-sm text-muted-foreground line-through">
+                          <span className="text-xs md:text-sm text-muted-foreground line-through">
                             ${item.product.originalPrice}
                           </span>
                         </div>
@@ -113,16 +114,18 @@ const Cart = () => {
                           <Button
                             variant="outline"
                             size="icon"
+                            className="h-8 w-8"
                             onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                           >
                             <Minus className="h-4 w-4" />
                           </Button>
-                          <span className="w-12 text-center font-semibold">
+                          <span className="w-10 text-center font-semibold">
                             {item.quantity}
                           </span>
                           <Button
                             variant="outline"
                             size="icon"
+                            className="h-8 w-8"
                             onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                           >
                             <Plus className="h-4 w-4" />
@@ -137,9 +140,9 @@ const Cart = () => {
           </div>
 
           <div className="lg:col-span-1">
-            <Card className="sticky top-24">
-              <CardContent className="p-6 space-y-4">
-                <h2 className="text-xl font-bold">Order Summary</h2>
+            <Card className="sticky top-20 md:top-24">
+              <CardContent className="p-4 md:p-6 space-y-4">
+                <h2 className="text-lg md:text-xl font-bold">Order Summary</h2>
                 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
@@ -163,7 +166,7 @@ const Cart = () => {
                 </Badge>
               </CardContent>
               
-              <CardFooter className="p-6 pt-0">
+              <CardFooter className="p-4 md:p-6 pt-0">
                 <Button 
                   variant="accent" 
                   size="lg" 
