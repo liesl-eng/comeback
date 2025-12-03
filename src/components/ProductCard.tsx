@@ -62,7 +62,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             </span>
           </div>
           <div className="mt-1.5">
-            <span className="text-xs text-muted-foreground">
+            <span className="text-sm text-muted-foreground">
               {product.quantity} units available
             </span>
           </div>
