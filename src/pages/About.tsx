@@ -59,9 +59,9 @@ const About = () => {
                 <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-accent/10">
                   <BadgeCheck className="h-5 w-5 md:h-6 md:w-6 text-accent" />
                 </div>
-                <h3 className="mb-2 text-lg md:text-xl font-bold">Curated, top-notch home goods</h3>
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Curated, Top-Notch Home Goods</h3>
                 <p className="text-sm md:text-base text-muted-foreground">
-                  Verified suppliers and ready-to-ship direct from brands' warehouses
+                  Verified and ready-to-ship direct from brand warehouses
                 </p>
               </CardContent>
             </Card>
@@ -71,9 +71,9 @@ const About = () => {
                 <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-success/10">
                   <TrendingDown className="h-5 w-5 md:h-6 md:w-6 text-success" />
                 </div>
-                <h3 className="mb-2 text-lg md:text-xl font-bold">Less-than-wholesale pricing</h3>
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Less-Than-Wholesale Pricing</h3>
                 <p className="text-sm md:text-base text-muted-foreground">
-                  Save up to 90% off retail and stretch your budget further
+                  Save up to 90% off retail
                 </p>
               </CardContent>
             </Card>
@@ -83,9 +83,9 @@ const About = () => {
                 <div className="mx-auto mb-3 md:mb-4 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-primary/10">
                   <Leaf className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                 </div>
-                <h3 className="mb-2 text-lg md:text-xl font-bold">Sustainable sourcing</h3>
+                <h3 className="mb-2 text-lg md:text-xl font-bold">Sustainable Sourcing</h3>
                 <p className="text-sm md:text-base text-muted-foreground">
-                  Furnish your business responsibly with high quality items while lowering costs
+                  Furnish responsibly while lowering costs
                 </p>
               </CardContent>
             </Card>
