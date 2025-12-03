@@ -38,7 +38,7 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
               <span className="text-lg md:text-2xl font-bold text-foreground tracking-tight">
                 Comeback Goods
               </span>
-              <span className="text-xs md:text-sm text-muted-foreground mt-0.5 hidden sm:block">
+              <span className="text-sm md:text-base text-muted-foreground font-medium hidden sm:block">
                 B2B Marketplace
               </span>
             </div>
