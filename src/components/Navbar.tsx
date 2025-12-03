@@ -38,7 +38,7 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
                 Comeback Goods
               </span>
               <span className="text-xs text-muted-foreground mt-0.5">
-                Wholesale marketplace for slightly imperfect goods
+                B2B Marketplace
               </span>
             </div>
           </Link>
