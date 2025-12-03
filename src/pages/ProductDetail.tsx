@@ -88,27 +88,27 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-background">
       <Navbar cartItemCount={totalItems} />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-6 md:py-8">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-4 md:mb-6">
           <Button
             variant="ghost"
             onClick={() => navigate("/products")}
-            className="gap-2 mb-4"
+            className="gap-2 mb-3 md:mb-4 -ml-2"
           >
             <ArrowLeft className="h-4 w-4" />
             View The Catalog
           </Button>
           
-          <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-3xl md:text-4xl font-bold">{product.name}</h1>
-            <Badge variant="outline" className="text-sm">
+          <div className="flex flex-wrap items-center gap-2 md:gap-3">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">{product.name}</h1>
+            <Badge variant="outline" className="text-xs md:text-sm">
               {product.category}
             </Badge>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-12">
           {/* Product Section */}
           <div className="space-y-6">
             <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
