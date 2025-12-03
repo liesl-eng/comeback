@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import { mockProducts } from "@/data/mockProducts";
@@ -8,8 +9,16 @@ import { Badge } from "@/components/ui/badge";
 
 const Products = () => {
   const { addItem, totalItems } = useCart();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  // Read search query from URL on mount and when it changes
+  useEffect(() => {
+    const search = searchParams.get("search") || "";
+    setSearchQuery(search);
+  }, [searchParams]);
 
   const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Textiles', 'Home & Wellness Tech'];
   const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
@@ -17,8 +26,22 @@ const Products = () => {
   const filteredProducts = mockProducts.filter((p) => {
     const matchesBrand = !selectedBrand || p.brand === selectedBrand;
     const matchesCategory = !selectedCategory || p.category === selectedCategory;
-    return matchesBrand && matchesCategory;
+    const matchesSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesBrand && matchesCategory && matchesSearch;
   });
+
+  // Clear search when clicking a filter
+  const handleBrandSelect = (brand: string | null) => {
+    setSelectedBrand(brand);
+    if (searchQuery) {
+      setSearchParams({});
+      setSearchQuery("");
+    }
+  };
+
+  const handleCategorySelect = (category: string | null) => {
+    setSelectedCategory(category);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -38,7 +61,7 @@ const Products = () => {
           <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible">
             <Button
               variant={selectedBrand === null ? "default" : "outline"}
-              onClick={() => setSelectedBrand(null)}
+              onClick={() => handleBrandSelect(null)}
               size="sm"
               className="flex-shrink-0"
             >
@@ -48,7 +71,7 @@ const Products = () => {
               <Button
                 key={brand}
                 variant={selectedBrand === brand ? "default" : "outline"}
-                onClick={() => setSelectedBrand(brand)}
+                onClick={() => handleBrandSelect(brand)}
                 size="sm"
                 className="flex-shrink-0"
               >
@@ -64,7 +87,7 @@ const Products = () => {
           <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible">
             <Button
               variant={selectedCategory === null ? "default" : "outline"}
-              onClick={() => setSelectedCategory(null)}
+              onClick={() => handleCategorySelect(null)}
               size="sm"
               className="flex-shrink-0"
             >
@@ -74,7 +97,7 @@ const Products = () => {
               <Button
                 key={category}
                 variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => handleCategorySelect(category)}
                 size="sm"
                 className="flex-shrink-0"
               >
@@ -87,7 +110,10 @@ const Products = () => {
         {/* Results Title */}
         <div className="mb-6 md:mb-8">
           <h2 className="text-xl md:text-3xl font-bold text-foreground mb-2">
-            {selectedBrand || 'All Brands'}{selectedCategory ? ` - ${selectedCategory}` : ''}
+            {searchQuery 
+              ? `Search results for "${searchQuery}"` 
+              : `${selectedBrand || 'All Brands'}${selectedCategory ? ` - ${selectedCategory}` : ''}`
+            }
           </h2>
           <Badge variant="secondary" className="text-sm">
             {filteredProducts.length} products found
