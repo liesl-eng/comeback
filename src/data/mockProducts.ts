@@ -26,8 +26,10 @@ const parseCSV = (csvText: string): Product[] => {
   const products: Product[] = [];
   
   // Check header to determine format (with or without Category column)
+  // Header might have "category" label OR have 7 columns (even with empty label)
   const headerLine = lines[0]?.toLowerCase() || '';
-  const hasCategory = headerLine.includes('category');
+  const headerColumns = headerLine.split(',').length;
+  const hasCategory = headerLine.includes('category') || headerColumns >= 7;
   
   // Start from line 1 (skip header) or line 2 if there's an empty row
   const startIndex = lines[1]?.trim() === '' || lines[1]?.startsWith(',,,') ? 2 : 1;
