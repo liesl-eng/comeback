@@ -20,20 +20,6 @@ const Products = () => {
     return matchesBrand && matchesCategory;
   });
 
-  // Group products by brand and sort brands alphabetically
-  const productsByBrand = filteredProducts.reduce((acc, product) => {
-    const brand = product.brand;
-    if (!acc[brand]) {
-      acc[brand] = [];
-    }
-    acc[brand].push(product);
-    return acc;
-  }, {} as Record<string, typeof filteredProducts>);
-
-  const sortedBrands = Object.keys(productsByBrand).sort((a, b) => 
-    a.localeCompare(b)
-  );
-
   return (
     <div className="min-h-screen bg-background">
       <Navbar cartItemCount={totalItems} />
@@ -98,39 +84,25 @@ const Products = () => {
           </div>
         </div>
 
+        {/* Results Title */}
         <div className="mb-6 md:mb-8">
+          <h2 className="text-xl md:text-3xl font-bold text-foreground mb-2">
+            {selectedBrand || 'All Brands'}{selectedCategory ? ` - ${selectedCategory}` : ''}
+          </h2>
           <Badge variant="secondary" className="text-sm">
             {filteredProducts.length} products found
           </Badge>
         </div>
 
-        {/* Brand Sections */}
-        <div className="space-y-8 md:space-y-12">
-          {sortedBrands.map((brand) => {
-            const brandProducts = productsByBrand[brand];
-            return (
-              <section key={brand} className="scroll-mt-8">
-                <div className="mb-4 md:mb-6 border-b pb-3">
-                  <h2 className="text-xl md:text-3xl font-bold text-foreground">
-                    {brand}
-                  </h2>
-                  <p className="text-sm md:text-base text-muted-foreground mt-1">
-                    {brandProducts.length} {brandProducts.length === 1 ? 'product' : 'products'}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                  {brandProducts.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onAddToCart={addItem}
-                    />
-                  ))}
-                </div>
-              </section>
-            );
-          })}
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          {filteredProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAddToCart={addItem}
+            />
+          ))}
         </div>
       </main>
     </div>
