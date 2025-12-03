@@ -61,7 +61,7 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
           <div className="flex items-center gap-3 flex-shrink-0">
             <Link to="/products">
               <Button
-                variant={location.pathname === "/products" ? "default" : "ghost"}
+                variant="accent"
                 size="sm"
               >
                 Browse Products
