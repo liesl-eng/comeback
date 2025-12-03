@@ -102,6 +102,11 @@ const ProductDetail = () => {
           
           <div className="flex flex-wrap items-center gap-2 md:gap-3">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">{product.name}</h1>
+            {product.brand && (
+              <Badge variant="secondary" className="text-xs md:text-sm">
+                {product.brand}
+              </Badge>
+            )}
             <Badge variant="outline" className="text-xs md:text-sm">
               {product.category}
             </Badge>
