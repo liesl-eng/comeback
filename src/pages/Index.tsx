@@ -84,9 +84,8 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="border-t bg-card py-8">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p className="text-base font-medium mb-1">Stretch your budget, not your standards.</p>
-          <p className="text-sm">Join thousands of buyers discovering incredible deals on quality pieces.</p>
+        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+          <p>© 2025 Comeback Goods. Tiny imperfections, huge savings.</p>
         </div>
       </footer>
     </div>;
