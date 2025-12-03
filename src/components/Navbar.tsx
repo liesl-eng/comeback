@@ -35,7 +35,7 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
               className="h-10 w-10 md:h-12 md:w-12 rounded-full object-cover"
             />
             <div className="flex flex-col">
-              <span className="text-xl md:text-3xl font-bold text-foreground tracking-tight">
+              <span className="text-lg md:text-2xl font-bold text-foreground tracking-tight">
                 Comeback Goods
               </span>
               <span className="text-sm md:text-base text-muted-foreground font-medium hidden sm:block">
