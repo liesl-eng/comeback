@@ -27,7 +27,7 @@ const About = () => {
           <h1 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8">About <span className="text-accent">Comeback Goods</span></h1>
           
           <p className="text-lg md:text-xl text-foreground mb-6 md:mb-8">
-            Comeback Goods works directly with brands for high quality, slightly imperfect goods.
+            <span className="font-bold">Comeback Goods</span> works directly with brands for high quality, slightly imperfect goods.
           </p>
 
           <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Why buy from us?</h2>
