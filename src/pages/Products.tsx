@@ -21,7 +21,29 @@ const Products = () => {
   const filteredProducts = mockProducts.filter((p) => {
     const matchesBrand = !selectedBrand || p.brand === selectedBrand;
     const matchesCategory = !selectedCategory || p.category === selectedCategory;
-    const matchesSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    // Handle plural/singular search matching
+    let matchesSearch = false;
+    if (!searchQuery) {
+      matchesSearch = true;
+    } else {
+      const query = searchQuery.toLowerCase();
+      const name = p.name.toLowerCase();
+      
+      // Check exact match first
+      if (name.includes(query)) {
+        matchesSearch = true;
+      } 
+      // If query ends with 's', also check without 's'
+      else if (query.endsWith('s') && name.includes(query.slice(0, -1))) {
+        matchesSearch = true;
+      }
+      // If query doesn't end with 's', also check with 's' added
+      else if (!query.endsWith('s') && name.includes(query + 's')) {
+        matchesSearch = true;
+      }
+    }
+    
     return matchesBrand && matchesCategory && matchesSearch;
   });
 
