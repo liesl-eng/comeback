@@ -18,6 +18,11 @@ const Products = () => {
   const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Pillows & Rugs', 'Home & Wellness Tech'];
   const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
   
+  // Custom brand sort order for specific categories
+  const brandSortOrder: Record<string, string[]> = {
+    'Home & Wellness Tech': ['Hatch Sleep', 'NutriBullet'],
+  };
+
   const filteredProducts = mockProducts.filter((p) => {
     const matchesBrand = !selectedBrand || p.brand === selectedBrand;
     const matchesCategory = !selectedCategory || p.category === selectedCategory;
@@ -45,6 +50,22 @@ const Products = () => {
     }
     
     return matchesBrand && matchesCategory && matchesSearch;
+  }).sort((a, b) => {
+    // Apply custom brand sorting if viewing a category with defined order
+    if (selectedCategory && brandSortOrder[selectedCategory]) {
+      const order = brandSortOrder[selectedCategory];
+      const aIndex = order.indexOf(a.brand || '');
+      const bIndex = order.indexOf(b.brand || '');
+      
+      // If both brands are in the order list, sort by their position
+      if (aIndex !== -1 && bIndex !== -1) {
+        return aIndex - bIndex;
+      }
+      // If only one is in the list, prioritize the one in the list
+      if (aIndex !== -1) return -1;
+      if (bIndex !== -1) return 1;
+    }
+    return 0;
   });
 
   // Update URL params for brand filter
