@@ -13,7 +13,16 @@ const Products = () => {
   // Read filters from URL params
   const selectedBrand = searchParams.get("brand") || null;
   const selectedCategory = searchParams.get("category") || null;
+  const selectedPriceTier = searchParams.get("priceTier") || null;
   const searchQuery = searchParams.get("search") || "";
+
+  const priceTiers = [
+    { label: "All Price Tiers", value: null },
+    { label: "Under $50", value: "under_50" },
+    { label: "$50-$150", value: "50_150" },
+    { label: "$150-$400", value: "150_400" },
+    { label: "$400+", value: "400_plus" },
+  ];
 
   const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Pillows & Rugs', 'Home & Wellness Tech'];
   const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
@@ -26,6 +35,26 @@ const Products = () => {
   const filteredProducts = mockProducts.filter((p) => {
     const matchesBrand = !selectedBrand || p.brand === selectedBrand;
     const matchesCategory = !selectedCategory || p.category === selectedCategory;
+    
+    // Price tier filtering
+    let matchesPriceTier = true;
+    if (selectedPriceTier) {
+      const price = p.discountedPrice;
+      switch (selectedPriceTier) {
+        case "under_50":
+          matchesPriceTier = price < 50;
+          break;
+        case "50_150":
+          matchesPriceTier = price >= 50 && price <= 150;
+          break;
+        case "150_400":
+          matchesPriceTier = price > 150 && price <= 400;
+          break;
+        case "400_plus":
+          matchesPriceTier = price > 400;
+          break;
+      }
+    }
     
     // Handle plural/singular search matching
     let matchesSearch = false;
@@ -49,7 +78,7 @@ const Products = () => {
       }
     }
     
-    return matchesBrand && matchesCategory && matchesSearch;
+    return matchesBrand && matchesCategory && matchesPriceTier && matchesSearch;
   }).sort((a, b) => {
     // Apply custom brand sorting if viewing a category with defined order
     if (selectedCategory && brandSortOrder[selectedCategory]) {
@@ -73,6 +102,7 @@ const Products = () => {
     const newParams = new URLSearchParams();
     if (brand) newParams.set("brand", brand);
     if (selectedCategory) newParams.set("category", selectedCategory);
+    if (selectedPriceTier) newParams.set("priceTier", selectedPriceTier);
     setSearchParams(newParams);
   };
 
@@ -81,6 +111,16 @@ const Products = () => {
     const newParams = new URLSearchParams();
     if (selectedBrand) newParams.set("brand", selectedBrand);
     if (category) newParams.set("category", category);
+    if (selectedPriceTier) newParams.set("priceTier", selectedPriceTier);
+    setSearchParams(newParams);
+  };
+
+  // Update URL params for price tier filter
+  const handlePriceTierSelect = (priceTier: string | null) => {
+    const newParams = new URLSearchParams();
+    if (selectedBrand) newParams.set("brand", selectedBrand);
+    if (selectedCategory) newParams.set("category", selectedCategory);
+    if (priceTier) newParams.set("priceTier", priceTier);
     setSearchParams(newParams);
   };
 
@@ -123,7 +163,7 @@ const Products = () => {
         </div>
 
         {/* Category Filters */}
-        <div className="mb-6">
+        <div className="mb-4">
           <p className="text-sm font-medium text-muted-foreground mb-2">Category</p>
           <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible">
             <Button
@@ -143,6 +183,24 @@ const Products = () => {
                 className="flex-shrink-0"
               >
                 {category}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Price Tier Filters */}
+        <div className="mb-6">
+          <p className="text-sm font-medium text-muted-foreground mb-2">Price Tier</p>
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible">
+            {priceTiers.map((tier) => (
+              <Button
+                key={tier.label}
+                variant={selectedPriceTier === tier.value ? "default" : "outline"}
+                onClick={() => handlePriceTierSelect(tier.value)}
+                size="sm"
+                className="flex-shrink-0"
+              >
+                {tier.label}
               </Button>
             ))}
           </div>
