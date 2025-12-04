@@ -92,7 +92,7 @@ const Products = () => {
         <div className="mb-6 md:mb-8">
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Shop The Catalog</h1>
           <p className="text-sm md:text-base text-muted-foreground">
-            High-quality pieces, big savings, zero compromise.
+            High-quality pieces. Big savings. Zero compromise.
           </p>
         </div>
 
