@@ -49,7 +49,7 @@ const Index = () => {
             <div className="mb-8 md:mb-12 text-center">
               <h2 className="mb-3 md:mb-4 text-3xl md:text-5xl font-black">Featured Products</h2>
               <p className="text-base md:text-xl text-muted-foreground">
-                High quality home brands. Better-than-wholesale pricing.
+                High quality home goods. Better-than-wholesale pricing.
               </p>
             </div>
 
