@@ -15,7 +15,7 @@ const Products = () => {
   const selectedCategory = searchParams.get("category") || null;
   const searchQuery = searchParams.get("search") || "";
 
-  const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Textiles', 'Home & Wellness Tech'];
+  const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Pillows & Rugs', 'Home & Wellness Tech'];
   const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
   
   const filteredProducts = mockProducts.filter((p) => {
