@@ -94,7 +94,7 @@ const About = () => {
           {/* Contact Us Section */}
           <div className="mb-8 md:mb-12 text-center">
             <h2 className="text-xl md:text-2xl font-semibold mb-4">Contact Us</h2>
-            <p className="text-muted-foreground mb-4">Have questions? We'd love to hear from you.</p>
+            <p className="text-muted-foreground mb-4">Have questions? We love email.</p>
             <a 
               href="mailto:hello@comebackgoods.com" 
               className="inline-flex items-center gap-2 text-accent hover:underline font-medium"
