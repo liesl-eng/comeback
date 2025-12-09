@@ -99,7 +99,7 @@ const Index = () => {
         <StatsSection />
 
         {/* Featured Products by Category */}
-        <section className="py-12 md:py-20">
+        <section className="py-6 md:py-10">
           <div className="container mx-auto px-4">
             <div className="mb-10 md:mb-14 text-center">
               <h2 className="mb-3 md:mb-4 text-3xl md:text-5xl font-black">
