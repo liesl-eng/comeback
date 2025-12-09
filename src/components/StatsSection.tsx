@@ -16,7 +16,7 @@ const StatsSection = () => {
     {
       icon: Boxes,
       value: formattedUnits,
-      label: "Units",
+      label: "Items in Stock",
     },
     {
       icon: PackageCheck,
