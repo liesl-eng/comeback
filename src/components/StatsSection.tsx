@@ -40,7 +40,7 @@ const StatsSection = () => {
               <span className="text-xl md:text-3xl font-black text-foreground">
                 {stat.value}
               </span>
-              <span className="text-sm text-muted-foreground font-medium">
+              <span className="text-base md:text-lg text-muted-foreground font-medium">
                 {stat.label}
               </span>
             </div>
