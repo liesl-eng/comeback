@@ -64,7 +64,7 @@ const parseCSV = (csvText: string): Product[] => {
       // New format: Name, Brand, Category, Image URL, Price, MSRP, Units Available
       name = parts[0];
       brand = parts[1];
-      category = parts[2];
+      category = parts[2] === 'Textiles' ? 'Pillows & Rugs' : parts[2];
       imageUrl = parts[3];
       priceStr = parts[4];
       msrpStr = parts[5];
