@@ -64,16 +64,16 @@ const Index = () => {
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="container relative mx-auto px-4 md:px-6 py-6 md:py-8 lg:py-10">
+          <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-10 lg:py-12">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="mb-2 md:mb-3 text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground lg:text-5xl uppercase tracking-tight">
+              <h1 className="mb-3 md:mb-5 text-3xl sm:text-4xl md:text-5xl font-black text-primary-foreground lg:text-6xl uppercase tracking-tight">
                 TINY IMPERFECTIONS.{" "}
                 <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-3 md:mb-4 text-lg md:text-2xl text-primary-foreground/90 font-bold">
+              <p className="mb-4 md:mb-5 text-xl md:text-2xl text-primary-foreground/90 font-bold">
                 Private Marketplace.
               </p>
-              <div className="flex flex-col sm:flex-row gap-2 md:gap-3 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Button
                   variant="accent"
                   size="default"
@@ -99,7 +99,7 @@ const Index = () => {
         <StatsSection />
 
         {/* Featured Products by Category */}
-        <section className="py-6 md:py-10">
+        <section className="py-8 md:py-12">
           <div className="container mx-auto px-4">
             <div className="mb-10 md:mb-14 text-center">
               <h2 className="mb-3 md:mb-4 text-3xl md:text-5xl font-black">
