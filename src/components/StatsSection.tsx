@@ -27,20 +27,20 @@ const StatsSection = () => {
 
   return (
     <section className="bg-muted/50 border-y border-border">
-      <div className="container mx-auto px-4 py-8 md:py-10">
-        <div className="grid grid-cols-3 gap-8 md:gap-16 max-w-3xl mx-auto">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid grid-cols-3 gap-6 md:gap-12">
           {stats.map((stat, index) => (
             <div 
               key={index} 
               className="flex flex-col items-center text-center"
             >
-              <div className="mb-2 p-3 rounded-full bg-accent/10">
-                <stat.icon className="h-6 w-6 text-accent" />
+              <div className="mb-3 p-4 md:p-5 rounded-full bg-accent/10">
+                <stat.icon className="h-8 w-8 md:h-10 md:w-10 text-accent" />
               </div>
-              <span className="text-xl md:text-3xl font-black text-foreground">
+              <span className="text-2xl sm:text-3xl md:text-5xl font-black text-foreground">
                 {stat.value}
               </span>
-              <span className="text-base md:text-lg text-muted-foreground font-medium">
+              <span className="text-sm sm:text-base md:text-xl text-muted-foreground font-medium mt-1">
                 {stat.label}
               </span>
             </div>
