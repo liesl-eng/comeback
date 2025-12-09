@@ -64,7 +64,7 @@ const Index = () => {
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-10 lg:py-12">
+          <div className="container relative mx-auto px-4 md:px-6 pt-10 pb-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="mb-3 md:mb-5 text-3xl sm:text-4xl md:text-5xl font-black text-primary-foreground lg:text-6xl uppercase tracking-tight">
                 TINY IMPERFECTIONS.{" "}
@@ -99,7 +99,7 @@ const Index = () => {
         <StatsSection />
 
         {/* Featured Products by Category */}
-        <section className="py-8 md:py-12">
+        <section className="py-6 md:py-8">
           <div className="container mx-auto px-4">
             <div className="mb-10 md:mb-14 text-center">
               <h2 className="mb-3 md:mb-4 text-3xl md:text-5xl font-black">
