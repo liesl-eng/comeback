@@ -6,39 +6,48 @@ import { mockProducts } from "@/data/mockProducts";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-marketplace.jpg";
 
 const Index = () => {
   const { addItem, totalItems } = useCart();
   const navigate = useNavigate();
 
-  // Get 12 featured products from different brands
-  const getFeaturedProducts = () => {
-    const brands = [...new Set(mockProducts.map((p) => p.brand))];
-    const featured: typeof mockProducts = [];
-
-    // Round-robin selection from each brand to get variety
-    let brandIndex = 0;
-    const brandCounters: Record<string, number> = {};
-    brands.forEach((b) => (brandCounters[b || ""] = 0));
-
-    while (featured.length < 12 && brandIndex < brands.length * 10) {
-      const brand = brands[brandIndex % brands.length];
-      const brandProducts = mockProducts.filter((p) => p.brand === brand);
-      const counter = brandCounters[brand || ""];
-
-      if (counter < brandProducts.length) {
-        featured.push(brandProducts[counter]);
-        brandCounters[brand || ""] = counter + 1;
-      }
-      brandIndex++;
+  // Get curated products by category with similar price ranges
+  const getCategoryProducts = (categoryName: string, count: number = 4) => {
+    const categoryProducts = mockProducts.filter(
+      (p) => p.category.toLowerCase() === categoryName.toLowerCase()
+    );
+    
+    // Sort by price and pick products from similar price ranges
+    const sorted = [...categoryProducts].sort((a, b) => a.discountedPrice - b.discountedPrice);
+    
+    // Pick products from the middle price range for a cohesive look
+    const midIndex = Math.floor(sorted.length / 3);
+    const midRangeProducts = sorted.slice(midIndex, midIndex + count * 3);
+    
+    // Return evenly spaced products from the mid-range
+    const step = Math.floor(midRangeProducts.length / count) || 1;
+    const selected: typeof mockProducts = [];
+    for (let i = 0; i < count && i * step < midRangeProducts.length; i++) {
+      selected.push(midRangeProducts[i * step]);
     }
-
-    return featured.slice(0, 12);
+    
+    return selected.slice(0, count);
   };
 
-  const featuredProducts = getFeaturedProducts();
+  const getCategoryCount = (categoryName: string) => {
+    return mockProducts.filter(
+      (p) => p.category.toLowerCase() === categoryName.toLowerCase()
+    ).length;
+  };
+
+  const featuredCategories = [
+    { name: "Furniture", products: getCategoryProducts("Furniture") },
+    { name: "Decor", products: getCategoryProducts("Decor") },
+    { name: "Lighting", products: getCategoryProducts("Lighting") },
+  ];
+
   const totalProductCount = mockProducts.length;
 
   return (
@@ -89,10 +98,10 @@ const Index = () => {
         {/* Stats Banner */}
         <StatsSection />
 
-        {/* Featured Products */}
-        <section className="py-10 md:py-16">
+        {/* Featured Products by Category */}
+        <section className="py-12 md:py-20">
           <div className="container mx-auto px-4">
-            <div className="mb-8 md:mb-12 text-center">
+            <div className="mb-10 md:mb-14 text-center">
               <h2 className="mb-3 md:mb-4 text-3xl md:text-5xl font-black">
                 Featured Products
               </h2>
@@ -101,17 +110,38 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-              {featuredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={addItem}
-                />
+            {/* Category Sections */}
+            <div className="space-y-12 md:space-y-16">
+              {featuredCategories.map((category) => (
+                <div key={category.name}>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground">
+                      {category.name}{" "}
+                      <span className="text-muted-foreground font-normal text-base md:text-lg">
+                        — {getCategoryCount(category.name).toLocaleString()} items
+                      </span>
+                    </h3>
+                    <Link
+                      to={`/products?category=${encodeURIComponent(category.name)}`}
+                      className="text-sm md:text-base font-medium text-accent hover:text-accent/80 flex items-center gap-1 transition-colors"
+                    >
+                      View All <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                    {category.products.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onAddToCart={addItem}
+                      />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
 
-            <div className="text-center">
+            <div className="text-center mt-12 md:mt-16">
               <Button
                 variant="default"
                 size="lg"
