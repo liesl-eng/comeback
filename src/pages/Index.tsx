@@ -20,52 +20,37 @@ const Index = () => {
     lighting: 150,
   };
 
-  // Get premium products by category, prioritizing high-value items
+  // Get premium Arhaus products by category
   const getCategoryProducts = (categoryName: string, count: number = 4) => {
     const categoryLower = categoryName.toLowerCase();
     const threshold = premiumThresholds[categoryLower] || 50;
     
-    const categoryProducts = mockProducts.filter(
-      (p) => p.category.toLowerCase() === categoryLower
+    // Filter for Arhaus products in this category
+    const arhausProducts = mockProducts.filter(
+      (p) => p.category.toLowerCase() === categoryLower && p.brand === "Arhaus"
     );
     
     // Filter for premium items above threshold
-    let premiumProducts = categoryProducts.filter(
+    let premiumProducts = arhausProducts.filter(
       (p) => p.discountedPrice >= threshold
     );
     
     // Fallback to items $50+ if not enough premium items
     if (premiumProducts.length < count) {
-      premiumProducts = categoryProducts.filter(
+      premiumProducts = arhausProducts.filter(
         (p) => p.discountedPrice >= 50
       );
+    }
+    
+    // Final fallback to all Arhaus products in category
+    if (premiumProducts.length < count) {
+      premiumProducts = arhausProducts;
     }
     
     // Sort by price descending to show highest-value items first
     const sorted = [...premiumProducts].sort((a, b) => b.discountedPrice - a.discountedPrice);
     
-    // Mix brands by selecting from different positions
-    const selected: typeof mockProducts = [];
-    const usedBrands = new Set<string>();
-    
-    // First pass: try to get variety of brands
-    for (const product of sorted) {
-      if (selected.length >= count) break;
-      if (!usedBrands.has(product.brand) || selected.length >= count - 1) {
-        selected.push(product);
-        usedBrands.add(product.brand);
-      }
-    }
-    
-    // Fill remaining slots if needed
-    for (const product of sorted) {
-      if (selected.length >= count) break;
-      if (!selected.includes(product)) {
-        selected.push(product);
-      }
-    }
-    
-    return selected.slice(0, count);
+    return sorted.slice(0, count);
   };
 
   const getCategoryCount = (categoryName: string) => {
