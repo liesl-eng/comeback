@@ -20,8 +20,8 @@ const StatsSection = () => {
     },
     {
       icon: PackageCheck,
-      value: "Small Batch",
-      label: "Orders",
+      value: "Low",
+      label: "Order Minimums",
     },
   ];
 
