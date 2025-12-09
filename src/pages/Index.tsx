@@ -20,14 +20,26 @@ const Index = () => {
     lighting: 150,
   };
 
-  // Get premium Arhaus products by category
+  // Shuffle array using Fisher-Yates algorithm
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // Get randomized premium Arhaus products by category
   const getCategoryProducts = (categoryName: string, count: number = 4) => {
     const categoryLower = categoryName.toLowerCase();
     const threshold = premiumThresholds[categoryLower] || 50;
     
-    // Filter for Arhaus products in this category
+    // Filter for Arhaus products in this category with valid images
     const arhausProducts = mockProducts.filter(
-      (p) => p.category.toLowerCase() === categoryLower && p.brand === "Arhaus"
+      (p) => p.category.toLowerCase() === categoryLower && 
+             p.brand === "Arhaus" &&
+             p.imageUrl && !p.imageUrl.includes("placeholder")
     );
     
     // Filter for premium items above threshold
@@ -47,10 +59,10 @@ const Index = () => {
       premiumProducts = arhausProducts;
     }
     
-    // Sort by price descending to show highest-value items first
-    const sorted = [...premiumProducts].sort((a, b) => b.discountedPrice - a.discountedPrice);
+    // Randomize selection from premium products
+    const shuffled = shuffleArray(premiumProducts);
     
-    return sorted.slice(0, count);
+    return shuffled.slice(0, count);
   };
 
   const getCategoryCount = (categoryName: string) => {
