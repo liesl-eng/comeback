@@ -28,7 +28,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             />
           </div>
         </Link>
-        <Badge variant="accent" className="absolute right-3 top-3 font-bold">
+        <Badge variant="accent" className="absolute right-2 bottom-2 text-[10px] px-1.5 py-0.5 font-semibold opacity-90">
           {product.discountPercentage}% OFF
         </Badge>
         <Button
@@ -79,8 +79,8 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             <span className="text-sm text-muted-foreground line-through">
               {formatPrice(product.originalPrice)}
             </span>
-            <span className="text-lg font-bold text-success">
-              {product.discountPercentage}% OFF
+            <span className="text-sm font-semibold text-success">
+              Save {product.discountPercentage}%
             </span>
           </div>
           <div className="mt-1.5">
