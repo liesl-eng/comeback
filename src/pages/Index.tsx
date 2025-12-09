@@ -13,24 +13,56 @@ const Index = () => {
   const { addItem, totalItems } = useCart();
   const navigate = useNavigate();
 
-  // Get curated products by category with similar price ranges
+  // Premium price thresholds by category
+  const premiumThresholds: Record<string, number> = {
+    furniture: 400,
+    decor: 100,
+    lighting: 150,
+  };
+
+  // Get premium products by category, prioritizing high-value items
   const getCategoryProducts = (categoryName: string, count: number = 4) => {
+    const categoryLower = categoryName.toLowerCase();
+    const threshold = premiumThresholds[categoryLower] || 50;
+    
     const categoryProducts = mockProducts.filter(
-      (p) => p.category.toLowerCase() === categoryName.toLowerCase()
+      (p) => p.category.toLowerCase() === categoryLower
     );
     
-    // Sort by price and pick products from similar price ranges
-    const sorted = [...categoryProducts].sort((a, b) => a.discountedPrice - b.discountedPrice);
+    // Filter for premium items above threshold
+    let premiumProducts = categoryProducts.filter(
+      (p) => p.discountedPrice >= threshold
+    );
     
-    // Pick products from the middle price range for a cohesive look
-    const midIndex = Math.floor(sorted.length / 3);
-    const midRangeProducts = sorted.slice(midIndex, midIndex + count * 3);
+    // Fallback to items $50+ if not enough premium items
+    if (premiumProducts.length < count) {
+      premiumProducts = categoryProducts.filter(
+        (p) => p.discountedPrice >= 50
+      );
+    }
     
-    // Return evenly spaced products from the mid-range
-    const step = Math.floor(midRangeProducts.length / count) || 1;
+    // Sort by price descending to show highest-value items first
+    const sorted = [...premiumProducts].sort((a, b) => b.discountedPrice - a.discountedPrice);
+    
+    // Mix brands by selecting from different positions
     const selected: typeof mockProducts = [];
-    for (let i = 0; i < count && i * step < midRangeProducts.length; i++) {
-      selected.push(midRangeProducts[i * step]);
+    const usedBrands = new Set<string>();
+    
+    // First pass: try to get variety of brands
+    for (const product of sorted) {
+      if (selected.length >= count) break;
+      if (!usedBrands.has(product.brand) || selected.length >= count - 1) {
+        selected.push(product);
+        usedBrands.add(product.brand);
+      }
+    }
+    
+    // Fill remaining slots if needed
+    for (const product of sorted) {
+      if (selected.length >= count) break;
+      if (!selected.includes(product)) {
+        selected.push(product);
+      }
     }
     
     return selected.slice(0, count);
