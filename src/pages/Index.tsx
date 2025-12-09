@@ -64,28 +64,28 @@ const Index = () => {
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-10 lg:py-14">
+          <div className="container relative mx-auto px-4 md:px-6 py-6 md:py-8 lg:py-10">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="mb-4 md:mb-6 text-3xl sm:text-4xl md:text-5xl font-black text-primary-foreground lg:text-7xl uppercase tracking-tight">
+              <h1 className="mb-2 md:mb-3 text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground lg:text-5xl uppercase tracking-tight">
                 TINY IMPERFECTIONS.{" "}
                 <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-4 md:mb-6 text-xl md:text-3xl text-primary-foreground/90 font-bold">
+              <p className="mb-3 md:mb-4 text-lg md:text-2xl text-primary-foreground/90 font-bold">
                 Private Marketplace.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-2 md:gap-3 justify-center">
                 <Button
                   variant="accent"
-                  size="lg"
+                  size="default"
                   className="gap-2"
                   onClick={() => navigate("/products")}
                 >
                   Browse Products
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
                 <Button
                   variant="secondary"
-                  size="lg"
+                  size="default"
                   onClick={() => navigate("/about")}
                 >
                   Learn More
