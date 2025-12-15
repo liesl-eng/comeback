@@ -1,12 +1,6 @@
 import { Package, Boxes, PackageCheck } from "lucide-react";
-import { mockProducts } from "@/data/mockProducts";
 
 const StatsSection = () => {
-  // Calculate total units in stock, rounded to nearest thousand
-  const totalUnits = mockProducts.reduce((sum, product) => sum + product.quantity, 0);
-  const roundedUnits = Math.round(totalUnits / 1000) * 1000;
-  const formattedUnits = `${(roundedUnits / 1000).toLocaleString()}K+`;
-
   const stats = [
     {
       icon: Package,
@@ -15,7 +9,7 @@ const StatsSection = () => {
     },
     {
       icon: Boxes,
-      value: formattedUnits,
+      value: "150K+",
       label: "Items in Stock",
     },
     {
@@ -37,7 +31,7 @@ const StatsSection = () => {
               <div className="mb-2 p-3 md:p-4 rounded-full bg-accent/10">
                 <stat.icon className="h-6 w-6 md:h-7 md:w-7 text-accent" />
               </div>
-              <span className="text-xl sm:text-2xl md:text-4xl font-black text-foreground">
+              <span className="text-2xl sm:text-3xl md:text-5xl font-black text-foreground">
                 {stat.value}
               </span>
               <span className="text-xs sm:text-sm md:text-base text-muted-foreground font-medium mt-0.5">
