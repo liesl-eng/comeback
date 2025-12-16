@@ -5,6 +5,7 @@ import { mockProducts } from "@/data/mockProducts";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { matchesSearchQuery } from "@/lib/searchSynonyms";
 
 const Products = () => {
   const { addItem, totalItems } = useCart();
@@ -56,27 +57,8 @@ const Products = () => {
       }
     }
     
-    // Handle plural/singular search matching
-    let matchesSearch = false;
-    if (!searchQuery) {
-      matchesSearch = true;
-    } else {
-      const query = searchQuery.toLowerCase();
-      const name = p.name.toLowerCase();
-      
-      // Check exact match first
-      if (name.includes(query)) {
-        matchesSearch = true;
-      } 
-      // If query ends with 's', also check without 's'
-      else if (query.endsWith('s') && name.includes(query.slice(0, -1))) {
-        matchesSearch = true;
-      }
-      // If query doesn't end with 's', also check with 's' added
-      else if (!query.endsWith('s') && name.includes(query + 's')) {
-        matchesSearch = true;
-      }
-    }
+    // Handle search matching with synonyms and plural/singular forms
+    const matchesSearch = matchesSearchQuery(p.name, searchQuery);
     
     return matchesBrand && matchesCategory && matchesPriceTier && matchesSearch;
   }).sort((a, b) => {
