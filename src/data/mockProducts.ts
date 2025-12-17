@@ -96,7 +96,14 @@ const parseCSV = (csvText: string): Product[] => {
     if (price === 0 || msrp === 0) continue;
     
     // Calculate discount percentage
-    const discountPercentage = Math.round(((msrp - price) / msrp) * 100);
+    let discountPercentage = Math.round(((msrp - price) / msrp) * 100);
+    
+    // Apply 70% discount cap - if discount exceeds 70%, raise price to cap at 70% off
+    let finalPrice = price;
+    if (discountPercentage > 70) {
+      finalPrice = Math.round(msrp * 0.30 * 100) / 100; // New price = 30% of MSRP (70% off)
+      discountPercentage = 70;
+    }
     
     products.push({
       id: `${brand}-${i}`,
@@ -104,7 +111,7 @@ const parseCSV = (csvText: string): Product[] => {
       description: `Premium ${name.toLowerCase()} from ${brand}`,
       category: category || brand,
       originalPrice: msrp,
-      discountedPrice: price,
+      discountedPrice: finalPrice,
       discountPercentage,
       supplier: {
         id: "s1",
