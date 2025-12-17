@@ -15,6 +15,20 @@ const parsePrice = (priceStr: string): number => {
   return parseFloat(priceStr.replace(/[$,]/g, ''));
 };
 
+// Helper function to round prices to wholesale-friendly numbers
+const roundToWholesalePrice = (price: number): number => {
+  if (price < 100) {
+    // Round to nearest $5
+    return Math.round(price / 5) * 5;
+  } else if (price <= 500) {
+    // Round to nearest $10
+    return Math.round(price / 10) * 10;
+  } else {
+    // Round to nearest $25
+    return Math.round(price / 25) * 25;
+  }
+};
+
 // Helper function to parse quantity strings (remove commas)
 const parseQuantity = (quantityStr: string): number => {
   return parseInt(quantityStr.replace(/,/g, '')) || 0;
@@ -101,9 +115,15 @@ const parseCSV = (csvText: string): Product[] => {
     // Apply 70% discount cap - if discount exceeds 70%, raise price to cap at 70% off
     let finalPrice = price;
     if (discountPercentage > 70) {
-      finalPrice = Math.round(msrp * 0.30 * 100) / 100; // New price = 30% of MSRP (70% off)
+      finalPrice = msrp * 0.30; // New price = 30% of MSRP (70% off)
       discountPercentage = 70;
     }
+    
+    // Round to wholesale-friendly price
+    finalPrice = roundToWholesalePrice(finalPrice);
+    
+    // Recalculate discount percentage based on rounded price
+    discountPercentage = Math.round(((msrp - finalPrice) / msrp) * 100);
     
     products.push({
       id: `${brand}-${i}`,
