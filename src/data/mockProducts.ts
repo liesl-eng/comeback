@@ -157,7 +157,7 @@ export const mockProducts: Product[] = [
   ...parseCSV(zuoModernCSV),
   ...parseCSV(moesHomeCSV),
   ...parseCSV(modusFurnitureCSV),
-  ...parseCSV(mercanaCSV),
+  // ...parseCSV(mercanaCSV), // Temporarily hidden until URL links are fixed
   ...parseCSV(inspiredHomeCSV),
   ...parseCSV(nutribulletCSV),
   ...parseCSV(hatchCSV),
