@@ -127,60 +127,12 @@ const Index = () => {
         {/* Stats Banner */}
         <StatsSection />
 
-        {/* Featured Products by Category */}
+        {/* Sub-header */}
         <section className="py-6 md:py-8">
-          <div className="container mx-auto px-4">
-            <div className="mb-10 md:mb-14 text-center">
-              <h2 className="mb-3 md:mb-4 text-3xl md:text-5xl font-black">
-                Featured Products
-              </h2>
-              <p className="text-base md:text-xl text-muted-foreground">
-                High-quality brands. Better-than-wholesale pricing.
-              </p>
-            </div>
-
-            {/* Category Sections */}
-            <div className="space-y-12 md:space-y-16">
-              {featuredCategories.map((category) => (
-                <div key={category.name}>
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl md:text-2xl font-bold text-foreground">
-                      {category.name}{" "}
-                      <span className="text-muted-foreground font-normal text-base md:text-lg">
-                        — {getCategoryCount(category.name).toLocaleString()} items
-                      </span>
-                    </h3>
-                    <Link
-                      to={`/products?category=${encodeURIComponent(category.name)}`}
-                      className="text-sm md:text-base font-medium text-accent hover:text-accent/80 flex items-center gap-1 transition-colors"
-                    >
-                      View All <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    {category.products.map((product) => (
-                      <ProductCard
-                        key={product.id}
-                        product={product}
-                        onAddToCart={addItem}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center mt-12 md:mt-16">
-              <Button
-                variant="default"
-                size="lg"
-                className="gap-2"
-                onClick={() => navigate("/products")}
-              >
-                View All {totalProductCount.toLocaleString()} Products
-                <ArrowRight className="h-5 w-5" />
-              </Button>
-            </div>
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-xl md:text-3xl text-muted-foreground font-medium">
+              High-quality brands. Better-than-wholesale pricing.
+            </p>
           </div>
         </section>
 
