@@ -99,22 +99,22 @@ const Index = () => {
                 TINY IMPERFECTIONS.{" "}
                 <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-4 md:mb-5 text-xl md:text-2xl text-primary-foreground/90 font-bold">
+              <p className="mb-4 md:mb-5 text-2xl md:text-4xl text-primary-foreground/90 font-bold">
                 Private Marketplace.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Button
                   variant="accent"
-                  size="default"
+                  size="lg"
                   className="gap-2"
                   onClick={() => navigate("/products")}
                 >
                   Browse Products
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
                   variant="secondary"
-                  size="default"
+                  size="lg"
                   onClick={() => navigate("/about")}
                 >
                   Learn More
