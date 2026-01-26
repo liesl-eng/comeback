@@ -11,15 +11,6 @@ interface NavbarProps {
   cartItemCount?: number;
 }
 
-const categories = [
-  "Furniture",
-  "Decor",
-  "Lighting",
-  "Pillows & Rugs",
-  "Outdoor",
-  "Home & Wellness Tech",
-];
-
 const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
   const navigate = useNavigate();
   const { totalFavorites } = useFavorites();
@@ -34,15 +25,9 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
     }
   };
 
-  const handleCategoryClick = (category: string) => {
-    navigate(`/products?category=${encodeURIComponent(category)}`);
-    setMobileMenuOpen(false);
-  };
-
   return (
     <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Main header row */}
         <div className="flex h-16 md:h-20 items-center justify-between gap-2 md:gap-4">
           {/* Left: Logo + Tagline */}
           <Link to="/" className="flex items-center gap-2 md:gap-3 flex-shrink-0">
@@ -76,6 +61,11 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
           </form>
 
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+            <Link to="/products">
+              <Button variant="accent" size="sm">
+                Browse Products
+              </Button>
+            </Link>
             <Link to="/favorites">
               <Button
                 variant="ghost"
@@ -160,47 +150,13 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
           </div>
         </div>
 
-        {/* Category navigation row - Desktop */}
-        <div className="hidden md:flex items-center gap-2 pb-3 overflow-x-auto scrollbar-hide">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant="ghost"
-              size="sm"
-              className="text-sm font-medium hover:bg-accent/10 hover:text-accent whitespace-nowrap"
-              onClick={() => handleCategoryClick(category)}
-            >
-              {category}
-            </Button>
-          ))}
-          <Link to="/products" className="ml-auto">
-            <Button variant="accent" size="sm">
-              Browse All
-            </Button>
-          </Link>
-        </div>
-
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
-            {/* Category buttons */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant="outline"
-                  size="sm"
-                  className="text-sm"
-                  onClick={() => handleCategoryClick(category)}
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
             <div className="flex flex-col gap-2">
               <Link to="/products" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="accent" className="w-full">
-                  Browse All Products
+                  Browse Products
                 </Button>
               </Link>
               <Link to="/about" onClick={() => setMobileMenuOpen(false)}>

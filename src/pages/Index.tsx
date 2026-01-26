@@ -109,7 +109,7 @@ const Index = () => {
                   className="gap-2"
                   onClick={() => navigate("/products")}
                 >
-                  Browse Products
+                  Browse All Products
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
@@ -119,6 +119,21 @@ const Index = () => {
                 >
                   Learn More
                 </Button>
+              </div>
+              
+              {/* Category buttons */}
+              <div className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3 justify-center">
+                {["Furniture", "Decor", "Lighting", "Pillows & Rugs", "Outdoor", "Home & Wellness Tech"].map((category) => (
+                  <Button
+                    key={category}
+                    variant="outline"
+                    size="sm"
+                    className="bg-white/10 border-white/30 text-primary-foreground hover:bg-white/20 hover:text-primary-foreground backdrop-blur-sm"
+                    onClick={() => navigate(`/products?category=${encodeURIComponent(category)}`)}
+                  >
+                    {category}
+                  </Button>
+                ))}
               </div>
             </div>
           </div>
