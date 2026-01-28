@@ -90,7 +90,7 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
             Pallet
           </span>
           {pallet.brand && (
-            <span className="px-4 py-2 text-sm font-semibold rounded bg-muted text-muted-foreground">
+            <span className="px-4 py-2 text-sm font-semibold rounded bg-highlight text-highlight-foreground">
               {formatBrandName(pallet.brand)}
             </span>
           )}
