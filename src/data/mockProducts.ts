@@ -3,7 +3,7 @@ import { Product } from "@/types/product";
 // Import CSV files as raw text
 import arhausCSV from "./arhaus.csv?raw";
 import zuoModernCSV from "./zuo_modern.csv?raw";
-import moesHomeCSV from "./moes_home.csv?raw";
+// import moesHomeCSV from "./moes_home.csv?raw"; // Removed
 import modusFurnitureCSV from "./modus_furniture.csv?raw";
 import mercanaCSV from "./mercana.csv?raw";
 import inspiredHomeCSV from "./inspired_home.csv?raw";
@@ -155,7 +155,7 @@ const parseCSV = (csvText: string): Product[] => {
 export const mockProducts: Product[] = [
   ...parseCSV(arhausCSV),
   ...parseCSV(zuoModernCSV),
-  ...parseCSV(moesHomeCSV),
+  // ...parseCSV(moesHomeCSV), // Removed
   ...parseCSV(modusFurnitureCSV),
   // ...parseCSV(mercanaCSV), // Temporarily hidden - image issues
   ...parseCSV(inspiredHomeCSV),
