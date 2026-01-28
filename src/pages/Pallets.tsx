@@ -117,7 +117,7 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
           
           {/* Total MSRP Value with strikethrough */}
           <div className="flex justify-between items-center">
-            <p className="text-lg font-bold text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Total MSRP Value
             </p>
             <p className="text-lg text-muted-foreground line-through">
