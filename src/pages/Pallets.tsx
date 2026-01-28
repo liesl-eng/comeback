@@ -106,7 +106,7 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
           {/* Pallet Cost */}
           {pallet.total_cost && (
             <div className="flex justify-between items-center">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">
+              <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
                 Pallet Cost
               </p>
               <p className="text-xl font-bold text-primary">
@@ -117,7 +117,7 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
           
           {/* Total MSRP Value with strikethrough */}
           <div className="flex justify-between items-center">
-            <p className="text-xs text-muted-foreground uppercase tracking-wide">
+            <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
               Total MSRP Value
             </p>
             <p className="text-sm text-muted-foreground line-through">
