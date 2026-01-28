@@ -8,6 +8,7 @@ import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import Pallets from "./pages/Pallets";
 import Cart from "./pages/Cart";
 import Favorites from "./pages/Favorites";
 import About from "./pages/About";
@@ -28,6 +29,7 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/products" element={<Products />} />
               <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/pallets" element={<Pallets />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/favorites" element={<Favorites />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
