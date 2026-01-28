@@ -122,39 +122,20 @@ const Pallets = () => {
   const { data: pallets, isLoading } = useQuery({
     queryKey: ['pallets-summary'],
     queryFn: async () => {
-      // Get aggregated data for each pallet
+      // Use the pallet_summary view for efficient aggregation
       const { data, error } = await supabase
-        .from('pallet_items')
-        .select('pallet_id, original_price, primary_image, category_name');
+        .from('pallet_summary')
+        .select('*');
       
       if (error) throw error;
 
-      // Aggregate by pallet_id
-      const palletMap = new Map<string, PalletSummary>();
-      
-      data.forEach((item) => {
-        const existing = palletMap.get(item.pallet_id);
-        if (existing) {
-          existing.item_count += 1;
-          existing.total_msrp += Number(item.original_price);
-          // Keep first non-null image
-          if (!existing.sample_image && item.primary_image) {
-            existing.sample_image = item.primary_image;
-          }
-        } else {
-          palletMap.set(item.pallet_id, {
-            pallet_id: item.pallet_id,
-            item_count: 1,
-            total_msrp: Number(item.original_price),
-            sample_image: item.primary_image,
-            sample_category: item.category_name,
-          });
-        }
-      });
-
-      return Array.from(palletMap.values()).sort((a, b) => 
-        a.pallet_id.localeCompare(b.pallet_id)
-      );
+      return data.map((row) => ({
+        pallet_id: row.pallet_id,
+        item_count: row.item_count,
+        total_msrp: Number(row.total_msrp),
+        sample_image: row.sample_image,
+        sample_category: row.sample_category,
+      }));
     },
   });
 
