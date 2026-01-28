@@ -16,6 +16,10 @@ const categories = [
     image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=300&fit=crop",
   },
   {
+    name: "Mirrors",
+    image: "https://images.unsplash.com/photo-1618220179428-22790b461013?w=400&h=300&fit=crop",
+  },
+  {
     name: "Pillows & Rugs",
     image: "https://images.unsplash.com/photo-1629949009765-40fc74c9ec21?w=400&h=300&fit=crop",
   },
