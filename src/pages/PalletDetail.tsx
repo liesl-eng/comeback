@@ -1,11 +1,40 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import { useCart } from "@/contexts/CartContext";
+import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+};
 
 const PalletDetail = () => {
   const { palletId } = useParams<{ palletId: string }>();
   const { totalItems } = useCart();
+
+  const { data: items, isLoading } = useQuery({
+    queryKey: ['pallet-items', palletId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('pallet_items')
+        .select('*')
+        .eq('pallet_id', palletId)
+        .order('product_name');
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!palletId,
+  });
+
+  const totalMsrp = items?.reduce((sum, item) => sum + Number(item.original_price), 0) ?? 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -22,17 +51,77 @@ const PalletDetail = () => {
 
         <div className="mb-6">
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Pallet {palletId}</h1>
-          <p className="text-muted-foreground">
-            View all items in this pallet
-          </p>
+          <div className="flex flex-wrap gap-4 text-muted-foreground">
+            <span>{items?.length ?? 0} items</span>
+            <span>•</span>
+            <span>Total MSRP: {formatCurrency(totalMsrp)}</span>
+          </div>
         </div>
 
-        {/* Placeholder for pallet items - will be populated with real data */}
-        <div className="bg-card rounded-lg border p-8 text-center">
-          <p className="text-muted-foreground">
-            Pallet items for <span className="font-semibold">{palletId}</span> will be displayed here.
-          </p>
-        </div>
+        {/* Items Grid */}
+        {isLoading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="bg-card rounded-lg border p-4">
+                <Skeleton className="aspect-square rounded-md mb-3" />
+                <Skeleton className="h-4 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : items && items.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {items.map((item) => (
+              <div 
+                key={item.id} 
+                className="bg-card rounded-lg border shadow-sm hover:shadow-md transition-shadow p-4"
+              >
+                {/* Image */}
+                <div className="aspect-square bg-muted rounded-md mb-3 overflow-hidden">
+                  {item.primary_image ? (
+                    <img 
+                      src={item.primary_image} 
+                      alt={item.product_name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
+                      No image
+                    </div>
+                  )}
+                </div>
+
+                {/* Category badge */}
+                {item.category_name && (
+                  <span className="inline-block px-2 py-1 text-xs font-medium rounded bg-muted text-muted-foreground mb-2">
+                    {item.category_name}
+                  </span>
+                )}
+
+                {/* Product name */}
+                <h3 className="font-medium text-foreground line-clamp-2 mb-1">
+                  {item.product_name}
+                </h3>
+
+                {/* SKU */}
+                <p className="text-xs text-muted-foreground mb-2">
+                  SKU: {item.product_sku}
+                </p>
+
+                {/* Price */}
+                <p className="text-lg font-bold text-foreground">
+                  {formatCurrency(Number(item.original_price))}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-card rounded-lg border p-8 text-center">
+            <p className="text-muted-foreground">
+              No items found for pallet <span className="font-semibold">{palletId}</span>.
+            </p>
+          </div>
+        )}
       </main>
     </div>
   );

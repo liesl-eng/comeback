@@ -1,35 +1,18 @@
 import { Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import { useCart } from "@/contexts/CartContext";
+import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
-interface PalletData {
-  id: string;
-  brand: string;
-  category: string;
-  title: string;
-  palletId: string;
-  itemCount: number;
-  totalMsrp: number;
-  imageUrl?: string;
+interface PalletSummary {
+  pallet_id: string;
+  item_count: number;
+  total_msrp: number;
+  sample_image: string | null;
+  sample_category: string | null;
 }
-
-const palletData: PalletData[] = [
-  { id: "1", brand: "Arhaus", category: "Furniture", title: "Premium Living Room Collection", palletId: "PLT-ARH-001", itemCount: 217, totalMsrp: 45600 },
-  { id: "2", brand: "Zuo Modern", category: "Furniture", title: "Contemporary Seating Assortment", palletId: "PLT-ZUO-002", itemCount: 184, totalMsrp: 38200 },
-  { id: "3", brand: "Modus Furniture", category: "Furniture", title: "Bedroom Essentials Bundle", palletId: "PLT-MOD-003", itemCount: 156, totalMsrp: 32400 },
-  { id: "4", brand: "Mercana", category: "Decor", title: "Artisan Decor Collection", palletId: "PLT-MER-004", itemCount: 243, totalMsrp: 28900 },
-  { id: "5", brand: "Inspired Home", category: "Furniture", title: "Velvet Accent Chairs", palletId: "PLT-INS-005", itemCount: 128, totalMsrp: 24600 },
-  { id: "6", brand: "NutriBullet", category: "Home & Wellness Tech", title: "Kitchen Appliance Lot", palletId: "PLT-NUT-006", itemCount: 312, totalMsrp: 18400 },
-  { id: "7", brand: "Hatch Sleep", category: "Home & Wellness Tech", title: "Sleep Technology Bundle", palletId: "PLT-HAT-007", itemCount: 89, totalMsrp: 15200 },
-  { id: "8", brand: "Arhaus", category: "Lighting", title: "Designer Lighting Collection", palletId: "PLT-ARH-008", itemCount: 176, totalMsrp: 52300 },
-  { id: "9", brand: "Zuo Modern", category: "Outdoor", title: "Outdoor Furniture Set", palletId: "PLT-ZUO-009", itemCount: 94, totalMsrp: 41800 },
-  { id: "10", brand: "Mercana", category: "Mirrors", title: "Statement Mirrors Assortment", palletId: "PLT-MER-010", itemCount: 67, totalMsrp: 19600 },
-  { id: "11", brand: "Modus Furniture", category: "Furniture", title: "Dining Room Collection", palletId: "PLT-MOD-011", itemCount: 142, totalMsrp: 36800 },
-  { id: "12", brand: "Inspired Home", category: "Pillows & Rugs", title: "Textile Accessories Bundle", palletId: "PLT-INS-012", itemCount: 289, totalMsrp: 14200 },
-  { id: "13", brand: "Arhaus", category: "Decor", title: "Artisan Home Accents", palletId: "PLT-ARH-013", itemCount: 198, totalMsrp: 27400 },
-  { id: "14", brand: "Zuo Modern", category: "Lighting", title: "Modern Pendant Collection", palletId: "PLT-ZUO-014", itemCount: 221, totalMsrp: 33600 },
-];
 
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat('en-US', {
@@ -40,35 +23,36 @@ const formatCurrency = (amount: number) => {
   }).format(amount);
 };
 
-const PalletCard = ({ pallet }: { pallet: PalletData }) => {
+const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/pallets/${pallet.palletId}`);
+    navigate(`/pallets/${pallet.pallet_id}`);
   };
 
   return (
     <div 
       onClick={handleClick}
-      className="bg-white rounded-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-      style={{ 
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
-      }}
+      className="bg-card rounded-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border shadow-sm hover:shadow-lg"
     >
       {/* Image Container - Square 1:1 ratio */}
-      <div className="relative aspect-square bg-gray-200 rounded-t-xl overflow-hidden">
-        {/* Placeholder gray background */}
-        <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300" />
+      <div className="relative aspect-square bg-muted rounded-t-xl overflow-hidden">
+        {pallet.sample_image ? (
+          <img 
+            src={pallet.sample_image} 
+            alt={`Pallet ${pallet.pallet_id}`}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/20" />
+        )}
         
         {/* Heart icon - top left */}
-        <button className="absolute top-3 left-3 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow">
-          <Heart className="w-5 h-5 text-gray-400" />
+        <button 
+          className="absolute top-3 left-3 w-9 h-9 bg-card rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Heart className="w-5 h-5 text-muted-foreground" />
         </button>
         
         {/* Item count badge - bottom right */}
@@ -78,7 +62,7 @@ const PalletCard = ({ pallet }: { pallet: PalletData }) => {
             background: 'linear-gradient(135deg, #d4af37 0%, #c5a028 100%)',
           }}
         >
-          {pallet.itemCount} ITEMS
+          {pallet.item_count} ITEMS
         </div>
       </div>
       
@@ -86,34 +70,28 @@ const PalletCard = ({ pallet }: { pallet: PalletData }) => {
       <div className="p-4">
         {/* Tags */}
         <div className="flex gap-2 mb-3">
-          <span 
-            className="px-3 py-1.5 text-xs font-medium rounded"
-            style={{ backgroundColor: '#e8f4f8', color: '#0066cc' }}
-          >
-            {pallet.brand}
+          <span className="px-3 py-1.5 text-xs font-medium rounded bg-primary/10 text-primary">
+            Pallet
           </span>
-          <span className="px-3 py-1.5 text-xs font-medium rounded bg-gray-100 text-gray-600">
-            {pallet.category}
-          </span>
+          {pallet.sample_category && (
+            <span className="px-3 py-1.5 text-xs font-medium rounded bg-muted text-muted-foreground">
+              {pallet.sample_category}
+            </span>
+          )}
         </div>
         
-        {/* Title */}
-        <h3 className="text-lg font-bold text-gray-900 mb-1">
-          {pallet.title}
+        {/* Pallet ID as Title */}
+        <h3 className="text-lg font-bold text-foreground mb-3">
+          {pallet.pallet_id}
         </h3>
         
-        {/* Pallet ID */}
-        <p className="text-sm text-gray-500 mb-3">
-          {pallet.palletId}
-        </p>
-        
         {/* Divider */}
-        <div className="border-t border-gray-200 pt-3">
-          <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+        <div className="border-t border-border pt-3">
+          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
             Total MSRP
           </p>
-          <p className="text-xl font-bold text-gray-900">
-            {formatCurrency(pallet.totalMsrp)}
+          <p className="text-xl font-bold text-foreground">
+            {formatCurrency(pallet.total_msrp)}
           </p>
         </div>
       </div>
@@ -121,8 +99,64 @@ const PalletCard = ({ pallet }: { pallet: PalletData }) => {
   );
 };
 
+const PalletCardSkeleton = () => (
+  <div className="bg-card rounded-xl border shadow-sm">
+    <Skeleton className="aspect-square rounded-t-xl" />
+    <div className="p-4">
+      <div className="flex gap-2 mb-3">
+        <Skeleton className="h-7 w-16" />
+        <Skeleton className="h-7 w-20" />
+      </div>
+      <Skeleton className="h-6 w-32 mb-3" />
+      <div className="border-t border-border pt-3">
+        <Skeleton className="h-4 w-20 mb-1" />
+        <Skeleton className="h-7 w-24" />
+      </div>
+    </div>
+  </div>
+);
+
 const Pallets = () => {
   const { totalItems } = useCart();
+
+  const { data: pallets, isLoading } = useQuery({
+    queryKey: ['pallets-summary'],
+    queryFn: async () => {
+      // Get aggregated data for each pallet
+      const { data, error } = await supabase
+        .from('pallet_items')
+        .select('pallet_id, original_price, primary_image, category_name');
+      
+      if (error) throw error;
+
+      // Aggregate by pallet_id
+      const palletMap = new Map<string, PalletSummary>();
+      
+      data.forEach((item) => {
+        const existing = palletMap.get(item.pallet_id);
+        if (existing) {
+          existing.item_count += 1;
+          existing.total_msrp += Number(item.original_price);
+          // Keep first non-null image
+          if (!existing.sample_image && item.primary_image) {
+            existing.sample_image = item.primary_image;
+          }
+        } else {
+          palletMap.set(item.pallet_id, {
+            pallet_id: item.pallet_id,
+            item_count: 1,
+            total_msrp: Number(item.original_price),
+            sample_image: item.primary_image,
+            sample_category: item.category_name,
+          });
+        }
+      });
+
+      return Array.from(palletMap.values()).sort((a, b) => 
+        a.pallet_id.localeCompare(b.pallet_id)
+      );
+    },
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -138,9 +172,19 @@ const Pallets = () => {
 
         {/* Pallet Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {palletData.map((pallet) => (
-            <PalletCard key={pallet.id} pallet={pallet} />
-          ))}
+          {isLoading ? (
+            Array.from({ length: 6 }).map((_, i) => (
+              <PalletCardSkeleton key={i} />
+            ))
+          ) : pallets && pallets.length > 0 ? (
+            pallets.map((pallet) => (
+              <PalletCard key={pallet.pallet_id} pallet={pallet} />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-muted-foreground">No pallets found.</p>
+            </div>
+          )}
         </div>
       </main>
     </div>
