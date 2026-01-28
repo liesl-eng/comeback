@@ -25,7 +25,7 @@ const Products = () => {
     { label: "$400+", value: "400_plus" },
   ];
 
-  const categories = ['Furniture', 'Lighting', 'Outdoor', 'Decor', 'Pillows & Rugs', 'Home & Wellness Tech', 'Mirrors'];
+  const categories = ['Decor', 'Furniture', 'Home & Wellness Tech', 'Lighting', 'Mirrors', 'Outdoor', 'Pillows & Rugs'];
   const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
   
   // Custom brand sort order for specific categories
