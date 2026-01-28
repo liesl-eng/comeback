@@ -44,9 +44,14 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
             src={pallet.sample_image} 
             alt={`Pallet ${pallet.pallet_id}`}
             className="w-full h-full object-cover"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              target.parentElement?.classList.add('bg-gradient-to-br', 'from-primary/20', 'to-primary/5');
+            }}
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/20" />
+          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5" />
         )}
         
         {/* Heart icon - top left */}
