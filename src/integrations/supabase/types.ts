@@ -47,14 +47,34 @@ export type Database = {
         }
         Relationships: []
       }
+      pallets: {
+        Row: {
+          brand: string
+          pallet_id: string
+          total_cost: number
+        }
+        Insert: {
+          brand: string
+          pallet_id: string
+          total_cost: number
+        }
+        Update: {
+          brand?: string
+          pallet_id?: string
+          total_cost?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       pallet_summary: {
         Row: {
+          brand: string | null
           item_count: number | null
           pallet_id: string | null
           sample_category: string | null
           sample_image: string | null
+          total_cost: number | null
           total_msrp: number | null
         }
         Relationships: []

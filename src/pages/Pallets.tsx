@@ -10,6 +10,8 @@ interface PalletSummary {
   pallet_id: string;
   item_count: number;
   total_msrp: number;
+  total_cost: number | null;
+  brand: string | null;
   sample_image: string | null;
   sample_category: string | null;
 }
@@ -73,9 +75,9 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
           <span className="px-3 py-1.5 text-xs font-medium rounded bg-primary/10 text-primary">
             Pallet
           </span>
-          {pallet.sample_category && (
+          {pallet.brand && (
             <span className="px-3 py-1.5 text-xs font-medium rounded bg-muted text-muted-foreground">
-              {pallet.sample_category}
+              {pallet.brand}
             </span>
           )}
         </div>
@@ -85,14 +87,43 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
           {pallet.pallet_id}
         </h3>
         
-        {/* Divider */}
-        <div className="border-t border-border pt-3">
-          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
-            Total MSRP
-          </p>
-          <p className="text-xl font-bold text-foreground">
-            {formatCurrency(pallet.total_msrp)}
-          </p>
+        {/* Pricing Section */}
+        <div className="border-t border-border pt-3 space-y-2">
+          {/* Cost */}
+          {pallet.total_cost && (
+            <div className="flex justify-between items-center">
+              <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                Cost
+              </p>
+              <p className="text-xl font-bold text-primary">
+                {formatCurrency(pallet.total_cost)}
+              </p>
+            </div>
+          )}
+          
+          {/* Total MSRP with strikethrough */}
+          <div className="flex justify-between items-center">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide">
+              Total MSRP
+            </p>
+            <p className="text-sm text-muted-foreground line-through">
+              {formatCurrency(pallet.total_msrp)}
+            </p>
+          </div>
+          
+          {/* % Off Badge */}
+          {pallet.total_cost && pallet.total_msrp > 0 && (
+            <div className="flex justify-end">
+              <span 
+                className="px-3 py-1 rounded-md text-white text-sm font-bold"
+                style={{
+                  background: 'linear-gradient(135deg, #d4af37 0%, #c5a028 100%)',
+                }}
+              >
+                {Math.round(((pallet.total_msrp - pallet.total_cost) / pallet.total_msrp) * 100)}% OFF
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -133,6 +164,8 @@ const Pallets = () => {
         pallet_id: row.pallet_id,
         item_count: row.item_count,
         total_msrp: Number(row.total_msrp),
+        total_cost: row.total_cost ? Number(row.total_cost) : null,
+        brand: row.brand,
         sample_image: row.sample_image,
         sample_category: row.sample_category,
       }));
