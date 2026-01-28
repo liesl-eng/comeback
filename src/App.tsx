@@ -54,7 +54,14 @@ const App = () => (
                 />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/favorites" element={<Favorites />} />
-                <Route path="/admin/import" element={<AdminImport />} />
+                <Route
+                  path="/admin/import"
+                  element={
+                    <ProtectedRoute>
+                      <AdminImport />
+                    </ProtectedRoute>
+                  }
+                />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
