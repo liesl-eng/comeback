@@ -115,6 +115,13 @@ const Index = () => {
                 <Button
                   variant="secondary"
                   size="lg"
+                  onClick={() => navigate("/pallets")}
+                >
+                  Shop Pallets
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="lg"
                   onClick={() => navigate("/about")}
                 >
                   Learn More
