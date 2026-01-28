@@ -1,4 +1,5 @@
 import { Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { useCart } from "@/contexts/CartContext";
 
@@ -40,8 +41,15 @@ const formatCurrency = (amount: number) => {
 };
 
 const PalletCard = ({ pallet }: { pallet: PalletData }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/pallets/${pallet.palletId}`);
+  };
+
   return (
     <div 
+      onClick={handleClick}
       className="bg-white rounded-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
       style={{ 
         boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
