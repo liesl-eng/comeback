@@ -113,11 +113,13 @@ const Index = () => {
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="highlight"
                   size="lg"
+                  className="gap-2"
                   onClick={() => navigate("/pallets")}
                 >
                   Shop Pallets
+                  <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
                   variant="secondary"
