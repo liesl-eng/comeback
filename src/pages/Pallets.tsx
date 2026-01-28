@@ -142,7 +142,7 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
           
           {/* View Items Button */}
           <Button 
-            className="w-full mt-6 bg-highlight hover:bg-highlight/90 text-highlight-foreground active:scale-95 transition-all"
+            className="w-full mt-10 bg-highlight hover:bg-highlight/90 text-highlight-foreground active:scale-95 transition-all"
           >
             View Items
             <ArrowRight className="ml-2 h-4 w-4" />
