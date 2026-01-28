@@ -132,7 +132,7 @@ const Auth = () => {
             <form onSubmit={handleLogin}>
               <CardContent className="space-y-4">
                 <CardDescription className="text-center">
-                  Sign in to access private pallet pricing and catalog
+                  Sign in to access pallet pricing and catalog
                 </CardDescription>
                 <div className="space-y-2">
                   <Label htmlFor="login-email">Email</Label>
