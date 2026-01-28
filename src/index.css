@@ -29,6 +29,9 @@ All colors MUST be HSL.
     --accent: 43 65% 55%;
     --accent-foreground: 210 55% 15%;
 
+    --highlight: 168 80% 45%;
+    --highlight-foreground: 0 0% 100%;
+
     --success: 152 69% 45%;
     --success-foreground: 0 0% 98%;
 
@@ -77,6 +80,9 @@ All colors MUST be HSL.
 
     --accent: 43 65% 55%;
     --accent-foreground: 210 55% 15%;
+
+    --highlight: 168 80% 50%;
+    --highlight-foreground: 0 0% 100%;
 
     --success: 152 69% 45%;
     --success-foreground: 0 0% 98%;
