@@ -1,10 +1,11 @@
-import { Heart } from "lucide-react";
+import { Heart, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import { useCart } from "@/contexts/CartContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 interface PalletSummary {
   pallet_id: string;
@@ -138,6 +139,14 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
               </span>
             </div>
           )}
+          
+          {/* View Items Button */}
+          <Button 
+            className="w-full mt-4 bg-highlight hover:bg-highlight/90 text-highlight-foreground active:scale-95 transition-all"
+          >
+            View Items
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
       </div>
     </div>
