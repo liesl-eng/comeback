@@ -66,15 +66,15 @@ serve(async (req) => {
       
       const parts = parseCSVLine(line);
       
-      // CSV columns: Pallet_ID, Client Id, Bulk Recommerce Short Id, Product SKU, Product Name, Original Price (MSRP), Primary Image, Category Name
-      if (parts.length < 8) continue;
+      // CSV columns: Client Id, Bulk Recommerce Short Id, Product SKU, Product Name, Original Price (MSRP), Primary Image, Category Name
+      if (parts.length < 7) continue;
       
-      const palletId = parts[0];
-      const productSku = parts[3];
-      const productName = parts[4];
-      const originalPrice = parsePrice(parts[5]);
-      const primaryImage = parts[6] || null;
-      const categoryName = parts[7] || null;
+      const palletId = parts[1]; // Bulk Recommerce Short Id
+      const productSku = parts[2];
+      const productName = parts[3];
+      const originalPrice = parsePrice(parts[4]);
+      const primaryImage = parts[5] || null;
+      const categoryName = parts[6] || null;
       
       // Skip if essential fields are missing
       if (!palletId || !productSku || !productName || originalPrice === 0) continue;
