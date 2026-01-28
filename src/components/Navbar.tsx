@@ -1,4 +1,4 @@
-import { ShoppingCart, Search, Menu, X, Heart } from "lucide-react";
+import { ShoppingCart, Search, Menu, X, Heart, LogIn, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface NavbarProps {
   cartItemCount?: number;
@@ -14,6 +16,8 @@ interface NavbarProps {
 const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
   const navigate = useNavigate();
   const { totalFavorites } = useFavorites();
+  const { user, signOut } = useAuth();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -23,6 +27,15 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
       navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
       setMobileMenuOpen(false);
     }
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: "Signed out",
+      description: "You have been successfully signed out.",
+    });
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -101,6 +114,24 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
                 )}
               </Button>
             </Link>
+            {user ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSignOut}
+                className="gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                Sign Out
+              </Button>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile: Favorites + Cart + Menu */}
@@ -164,6 +195,19 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
                   About
                 </Button>
               </Link>
+              {user ? (
+                <Button variant="outline" className="w-full gap-2" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </Button>
+              ) : (
+                <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="outline" className="w-full gap-2">
+                    <LogIn className="h-4 w-4" />
+                    Sign In
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}
