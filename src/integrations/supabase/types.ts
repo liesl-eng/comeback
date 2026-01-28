@@ -14,7 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      pallet_items: {
+        Row: {
+          category_name: string | null
+          created_at: string
+          id: string
+          original_price: number
+          pallet_id: string
+          primary_image: string | null
+          product_name: string
+          product_sku: string
+        }
+        Insert: {
+          category_name?: string | null
+          created_at?: string
+          id?: string
+          original_price: number
+          pallet_id: string
+          primary_image?: string | null
+          product_name: string
+          product_sku: string
+        }
+        Update: {
+          category_name?: string | null
+          created_at?: string
+          id?: string
+          original_price?: number
+          pallet_id?: string
+          primary_image?: string | null
+          product_name?: string
+          product_sku?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
