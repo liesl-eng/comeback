@@ -73,7 +73,7 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
         
         {/* Item count badge - bottom right */}
         <div 
-          className="absolute bottom-3 right-3 px-3 py-1.5 rounded-md text-white text-xs font-bold uppercase tracking-wide"
+          className="absolute bottom-3 right-3 px-4 py-2 rounded-md text-white text-base font-bold uppercase tracking-wide"
           style={{
             background: 'linear-gradient(135deg, #d4af37 0%, #c5a028 100%)',
           }}
@@ -129,7 +129,7 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
           {pallet.total_cost && pallet.total_msrp > 0 && (
             <div className="flex justify-end">
               <span 
-                className="px-3 py-1 rounded-md text-white text-sm font-bold"
+                className="px-4 py-2 rounded-md text-white text-base font-bold"
                 style={{
                   background: 'linear-gradient(135deg, #d4af37 0%, #c5a028 100%)',
                 }}
