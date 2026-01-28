@@ -25,6 +25,15 @@ const formatCurrency = (amount: number) => {
   }).format(amount);
 };
 
+const formatBrandName = (brand: string): string => {
+  // Replace underscores with spaces and capitalize each word
+  return brand
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
 const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
   const navigate = useNavigate();
 
@@ -77,12 +86,12 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
       <div className="p-4">
         {/* Tags */}
         <div className="flex gap-2 mb-3">
-          <span className="px-3 py-1.5 text-xs font-medium rounded bg-primary/10 text-primary">
+          <span className="px-4 py-2 text-sm font-semibold rounded bg-primary/10 text-primary">
             Pallet
           </span>
           {pallet.brand && (
-            <span className="px-3 py-1.5 text-xs font-medium rounded bg-muted text-muted-foreground">
-              {pallet.brand}
+            <span className="px-4 py-2 text-sm font-semibold rounded bg-muted text-muted-foreground">
+              {formatBrandName(pallet.brand)}
             </span>
           )}
         </div>
@@ -94,11 +103,11 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
         
         {/* Pricing Section */}
         <div className="border-t border-border pt-3 space-y-2">
-          {/* Cost */}
+          {/* Pallet Cost */}
           {pallet.total_cost && (
             <div className="flex justify-between items-center">
               <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                Cost
+                Pallet Cost
               </p>
               <p className="text-xl font-bold text-primary">
                 {formatCurrency(pallet.total_cost)}
@@ -106,10 +115,10 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
             </div>
           )}
           
-          {/* Total MSRP with strikethrough */}
+          {/* Total MSRP Value with strikethrough */}
           <div className="flex justify-between items-center">
             <p className="text-xs text-muted-foreground uppercase tracking-wide">
-              Total MSRP
+              Total MSRP Value
             </p>
             <p className="text-sm text-muted-foreground line-through">
               {formatCurrency(pallet.total_msrp)}
