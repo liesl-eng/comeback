@@ -120,7 +120,7 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
             <p className="text-lg font-bold text-muted-foreground">
               Total MSRP Value
             </p>
-            <p className="text-sm text-muted-foreground line-through">
+            <p className="text-lg text-muted-foreground line-through">
               {formatCurrency(pallet.total_msrp)}
             </p>
           </div>
