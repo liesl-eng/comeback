@@ -49,7 +49,16 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      pallet_summary: {
+        Row: {
+          item_count: number | null
+          pallet_id: string | null
+          sample_category: string | null
+          sample_image: string | null
+          total_msrp: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
