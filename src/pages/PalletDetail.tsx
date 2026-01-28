@@ -7,12 +7,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const formatCurrency = (amount: number) => {
+  const rounded = Math.round(amount);
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(amount);
+  }).format(rounded);
 };
 
 const PalletDetail = () => {
@@ -110,7 +111,7 @@ const PalletDetail = () => {
 
                 {/* Price */}
                 <p className="text-lg font-bold text-foreground">
-                  {formatCurrency(Number(item.original_price))}
+                  Item MSRP: {formatCurrency(Number(item.original_price))}
                 </p>
               </div>
             ))}
