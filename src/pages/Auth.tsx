@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, Check } from "lucide-react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
 
 const Auth = () => {
@@ -131,9 +131,12 @@ const Auth = () => {
           <TabsContent value="login">
             <form onSubmit={handleLogin}>
               <CardContent className="space-y-4">
-                <CardDescription className="text-center">
-                  Sign in to access pallet pricing and catalog
-                </CardDescription>
+                <div className="text-center space-y-1">
+                  <h2 className="text-lg font-bold text-foreground">Wholesale Pallet Program</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Curated pallets of premium home goods at up to 90% off MSRP
+                  </p>
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="login-email">Email</Label>
                   <Input
@@ -157,7 +160,7 @@ const Auth = () => {
                   />
                 </div>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex-col gap-4">
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? (
                     <>
@@ -168,6 +171,20 @@ const Auth = () => {
                     "Sign In"
                   )}
                 </Button>
+                <div className="space-y-2 w-full">
+                  <div className="flex items-center gap-2 text-[14px] text-muted-foreground">
+                    <Check className="h-4 w-4 text-highlight" />
+                    <span>Up to 90% off MSRP</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[14px] text-muted-foreground">
+                    <Check className="h-4 w-4 text-highlight" />
+                    <span>Build inventory at a fraction of the cost</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[14px] text-muted-foreground">
+                    <Check className="h-4 w-4 text-highlight" />
+                    <span>Full manifests with photos, SKUs, and pricing</span>
+                  </div>
+                </div>
               </CardFooter>
             </form>
           </TabsContent>
@@ -175,9 +192,12 @@ const Auth = () => {
           <TabsContent value="signup">
             <form onSubmit={handleSignup}>
               <CardContent className="space-y-4">
-                <CardDescription className="text-center">
-                  Create an account to access exclusive pallet deals
-                </CardDescription>
+                <div className="text-center space-y-1">
+                  <h2 className="text-lg font-bold text-foreground">Wholesale Pallet Program</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Curated pallets of premium home goods at up to 90% off MSRP
+                  </p>
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="signup-email">Email</Label>
                   <Input
@@ -212,7 +232,7 @@ const Auth = () => {
                   />
                 </div>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex-col gap-4">
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? (
                     <>
@@ -223,6 +243,20 @@ const Auth = () => {
                     "Create Account"
                   )}
                 </Button>
+                <div className="space-y-2 w-full">
+                  <div className="flex items-center gap-2 text-[14px] text-muted-foreground">
+                    <Check className="h-4 w-4 text-highlight" />
+                    <span>Up to 90% off MSRP</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[14px] text-muted-foreground">
+                    <Check className="h-4 w-4 text-highlight" />
+                    <span>Build inventory at a fraction of the cost</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[14px] text-muted-foreground">
+                    <Check className="h-4 w-4 text-highlight" />
+                    <span>Full manifests with photos, SKUs, and pricing</span>
+                  </div>
+                </div>
               </CardFooter>
             </form>
           </TabsContent>
