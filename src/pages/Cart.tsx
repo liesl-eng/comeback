@@ -85,7 +85,7 @@ const Cart = () => {
       const response = await fetch("https://hook.us2.make.com/dfhkw36aa994g9qodvvbwvkkhlhj4dnk", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain",
         },
         body: JSON.stringify(payload),
       });
