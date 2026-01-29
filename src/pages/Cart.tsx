@@ -15,7 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState } from "react";
 
 // ⚠️ PASTE YOUR GOOGLE SHEET WEBHOOK URL HERE ⚠️
-const WEBHOOK_URL = "PASTE_YOUR_WEBHOOK_URL_HERE";
+const WEBHOOK_URL =
+  "https://script.google.com/macros/s/AKfycbytxlbCL9kMy_ocw6ARCGjfZ-TlTrL29n-oJ_Q1Ib4AuTfhWCG87t0cLD4K8qxhpM8S/exec";
 
 const Cart = () => {
   const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
