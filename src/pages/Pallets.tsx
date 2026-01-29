@@ -201,9 +201,9 @@ const Pallets = () => {
       
       <main className="container mx-auto px-4 py-6 md:py-8">
         <div className="mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-4xl font-bold mb-2">Pallets By Brand</h1>
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">Comeback Pallet Program</h1>
           <p className="text-sm md:text-base text-muted-foreground">
-            Bulk purchasing opportunities with significant savings
+            Curated pallets of home goods, up to 90% off MSRP
           </p>
         </div>
 
