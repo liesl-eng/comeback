@@ -65,8 +65,8 @@ const Cart = () => {
         price: item.product.discountedPrice,
       }));
 
-      // Send to Make.com (Google Sheet)
-      const response = await fetch("https://hook.us2.make.com/dfhkw36aa994g9qodvvbwvkkhlhj4dnk", {
+      // Send to Google Sheet
+      const response = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
