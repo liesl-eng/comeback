@@ -5,7 +5,7 @@ import CategorySection from "@/components/CategorySection";
 import { mockProducts } from "@/data/mockProducts";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-marketplace.jpg";
 
@@ -115,14 +115,12 @@ const Index = () => {
                 <Button
                   variant="highlight"
                   size="lg"
-                  className="flex-col h-auto py-3 px-8 gap-1"
+                  className="gap-2"
                   onClick={() => navigate("/pallets")}
                 >
-                  <span className="flex items-center gap-2">
-                    Pallet Program
-                    <ArrowRight className="h-5 w-5" />
-                  </span>
-                  <span className="text-[13px] text-white/70 font-normal">Login Required</span>
+                  <Lock className="h-[18px] w-[18px]" />
+                  Pallet Program
+                  <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
                   variant="secondary"
