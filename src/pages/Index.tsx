@@ -99,8 +99,11 @@ const Index = () => {
                 TINY IMPERFECTIONS.{" "}
                 <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-4 md:mb-5 text-2xl md:text-4xl text-primary-foreground/90 font-bold">
+              <p className="mb-2 md:mb-3 text-2xl md:text-4xl text-primary-foreground/90 font-bold">
                 Private B2B Marketplace.
+              </p>
+              <p className="mb-4 md:mb-5 text-base md:text-xl text-primary-foreground/70 font-medium">
+                High-quality brands. Better-than-wholesale pricing.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Button
