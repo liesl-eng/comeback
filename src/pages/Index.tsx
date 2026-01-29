@@ -115,14 +115,14 @@ const Index = () => {
                 <Button
                   variant="highlight"
                   size="lg"
-                  className="gap-2 flex-col h-auto py-2"
+                  className="flex-col h-auto py-3 px-8 gap-1"
                   onClick={() => navigate("/pallets")}
                 >
                   <span className="flex items-center gap-2">
                     Pallet Program
                     <ArrowRight className="h-5 w-5" />
                   </span>
-                  <span className="text-xs opacity-70 font-normal">Login Required</span>
+                  <span className="text-[13px] text-white/70 font-normal">Login Required</span>
                 </Button>
                 <Button
                   variant="secondary"
