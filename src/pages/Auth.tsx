@@ -132,9 +132,9 @@ const Auth = () => {
             <form onSubmit={handleLogin}>
               <CardContent className="space-y-4">
                 <div className="text-center space-y-1">
-                  <h2 className="text-lg font-bold text-foreground">Wholesale Pallet Program</h2>
+                  <h2 className="text-lg font-bold text-foreground">Comeback Pallet Program</h2>
                   <p className="text-sm text-muted-foreground">
-                    Curated pallets of premium home goods at up to 90% off MSRP
+                    Curated pallets of home goods, up to 90% off MSRP
                   </p>
                 </div>
                 <div className="space-y-2">
@@ -193,9 +193,9 @@ const Auth = () => {
             <form onSubmit={handleSignup}>
               <CardContent className="space-y-4">
                 <div className="text-center space-y-1">
-                  <h2 className="text-lg font-bold text-foreground">Wholesale Pallet Program</h2>
+                  <h2 className="text-lg font-bold text-foreground">Comeback Pallet Program</h2>
                   <p className="text-sm text-muted-foreground">
-                    Curated pallets of premium home goods at up to 90% off MSRP
+                    Curated pallets of home goods, up to 90% off MSRP
                   </p>
                 </div>
                 <div className="space-y-2">
