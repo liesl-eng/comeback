@@ -96,7 +96,7 @@ const Cart = () => {
         });
         navigate("/products");
       } else {
-        throw new Error(result.message || "Submission failed");
+        throw new Error(result || "Submission failed");
       }
     } catch (error) {
       console.error("Error submitting order:", error);
