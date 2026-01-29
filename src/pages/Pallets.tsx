@@ -1,4 +1,4 @@
-import { Heart, ArrowRight } from "lucide-react";
+import { Heart, ArrowRight, ShoppingCart, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
@@ -35,11 +35,20 @@ const formatBrandName = (brand: string): string => {
     .join(' ');
 };
 
-const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
+const PalletCard = ({ pallet, isInCart, onAddToCart }: { 
+  pallet: PalletSummary; 
+  isInCart: boolean;
+  onAddToCart: () => void;
+}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/pallets/${pallet.pallet_id}`);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onAddToCart();
   };
 
   return (
@@ -140,13 +149,34 @@ const PalletCard = ({ pallet }: { pallet: PalletSummary }) => {
             </div>
           )}
           
-          {/* View Items Button */}
-          <Button 
-            className="w-full mt-16 bg-highlight hover:bg-highlight/90 text-highlight-foreground active:scale-95 transition-all"
-          >
-            View Items
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-2 mt-6">
+            <Button 
+              variant="accent"
+              className="w-full"
+              onClick={handleAddToCart}
+              disabled={isInCart}
+            >
+              {isInCart ? (
+                <>
+                  <Check className="mr-2 h-4 w-4" />
+                  Added to Request
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="mr-2 h-4 w-4" />
+                  Request To Order
+                </>
+              )}
+            </Button>
+            <Button 
+              variant="outline"
+              className="w-full"
+            >
+              View Items
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
@@ -171,7 +201,22 @@ const PalletCardSkeleton = () => (
 );
 
 const Pallets = () => {
-  const { totalItems } = useCart();
+  const { totalItems, palletItems, addPallet } = useCart();
+
+  const isPalletInCart = (palletId: string) => {
+    return palletItems.some((p) => p.palletId === palletId);
+  };
+
+  const handleAddPallet = (pallet: PalletSummary) => {
+    if (pallet.total_cost) {
+      addPallet({
+        palletId: pallet.pallet_id,
+        brand: pallet.brand,
+        totalCost: pallet.total_cost,
+        totalMsrp: pallet.total_msrp,
+      });
+    }
+  };
 
   const { data: pallets, isLoading } = useQuery({
     queryKey: ['pallets-summary'],
@@ -215,7 +260,12 @@ const Pallets = () => {
             ))
           ) : pallets && pallets.length > 0 ? (
             pallets.map((pallet) => (
-              <PalletCard key={pallet.pallet_id} pallet={pallet} />
+              <PalletCard 
+                key={pallet.pallet_id} 
+                pallet={pallet} 
+                isInCart={isPalletInCart(pallet.pallet_id)}
+                onAddToCart={() => handleAddPallet(pallet)}
+              />
             ))
           ) : (
             <div className="col-span-full text-center py-12">
