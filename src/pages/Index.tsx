@@ -100,7 +100,7 @@ const Index = () => {
                 <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
               <p className="mb-4 md:mb-5 text-2xl md:text-4xl text-primary-foreground/90 font-bold">
-                Private Marketplace.
+                Private B2B Marketplace.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Button
@@ -109,17 +109,20 @@ const Index = () => {
                   className="gap-2"
                   onClick={() => navigate("/products")}
                 >
-                  Browse All Products
+                  Browse Individual Items
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
                   variant="highlight"
                   size="lg"
-                  className="gap-2"
+                  className="gap-2 flex-col h-auto py-2"
                   onClick={() => navigate("/pallets")}
                 >
-                  Shop Pallets
-                  <ArrowRight className="h-5 w-5" />
+                  <span className="flex items-center gap-2">
+                    Pallet Program
+                    <ArrowRight className="h-5 w-5" />
+                  </span>
+                  <span className="text-xs opacity-70 font-normal">Login Required</span>
                 </Button>
                 <Button
                   variant="secondary"
