@@ -1,12 +1,15 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { CartItem, Product } from "@/types/product";
+import { CartItem, Product, PalletCartItem } from "@/types/product";
 import { toast } from "sonner";
 
 interface CartContextType {
   items: CartItem[];
+  palletItems: PalletCartItem[];
   addItem: (product: Product) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
+  addPallet: (pallet: Omit<PalletCartItem, 'quantity'>) => void;
+  removePallet: (palletId: string) => void;
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
@@ -16,6 +19,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [palletItems, setPalletItems] = useState<PalletCartItem[]>([]);
 
   const addItem = (product: Product) => {
     setItems((currentItems) => {
@@ -53,24 +57,45 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
+  const addPallet = (pallet: Omit<PalletCartItem, 'quantity'>) => {
+    setPalletItems((current) => {
+      const exists = current.find((p) => p.palletId === pallet.palletId);
+      if (exists) {
+        toast.info("Pallet already in order request");
+        return current;
+      }
+      toast.success("Pallet added to order request");
+      return [...current, { ...pallet, quantity: 1 }];
+    });
+  };
+
+  const removePallet = (palletId: string) => {
+    setPalletItems((current) => current.filter((p) => p.palletId !== palletId));
+    toast.success("Pallet removed from order request");
+  };
+
   const clearCart = () => {
     setItems([]);
+    setPalletItems([]);
     toast.success("Order request cleared");
   };
 
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0) + palletItems.length;
   const totalPrice = items.reduce(
     (sum, item) => sum + item.product.discountedPrice * item.quantity,
     0
-  );
+  ) + palletItems.reduce((sum, p) => sum + p.totalCost, 0);
 
   return (
     <CartContext.Provider
       value={{
         items,
+        palletItems,
         addItem,
         removeItem,
         updateQuantity,
+        addPallet,
+        removePallet,
         clearCart,
         totalItems,
         totalPrice,

@@ -36,3 +36,11 @@ export interface CartItem {
   product: Product;
   quantity: number;
 }
+
+export interface PalletCartItem {
+  palletId: string;
+  brand: string | null;
+  totalCost: number;
+  totalMsrp: number;
+  quantity: 1; // Always locked at 1
+}

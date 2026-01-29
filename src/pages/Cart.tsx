@@ -18,8 +18,16 @@ import { useState } from "react";
 const WEBHOOK_URL =
   "https://script.google.com/macros/s/AKfycbytxlbCL9kMy_ocw6ARCGjfZ-TlTrL29n-oJ_Q1Ib4AuTfhWCG87t0cLD4K8qxhpM8S/exec";
 
+const formatBrandName = (brand: string): string => {
+  return brand
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
 const Cart = () => {
-  const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
+  const { items, palletItems, removeItem, updateQuantity, removePallet, clearCart, totalItems, totalPrice } = useCart();
   const navigate = useNavigate();
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,12 +66,24 @@ const Cart = () => {
       );
 
       // Format cart items for Google Sheet
-      const cartItems = items.map((item) => ({
+      const productCartItems = items.map((item) => ({
         name: item.product.name,
         sku: item.product.id,
         quantity: item.quantity,
         price: item.product.discountedPrice,
+        type: "product",
       }));
+
+      // Format pallet items for Google Sheet
+      const palletCartItems = palletItems.map((pallet) => ({
+        name: `Pallet: ${pallet.palletId}${pallet.brand ? ` (${formatBrandName(pallet.brand)})` : ''}`,
+        sku: pallet.palletId,
+        quantity: 1,
+        price: pallet.totalCost,
+        type: "pallet",
+      }));
+
+      const allCartItems = [...productCartItems, ...palletCartItems];
 
       // Send to Make.com (which sends to Google Sheet)
       const payload = {
@@ -74,7 +94,7 @@ const Cart = () => {
         businessType: formData.businessType,
         deliveryAddress: formData.deliveryAddress,
         notes: formData.notes,
-        cartItems: cartItems,
+        cartItems: allCartItems,
         itemCount: totalItems,
         orderTotal: totalPrice,
         totalSavings: totalSavings,
@@ -119,7 +139,7 @@ const Cart = () => {
     }
   };
 
-  if (items.length === 0) {
+  if (items.length === 0 && palletItems.length === 0) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar cartItemCount={totalItems} />
@@ -127,18 +147,28 @@ const Cart = () => {
           <ShoppingBag className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
           <h1 className="text-2xl font-bold mb-2">Your cart is empty</h1>
           <p className="text-muted-foreground mb-6">Start adding some great deals to your cart!</p>
-          <Button variant="accent" onClick={() => navigate("/products")}>
-            Browse Products
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button variant="accent" onClick={() => navigate("/products")}>
+              Browse Products
+            </Button>
+            <Button variant="outline" onClick={() => navigate("/pallets")}>
+              Browse Pallets
+            </Button>
+          </div>
         </div>
       </div>
     );
   }
 
-  const totalSavings = items.reduce(
+  const productSavings = items.reduce(
     (sum, item) => sum + (item.product.originalPrice - item.product.discountedPrice) * item.quantity,
     0,
   );
+  const palletSavings = palletItems.reduce(
+    (sum, pallet) => sum + (pallet.totalMsrp - pallet.totalCost),
+    0,
+  );
+  const totalSavings = productSavings + palletSavings;
 
   return (
     <div className="min-h-screen bg-background">
@@ -222,6 +252,63 @@ const Cart = () => {
                 </CardContent>
               </Card>
             ))}
+
+            {/* Pallet Items Section */}
+            {palletItems.length > 0 && (
+              <>
+                {items.length > 0 && (
+                  <h2 className="text-lg font-semibold mt-6 pt-4 border-t">Pallets</h2>
+                )}
+                {palletItems.map((pallet) => (
+                  <Card key={pallet.palletId}>
+                    <CardContent className="p-3 md:p-4">
+                      <div className="flex gap-3 md:gap-4">
+                        <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5 flex-shrink-0 flex items-center justify-center">
+                          <span className="text-2xl font-bold text-primary/60">P</span>
+                        </div>
+
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <div>
+                              <h3 className="font-semibold text-base md:text-lg line-clamp-1">{pallet.palletId}</h3>
+                              {pallet.brand && (
+                                <Badge variant="secondary" className="mt-1 text-xs">
+                                  {formatBrandName(pallet.brand)}
+                                </Badge>
+                              )}
+                              <Badge variant="outline" className="mt-1 ml-1 text-xs">
+                                Pallet
+                              </Badge>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => removePallet(pallet.palletId)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-3 md:mt-4">
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-lg md:text-xl font-bold">
+                                {formatPrice(pallet.totalCost)}
+                              </span>
+                              <span className="text-xs md:text-sm text-muted-foreground line-through">
+                                {formatPrice(pallet.totalMsrp)}
+                              </span>
+                            </div>
+
+                            <span className="text-sm text-muted-foreground">Qty: 1</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </>
+            )}
           </div>
 
           <div className="lg:col-span-1">
