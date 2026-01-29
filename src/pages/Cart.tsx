@@ -79,17 +79,17 @@ const Cart = () => {
         orderTotal: totalPrice,
         totalSavings: totalSavings,
       };
-      
+
       console.log("Sending to Make.com:", payload);
-      
-      const response = await fetch("https://hook.us2.make.com/dfhkw36aa994g9qodvvbwvkkhlhj4dnk", {
+
+      const response = await fetch("https://hook.us2.make.com/vldq5e2wbokwokg4kwqiysmvjh1rjng6", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
-      
+
       console.log("Response status:", response.status);
       console.log("Response ok:", response.ok);
       const result = await response.text();
