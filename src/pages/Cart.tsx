@@ -66,25 +66,32 @@ const Cart = () => {
       }));
 
       // Send to Make.com (which sends to Google Sheet)
+      const payload = {
+        companyName: formData.companyName,
+        contactName: formData.contactName,
+        email: formData.email,
+        phone: formData.phone,
+        businessType: formData.businessType,
+        deliveryAddress: formData.deliveryAddress,
+        notes: formData.notes,
+        cartItems: JSON.stringify(cartItems),
+        itemCount: totalItems,
+        orderTotal: totalPrice,
+        totalSavings: totalSavings,
+      };
+      
+      console.log("Sending to Make.com:", payload);
+      
       const response = await fetch("https://hook.us2.make.com/dfhkw36aa994g9qodvvbwvkkhlhj4dnk", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          companyName: formData.companyName,
-          contactName: formData.contactName,
-          email: formData.email,
-          phone: formData.phone,
-          businessType: formData.businessType,
-          deliveryAddress: formData.deliveryAddress,
-          notes: formData.notes,
-          cartItems: JSON.stringify(cartItems),
-          itemCount: totalItems,
-          orderTotal: totalPrice,
-          totalSavings: totalSavings,
-        }),
+        body: JSON.stringify(payload),
       });
+      
+      console.log("Response status:", response.status);
+      console.log("Response ok:", response.ok);
       const result = await response.text();
 
       if (result === "Accepted") {
