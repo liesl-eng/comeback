@@ -167,13 +167,9 @@ const Index = () => {
         {/* CTA Section */}
         <section className="py-10 md:py-16 bg-gradient-hero">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="mb-3 md:mb-4 text-2xl md:text-4xl font-bold text-primary-foreground">
+            <h2 className="mb-6 md:mb-8 text-2xl md:text-4xl font-bold text-primary-foreground">
               Stretch your budget, not your standards.
             </h2>
-            <p className="mb-6 md:mb-8 text-base md:text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-              Join thousands of buyers discovering incredible deals on quality
-              pieces.
-            </p>
             <Button
               variant="accent"
               size="lg"
