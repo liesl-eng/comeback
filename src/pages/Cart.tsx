@@ -74,7 +74,7 @@ const Cart = () => {
         businessType: formData.businessType,
         deliveryAddress: formData.deliveryAddress,
         notes: formData.notes,
-        cartItems: JSON.stringify(cartItems),
+        cartItems: cartItems,
         itemCount: totalItems,
         orderTotal: totalPrice,
         totalSavings: totalSavings,
