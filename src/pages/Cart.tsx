@@ -65,12 +65,9 @@ const Cart = () => {
         price: item.product.discountedPrice,
       }));
 
-      // Send to Google Sheet
-      const response = await fetch(WEBHOOK_URL, {
+      // Send to Make.com (Google Sheet)
+      const response = await fetch("https://hook.us2.make.com/dfhkw36aa994g9qodvvbwvkkhlhj4dnk", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           ...formData,
           cartItems: cartItems,
@@ -80,9 +77,9 @@ const Cart = () => {
         }),
       });
 
-      const result = await response.json();
+      const result = await response.text();
 
-      if (result.status === "success") {
+      if (result === "Accepted") {
         toast.success("Order request submitted! We'll contact you within 24 hours.");
         clearCart();
         setShowOrderForm(false);
