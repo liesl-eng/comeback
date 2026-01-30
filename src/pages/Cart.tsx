@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, formatPriceFixed } from "@/lib/utils";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -319,22 +319,22 @@ const Cart = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between text-base md:text-lg">
                     <span className="text-muted-foreground">Items ({totalItems})</span>
-                    <span className="font-semibold">{formatPrice(totalPrice)}</span>
+                    <span className="font-semibold">{formatPriceFixed(totalPrice)}</span>
                   </div>
                   <div className="flex justify-between text-base md:text-lg">
                     <span className="text-muted-foreground">Total Savings</span>
-                    <span className="font-semibold text-success">-{formatPrice(totalSavings)}</span>
+                    <span className="font-semibold text-success">-{formatPriceFixed(totalSavings)}</span>
                   </div>
                   <div className="pt-4 border-t">
                     <div className="flex justify-between text-xl md:text-2xl">
                       <span className="font-bold">Total</span>
-                      <span className="font-bold">{formatPrice(totalPrice)}</span>
+                      <span className="font-bold">{formatPriceFixed(totalPrice)}</span>
                     </div>
                   </div>
                 </div>
 
                 <Badge variant="success" className="w-full justify-center py-2.5 text-sm md:text-base">
-                  {Math.round((totalSavings / (totalPrice + totalSavings)) * 100)}% below MSRP ({formatPrice(totalSavings)} savings)
+                  {Math.round((totalSavings / (totalPrice + totalSavings)) * 100)}% below MSRP ({formatPriceFixed(totalSavings)} savings)
                 </Badge>
               </CardContent>
 
