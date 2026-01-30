@@ -96,7 +96,7 @@ const PalletDetail = () => {
             <span>•</span>
             <span className="font-bold text-foreground">Pallet Cost: {formatCurrency(Number(palletSummary?.total_cost ?? 0))}</span>
             <span>•</span>
-            <span>Total MSRP: {formatCurrency(totalMsrp)}</span>
+            <span>Total MSRP Value: {formatCurrency(totalMsrp)}</span>
           </div>
         </div>
 
