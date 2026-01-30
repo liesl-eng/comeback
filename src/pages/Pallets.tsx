@@ -95,6 +95,11 @@ const PalletCard = ({ pallet, isInCart, onAddToCart }: {
           <Heart className="w-5 h-5 text-muted-foreground" />
         </button>
         
+        {/* Condition Badge - top right */}
+        <span className="absolute right-3 top-3 px-2 py-1 text-[10px] font-medium rounded bg-white/90 text-muted-foreground backdrop-blur-sm">
+          Inspected – Like New
+        </span>
+        
         {/* Item count badge - bottom right */}
         <div 
           className="absolute bottom-3 right-3 px-4 py-2 rounded-md text-white text-base font-bold uppercase tracking-wide"
