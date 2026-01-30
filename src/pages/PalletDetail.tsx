@@ -17,6 +17,17 @@ const formatCurrency = (amount: number) => {
   }).format(rounded);
 };
 
+// Apply 85% discount cap - if discount exceeds 85%, raise the cost to cap at 85%
+const applyCappedPricing = (totalCost: number, totalMsrp: number) => {
+  const discount = ((totalMsrp - totalCost) / totalMsrp) * 100;
+  if (discount > 85) {
+    // Cap at 85% off: new cost = 15% of MSRP
+    const cappedCost = totalMsrp * 0.15;
+    return { cappedCost, cappedDiscount: 85 };
+  }
+  return { cappedCost: totalCost, cappedDiscount: Math.round(discount) };
+};
+
 const PalletDetail = () => {
   const { palletId } = useParams<{ palletId: string }>();
   const { totalItems, addPallet } = useCart();
@@ -56,10 +67,11 @@ const PalletDetail = () => {
   const handleAddToRequest = () => {
     if (!palletSummary || !palletId) return;
     
+    const { cappedCost } = applyCappedPricing(Number(palletSummary.total_cost), totalMsrp);
     addPallet({
       palletId: palletId,
       brand: palletSummary.brand,
-      totalCost: Number(palletSummary.total_cost),
+      totalCost: cappedCost,
       totalMsrp: totalMsrp,
     });
   };
@@ -94,7 +106,9 @@ const PalletDetail = () => {
           <div className="flex flex-wrap gap-4 text-muted-foreground">
             <span>{items?.length ?? 0} items</span>
             <span>•</span>
-            <span className="font-bold text-foreground">Pallet Cost: {formatCurrency(Number(palletSummary?.total_cost ?? 0))}</span>
+            <span className="font-bold text-foreground">
+              Pallet Cost: {formatCurrency(applyCappedPricing(Number(palletSummary?.total_cost ?? 0), totalMsrp).cappedCost)}
+            </span>
             <span>•</span>
             <span>Total MSRP Value: {formatCurrency(totalMsrp)}</span>
           </div>

@@ -26,6 +26,17 @@ const formatCurrency = (amount: number) => {
   }).format(amount);
 };
 
+// Apply 85% discount cap - if discount exceeds 85%, raise the cost to cap at 85%
+const applyCappedPricing = (totalCost: number, totalMsrp: number) => {
+  const discount = ((totalMsrp - totalCost) / totalMsrp) * 100;
+  if (discount > 85) {
+    // Cap at 85% off: new cost = 15% of MSRP
+    const cappedCost = totalMsrp * 0.15;
+    return { cappedCost, cappedDiscount: 85 };
+  }
+  return { cappedCost: totalCost, cappedDiscount: Math.round(discount) };
+};
+
 const formatBrandName = (brand: string): string => {
   // Replace underscores with spaces and capitalize each word
   return brand
@@ -114,40 +125,45 @@ const PalletCard = ({ pallet, isInCart, onAddToCart }: {
         {/* Pricing Section */}
         <div className="border-t border-border pt-3 space-y-2">
           {/* Pallet Cost */}
-          {pallet.total_cost && (
-            <div className="flex justify-between items-center">
-              <p className="text-lg font-bold text-muted-foreground">
-                Pallet Cost
-              </p>
-              <p className="text-xl font-bold text-primary">
-                {formatCurrency(pallet.total_cost)}
-              </p>
-            </div>
-          )}
-          
-          {/* Total MSRP Value with strikethrough */}
-          <div className="flex justify-between items-center">
-            <p className="text-lg text-muted-foreground">
-              Total MSRP Value
-            </p>
-            <p className="text-lg text-muted-foreground line-through">
-              {formatCurrency(pallet.total_msrp)}
-            </p>
-          </div>
-          
-          {/* % Off Badge */}
-          {pallet.total_cost && pallet.total_msrp > 0 && (
-            <div className="flex justify-end">
-              <span 
-                className="px-4 py-2 rounded-md text-white text-base font-bold"
-                style={{
-                  background: 'linear-gradient(135deg, #d4af37 0%, #c5a028 100%)',
-                }}
-              >
-                {Math.round(((pallet.total_msrp - pallet.total_cost) / pallet.total_msrp) * 100)}% OFF
-              </span>
-            </div>
-          )}
+          {pallet.total_cost && (() => {
+            const { cappedCost, cappedDiscount } = applyCappedPricing(pallet.total_cost, pallet.total_msrp);
+            return (
+              <>
+                <div className="flex justify-between items-center">
+                  <p className="text-lg font-bold text-muted-foreground">
+                    Pallet Cost
+                  </p>
+                  <p className="text-xl font-bold text-primary">
+                    {formatCurrency(cappedCost)}
+                  </p>
+                </div>
+                
+                {/* Total MSRP Value with strikethrough */}
+                <div className="flex justify-between items-center">
+                  <p className="text-lg text-muted-foreground">
+                    Total MSRP Value
+                  </p>
+                  <p className="text-lg text-muted-foreground line-through">
+                    {formatCurrency(pallet.total_msrp)}
+                  </p>
+                </div>
+                
+                {/* % Off Badge */}
+                {pallet.total_msrp > 0 && (
+                  <div className="flex justify-end">
+                    <span 
+                      className="px-4 py-2 rounded-md text-white text-base font-bold"
+                      style={{
+                        background: 'linear-gradient(135deg, #d4af37 0%, #c5a028 100%)',
+                      }}
+                    >
+                      {cappedDiscount}% OFF
+                    </span>
+                  </div>
+                )}
+              </>
+            );
+          })()}
           
           {/* Action Buttons */}
           <div className="flex flex-col gap-2 mt-6">
@@ -209,10 +225,11 @@ const Pallets = () => {
 
   const handleAddPallet = (pallet: PalletSummary) => {
     if (pallet.total_cost) {
+      const { cappedCost } = applyCappedPricing(pallet.total_cost, pallet.total_msrp);
       addPallet({
         palletId: pallet.pallet_id,
         brand: pallet.brand,
-        totalCost: pallet.total_cost,
+        totalCost: cappedCost,
         totalMsrp: pallet.total_msrp,
       });
     }
