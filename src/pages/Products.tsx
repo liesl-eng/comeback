@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import { mockProducts } from "@/data/mockProducts";
@@ -6,6 +6,7 @@ import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { matchesSearchQuery } from "@/lib/searchSynonyms";
+import { Lock } from "lucide-react";
 
 const Products = () => {
   const { addItem, totalItems } = useCart();
@@ -111,11 +112,19 @@ const Products = () => {
       <Navbar cartItemCount={totalItems} />
       
       <main className="container mx-auto px-4 py-6 md:py-8">
-        <div className="mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-4xl font-bold mb-2">Shop The Catalog</h1>
-          <p className="text-sm md:text-base text-muted-foreground">
-            High-quality pieces. Big savings. Zero compromise.
-          </p>
+        <div className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-4xl font-bold mb-2">Shop The Catalog</h1>
+            <p className="text-sm md:text-base text-muted-foreground">
+              High-quality pieces. Big savings. Zero compromise.
+            </p>
+          </div>
+          <Button variant="highlight" asChild className="w-fit">
+            <Link to="/pallets">
+              <Lock className="mr-2 h-4 w-4" />
+              Shop Pallets
+            </Link>
+          </Button>
         </div>
 
         {/* Brand Filters */}
