@@ -31,6 +31,10 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
         <Badge variant="accent" className="absolute right-2 bottom-2 text-[10px] px-1.5 py-0.5 font-semibold opacity-90">
           {product.discountPercentage}% OFF
         </Badge>
+        {/* Condition Badge */}
+        <span className="absolute right-2 top-3 px-2 py-1 text-[10px] font-medium rounded bg-white/90 text-muted-foreground backdrop-blur-sm">
+          New – Warehouse Direct
+        </span>
         <Button
           variant="ghost"
           size="icon"
