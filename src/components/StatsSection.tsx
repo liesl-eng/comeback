@@ -4,7 +4,7 @@ const StatsSection = () => {
   const stats = [
     {
       icon: Package,
-      value: "3,260+",
+      value: "9,000+",
       label: "Products",
     },
     {
