@@ -96,7 +96,7 @@ const PalletCard = ({ pallet, isInCart, onAddToCart }: {
         </button>
         
         {/* Condition Badge - top right */}
-        <span className="absolute right-3 top-3 px-2 py-1 text-[10px] font-medium rounded bg-white/90 text-muted-foreground backdrop-blur-sm">
+        <span className="absolute right-3 top-3 px-2 py-1 text-xs font-medium rounded bg-white/90 text-muted-foreground backdrop-blur-sm">
           Inspected – Like New
         </span>
         
