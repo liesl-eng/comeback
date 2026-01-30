@@ -297,7 +297,7 @@ const ProductDetail = () => {
 
                   {/* Optional Minimum Order Note */}
                   <p className="text-sm text-muted-foreground text-center">
-                    $2,000 minimum per brand (Arhaus, Mercana, etc.)
+                    $5,000 minimum per brand (Arhaus, Mercana, etc.)
                   </p>
                 </div>
               </CardContent>
