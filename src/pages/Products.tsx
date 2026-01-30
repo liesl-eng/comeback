@@ -63,18 +63,20 @@ const Products = () => {
     
     return matchesBrand && matchesCategory && matchesPriceTier && matchesSearch;
   }).sort((a, b) => {
-    // Helper to check if product has a valid image
+    // Helper to check if product has a valid, displayable image
     const hasValidImage = (imageUrl: string) => {
-      return imageUrl && 
-             imageUrl !== 'N/A' && 
-             !imageUrl.includes('wikipedia.org/wiki') && 
-             !imageUrl.includes('Arhaus_logo');
+      if (!imageUrl || imageUrl === 'N/A') return false;
+      const lowerUrl = imageUrl.toLowerCase();
+      return !lowerUrl.includes('wikipedia.org/wiki') && 
+             !lowerUrl.includes('arhaus_logo') &&
+             !lowerUrl.includes('placeholder') &&
+             !lowerUrl.includes('logo');
     };
     
     const aHasImage = hasValidImage(a.imageUrl);
     const bHasImage = hasValidImage(b.imageUrl);
     
-    // Products with images come first
+    // Products with valid images ALWAYS come first
     if (aHasImage && !bHasImage) return -1;
     if (!aHasImage && bHasImage) return 1;
     
