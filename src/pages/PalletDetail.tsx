@@ -17,13 +17,16 @@ const formatCurrency = (amount: number) => {
   }).format(rounded);
 };
 
-// Apply 85% discount cap - if discount exceeds 85%, raise the cost to cap at 85%
-const applyCappedPricing = (totalCost: number, totalMsrp: number) => {
+// Apply discount cap - 75% for Havenly, 85% for others
+const applyCappedPricing = (totalCost: number, totalMsrp: number, brand?: string | null) => {
+  const isHavenly = brand?.toLowerCase().includes('havenly');
+  const maxDiscount = isHavenly ? 75 : 85;
+  const minCostRatio = isHavenly ? 0.25 : 0.15; // 25% of MSRP for 75% off, 15% for 85% off
+  
   const discount = ((totalMsrp - totalCost) / totalMsrp) * 100;
-  if (discount > 85) {
-    // Cap at 85% off: new cost = 15% of MSRP
-    const cappedCost = totalMsrp * 0.15;
-    return { cappedCost, cappedDiscount: 85 };
+  if (discount > maxDiscount) {
+    const cappedCost = totalMsrp * minCostRatio;
+    return { cappedCost, cappedDiscount: maxDiscount };
   }
   return { cappedCost: totalCost, cappedDiscount: Math.round(discount) };
 };
@@ -67,7 +70,7 @@ const PalletDetail = () => {
   const handleAddToRequest = () => {
     if (!palletSummary || !palletId) return;
     
-    const { cappedCost } = applyCappedPricing(Number(palletSummary.total_cost), totalMsrp);
+    const { cappedCost } = applyCappedPricing(Number(palletSummary.total_cost), totalMsrp, palletSummary.brand);
     addPallet({
       palletId: palletId,
       brand: palletSummary.brand,
@@ -107,7 +110,7 @@ const PalletDetail = () => {
             <span>{items?.length ?? 0} items</span>
             <span>•</span>
             <span className="font-bold text-foreground">
-              Pallet Cost: {formatCurrency(applyCappedPricing(Number(palletSummary?.total_cost ?? 0), totalMsrp).cappedCost)}
+              Pallet Cost: {formatCurrency(applyCappedPricing(Number(palletSummary?.total_cost ?? 0), totalMsrp, palletSummary?.brand).cappedCost)}
             </span>
             <span>•</span>
             <span>Total MSRP Value: {formatCurrency(totalMsrp)}</span>
