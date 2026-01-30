@@ -314,26 +314,26 @@ const Cart = () => {
           <div className="lg:col-span-1">
             <Card className="sticky top-20 md:top-24">
               <CardContent className="p-4 md:p-6 space-y-4">
-                <h2 className="text-lg md:text-xl font-bold">Order Summary</h2>
+                <h2 className="text-xl md:text-2xl font-bold">Order Summary</h2>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
+                <div className="space-y-3">
+                  <div className="flex justify-between text-base md:text-lg">
                     <span className="text-muted-foreground">Items ({totalItems})</span>
                     <span className="font-semibold">{formatPrice(totalPrice)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-base md:text-lg">
                     <span className="text-muted-foreground">Total Savings</span>
                     <span className="font-semibold text-success">-{formatPrice(totalSavings)}</span>
                   </div>
                   <div className="pt-4 border-t">
-                    <div className="flex justify-between text-lg">
+                    <div className="flex justify-between text-xl md:text-2xl">
                       <span className="font-bold">Total</span>
                       <span className="font-bold">{formatPrice(totalPrice)}</span>
                     </div>
                   </div>
                 </div>
 
-                <Badge variant="success" className="w-full justify-center py-2">
+                <Badge variant="success" className="w-full justify-center py-2.5 text-sm md:text-base">
                   {Math.round((totalSavings / (totalPrice + totalSavings)) * 100)}% below MSRP ({formatPrice(totalSavings)} savings)
                 </Badge>
               </CardContent>
