@@ -55,6 +55,10 @@ const PalletCard = ({ pallet, isInCart, onAddToCart }: {
   onAddToCart: () => void;
 }) => {
   const navigate = useNavigate();
+  
+  // Use collage image if available, fallback to sample_image
+  const collageImageUrl = `/pallet-collages/${pallet.pallet_id}.jpg`;
+  const imageUrl = collageImageUrl;
 
   const handleClick = () => {
     navigate(`/pallets/${pallet.pallet_id}`);
@@ -72,20 +76,21 @@ const PalletCard = ({ pallet, isInCart, onAddToCart }: {
     >
       {/* Image Container - Square 1:1 ratio */}
       <div className="relative aspect-square bg-muted rounded-t-xl overflow-hidden">
-        {pallet.sample_image ? (
-          <img 
-            src={pallet.sample_image} 
-            alt={`Pallet ${pallet.pallet_id}`}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
+        <img 
+          src={imageUrl} 
+          alt={`Pallet ${pallet.pallet_id}`}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            // Fallback to sample_image if collage doesn't exist
+            if (pallet.sample_image && target.src !== pallet.sample_image) {
+              target.src = pallet.sample_image;
+            } else {
               target.style.display = 'none';
               target.parentElement?.classList.add('bg-gradient-to-br', 'from-primary/20', 'to-primary/5');
-            }}
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5" />
-        )}
+            }
+          }}
+        />
         
         {/* Heart icon - top left */}
         <button 
