@@ -94,6 +94,8 @@ const PalletDetail = () => {
           <div className="flex flex-wrap gap-4 text-muted-foreground">
             <span>{items?.length ?? 0} items</span>
             <span>•</span>
+            <span className="font-bold text-foreground">Pallet Cost: {formatCurrency(Number(palletSummary?.total_cost ?? 0))}</span>
+            <span>•</span>
             <span>Total MSRP: {formatCurrency(totalMsrp)}</span>
           </div>
         </div>
