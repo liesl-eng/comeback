@@ -339,7 +339,7 @@ const Cart = () => {
               </CardContent>
 
               <CardFooter className="p-4 md:p-6 pt-0">
-                <Button variant="accent" size="lg" className="w-full" onClick={() => setShowOrderForm(true)}>
+                <Button variant="accent" size="lg" className="w-full text-sm md:text-base" onClick={() => setShowOrderForm(true)}>
                   Submit Order Request
                 </Button>
               </CardFooter>
