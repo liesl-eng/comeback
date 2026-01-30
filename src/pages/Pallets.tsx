@@ -26,13 +26,16 @@ const formatCurrency = (amount: number) => {
   }).format(amount);
 };
 
-// Apply 85% discount cap - if discount exceeds 85%, raise the cost to cap at 85%
-const applyCappedPricing = (totalCost: number, totalMsrp: number) => {
+// Apply discount cap - 75% for Havenly, 85% for others
+const applyCappedPricing = (totalCost: number, totalMsrp: number, brand?: string | null) => {
+  const isHavenly = brand?.toLowerCase().includes('havenly');
+  const maxDiscount = isHavenly ? 75 : 85;
+  const minCostRatio = isHavenly ? 0.25 : 0.15; // 25% of MSRP for 75% off, 15% for 85% off
+  
   const discount = ((totalMsrp - totalCost) / totalMsrp) * 100;
-  if (discount > 85) {
-    // Cap at 85% off: new cost = 15% of MSRP
-    const cappedCost = totalMsrp * 0.15;
-    return { cappedCost, cappedDiscount: 85 };
+  if (discount > maxDiscount) {
+    const cappedCost = totalMsrp * minCostRatio;
+    return { cappedCost, cappedDiscount: maxDiscount };
   }
   return { cappedCost: totalCost, cappedDiscount: Math.round(discount) };
 };
@@ -126,7 +129,7 @@ const PalletCard = ({ pallet, isInCart, onAddToCart }: {
         <div className="border-t border-border pt-3 space-y-2">
           {/* Pallet Cost */}
           {pallet.total_cost && (() => {
-            const { cappedCost, cappedDiscount } = applyCappedPricing(pallet.total_cost, pallet.total_msrp);
+            const { cappedCost, cappedDiscount } = applyCappedPricing(pallet.total_cost, pallet.total_msrp, pallet.brand);
             return (
               <>
                 <div className="flex justify-between items-center">
@@ -225,7 +228,7 @@ const Pallets = () => {
 
   const handleAddPallet = (pallet: PalletSummary) => {
     if (pallet.total_cost) {
-      const { cappedCost } = applyCappedPricing(pallet.total_cost, pallet.total_msrp);
+      const { cappedCost } = applyCappedPricing(pallet.total_cost, pallet.total_msrp, pallet.brand);
       addPallet({
         palletId: pallet.pallet_id,
         brand: pallet.brand,
