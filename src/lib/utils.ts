@@ -11,3 +11,7 @@ export function formatPrice(price: number): string {
   }
   return `$${price.toFixed(2)}`;
 }
+
+export function formatPriceFixed(price: number): string {
+  return `$${price.toFixed(2)}`;
+}
