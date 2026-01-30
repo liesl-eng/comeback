@@ -1,10 +1,11 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import { useCart } from "@/contexts/CartContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 const formatCurrency = (amount: number) => {
   const rounded = Math.round(amount);
@@ -18,7 +19,7 @@ const formatCurrency = (amount: number) => {
 
 const PalletDetail = () => {
   const { palletId } = useParams<{ palletId: string }>();
-  const { totalItems } = useCart();
+  const { totalItems, addPallet } = useCart();
 
   const { data: items, isLoading } = useQuery({
     queryKey: ['pallet-items', palletId],
@@ -35,7 +36,33 @@ const PalletDetail = () => {
     enabled: !!palletId,
   });
 
+  const { data: palletSummary } = useQuery({
+    queryKey: ['pallet-summary', palletId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('pallet_summary')
+        .select('*')
+        .eq('pallet_id', palletId)
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!palletId,
+  });
+
   const totalMsrp = items?.reduce((sum, item) => sum + Number(item.original_price), 0) ?? 0;
+
+  const handleAddToRequest = () => {
+    if (!palletSummary || !palletId) return;
+    
+    addPallet({
+      palletId: palletId,
+      brand: palletSummary.brand,
+      totalCost: Number(palletSummary.total_cost),
+      totalMsrp: totalMsrp,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -51,7 +78,19 @@ const PalletDetail = () => {
         </Link>
 
         <div className="mb-6">
-          <h1 className="text-2xl md:text-4xl font-bold mb-2">Pallet {palletId}</h1>
+          <div className="flex flex-wrap items-center gap-4 mb-2">
+            <h1 className="text-2xl md:text-4xl font-bold">Pallet {palletId}</h1>
+            <Button 
+              variant="highlight" 
+              size="sm" 
+              className="gap-2"
+              onClick={handleAddToRequest}
+              disabled={!palletSummary}
+            >
+              <Plus className="h-4 w-4" />
+              Add to Request
+            </Button>
+          </div>
           <div className="flex flex-wrap gap-4 text-muted-foreground">
             <span>{items?.length ?? 0} items</span>
             <span>•</span>
