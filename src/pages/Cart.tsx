@@ -334,7 +334,7 @@ const Cart = () => {
                 </div>
 
                 <Badge variant="success" className="w-full justify-center py-2">
-                  You're saving {formatPrice(totalSavings)} on this order!
+                  {Math.round((totalSavings / (totalPrice + totalSavings)) * 100)}% below MSRP ({formatPrice(totalSavings)} savings)
                 </Badge>
               </CardContent>
 
