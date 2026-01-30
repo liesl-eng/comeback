@@ -165,7 +165,7 @@ const PalletCard = ({ pallet, isInCart, onAddToCart }: {
               ) : (
                 <>
                   <ShoppingCart className="mr-2 h-4 w-4" />
-                  Request To Order
+                  Add to Request
                 </>
               )}
             </Button>

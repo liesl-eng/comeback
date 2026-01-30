@@ -97,7 +97,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           onClick={() => onAddToCart?.(product)}
         >
           <ShoppingCart className="h-4 w-4" />
-          Request to Order
+          Add to Request
         </Button>
         <p className="text-xs text-muted-foreground text-center">
           $2,000 minimum per brand (Arhaus, Mercana, etc.)
