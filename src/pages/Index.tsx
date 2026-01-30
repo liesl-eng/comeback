@@ -99,7 +99,7 @@ const Index = () => {
                 TINY IMPERFECTIONS.{" "}
                 <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-4 md:mb-5 text-xl md:text-3xl text-primary-foreground/90 font-bold">
+              <p className="mb-4 md:mb-5 text-xl md:text-3xl text-primary-foreground/90 font-medium">
                 Private B2B Marketplace.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
