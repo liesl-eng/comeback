@@ -99,7 +99,7 @@ const Index = () => {
                 TINY IMPERFECTIONS.{" "}
                 <span className="text-accent">HUGE</span> SAVINGS.
               </h1>
-              <p className="mb-4 md:mb-5 text-2xl md:text-4xl text-primary-foreground/90 font-bold">
+              <p className="mb-4 md:mb-5 text-xl md:text-3xl text-primary-foreground/90 font-bold">
                 Private B2B Marketplace.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
@@ -155,7 +155,7 @@ const Index = () => {
         {/* Sub-header */}
         <section className="pt-6 pb-2 md:pt-8 md:pb-4 bg-muted/30">
           <div className="container mx-auto px-4 text-center">
-            <p className="text-lg md:text-2xl text-muted-foreground font-medium">
+            <p className="text-xl md:text-3xl text-muted-foreground font-medium">
               Stretch your budget, not your standards.
             </p>
           </div>
