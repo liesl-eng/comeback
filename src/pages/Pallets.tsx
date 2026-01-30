@@ -245,7 +245,7 @@ const Pallets = () => {
       
       if (error) throw error;
 
-      return data.map((row) => ({
+      const mapped = data.map((row) => ({
         pallet_id: row.pallet_id,
         item_count: row.item_count,
         total_msrp: Number(row.total_msrp),
@@ -254,6 +254,15 @@ const Pallets = () => {
         sample_image: row.sample_image,
         sample_category: row.sample_category,
       }));
+
+      // Sort: Havenly first (hot brand), then alphabetically by brand
+      return mapped.sort((a, b) => {
+        const aIsHavenly = a.brand?.toLowerCase().includes('havenly');
+        const bIsHavenly = b.brand?.toLowerCase().includes('havenly');
+        if (aIsHavenly && !bIsHavenly) return -1;
+        if (!aIsHavenly && bIsHavenly) return 1;
+        return (a.brand || '').localeCompare(b.brand || '');
+      });
     },
   });
 
