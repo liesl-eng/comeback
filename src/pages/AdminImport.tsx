@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Upload, CheckCircle, XCircle, Loader2 } from "lucide-react";
-
+import { useAuth } from "@/contexts/AuthContext";
+import { Upload, CheckCircle, XCircle, Loader2, ShieldAlert } from "lucide-react";
 interface ImportResult {
   fileName: string;
   status: 'pending' | 'importing' | 'success' | 'error';
@@ -82,8 +83,83 @@ function parseCSV(csvContent: string) {
 
 export default function AdminImport() {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [results, setResults] = useState<ImportResult[]>([]);
   const [isImporting, setIsImporting] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [checkingRole, setCheckingRole] = useState(true);
+
+  // Check if user has admin role
+  useEffect(() => {
+    async function checkAdminRole() {
+      if (!user) {
+        setCheckingRole(false);
+        setIsAdmin(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase.rpc('has_role', {
+          _user_id: user.id,
+          _role: 'admin'
+        });
+
+        if (error) {
+          console.error('Error checking admin role:', error);
+          setIsAdmin(false);
+        } else {
+          setIsAdmin(data === true);
+        }
+      } catch (err) {
+        console.error('Error checking admin role:', err);
+        setIsAdmin(false);
+      } finally {
+        setCheckingRole(false);
+      }
+    }
+
+    checkAdminRole();
+  }, [user]);
+
+  // Show loading state while checking role
+  if (checkingRole) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="container mx-auto px-4 py-8 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </main>
+      </div>
+    );
+  }
+
+  // Show access denied if not admin
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="container mx-auto px-4 py-8">
+          <Card className="max-w-md mx-auto">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-destructive">
+                <ShieldAlert className="h-6 w-6" />
+                Access Denied
+              </CardTitle>
+              <CardDescription>
+                You do not have permission to access this page. Admin privileges are required.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={() => navigate('/')} variant="outline" className="w-full">
+                Return to Home
+              </Button>
+            </CardContent>
+          </Card>
+        </main>
+      </div>
+    );
+  }
   
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
