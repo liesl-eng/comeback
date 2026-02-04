@@ -104,7 +104,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           Add to Request
         </Button>
         <p className="text-xs text-muted-foreground text-center">
-          $5,000 minimum per brand (Arhaus, Mercana, etc.)
+          $5,000 minimum per brand (Arhaus, Modus, etc.)
         </p>
       </CardFooter>
     </Card>
