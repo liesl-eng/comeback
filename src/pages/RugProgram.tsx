@@ -212,8 +212,8 @@ const RugProgram = () => {
                   className="text-center p-6 border-2 border-transparent hover:border-accent/50 transition-colors cursor-default"
                 >
                   <span className="text-4xl mb-3 block">{card.icon}</span>
-                  <h3 className="font-semibold text-lg mb-1">{card.title}</h3>
-                  <p className="text-sm text-muted-foreground">{card.desc}</p>
+                  <h3 className="font-bold text-xl md:text-2xl mb-1">{card.title}</h3>
+                  <p className="text-base text-muted-foreground">{card.desc}</p>
                 </Card>
               ))}
             </div>
