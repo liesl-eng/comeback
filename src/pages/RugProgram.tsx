@@ -273,7 +273,7 @@ const RugProgram = () => {
         </section>
 
         {/* ── SAMPLE INVENTORY ── */}
-        <section className="pt-6 md:pt-10 pb-14 md:pb-20 bg-muted/30">
+        <section className="pt-6 md:pt-10 pb-6 md:pb-10 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 md:mb-14">
               <h2 className="text-2xl md:text-4xl font-bold mb-3">Sample Inventory</h2>
@@ -311,7 +311,7 @@ const RugProgram = () => {
 
 
         {/* ── FAQ ── */}
-        <section className="py-14 md:py-20 bg-muted/30">
+        <section className="pt-6 md:pt-10 pb-14 md:pb-20 bg-muted/30">
           <div className="container mx-auto px-4 max-w-3xl">
             <h2 className="text-2xl md:text-4xl font-bold text-center mb-8 md:mb-12">
               Frequently Asked Questions
