@@ -204,7 +204,7 @@ const RugProgram = () => {
                 Reliable, affordable rug inventory — without the sourcing headaches.
               </p>
             </div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-accent text-center mb-6">Perfect For</p>
+            <p className="text-base md:text-lg font-semibold uppercase tracking-widest text-accent text-center mb-6">Perfect For</p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
               {[
                 { icon: "🏪", title: "Boutique Stores", desc: "High-margin inventory your shoppers love" },
