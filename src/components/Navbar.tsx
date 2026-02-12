@@ -80,7 +80,7 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
               </Button>
             </Link>
             <Link to="/rug-program">
-              <Button variant="outline" size="sm">
+              <Button variant="highlight" size="sm">
                 Rug Program
               </Button>
             </Link>
@@ -196,7 +196,7 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
                 </Button>
               </Link>
               <Link to="/rug-program" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full">
+                <Button variant="highlight" className="w-full">
                   Rug Program
                 </Button>
               </Link>

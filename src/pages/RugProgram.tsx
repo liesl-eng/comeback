@@ -332,15 +332,15 @@ const RugProgram = () => {
         </section>
       </main>
 
-      <footer className="py-10 bg-card border-t border-border">
-        <div className="container mx-auto px-4 text-center space-y-2">
-          <p className="text-base text-foreground font-medium">
+      <footer className="py-12 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center space-y-3">
+          <p className="text-xl md:text-2xl font-semibold">
             Get in contact:{" "}
-            <a href="mailto:liesl@comebackgoods.com" className="text-accent hover:underline">
+            <a href="mailto:liesl@comebackgoods.com" className="text-accent hover:underline underline-offset-4">
               liesl@comebackgoods.com
             </a>
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-primary-foreground/60">
             © 2025 Comeback Goods. Almost Perfect. Always Loved.
           </p>
         </div>
