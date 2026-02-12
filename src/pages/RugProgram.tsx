@@ -183,22 +183,19 @@ const RugProgram = () => {
                 </Button>
               </div>
 
-              {/* Trust stats with dividers */}
-              <div className="flex items-center justify-center gap-6 md:gap-10 max-w-lg mx-auto">
+              {/* Hero bullet points */}
+              <ul className="flex flex-col gap-3 max-w-xl mx-auto text-left">
                 {[
-                  ["60–80%", "Below MSRP"],
-                  ["New Condition", "Warehouse Direct"],
-                  ["Flexible", "Pause Anytime"],
-                ].map(([big, small], i) => (
-                  <div key={big} className="flex items-center gap-6 md:gap-10">
-                    {i > 0 && <div className="w-px h-10 bg-[hsl(0_0%_98%/0.15)]" />}
-                    <div className="text-center">
-                      <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">{big}</p>
-                      <p className="text-xs md:text-sm text-[hsl(0_0%_98%/0.6)]">{small}</p>
-                    </div>
-                  </div>
+                  ["Rugs You Can Count On", "inspected, graded, and ready to sell."],
+                  ["High-Margin Inventory", "up to 80% off retail, no wasted stock."],
+                  ["Your Lot, Your Rules", "monthly or quarterly, swap, pause, or adjust anytime."],
+                ].map(([label, desc]) => (
+                  <li key={label} className="flex items-start gap-3 text-[hsl(0_0%_98%/0.85)] text-sm md:text-base">
+                    <CheckCircle2 className="h-5 w-5 mt-0.5 shrink-0 text-[hsl(43_65%_55%)]" />
+                    <span><span className="font-bold text-[hsl(0_0%_98%)] whitespace-nowrap">{label}</span> — {desc}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </section>
