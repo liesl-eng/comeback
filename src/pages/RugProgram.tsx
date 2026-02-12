@@ -278,7 +278,7 @@ const RugProgram = () => {
             <div className="text-center mb-10 md:mb-14">
               <h2 className="text-2xl md:text-4xl font-bold mb-3">Sample Inventory</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Here's a taste of what lands in a typical shipment. Brands, styles, and sizes rotate based on availability.
+                Brands, styles, and sizes rotate based on availability.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
@@ -310,27 +310,6 @@ const RugProgram = () => {
         </section>
 
 
-        {/* ── FAQ ── */}
-        <section className="py-14 md:py-20 bg-muted/30">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <h2 className="text-2xl md:text-4xl font-bold text-center mb-8 md:mb-12">
-              Frequently Asked Questions
-            </h2>
-            <Accordion type="single" collapsible className="space-y-2">
-              {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border rounded-lg px-4 bg-card">
-                  <AccordionTrigger className="text-left font-semibold text-base hover:no-underline [&[data-state=open]>svg]:text-accent">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </section>
-
         {/* ── BOTTOM CTA ── */}
         <section className="py-14 md:py-20 bg-gradient-hero">
           <div className="container mx-auto px-4 text-center">
@@ -352,13 +331,6 @@ const RugProgram = () => {
           </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t bg-card py-8">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2025 Comeback Goods. Almost Perfect. Always Loved.</p>
-        </div>
-      </footer>
     </div>
   );
 };
