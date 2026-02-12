@@ -152,8 +152,8 @@ const RugProgram = () => {
           {/* Warm gradient accent glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[hsl(30_50%_55%/0.08)]" />
 
-          <div className="container relative z-10 mx-auto px-4 md:px-6 py-20 md:py-28 lg:py-36">
-            <div className="max-w-4xl mx-auto text-center">
+          <div className="relative z-10 mx-auto px-6 md:px-12 lg:px-20 py-20 md:py-28 lg:py-36">
+            <div className="max-w-5xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 mb-6 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] text-sm font-semibold px-4 py-1.5 rounded-full">
                 <Sparkles className="h-4 w-4" />
                 Subscription Program
