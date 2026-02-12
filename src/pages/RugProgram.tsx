@@ -152,7 +152,7 @@ const RugProgram = () => {
           {/* Warm gradient accent glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[hsl(30_50%_55%/0.08)]" />
 
-          <div className="relative z-10 mx-auto px-6 md:px-12 lg:px-20 py-20 md:py-28 lg:py-36">
+          <div className="relative z-10 mx-auto px-6 md:px-12 lg:px-20 py-14 md:py-20 lg:py-28">
             <div className="max-w-5xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 mb-6 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] text-sm font-semibold px-4 py-1.5 rounded-full">
                 <Sparkles className="h-4 w-4" />
@@ -174,7 +174,7 @@ const RugProgram = () => {
                   className="border-[hsl(0_0%_98%/0.4)] text-[hsl(0_0%_98%)] bg-transparent hover:bg-[hsl(0_0%_98%/0.1)] hover:text-[hsl(0_0%_98%)] font-medium text-base px-8"
                   onClick={() => scrollTo("how-it-works")}
                 >
-                  See How It Works
+                  How It Works
                 </Button>
               </div>
 
