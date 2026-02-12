@@ -278,7 +278,7 @@ const RugProgram = () => {
             <div className="text-center mb-10 md:mb-14">
               <h2 className="text-2xl md:text-4xl font-bold mb-3">Sample Inventory</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Here's a taste of what lands in a typical shipment. Brands, styles, and sizes rotate based on availability.
+                Brands, styles, and sizes rotate based on availability.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
