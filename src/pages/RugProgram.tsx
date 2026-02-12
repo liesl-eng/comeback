@@ -166,7 +166,7 @@ const RugProgram = () => {
                 </span>
               </h1>
               <p className="mb-10 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
-                Inspected, ready-to-sell inventory delivered on your schedule.
+                Inspected, ready-to-sell rug inventory delivered on your schedule.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <Button size="lg" className="gap-2 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] hover:bg-[hsl(30_50%_60%)] font-bold text-base px-8" onClick={() => scrollTo("quote-form")}>
