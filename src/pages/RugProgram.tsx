@@ -185,8 +185,8 @@ const RugProgram = () => {
               {/* Hero bullet points */}
               <ul className="flex flex-col gap-3 max-w-xl mx-auto text-left">
                 {[
+                  ["Premium Rugs, Big Savings", "curated rugs up to 80% off retail."],
                   ["Rugs You Can Count On", "inspected, graded, and ready to display."],
-                  ["Premium Rugs, Big Savings", "curated, high quality rugs up to 80% off retail."],
                   ["Your Lot, Your Rules", "monthly or quarterly, swap, pause, or adjust anytime."],
                 ].map(([label, desc]) => (
                   <li key={label} className="flex items-start gap-3 text-[hsl(0_0%_98%/0.85)] text-sm md:text-base">
