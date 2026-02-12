@@ -258,7 +258,7 @@ const RugProgram = () => {
                 {
                   step: "03",
                   title: "Predictable & Flexible Delivery",
-                  desc: "Receive consistent shipments on your schedule — pause, swap, or adjust anytime.",
+                  desc: "Receive consistent rug shipments on your schedule — pause, swap, or adjust anytime.",
                   Icon: CalendarClock,
                 },
               ].map((s, i) => (
