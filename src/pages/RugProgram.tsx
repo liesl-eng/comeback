@@ -330,29 +330,7 @@ const RugProgram = () => {
             </Accordion>
           </div>
         </section>
-
-        {/* ── BOTTOM CTA ── */}
-        <section className="py-14 md:py-20 bg-gradient-hero">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Ready to stop rug shopping and start rug sourcing?
-            </h2>
-            <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-              Join businesses that trust Comeback Goods for consistent, affordable rug inventory.
-            </p>
-            <Button
-              variant="accent"
-              size="lg"
-              className="gap-2"
-              onClick={() => scrollTo("quote-form")}
-            >
-              Get Your Custom Quote
-              <ArrowRight className="h-5 w-5" />
-            </Button>
-          </div>
-        </section>
       </main>
-
     </div>
   );
 };
