@@ -67,7 +67,7 @@ const faqs = [
   },
   {
     q: "What brands do you carry?",
-    a: "We source from a rotating mix of premium home brands. While specific brands vary by availability, everything meets our quality standards and is evaluated by us before we ship out to you. We're happy to share current brand availability during your consultation.",
+    a: "We source from a rotating mix of premium home brands. While specific brands vary by availability, everything meets our quality standards and is evaluated by us before we ship. We're happy to share current brand availability during your consultation.",
   },
 ];
 
