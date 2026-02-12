@@ -165,7 +165,7 @@ const RugProgram = () => {
                 </span>
               </h1>
               <p className="mb-10 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
-                Inspected, ready-to-sell rug inventory... delivered on your schedule.
+                Inspected, ready-to-display rug inventory... delivered on your schedule.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <Button
