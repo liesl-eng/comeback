@@ -233,14 +233,14 @@ const RugProgram = () => {
               {[
                 {
                   step: "01",
-                  title: "Tell Us What You Need",
+                  title: "Tell Us What Rugs You Need",
                   desc: "Set your volume, style, and size preferences — we'll curate a program built for your business or project.",
                   Icon: ClipboardList,
                 },
                 {
                   step: "02",
-                  title: "Curated, Ready-to-Use Inventory",
-                  desc: "Premium brand rugs, inspected and graded, priced 60–80% below retail.",
+                  title: "Curated, Ready-to-Use Rug Inventory",
+                  desc: "Premium brand rugs, inspected and graded, priced up to 60% below wholesale.",
                   Icon: PackageSearch,
                 },
                 {
@@ -251,15 +251,15 @@ const RugProgram = () => {
                 },
               ].map((s, i) => (
                 <div key={s.step} className="flex items-stretch">
-                  <Card className="relative text-center p-6 md:p-8 border border-border/60 bg-card/80 backdrop-blur-sm flex-1 flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center mb-4">
-                      <s.Icon className="w-6 h-6 text-accent" />
+                  <Card className="relative text-center p-8 md:p-10 border border-border/60 bg-card/80 backdrop-blur-sm flex-1 flex flex-col items-center">
+                    <div className="w-14 h-14 rounded-full bg-accent/15 flex items-center justify-center mb-5">
+                      <s.Icon className="w-7 h-7 text-accent" />
                     </div>
-                    <span className="text-xs font-bold tracking-widest text-accent uppercase mb-3">
+                    <span className="text-sm font-bold tracking-widest text-accent uppercase mb-3">
                       Step {s.step}
                     </span>
-                    <h3 className="text-lg font-semibold mb-3">{s.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                    <h3 className="text-xl md:text-2xl font-semibold mb-3">{s.title}</h3>
+                    <p className="text-base text-muted-foreground leading-relaxed">{s.desc}</p>
                   </Card>
                   {i < 2 && (
                     <div className="hidden md:flex items-center justify-center px-2">
