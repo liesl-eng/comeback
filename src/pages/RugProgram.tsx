@@ -182,7 +182,7 @@ const RugProgram = () => {
               <ul className="flex flex-col gap-3 max-w-xl mx-auto text-left">
                 {[
                   ["Premium Rugs, Big Savings", "up to 60% off wholesale."],
-                  ["Rugs You Can Count On", "inspected, graded, and ready to display."],
+                  ["Rugs You Can Count On", "inspected and ready to display."],
                   ["Your Lot, Your Rules", "monthly or quarterly, swap, pause, or adjust anytime."],
                 ].map(([label, desc]) => (
                   <li key={label} className="flex items-start gap-3 text-[hsl(0_0%_98%/0.85)] text-base md:text-lg">
