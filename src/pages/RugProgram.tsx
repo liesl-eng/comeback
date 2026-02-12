@@ -237,17 +237,17 @@ const RugProgram = () => {
                 {
                   step: "01",
                   title: "Tell Us What You Need",
-                  desc: "Share your volume, style preferences, and size requirements. We'll tailor a program around your business.",
+                  desc: "Set your volume, style, and size preferences — we'll curate a program built for your business or project.",
                 },
                 {
                   step: "02",
-                  title: "We Source & Curate",
-                  desc: "Our team pulls from premium brand overstock — area rugs, runners, and outdoor styles at 60–80% below MSRP.",
+                  title: "Curated, Ready-to-Use Inventory",
+                  desc: "Premium brand rugs, inspected and graded, priced 60–80% below retail.",
                 },
                 {
                   step: "03",
-                  title: "Recurring Shipments",
-                  desc: "Receive consistent, quality-inspected rug inventory on a schedule that works for you. Pause or adjust anytime.",
+                  title: "Predictable & Flexible Delivery",
+                  desc: "Receive consistent shipments on your schedule — pause, swap, or adjust anytime.",
                 },
               ].map((s) => (
                 <div key={s.step} className="relative text-center">
