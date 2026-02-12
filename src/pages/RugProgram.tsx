@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
@@ -139,6 +140,16 @@ const RugProgram = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Comeback Goods Rug Program — Curated Rugs, Big Savings</title>
+        <meta name="description" content="Subscription-based rug sourcing from premium brands up to 60% below wholesale. Inspected, ready-to-sell inventory delivered on your schedule." />
+        <meta property="og:title" content="Comeback Goods Rug Program — Curated Rugs, Big Savings" />
+        <meta property="og:description" content="Subscription-based rug sourcing from premium brands up to 60% below wholesale. Inspected, ready-to-sell inventory delivered on your schedule." />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Comeback Goods Rug Program — Curated Rugs, Big Savings" />
+        <meta name="twitter:description" content="Subscription-based rug sourcing from premium brands up to 60% below wholesale. Inspected, ready-to-sell inventory delivered on your schedule." />
+      </Helmet>
       <Navbar cartItemCount={totalItems} />
 
       <main>
