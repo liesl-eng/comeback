@@ -158,7 +158,7 @@ const RugProgram = () => {
                 <Sparkles className="h-4 w-4" />
                 Comeback Rug Program
               </div>
-              <h1 className="mb-5 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-[0.95]">
+              <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[0.95]">
                 <span className="text-[hsl(0_0%_98%)]">Curated Rugs, </span>
                 <span className="bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">
                   Big Savings
