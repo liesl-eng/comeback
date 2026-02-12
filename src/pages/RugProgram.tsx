@@ -40,6 +40,7 @@ const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
 const sampleRugs = [
   { name: "Antiquity Hand Tufted 8×10", style: "Traditional", brand: "Safavieh", msrp: 713, price: 214, image: rugAntiquityNavy },
   { name: "Floral Persian Area Rug 7×10", style: "Traditional", brand: "Threshold", msrp: 200, price: 60, image: rugFloralPersian },
+  { name: "Modern Geometric Area Rug 6×9", style: "Modern", brand: "Safavieh", msrp: 420, price: 126, image: rugModernGeo },
   { name: "Buttercup Diamond Persian 7×10", style: "Traditional", brand: "Threshold", msrp: 200, price: 60, image: rugPersianBlue },
   { name: "Solid Eyelash Shag 5×7", style: "Solid/Shag", brand: "Threshold", msrp: 100, price: 30, image: rugShagGray },
   { name: "Jute Diamond Area Rug 5×7", style: "Natural", brand: "Threshold", msrp: 100, price: 30, image: rugJuteDiamond },
@@ -47,7 +48,6 @@ const sampleRugs = [
   { name: "Persian Medallion Runner 2×8", style: "Runner", brand: "Safavieh", msrp: 289, price: 87, image: rugPersianRunner },
   { name: "Boho Diamond Runner 2×7", style: "Runner", brand: "JONATHAN Y", msrp: 179, price: 54, image: rugBohoRunner },
   { name: "Floral Round Accent Rug 4ft", style: "Round", brand: "Threshold", msrp: 120, price: 36, image: rugRoundFloral },
-  { name: "Modern Geometric Area Rug 6×9", style: "Modern", brand: "Safavieh", msrp: 420, price: 126, image: rugModernGeo },
 ];
 
 const volumeOptions = ["10–25 rugs/mo", "25–50 rugs/mo", "50–100 rugs/mo", "100+ rugs/mo", "Not sure yet"];
