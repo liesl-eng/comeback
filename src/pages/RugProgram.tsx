@@ -331,6 +331,20 @@ const RugProgram = () => {
           </div>
         </section>
       </main>
+
+      <footer className="py-10 bg-card border-t border-border">
+        <div className="container mx-auto px-4 text-center space-y-2">
+          <p className="text-base text-foreground font-medium">
+            Get in contact:{" "}
+            <a href="mailto:liesl@comebackgoods.com" className="text-accent hover:underline">
+              liesl@comebackgoods.com
+            </a>
+          </p>
+          <p className="text-sm text-muted-foreground">
+            © 2025 Comeback Goods. Almost Perfect. Always Loved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
