@@ -199,6 +199,7 @@ const RugProgram = () => {
         <section className="py-14 md:py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 md:mb-14">
+              <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-3">Perfect For</p>
               <h2 className="text-2xl md:text-4xl font-bold mb-3">Stretch Your Budget, Not Your Standards.</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Reliable, affordable rug inventory — without the sourcing headaches.
