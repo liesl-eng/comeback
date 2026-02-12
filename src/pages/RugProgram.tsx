@@ -50,16 +50,16 @@ const faqs = [
     a: "All rugs are new or like-new, and come directly from our retailer and brand partners. Every rug is inspected before shipping.",
   },
   {
+    q: "How does pricing work?",
+    a: "We have a low MOQ but pricing depends on volume and mix. Most partners see up to 60–70% below wholesale. We'll provide a custom quote based on your volume tier and style preferences.",
+  },
+  {
     q: "Can I choose specific styles, sizes, or colors?",
     a: "Absolutely. During onboarding, you'll share your preferences and we'll curate shipments to match. Need mostly 5×7 neutrals? Heavy on runners? We build your program around what sells in your business.",
   },
   {
     q: "What's the minimum commitment?",
     a: "We ask for a 3-month initial commitment so we can dial in your preferences. After that, you can adjust volume, pause, or cancel with 30 days notice.",
-  },
-  {
-    q: "How does pricing work?",
-    a: "Pricing depends on volume and mix. Most partners see up to 60–70% below wholesale. We'll provide a custom quote based on your volume tier and style preferences.",
   },
   {
     q: "How often do I receive shipments?",
