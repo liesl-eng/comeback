@@ -20,7 +20,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight } from "lucide-react";
 import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
 import rugMoroccanBoho from "@/assets/rugs/rug-moroccan-boho.jpg";
 import rugPersianBlue from "@/assets/rugs/rug-persian-blue.jpg";
@@ -232,30 +232,43 @@ const RugProgram = () => {
         <section id="how-it-works" className="py-14 md:py-20 scroll-mt-20">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-14">How It Works</h2>
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-0 max-w-5xl mx-auto items-stretch">
               {[
                 {
                   step: "01",
                   title: "Tell Us What You Need",
                   desc: "Set your volume, style, and size preferences — we'll curate a program built for your business or project.",
+                  Icon: ClipboardList,
                 },
                 {
                   step: "02",
                   title: "Curated, Ready-to-Use Inventory",
                   desc: "Premium brand rugs, inspected and graded, priced 60–80% below retail.",
+                  Icon: PackageSearch,
                 },
                 {
                   step: "03",
                   title: "Predictable & Flexible Delivery",
                   desc: "Receive consistent shipments on your schedule — pause, swap, or adjust anytime.",
+                  Icon: CalendarClock,
                 },
-              ].map((s) => (
-                <div key={s.step} className="relative text-center">
-                  <span className="text-7xl md:text-8xl font-black text-accent/15 select-none leading-none">
-                    {s.step}
-                  </span>
-                  <h3 className="text-lg font-semibold -mt-4 mb-2">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground">{s.desc}</p>
+              ].map((s, i) => (
+                <div key={s.step} className="flex items-stretch">
+                  <Card className="relative text-center p-6 md:p-8 border border-border/60 bg-card/80 backdrop-blur-sm flex-1 flex flex-col items-center">
+                    <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center mb-4">
+                      <s.Icon className="w-6 h-6 text-accent" />
+                    </div>
+                    <span className="text-xs font-bold tracking-widest text-accent uppercase mb-3">
+                      Step {s.step}
+                    </span>
+                    <h3 className="text-lg font-semibold mb-3">{s.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                  </Card>
+                  {i < 2 && (
+                    <div className="hidden md:flex items-center justify-center px-2">
+                      <ChevronRight className="w-5 h-5 text-accent/60" />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
