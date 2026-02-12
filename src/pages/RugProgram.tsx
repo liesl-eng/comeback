@@ -47,7 +47,7 @@ const styleOptions = ["Traditional", "Modern", "Bohemian", "Solid/Neutral", "Geo
 const faqs = [
   {
     q: "What condition are the rugs in?",
-    a: "All rugs are new or like-new from premium brand overstock. These are warehouse-direct items — never used, just excess inventory that brands need to move. Every rug is inspected before shipping.",
+    a: "All rugs are new or like-new, and come directly from our retailer and brand partners. Every rug is inspected before shipping.",
   },
   {
     q: "Can I choose specific styles, sizes, or colors?",
@@ -59,7 +59,7 @@ const faqs = [
   },
   {
     q: "How does pricing work?",
-    a: "Pricing depends on volume and mix. Most partners see 60–80% below MSRP. We'll provide a custom quote based on your volume tier and style preferences.",
+    a: "Pricing depends on volume and mix. Most partners see up to 60–70% below wholesale. We'll provide a custom quote based on your volume tier and style preferences.",
   },
   {
     q: "How often do I receive shipments?",
@@ -67,7 +67,7 @@ const faqs = [
   },
   {
     q: "What brands do you carry?",
-    a: "We source from a rotating mix of premium home brands. While specific brands vary by availability, everything meets our quality standards. We're happy to share current brand availability during your consultation.",
+    a: "We source from a rotating mix of premium home brands. While specific brands vary by availability, everything meets our quality standards and is evaluated by us before we ship out to you. We're happy to share current brand availability during your consultation.",
   },
 ];
 
