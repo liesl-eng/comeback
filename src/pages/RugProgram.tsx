@@ -40,6 +40,9 @@ const sampleRugs = [
   { name: "Solid Eyelash Shag 5×7", style: "Solid/Shag", brand: "Threshold", msrp: 100, price: 30, image: rugShagGray },
   { name: "Jute Diamond Area Rug 5×7", style: "Natural", brand: "Threshold", msrp: 100, price: 30, image: rugJuteDiamond },
   { name: "Moroccan Boho Vintage Diamond 8×10", style: "Bohemian", brand: "JONATHAN Y", msrp: 359, price: 108, image: rugMoroccanBoho },
+  { name: "Persian Medallion Runner 2×8", style: "Runner", brand: "Safavieh", msrp: 289, price: 87, image: rugAntiquityNavy },
+  { name: "Boho Diamond Runner 2×7", style: "Runner", brand: "JONATHAN Y", msrp: 179, price: 54, image: rugMoroccanBoho },
+  { name: "Floral Round Accent Rug 4ft", style: "Round", brand: "Threshold", msrp: 120, price: 36, image: rugFloralPersian },
 ];
 
 const volumeOptions = ["10–25 rugs/mo", "25–50 rugs/mo", "50–100 rugs/mo", "100+ rugs/mo", "Not sure yet"];
