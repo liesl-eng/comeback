@@ -32,6 +32,7 @@ import rugFloralPersian from "@/assets/rugs/rug-floral-persian.jpg";
 import rugPersianRunner from "@/assets/rugs/rug-persian-runner.jpg";
 import rugBohoRunner from "@/assets/rugs/rug-boho-runner.jpg";
 import rugRoundFloral from "@/assets/rugs/rug-round-floral.jpg";
+import rugModernGeo from "@/assets/rugs/rug-modern-geometric.jpg";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
@@ -46,6 +47,7 @@ const sampleRugs = [
   { name: "Persian Medallion Runner 2×8", style: "Runner", brand: "Safavieh", msrp: 289, price: 87, image: rugPersianRunner },
   { name: "Boho Diamond Runner 2×7", style: "Runner", brand: "JONATHAN Y", msrp: 179, price: 54, image: rugBohoRunner },
   { name: "Floral Round Accent Rug 4ft", style: "Round", brand: "Threshold", msrp: 120, price: 36, image: rugRoundFloral },
+  { name: "Modern Geometric Area Rug 6×9", style: "Modern", brand: "Safavieh", msrp: 420, price: 126, image: rugModernGeo },
 ];
 
 const volumeOptions = ["10–25 rugs/mo", "25–50 rugs/mo", "50–100 rugs/mo", "100+ rugs/mo", "Not sure yet"];
