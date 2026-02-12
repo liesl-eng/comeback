@@ -159,8 +159,7 @@ const RugProgram = () => {
                 Subscription Program
               </div>
               <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[0.95]">
-                <span className="text-[hsl(0_0%_98%)]">Curated Rugs,</span>
-                <br />
+                <span className="text-[hsl(0_0%_98%)]">Curated Rugs, </span>
                 <span className="bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">
                   Maximum Margin
                 </span>
