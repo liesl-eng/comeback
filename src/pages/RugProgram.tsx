@@ -156,7 +156,7 @@ const RugProgram = () => {
             <div className="max-w-5xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 mb-6 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] text-sm font-semibold px-4 py-1.5 rounded-full">
                 <Sparkles className="h-4 w-4" />
-                Subscription Program
+                Comeback Rug Program
               </div>
               <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[0.95]">
                 <span className="text-[hsl(0_0%_98%)]">Curated Rugs, </span>
