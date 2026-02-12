@@ -29,6 +29,9 @@ import rugShagGray from "@/assets/rugs/rug-shag-gray.jpg";
 import rugJuteDiamond from "@/assets/rugs/rug-jute-diamond.jpg";
 import rugAntiquityNavy from "@/assets/rugs/rug-antiquity-navy.jpg";
 import rugFloralPersian from "@/assets/rugs/rug-floral-persian.jpg";
+import rugPersianRunner from "@/assets/rugs/rug-persian-runner.jpg";
+import rugBohoRunner from "@/assets/rugs/rug-boho-runner.jpg";
+import rugRoundFloral from "@/assets/rugs/rug-round-floral.jpg";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
@@ -40,9 +43,9 @@ const sampleRugs = [
   { name: "Solid Eyelash Shag 5×7", style: "Solid/Shag", brand: "Threshold", msrp: 100, price: 30, image: rugShagGray },
   { name: "Jute Diamond Area Rug 5×7", style: "Natural", brand: "Threshold", msrp: 100, price: 30, image: rugJuteDiamond },
   { name: "Moroccan Boho Vintage Diamond 8×10", style: "Bohemian", brand: "JONATHAN Y", msrp: 359, price: 108, image: rugMoroccanBoho },
-  { name: "Persian Medallion Runner 2×8", style: "Runner", brand: "Safavieh", msrp: 289, price: 87, image: rugAntiquityNavy },
-  { name: "Boho Diamond Runner 2×7", style: "Runner", brand: "JONATHAN Y", msrp: 179, price: 54, image: rugMoroccanBoho },
-  { name: "Floral Round Accent Rug 4ft", style: "Round", brand: "Threshold", msrp: 120, price: 36, image: rugFloralPersian },
+  { name: "Persian Medallion Runner 2×8", style: "Runner", brand: "Safavieh", msrp: 289, price: 87, image: rugPersianRunner },
+  { name: "Boho Diamond Runner 2×7", style: "Runner", brand: "JONATHAN Y", msrp: 179, price: 54, image: rugBohoRunner },
+  { name: "Floral Round Accent Rug 4ft", style: "Round", brand: "Threshold", msrp: 120, price: 36, image: rugRoundFloral },
 ];
 
 const volumeOptions = ["10–25 rugs/mo", "25–50 rugs/mo", "50–100 rugs/mo", "100+ rugs/mo", "Not sure yet"];
