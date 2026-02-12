@@ -239,7 +239,7 @@ const RugProgram = () => {
                 },
                 {
                   step: "02",
-                  title: "Curated, Ready-to-Use Rug Inventory",
+                  title: "Curated, Ready-to-Display Rug Inventory",
                   desc: "Premium brand rugs, inspected and graded, priced up to 60% below wholesale.",
                   Icon: PackageSearch,
                 },
