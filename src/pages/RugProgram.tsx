@@ -56,7 +56,7 @@ const faqs = [
   },
   {
     q: "Can I choose specific styles, sizes, or colors?",
-    a: "Absolutely. During onboarding, you'll share your preferences and we'll curate shipments to match. Need mostly 5×7 neutrals? Heavy on runners? We build your program around what sells in your business.",
+    a: "Absolutely. During onboarding, you'll share your preferences and we'll curate shipments to match. Need mostly 5×7 neutrals? Heavy on runners? We build your program around what works for your business.",
   },
   {
     q: "What's the minimum commitment?",
