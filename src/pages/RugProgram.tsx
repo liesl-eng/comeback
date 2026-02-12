@@ -203,7 +203,7 @@ const RugProgram = () => {
         <section className="py-14 md:py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 md:mb-14">
-              <h2 className="text-2xl md:text-4xl font-bold mb-3">Built for Businesses That Move Volume</h2>
+              <h2 className="text-2xl md:text-4xl font-bold mb-3">Stretch Your Budget, Not Your Standards.</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Our rug program is designed for organizations that need reliable, affordable rug inventory — without the sourcing headaches.
               </p>
