@@ -138,7 +138,7 @@ const Index = () => {
                     key={category}
                     variant="outline"
                     size="sm"
-                    className="bg-white/10 border-white/30 text-primary-foreground hover:bg-white/20 hover:text-primary-foreground backdrop-blur-sm"
+                    className="bg-white/10 border-white/30 text-primary-foreground hover:bg-white/20 hover:text-primary-foreground backdrop-blur-sm text-base"
                     onClick={() => navigate(`/products?category=${encodeURIComponent(category)}`)}
                   >
                     {category}
