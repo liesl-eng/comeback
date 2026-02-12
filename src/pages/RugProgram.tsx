@@ -159,14 +159,14 @@ const RugProgram = () => {
                 Subscription Program
               </div>
               <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[0.95]">
-                <span className="text-[hsl(0_0%_98%)]">Rugs on Repeat.</span>
+                <span className="text-[hsl(0_0%_98%)]">Curated Rugs,</span>
                 <br />
                 <span className="bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">
-                  Built for Your Business.
+                  Maximum Margin
                 </span>
               </h1>
               <p className="mb-10 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
-                Subscription-based rug sourcing from premium brands at 60–80% below MSRP. Consistent inventory, curated to your specs, delivered on schedule.
+                Inspected, ready-to-sell inventory delivered on your schedule.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <Button size="lg" className="gap-2 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] hover:bg-[hsl(30_50%_60%)] font-bold text-base px-8" onClick={() => scrollTo("quote-form")}>
