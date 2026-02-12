@@ -21,26 +21,23 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import rugMoroccanBoho from "@/assets/rugs/rug-moroccan-boho.jpg";
+import rugPersianBlue from "@/assets/rugs/rug-persian-blue.jpg";
+import rugShagGray from "@/assets/rugs/rug-shag-gray.jpg";
+import rugJuteDiamond from "@/assets/rugs/rug-jute-diamond.jpg";
+import rugAntiquityNavy from "@/assets/rugs/rug-antiquity-navy.jpg";
+import rugFloralPersian from "@/assets/rugs/rug-floral-persian.jpg";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
 
 const sampleRugs = [
-  { name: "Medallion Area Rug 8×10", style: "Traditional", msrp: 899, price: 189, discount: "79% below MSRP" },
-  { name: "Abstract Geo Runner 2.5×8", style: "Modern", msrp: 349, price: 79, discount: "77% below MSRP" },
-  { name: "Handwoven Jute 5×7", style: "Bohemian", msrp: 599, price: 139, discount: "77% below MSRP" },
-  { name: "Solid Shag 6×9", style: "Solid/Neutral", msrp: 479, price: 109, discount: "77% below MSRP" },
-  { name: "Indoor/Outdoor Stripe 5×7", style: "Outdoor", msrp: 399, price: 89, discount: "78% below MSRP" },
-  { name: "Vintage Distressed 8×10", style: "Traditional", msrp: 749, price: 169, discount: "77% below MSRP" },
-];
-
-const rugGradients = [
-  "from-amber-800/30 via-amber-600/20 to-amber-900/30",
-  "from-slate-600/30 via-slate-400/20 to-slate-700/30",
-  "from-yellow-700/30 via-yellow-500/20 to-yellow-800/30",
-  "from-stone-500/30 via-stone-300/20 to-stone-600/30",
-  "from-teal-700/30 via-teal-500/20 to-teal-800/30",
-  "from-rose-800/30 via-rose-600/20 to-rose-900/30",
+  { name: "Moroccan Boho Vintage Diamond 8×10", style: "Bohemian", brand: "JONATHAN Y", msrp: 359, price: 108, discount: "70% below MSRP", image: rugMoroccanBoho },
+  { name: "Buttercup Diamond Persian 7×10", style: "Traditional", brand: "Threshold", msrp: 200, price: 60, discount: "70% below MSRP", image: rugPersianBlue },
+  { name: "Solid Eyelash Shag 5×7", style: "Solid/Shag", brand: "Threshold", msrp: 100, price: 30, discount: "70% below MSRP", image: rugShagGray },
+  { name: "Jute Diamond Area Rug 5×7", style: "Natural", brand: "Threshold", msrp: 100, price: 30, discount: "70% below MSRP", image: rugJuteDiamond },
+  { name: "Antiquity Hand Tufted 8×10", style: "Traditional", brand: "Safavieh", msrp: 713, price: 214, discount: "70% below MSRP", image: rugAntiquityNavy },
+  { name: "Floral Persian Area Rug 7×10", style: "Traditional", brand: "Threshold", msrp: 200, price: 60, discount: "70% below MSRP", image: rugFloralPersian },
 ];
 
 const volumeOptions = ["10–25 rugs/mo", "25–50 rugs/mo", "50–100 rugs/mo", "100+ rugs/mo", "Not sure yet"];
@@ -264,10 +261,10 @@ const RugProgram = () => {
               </p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
-              {sampleRugs.map((rug, i) => (
+              {sampleRugs.map((rug) => (
                 <Card key={rug.name} className="overflow-hidden">
-                  <div className={`h-44 bg-gradient-to-br ${rugGradients[i]} flex items-center justify-center`}>
-                    <span className="text-4xl opacity-40">🪴</span>
+                  <div className="h-44 overflow-hidden">
+                    <img src={rug.image} alt={rug.name} className="w-full h-full object-cover" />
                   </div>
                   <CardContent className="p-4 space-y-2">
                     <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">
