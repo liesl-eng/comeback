@@ -20,7 +20,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
 import rugMoroccanBoho from "@/assets/rugs/rug-moroccan-boho.jpg";
 import rugPersianBlue from "@/assets/rugs/rug-persian-blue.jpg";
 import rugShagGray from "@/assets/rugs/rug-shag-gray.jpg";
@@ -142,45 +143,59 @@ const RugProgram = () => {
 
       <main>
         {/* ── HERO ── */}
-        <section className="relative overflow-hidden bg-gradient-hero">
-          <div className="container relative mx-auto px-4 md:px-6 py-16 md:py-24 lg:py-28">
+        <section className="relative overflow-hidden" style={{ background: 'var(--gradient-rug-hero)' }}>
+          {/* Woven texture overlay */}
+          <div
+            className="absolute inset-0 opacity-[0.07] mix-blend-luminosity"
+            style={{ backgroundImage: `url(${textureWoven})`, backgroundSize: '400px', backgroundRepeat: 'repeat' }}
+          />
+          {/* Warm gradient accent glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[hsl(30_50%_55%/0.08)]" />
+
+          <div className="container relative z-10 mx-auto px-4 md:px-6 py-20 md:py-28 lg:py-36">
             <div className="max-w-4xl mx-auto text-center">
-              <Badge className="mb-6 bg-accent text-accent-foreground border-0 text-sm px-4 py-1.5">
-                New Program
-              </Badge>
-              <h1 className="mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-primary-foreground uppercase tracking-tight leading-tight">
-                Rugs on Repeat.
+              <div className="inline-flex items-center gap-2 mb-6 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] text-sm font-semibold px-4 py-1.5 rounded-full">
+                <Sparkles className="h-4 w-4" />
+                Subscription Program
+              </div>
+              <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[0.95]">
+                <span className="text-[hsl(0_0%_98%)]">Rugs on Repeat.</span>
                 <br />
-                <span className="text-accent">Built for Your Business.</span>
+                <span className="bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">
+                  Built for Your Business.
+                </span>
               </h1>
-              <p className="mb-8 text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
+              <p className="mb-10 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
                 Subscription-based rug sourcing from premium brands at 60–80% below MSRP. Consistent inventory, curated to your specs, delivered on schedule.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-                <Button variant="default" size="lg" className="gap-2" onClick={() => scrollTo("quote-form")}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <Button size="lg" className="gap-2 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] hover:bg-[hsl(30_50%_60%)] font-bold text-base px-8" onClick={() => scrollTo("quote-form")}>
                   Get a Custom Quote
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
-                  variant="outline"
                   size="lg"
-                  className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                  variant="outline"
+                  className="border-[hsl(0_0%_98%/0.4)] text-[hsl(0_0%_98%)] bg-transparent hover:bg-[hsl(0_0%_98%/0.1)] hover:text-[hsl(0_0%_98%)] font-medium text-base px-8"
                   onClick={() => scrollTo("how-it-works")}
                 >
                   See How It Works
                 </Button>
               </div>
 
-              {/* Trust stats */}
-              <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
+              {/* Trust stats with dividers */}
+              <div className="flex items-center justify-center gap-6 md:gap-10 max-w-lg mx-auto">
                 {[
                   ["60–80%", "Below MSRP"],
                   ["New Condition", "Warehouse Direct"],
                   ["Flexible", "Pause Anytime"],
-                ].map(([big, small]) => (
-                  <div key={big} className="text-center">
-                    <p className="text-xl md:text-2xl font-bold text-accent">{big}</p>
-                    <p className="text-xs md:text-sm text-primary-foreground/70">{small}</p>
+                ].map(([big, small], i) => (
+                  <div key={big} className="flex items-center gap-6 md:gap-10">
+                    {i > 0 && <div className="w-px h-10 bg-[hsl(0_0%_98%/0.15)]" />}
+                    <div className="text-center">
+                      <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">{big}</p>
+                      <p className="text-xs md:text-sm text-[hsl(0_0%_98%/0.6)]">{small}</p>
+                    </div>
                   </div>
                 ))}
               </div>

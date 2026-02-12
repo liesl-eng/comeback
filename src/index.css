@@ -46,6 +46,8 @@ All colors MUST be HSL.
 
     --gradient-hero: linear-gradient(135deg, hsl(210 55% 15%) 0%, hsl(210 60% 10%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(43 65% 55%) 0%, hsl(43 70% 50%) 100%);
+    --gradient-rug-hero: linear-gradient(160deg, hsl(210 55% 12%) 0%, hsl(220 50% 8%) 40%, hsl(30 30% 12%) 100%);
+    --rug-warm: 30 50% 55%;
     --shadow-card: 0 4px 20px -2px hsl(210 55% 15% / 0.08);
     --shadow-hover: 0 8px 30px -4px hsl(210 55% 15% / 0.15);
 
