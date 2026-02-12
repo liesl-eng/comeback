@@ -161,17 +161,13 @@ const RugProgram = () => {
               <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[0.95]">
                 <span className="text-[hsl(0_0%_98%)]">Curated Rugs, </span>
                 <span className="bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">
-                  Maximum Margin
+                  Big Savings
                 </span>
               </h1>
               <p className="mb-10 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
                 Inspected, ready-to-sell rug inventory delivered on your schedule.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <Button size="lg" className="gap-2 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] hover:bg-[hsl(30_50%_60%)] font-bold text-base px-8" onClick={() => scrollTo("quote-form")}>
-                  Get a Custom Quote
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
                 <Button
                   size="lg"
                   variant="outline"
@@ -189,7 +185,7 @@ const RugProgram = () => {
                   ["Rugs You Can Count On", "inspected, graded, and ready to display."],
                   ["Your Lot, Your Rules", "monthly or quarterly, swap, pause, or adjust anytime."],
                 ].map(([label, desc]) => (
-                  <li key={label} className="flex items-start gap-3 text-[hsl(0_0%_98%/0.85)] text-sm md:text-base">
+                  <li key={label} className="flex items-start gap-3 text-[hsl(0_0%_98%/0.85)] text-base md:text-lg">
                     <CheckCircle2 className="h-5 w-5 mt-0.5 shrink-0 text-[hsl(43_65%_55%)]" />
                     <span><span className="font-bold text-[hsl(0_0%_98%)] whitespace-nowrap">{label}</span> — {desc}</span>
                   </li>
@@ -315,165 +311,6 @@ const RugProgram = () => {
           </div>
         </section>
 
-        {/* ── QUOTE FORM ── */}
-        <section id="quote-form" className="py-14 md:py-20 scroll-mt-20">
-          <div className="container mx-auto px-4 max-w-2xl">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-4xl font-bold mb-3">Get Your Custom Quote</h2>
-              <p className="text-muted-foreground">
-                Tell us about your business and rug needs. We'll put together a program and pricing tailored to you.
-              </p>
-            </div>
-
-            <Card className="shadow-card">
-              <CardContent className="p-6 md:p-8">
-                {submitted ? (
-                  <div className="text-center py-10 space-y-4">
-                    <CheckCircle2 className="h-16 w-16 mx-auto text-success" />
-                    <h3 className="text-2xl font-bold">Request Received!</h3>
-                    <p className="text-muted-foreground max-w-sm mx-auto">
-                      We'll review your details and get back to you within 1–2 business days with a custom program quote.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    {/* Row 1 */}
-                    <div className="space-y-2">
-                      <Label htmlFor="rp-company">Company Name *</Label>
-                      <Input
-                        id="rp-company"
-                        placeholder="Your Company LLC"
-                        value={formData.companyName}
-                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                        required
-                      />
-                    </div>
-
-                    {/* Row 2 */}
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="rp-contact">Contact Name</Label>
-                        <Input
-                          id="rp-contact"
-                          placeholder="Jane Doe"
-                          value={formData.contactName}
-                          onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="rp-email">Email *</Label>
-                        <Input
-                          id="rp-email"
-                          type="email"
-                          placeholder="jane@company.com"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    {/* Row 3 */}
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="rp-phone">Phone</Label>
-                        <Input
-                          id="rp-phone"
-                          type="tel"
-                          placeholder="(555) 123-4567"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="rp-biz">Business Type *</Label>
-                        <Select
-                          value={formData.businessType}
-                          onValueChange={(v) => setFormData({ ...formData, businessType: v })}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="reseller">Reseller / Goodwill</SelectItem>
-                            <SelectItem value="property-management">Property Management</SelectItem>
-                            <SelectItem value="short-term-rental">Short-Term Rental</SelectItem>
-                            <SelectItem value="stager-designer">Stager / Designer</SelectItem>
-                            <SelectItem value="boutique-hotel">Boutique Hotel</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
-                    {/* Volume */}
-                    <div className="space-y-2">
-                      <Label>Estimated Monthly Volume</Label>
-                      <div className="flex gap-2 flex-wrap">
-                        {volumeOptions.map((v) => (
-                          <Button
-                            key={v}
-                            type="button"
-                            size="sm"
-                            variant={formData.volume === v ? "default" : "outline"}
-                            className={formData.volume === v ? "bg-accent text-accent-foreground hover:bg-accent/90" : ""}
-                            onClick={() => setFormData({ ...formData, volume: v })}
-                          >
-                            {v}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Style Preferences */}
-                    <div className="space-y-2">
-                      <Label>Style Preferences</Label>
-                      <div className="flex gap-2 flex-wrap">
-                        {styleOptions.map((s) => (
-                          <Button
-                            key={s}
-                            type="button"
-                            size="sm"
-                            variant={formData.styles.includes(s) ? "default" : "outline"}
-                            className={formData.styles.includes(s) ? "bg-accent text-accent-foreground hover:bg-accent/90" : ""}
-                            onClick={() => toggleStyle(s)}
-                          >
-                            {s}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Notes */}
-                    <div className="space-y-2">
-                      <Label htmlFor="rp-notes">Anything Else?</Label>
-                      <Textarea
-                        id="rp-notes"
-                        rows={3}
-                        placeholder="Tell us about your business, preferred sizes, special requirements…"
-                        value={formData.notes}
-                        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                      />
-                    </div>
-
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      size="lg"
-                      disabled={!isFormValid || isSubmitting}
-                    >
-                      {isSubmitting ? "Submitting…" : "Request Custom Quote"}
-                    </Button>
-
-                    <p className="text-xs text-muted-foreground text-center">
-                      We'll respond within 1–2 business days. No commitment required.
-                    </p>
-                  </form>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        </section>
 
         {/* ── FAQ ── */}
         <section className="py-14 md:py-20 bg-muted/30">
