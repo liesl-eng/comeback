@@ -199,6 +199,14 @@ const RugProgram = () => {
                 >
                   How It Works
                 </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-[hsl(43_65%_55%/0.6)] text-[hsl(43_65%_55%)] bg-transparent hover:bg-[hsl(43_65%_55%/0.1)] hover:text-[hsl(43_65%_55%)] font-medium text-base px-8"
+                  onClick={() => scrollTo("complete-the-room")}
+                >
+                  Complete the Room <ArrowRight className="h-4 w-4 ml-1" />
+                </Button>
               </div>
 
               {/* Hero bullet points */}
@@ -333,7 +341,7 @@ const RugProgram = () => {
         </section>
 
         {/* ── COMPLETE THE ROOM ── */}
-        <section className="py-10 md:py-14 bg-muted/30">
+        <section id="complete-the-room" className="py-10 md:py-14 bg-muted/30 scroll-mt-20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 md:mb-14">
               <h2 className="text-2xl md:text-4xl font-bold mb-3">Complete the Room</h2>
@@ -349,8 +357,8 @@ const RugProgram = () => {
                 { name: "Meridian Lamp - Black", brand: "Ferm Living", msrp: 265, price: 50, image: meridianBlack },
               ].map((item) => (
                 <Card key={item.name} className="overflow-hidden">
-                  <div className="relative h-44 overflow-hidden">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="relative h-56 overflow-hidden bg-muted/20 flex items-center justify-center">
+                    <img src={item.image} alt={item.name} className="w-full h-full object-contain p-2" />
                     <Badge variant="accent" className="absolute top-2 right-2 text-[10px]">81% below MSRP</Badge>
                   </div>
                   <CardContent className="p-4 space-y-2">
