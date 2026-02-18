@@ -33,9 +33,7 @@ import rugPersianRunner from "@/assets/rugs/rug-persian-runner.jpg";
 import rugBohoRunner from "@/assets/rugs/rug-boho-runner.jpg";
 import rugRoundFloral from "@/assets/rugs/rug-round-floral.jpg";
 import rugModernGeo from "@/assets/rugs/rug-modern-geometric.jpg";
-import meridianCashmere from "@/assets/lighting/meridian-cashmere.jpg";
 import meridianBrushedSteel from "@/assets/lighting/meridian-brushed-steel.jpg";
-import meridianBlack from "@/assets/lighting/meridian-black.jpg";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
@@ -341,6 +339,7 @@ const RugProgram = () => {
         </section>
 
         {/* ── COMPLETE THE ROOM ── */}
+        {/* ── COMPLETE THE ROOM ── */}
         <section id="complete-the-room" className="py-10 md:py-14 bg-muted/30 scroll-mt-20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 md:mb-14">
@@ -349,32 +348,30 @@ const RugProgram = () => {
                 Pair your rugs with premium Ferm Living lighting at wholesale prices.
               </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
-              {[
-                { name: "Meridian Lamp - Cashmere", brand: "Ferm Living", msrp: 265, price: 50, image: meridianCashmere },
-                { name: "Meridian Lamp - Brushed Steel", brand: "Ferm Living", msrp: 265, price: 50, image: meridianBrushedSteel },
-                { name: "Meridian Lamp - Brass", brand: "Ferm Living", msrp: 265, price: 50, image: meridianBrushedSteel },
-                { name: "Meridian Lamp - Black", brand: "Ferm Living", msrp: 265, price: 50, image: meridianBlack },
-              ].map((item) => (
-                <Card key={item.name} className="overflow-hidden">
-                  <div className="relative h-56 overflow-hidden bg-muted/20 flex items-center justify-center">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-contain p-2" />
-                    <Badge variant="accent" className="absolute top-2 right-2 text-[10px]">81% below MSRP</Badge>
+            <a href="/meridian-lamp" className="block max-w-2xl mx-auto group">
+              <Card className="overflow-hidden transition-shadow hover:shadow-xl">
+                <div className="bg-muted/20 flex items-center justify-center p-8 md:p-12">
+                  <img
+                    src={meridianBrushedSteel}
+                    alt="Ferm Living Meridian Table Lamp — Brass"
+                    className="max-h-[340px] w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <CardContent className="p-6 text-center space-y-2">
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">Ferm Living</p>
+                  <h3 className="text-xl md:text-2xl font-bold">Meridian Table Lamp — Brass</h3>
+                  <div className="flex items-baseline gap-3 justify-center">
+                    <span className="text-2xl font-black">$50</span>
+                    <span className="text-base text-muted-foreground line-through">$265</span>
+                    <Badge variant="accent">81% below MSRP</Badge>
                   </div>
-                  <CardContent className="p-4 space-y-2">
-                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">
-                      {item.brand}
-                    </p>
-                    <h3 className="font-semibold leading-tight">{item.name}</h3>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold">${item.price}</span>
-                      <span className="text-sm text-muted-foreground line-through">${item.msrp}</span>
-                    </div>
-                    <span className="text-xs text-muted-foreground">New — Warehouse Direct</span>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                  <p className="text-sm text-muted-foreground">New — Warehouse Direct · Available in 4 finishes</p>
+                  <p className="text-sm font-medium text-accent group-hover:underline underline-offset-4 pt-1">
+                    View Details →
+                  </p>
+                </CardContent>
+              </Card>
+            </a>
             <p className="text-center text-sm text-muted-foreground italic mt-8 max-w-xl mx-auto">
               Add lighting to your rug program quote — just mention it in your request.
             </p>
