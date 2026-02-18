@@ -19,6 +19,7 @@ import About from "./pages/About";
 import AdminImport from "./pages/AdminImport";
 import Auth from "./pages/Auth";
 import RugProgram from "./pages/RugProgram";
+import MeridianLamp from "./pages/MeridianLamp";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -57,6 +58,7 @@ const App = () => (
                 />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/rug-program" element={<RugProgram />} />
+                <Route path="/meridian-lamp" element={<MeridianLamp />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route
                   path="/admin/import"
