@@ -345,7 +345,7 @@ const RugProgram = () => {
             <div className="text-center mb-10 md:mb-14">
               <h2 className="text-2xl md:text-4xl font-bold mb-3">Complete the Room</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Pair your rugs with premium lighting at less-than-wholesale prices.
+                Pair your rugs with premium lighting… at less-than-wholesale prices.
               </p>
             </div>
             <a href="/meridian-lamp" className="block max-w-xs mx-auto group">
