@@ -354,7 +354,7 @@ const RugProgram = () => {
                   <img
                     src={meridianBrass}
                     alt="Ferm Living Meridian Table Lamp — Brass"
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <CardContent className="p-4 space-y-2">
