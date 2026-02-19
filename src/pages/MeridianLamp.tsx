@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import meridianBrass from "@/assets/lighting/meridian-brass.jpg";
+import meridianBrassShelf from "@/assets/lighting/meridian-brass-shelf.webp";
 import meridianBrushedSteel from "@/assets/lighting/meridian-brushed-steel.webp";
+import meridianBrushedSteelAlt from "@/assets/lighting/meridian-brushed-steel.jpg";
 import meridianCashmere from "@/assets/lighting/meridian-cashmere.jpg";
 import meridianBlack from "@/assets/lighting/meridian-black.jpg";
 
@@ -42,10 +44,20 @@ const finishes = [
   },
 ];
 
+const allImages = [
+  { src: meridianBrass, alt: "Meridian Table Lamp in Brass" },
+  { src: meridianBrassShelf, alt: "Meridian Lamps styled on a shelf" },
+  { src: meridianBrushedSteel, alt: "Meridian Table Lamp in Brushed Steel" },
+  { src: meridianBrushedSteelAlt, alt: "Meridian Table Lamp in Brushed Steel, alternate view" },
+  { src: meridianCashmere, alt: "Meridian Table Lamp in Cashmere" },
+  { src: meridianBlack, alt: "Meridian Table Lamp in Black" },
+];
+
 const MeridianLamp = () => {
   const { totalItems } = useCart();
   const navigate = useNavigate();
   const [selectedFinish, setSelectedFinish] = useState(finishes[0]);
+  const [selectedImage, setSelectedImage] = useState(allImages[0]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -64,14 +76,37 @@ const MeridianLamp = () => {
         </button>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-10 max-w-4xl mx-auto">
-          {/* Image */}
-          <div className="bg-[hsl(30_20%_93%)] rounded-xl overflow-hidden aspect-square flex items-center justify-center">
-            <img
-              src={selectedFinish.image}
-              alt={selectedFinish.alt}
-              className="w-full h-full object-cover object-center transition-opacity duration-200"
-              key={selectedFinish.id}
-            />
+          {/* Image + Thumbnails */}
+          <div className="flex flex-col gap-3">
+            <div className="bg-[hsl(30_20%_93%)] rounded-xl overflow-hidden aspect-square flex items-center justify-center">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="w-full h-full object-cover object-center transition-opacity duration-200"
+                key={selectedImage.src}
+              />
+            </div>
+
+            {/* Thumbnail Strip */}
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
+              {allImages.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedImage(img)}
+                  className={`shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                    selectedImage.src === img.src
+                      ? "border-foreground shadow-md"
+                      : "border-border hover:border-muted-foreground"
+                  }`}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Details */}
@@ -95,7 +130,10 @@ const MeridianLamp = () => {
                 {finishes.map((f) => (
                   <button
                     key={f.id}
-                    onClick={() => setSelectedFinish(f)}
+                    onClick={() => {
+                      setSelectedFinish(f);
+                      setSelectedImage({ src: f.image, alt: f.alt });
+                    }}
                     title={f.label}
                     className={`relative flex flex-col items-center gap-1.5 group`}
                   >
