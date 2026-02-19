@@ -361,7 +361,7 @@ const RugProgram = () => {
                   <CardContent className="sm:w-3/5 p-6 md:p-8 flex flex-col justify-center space-y-3">
                     <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Ferm Living · Featured Product</p>
                     <h3 className="text-xl md:text-2xl font-semibold leading-tight">Meridian Rechargeable Table Lamp</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                       Designed by the design studio Regular Company for Ferm Living. The Meridian is a portable, dimmable LED table lamp built around three simple geometric forms — cone, arc, and cylinder. Cordless and rechargeable via USB-C, it delivers up to 12 hours of warm white light per charge. Compact enough for nightstands, shelves, and side tables — ideal for staging, rentals, and hospitality.
                     </p>
                     <div className="flex items-baseline gap-2 pt-1">
