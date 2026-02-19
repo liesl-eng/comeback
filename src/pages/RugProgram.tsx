@@ -348,25 +348,25 @@ const RugProgram = () => {
                 Pair your rugs with premium Ferm Living lighting at wholesale prices.
               </p>
             </div>
-            <a href="/meridian-lamp" className="block max-w-2xl mx-auto group">
+            <a href="/meridian-lamp" className="block max-w-xs mx-auto group">
               <Card className="overflow-hidden transition-shadow hover:shadow-xl">
-                <div className="bg-muted/20 flex items-center justify-center p-8 md:p-12">
+                <div className="h-44 overflow-hidden bg-[hsl(30_20%_93%)]">
                   <img
                     src={meridianBrushedSteel}
                     alt="Ferm Living Meridian Table Lamp — Brass"
-                    className="max-h-[340px] w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <CardContent className="p-6 text-center space-y-2">
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">Ferm Living</p>
-                  <h3 className="text-xl md:text-2xl font-bold">Meridian Table Lamp — Brass</h3>
-                  <div className="flex items-baseline gap-3 justify-center">
-                    <span className="text-2xl font-black">$50</span>
-                    <span className="text-base text-muted-foreground line-through">$265</span>
-                    <Badge variant="accent">81% below MSRP</Badge>
+                <CardContent className="p-4 space-y-2">
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Ferm Living</p>
+                  <h3 className="font-semibold leading-tight">Meridian Table Lamp — Brass</h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-lg font-bold">$50</span>
+                    <span className="text-sm text-muted-foreground line-through">$265</span>
+                    <Badge variant="accent" className="text-[10px]">81% off</Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">New — Warehouse Direct · Available in 4 finishes</p>
-                  <p className="text-sm font-medium text-accent group-hover:underline underline-offset-4 pt-1">
+                  <p className="text-xs text-muted-foreground">New · 4 finishes available</p>
+                  <p className="text-xs font-medium text-accent group-hover:underline underline-offset-4 pt-0.5">
                     View Details →
                   </p>
                 </CardContent>
