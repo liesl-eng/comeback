@@ -348,9 +348,9 @@ const RugProgram = () => {
                 Pair your rugs with premium lighting… at less-than-wholesale prices.
               </p>
             </div>
-            <a href="/meridian-lamp" className="block max-w-xs mx-auto group">
+            <a href="/meridian-lamp" className="block max-w-sm mx-auto group">
               <Card className="overflow-hidden transition-shadow hover:shadow-xl">
-                <div className="h-44 overflow-hidden bg-[hsl(30_20%_93%)]">
+                <div className="h-56 overflow-hidden bg-[hsl(30_20%_93%)]">
                   <img
                     src={meridianBrassShelf}
                     alt="Ferm Living Meridian Rechargeable Lamps"
@@ -363,7 +363,7 @@ const RugProgram = () => {
                   <div className="flex items-baseline gap-2">
                     <span className="text-lg font-bold">$50</span>
                     <span className="text-sm text-muted-foreground line-through">$265</span>
-                    <Badge variant="accent" className="text-[10px]">81% off</Badge>
+                    <Badge variant="accent" className="text-[10px]">81% below MSRP</Badge>
                   </div>
                   <p className="text-xs text-muted-foreground">New · 4 finishes available</p>
                   <p className="text-xs font-medium text-accent group-hover:underline underline-offset-4 pt-0.5">
