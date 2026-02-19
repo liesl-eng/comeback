@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import meridianBrass from "@/assets/lighting/meridian-brass.jpg";
-import meridianBrushedSteel from "@/assets/lighting/meridian-brushed-steel.jpg";
+import meridianBrushedSteel from "@/assets/lighting/meridian-brushed-steel.webp";
 import meridianCashmere from "@/assets/lighting/meridian-cashmere.jpg";
 import meridianBlack from "@/assets/lighting/meridian-black.jpg";
 
@@ -69,7 +69,7 @@ const MeridianLamp = () => {
             <img
               src={selectedFinish.image}
               alt={selectedFinish.alt}
-              className="w-full h-full object-contain transition-opacity duration-200"
+              className="w-full h-full object-cover object-center transition-opacity duration-200"
               key={selectedFinish.id}
             />
           </div>
