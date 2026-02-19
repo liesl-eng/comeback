@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import meridianBrass from "@/assets/lighting/meridian-brass.jpg";
 import meridianBrushedSteel from "@/assets/lighting/meridian-brushed-steel.jpg";
 import meridianCashmere from "@/assets/lighting/meridian-cashmere.jpg";
 import meridianBlack from "@/assets/lighting/meridian-black.jpg";
@@ -15,7 +16,7 @@ const finishes = [
     id: "brass",
     label: "Brass",
     swatch: "hsl(43 65% 52%)",
-    image: meridianBrushedSteel, // using brushed steel as brass placeholder
+    image: meridianBrass,
     alt: "Ferm Living Meridian Table Lamp in Brass",
   },
   {
@@ -68,7 +69,7 @@ const MeridianLamp = () => {
             <img
               src={selectedFinish.image}
               alt={selectedFinish.alt}
-              className="w-full h-full object-cover transition-opacity duration-200"
+              className="w-full h-full object-contain transition-opacity duration-200"
               key={selectedFinish.id}
             />
           </div>

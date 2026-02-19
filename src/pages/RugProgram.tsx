@@ -33,7 +33,7 @@ import rugPersianRunner from "@/assets/rugs/rug-persian-runner.jpg";
 import rugBohoRunner from "@/assets/rugs/rug-boho-runner.jpg";
 import rugRoundFloral from "@/assets/rugs/rug-round-floral.jpg";
 import rugModernGeo from "@/assets/rugs/rug-modern-geometric.jpg";
-import meridianBrushedSteel from "@/assets/lighting/meridian-brushed-steel.jpg";
+import meridianBrass from "@/assets/lighting/meridian-brass.jpg";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
@@ -352,9 +352,9 @@ const RugProgram = () => {
               <Card className="overflow-hidden transition-shadow hover:shadow-xl">
                 <div className="h-44 overflow-hidden bg-[hsl(30_20%_93%)]">
                   <img
-                    src={meridianBrushedSteel}
+                    src={meridianBrass}
                     alt="Ferm Living Meridian Table Lamp — Brass"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <CardContent className="p-4 space-y-2">
