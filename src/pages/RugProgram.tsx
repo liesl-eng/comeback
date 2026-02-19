@@ -33,7 +33,7 @@ import rugPersianRunner from "@/assets/rugs/rug-persian-runner.jpg";
 import rugBohoRunner from "@/assets/rugs/rug-boho-runner.jpg";
 import rugRoundFloral from "@/assets/rugs/rug-round-floral.jpg";
 import rugModernGeo from "@/assets/rugs/rug-modern-geometric.jpg";
-import meridianBrass from "@/assets/lighting/meridian-brass.jpg";
+import meridianBrassShelf from "@/assets/lighting/meridian-brass-shelf.webp";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
@@ -352,14 +352,14 @@ const RugProgram = () => {
               <Card className="overflow-hidden transition-shadow hover:shadow-xl">
                 <div className="h-44 overflow-hidden bg-[hsl(30_20%_93%)]">
                   <img
-                    src={meridianBrass}
-                    alt="Ferm Living Meridian Table Lamp — Brass"
+                    src={meridianBrassShelf}
+                    alt="Ferm Living Meridian Rechargeable Lamps"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <CardContent className="p-4 space-y-2">
                   <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Ferm Living</p>
-                  <h3 className="font-semibold leading-tight">Meridian Table Lamp — Brass</h3>
+                  <h3 className="font-semibold leading-tight">Meridian Rechargeable Lamps</h3>
                   <div className="flex items-baseline gap-2">
                     <span className="text-lg font-bold">$50</span>
                     <span className="text-sm text-muted-foreground line-through">$265</span>
