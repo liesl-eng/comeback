@@ -119,16 +119,31 @@ const MeridianLamp = () => {
               </div>
             </div>
 
-            <div className="space-y-2 text-sm text-muted-foreground leading-relaxed">
+            <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
               <p>
-                Premium Ferm Living table lamp at a fraction of retail.
+                Designed by Regular Company for Ferm Living, the Meridian is a portable, dimmable LED table lamp built around three simple geometric forms — cone, arc, and cylinder. Cordless and rechargeable via USB-C, it delivers up to 12 hours of warm white light per charge. Compact enough for nightstands, shelves, and side tables — ideal for staging, rentals, and hospitality.
               </p>
               <p>
-                <span className="font-semibold text-foreground">Condition:</span> New — Warehouse Direct
+                <span className="font-semibold text-foreground">Available in 4 finishes:</span> Cashmere, Brass, Brushed Steel, and Black.
               </p>
-              <p>
-                <span className="font-semibold text-foreground">Availability:</span> Add lighting to your rug program order, or inquire for standalone purchases.
-              </p>
+              <div>
+                <p className="font-semibold text-foreground mb-1.5">Specs</p>
+                <ul className="space-y-1 list-none">
+                  {[
+                    "Dimmable warm white LED (2700K)",
+                    "Up to 12 hours per charge",
+                    "USB-C charging (cable included)",
+                    "30,000-hour LED lifespan",
+                    `Dimensions: 8.2"W × 10.2"H × 6.7"D`,
+                    "UL approved (US version)",
+                  ].map((spec) => (
+                    <li key={spec} className="flex items-start gap-2">
+                      <span className="mt-1.5 h-1 w-1 rounded-full bg-muted-foreground/50 shrink-0" />
+                      {spec}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <div className="space-y-2.5 pt-1">
