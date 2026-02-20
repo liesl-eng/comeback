@@ -371,7 +371,7 @@ const RugProgram = () => {
                     </div>
                     <p className="text-xs text-muted-foreground">Warehouse Direct — New</p>
                     <p className="text-xs text-muted-foreground">4 finishes: Cashmere, Brass, Brushed Steel, Black</p>
-                    <p className="text-sm font-medium text-accent group-hover:underline underline-offset-4 pt-1">
+                    <p className="text-base font-semibold text-accent group-hover:underline underline-offset-4 pt-1">
                       View Details →
                     </p>
                   </CardContent>
