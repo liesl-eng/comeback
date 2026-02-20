@@ -62,8 +62,8 @@ const MeridianLamp = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Meridian Table Lamp — Ferm Living | Comeback Goods</title>
-        <meta name="description" content="Ferm Living Meridian Table Lamp — $50 vs $265 MSRP. New, warehouse direct. Available in Brass, Brushed Steel, Cashmere, and Black." />
+        <title>Rechargeable Table Lamps — Meridian by Ferm Living | Comeback Goods</title>
+        <meta name="description" content="Premium Rechargeable Table Lamps — The Meridian by Ferm Living. $50 vs $265 MSRP. New, warehouse direct. Available in Brass, Brushed Steel, Cashmere, and Black." />
       </Helmet>
       <Navbar cartItemCount={totalItems} />
 
