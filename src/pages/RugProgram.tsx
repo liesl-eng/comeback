@@ -21,7 +21,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, Lightbulb } from "lucide-react";
 import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
 import rugMoroccanBoho from "@/assets/rugs/rug-moroccan-boho.jpg";
 import rugPersianBlue from "@/assets/rugs/rug-persian-blue.jpg";
@@ -203,7 +203,7 @@ const RugProgram = () => {
                   className="border-[hsl(43_65%_55%/0.6)] text-[hsl(43_65%_55%)] bg-transparent hover:bg-[hsl(43_65%_55%/0.1)] hover:text-[hsl(43_65%_55%)] font-medium text-base px-8"
                   onClick={() => scrollTo("complete-the-room")}
                 >
-                  Complete The Room With Lighting <ArrowRight className="h-4 w-4 ml-1" />
+                  <Lightbulb className="h-4 w-4 mr-2" />Complete The Room With Lighting <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </div>
 
