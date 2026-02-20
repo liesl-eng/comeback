@@ -348,7 +348,7 @@ const RugProgram = () => {
                 Pair your rugs with premium lighting… at less-than-wholesale prices.
               </p>
             </div>
-            <a href="/meridian-lamp" className="block max-w-3xl mx-auto group">
+            <a href="/brass-table-lamps" className="block max-w-3xl mx-auto group">
               <Card className="overflow-hidden transition-shadow hover:shadow-xl">
                 <div className="flex flex-col sm:flex-row">
                   <div className="sm:w-2/5 h-56 sm:h-auto overflow-hidden bg-[hsl(30_20%_93%)] shrink-0">

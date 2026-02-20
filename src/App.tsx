@@ -58,7 +58,7 @@ const App = () => (
                 />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/rug-program" element={<RugProgram />} />
-                <Route path="/meridian-lamp" element={<MeridianLamp />} />
+                <Route path="/brass-table-lamps" element={<MeridianLamp />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route
                   path="/admin/import"
