@@ -122,10 +122,7 @@ const MeridianLamp = () => {
               <span className="text-lg text-muted-foreground line-through">$265</span>
               <Badge variant="accent">81% below MSRP</Badge>
             </div>
-            <div className="flex flex-col gap-0.5">
-              <p className="text-xs text-muted-foreground">Warehouse Direct — New</p>
-              <p className="text-xs text-muted-foreground">4 finishes: Cashmere, Brass, Brushed Steel, Black</p>
-            </div>
+            <p className="text-xs text-muted-foreground">Warehouse Direct — New</p>
 
             {/* Finish Selector */}
             <div>
