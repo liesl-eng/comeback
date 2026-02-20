@@ -369,7 +369,8 @@ const RugProgram = () => {
                       <span className="text-base text-muted-foreground line-through">$265</span>
                       <Badge variant="accent" className="text-xs">81% off</Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">New · 4 finishes: Cashmere, Brass, Brushed Steel, Black</p>
+                    <p className="text-xs text-muted-foreground">Warehouse Direct — New</p>
+                    <p className="text-xs text-muted-foreground">4 finishes: Cashmere, Brass, Brushed Steel, Black</p>
                     <p className="text-sm font-medium text-accent group-hover:underline underline-offset-4 pt-1">
                       View Details →
                     </p>
