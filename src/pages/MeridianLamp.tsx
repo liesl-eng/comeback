@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import meridianBrass from "@/assets/lighting/meridian-brass.jpg";
-
+import meridianBrassShelf from "@/assets/lighting/meridian-brass-shelf.webp";
 import meridianBrushedSteel from "@/assets/lighting/meridian-brushed-steel.webp";
 import meridianBrushedSteelAlt from "@/assets/lighting/meridian-brushed-steel.jpg";
 import meridianCashmere from "@/assets/lighting/meridian-cashmere.jpg";
@@ -46,6 +46,7 @@ const finishes = [
 
 const allImages = [
   { src: meridianBrass, alt: "Meridian Table Lamp in Brass" },
+  { src: meridianBrassShelf, alt: "Meridian Lamps styled on a shelf" },
   { src: meridianBrushedSteel, alt: "Meridian Table Lamp in Brushed Steel" },
   { src: meridianBrushedSteelAlt, alt: "Meridian Table Lamp in Brushed Steel, alternate view" },
   { src: meridianCashmere, alt: "Meridian Table Lamp in Cashmere" },
