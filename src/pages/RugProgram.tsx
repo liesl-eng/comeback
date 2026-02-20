@@ -203,7 +203,7 @@ const RugProgram = () => {
                   className="border-[hsl(43_65%_55%/0.6)] text-[hsl(43_65%_55%)] bg-transparent hover:bg-[hsl(43_65%_55%/0.1)] hover:text-[hsl(43_65%_55%)] font-medium text-base px-8"
                   onClick={() => scrollTo("complete-the-room")}
                 >
-                  Complete the Room <ArrowRight className="h-4 w-4 ml-1" />
+                  Complete The Room With Lighting <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </div>
 
