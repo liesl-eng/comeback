@@ -57,7 +57,7 @@ const styleOptions = ["Traditional", "Modern", "Bohemian", "Solid/Neutral", "Geo
 const faqs = [
   {
     q: "What condition are the rugs in?",
-    a: "All rugs are new or like-new, and come directly from our retailer and brand partners. Every rug is inspected before shipping.",
+    a: "Every rug is inspected by us before shipping.",
   },
   {
     q: "How does pricing work?",
