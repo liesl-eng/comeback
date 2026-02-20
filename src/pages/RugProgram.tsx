@@ -179,10 +179,10 @@ const RugProgram = () => {
                 Comeback Rug Program
               </div>
               <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[1.1] sm:leading-[0.95]">
-                <span className="text-[hsl(0_0%_98%)]">Curated Rugs, </span>
-                <br className="sm:hidden" />
+                <span className="text-[hsl(0_0%_98%)]">Curated Rugs.</span>
+                <br />
                 <span className="bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">
-                  Big Savings
+                  Big Savings.
                 </span>
               </h1>
               <p className="mb-10 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
