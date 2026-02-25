@@ -36,7 +36,7 @@ const RugProgramNavbar = ({ onGetQuoteClick }: RugProgramNavbarProps) => {
               onClick={onGetQuoteClick}
               className="md:text-base md:px-5 md:h-10"
             >
-              Get a Quote
+              Get in Contact
             </Button>
             <Link
               to="/"
