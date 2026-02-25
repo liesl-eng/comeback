@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/Navbar";
-import { useCart } from "@/contexts/CartContext";
+import RugProgramNavbar from "@/components/RugProgramNavbar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -82,7 +81,6 @@ const faqs = [
 ];
 
 const RugProgram = () => {
-  const { totalItems } = useCart();
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -159,7 +157,7 @@ const RugProgram = () => {
         <meta name="twitter:title" content="Comeback Goods Rug Program — Curated Rugs, Big Savings" />
         <meta name="twitter:description" content="Subscription-based rug sourcing from premium brands up to 60% below wholesale. Inspected, ready-to-sell inventory delivered on your schedule." />
       </Helmet>
-      <Navbar cartItemCount={totalItems} />
+      <RugProgramNavbar onGetQuoteClick={() => scrollTo("get-a-quote")} />
 
       <main>
         {/* ── HERO ── */}
@@ -406,7 +404,7 @@ const RugProgram = () => {
         </section>
       </main>
 
-      <footer className="py-12 bg-primary text-primary-foreground">
+      <footer id="get-a-quote" className="py-12 bg-primary text-primary-foreground scroll-mt-20">
         <div className="container mx-auto px-4 text-center space-y-3">
           <p className="text-xl md:text-2xl font-semibold">
             Get in contact:{" "}
