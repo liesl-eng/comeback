@@ -21,17 +21,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, Lightbulb } from "lucide-react";
+import RugCollections from "@/components/RugCollections";
 import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
-import rugMoroccanBoho from "@/assets/rugs/rug-moroccan-boho.jpg";
-import rugPersianBlue from "@/assets/rugs/rug-persian-blue.jpg";
-import rugShagGray from "@/assets/rugs/rug-shag-gray.jpg";
-import rugJuteDiamond from "@/assets/rugs/rug-jute-diamond.jpg";
-import rugAntiquityNavy from "@/assets/rugs/rug-antiquity-navy.jpg";
-import rugFloralPersian from "@/assets/rugs/rug-floral-persian.jpg";
-import rugPersianRunner from "@/assets/rugs/rug-persian-runner.jpg";
-import rugBohoRunner from "@/assets/rugs/rug-boho-runner.jpg";
-import rugRoundFloral from "@/assets/rugs/rug-round-floral.jpg";
-import rugModernGeo from "@/assets/rugs/rug-modern-geometric.jpg";
 import meridianBrassShelf from "@/assets/lighting/meridian-brass-shelf.webp";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
