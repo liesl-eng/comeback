@@ -28,18 +28,6 @@ import meridianBrassShelf from "@/assets/lighting/meridian-brass-shelf.webp";
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
 
-const sampleRugs = [
-  { name: "Antiquity Hand Tufted 8×10", style: "Traditional", brand: "Safavieh", msrp: 713, price: 214, image: rugAntiquityNavy },
-  { name: "Floral Persian Area Rug 7×10", style: "Traditional", brand: "Threshold", msrp: 200, price: 60, image: rugFloralPersian },
-  { name: "Modern Geometric Area Rug 6×9", style: "Modern", brand: "Safavieh", msrp: 420, price: 126, image: rugModernGeo },
-  { name: "Buttercup Diamond Persian 7×10", style: "Traditional", brand: "Threshold", msrp: 200, price: 60, image: rugPersianBlue },
-  { name: "Solid Eyelash Shag 5×7", style: "Solid/Shag", brand: "Threshold", msrp: 100, price: 30, image: rugShagGray },
-  { name: "Jute Diamond Area Rug 5×7", style: "Natural", brand: "Threshold", msrp: 100, price: 30, image: rugJuteDiamond },
-  { name: "Moroccan Boho Vintage Diamond 8×10", style: "Bohemian", brand: "JONATHAN Y", msrp: 359, price: 108, image: rugMoroccanBoho },
-  { name: "Persian Medallion Runner 2×8", style: "Runner", brand: "Safavieh", msrp: 289, price: 87, image: rugPersianRunner },
-  { name: "Boho Diamond Runner 2×7", style: "Runner", brand: "JONATHAN Y", msrp: 179, price: 54, image: rugBohoRunner },
-  { name: "Floral Round Accent Rug 4ft", style: "Round", brand: "Threshold", msrp: 120, price: 36, image: rugRoundFloral },
-];
 
 const volumeOptions = ["10–25 rugs/mo", "25–50 rugs/mo", "50–100 rugs/mo", "100+ rugs/mo", "Not sure yet"];
 const styleOptions = ["Traditional", "Modern", "Bohemian", "Solid/Neutral", "Geometric", "Shag", "Outdoor", "Runner"];
@@ -290,42 +278,8 @@ const RugProgram = () => {
           </div>
         </section>
 
-        {/* ── SAMPLE INVENTORY ── */}
-        <section className="pt-6 md:pt-10 pb-6 md:pb-10 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-10 md:mb-14">
-              <h2 className="text-2xl md:text-4xl font-bold mb-3">Sample Inventory</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Brands, styles, and sizes rotate based on availability.
-              </p>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
-              {sampleRugs.map((rug) => (
-                <Card key={rug.name} className="overflow-hidden">
-                  <div className="h-44 overflow-hidden">
-                    <img src={rug.image} alt={rug.name} className="w-full h-full object-cover" />
-                  </div>
-                  <CardContent className="p-4 space-y-2">
-                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">
-                      {rug.style}
-                    </p>
-                    <h3 className="font-semibold leading-tight">{rug.name}</h3>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold">${rug.price}</span>
-                      <span className="text-sm text-muted-foreground line-through">${rug.msrp}</span>
-                    </div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs text-muted-foreground">Graded & Inspected — Like New</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            <p className="text-center text-sm text-muted-foreground italic mt-8 max-w-xl mx-auto">
-              Actual inventory varies. Your program is curated to your preferences — these are representative examples.
-            </p>
-          </div>
-        </section>
+        {/* ── COLLECTIONS ── */}
+        <RugCollections />
 
         {/* ── COMPLETE THE ROOM ── */}
         {/* ── COMPLETE THE ROOM ── */}
