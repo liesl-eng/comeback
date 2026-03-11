@@ -346,9 +346,9 @@ const RugCollections = () => {
                   <CardContent className={cn("p-4", isExpanded ? "pt-4" : "")}>
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-semibold text-lg leading-tight">Collection: {col.name}</h3>
+                        <h3 className="font-bold text-lg leading-tight">{col.name}</h3>
                         <p className="text-sm text-muted-foreground">
-                          {col.designCount} {col.designCount === 1 ? "design" : "designs"} · In Stock
+                          {col.designCount} {col.designCount === 1 ? "pattern" : "patterns"} · In Stock
                         </p>
                       </div>
                       <ChevronDown
