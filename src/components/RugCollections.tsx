@@ -111,7 +111,7 @@ const collections: Collection[] = [
     totalUnits: 2762,
     designCount: 9,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678",
-    sizeBuckets: ["~3×5", "~5×7", "Runners"],
+    sizeBuckets: ["3×5", "5×7", "Runners"],
     subDesigns: [
       { name: "Brooklyn Trellis", units: 661, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678", sizes: [{ size: "20\"×5' Runner", units: 401 }, { size: "22\"×1' Cut", units: 217 }, { size: "Roll Runner", units: 42 }, { size: "3'3\"×4'7\"", units: 1 }] },
       { name: "Clover", units: 518, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-128OH.jpg?v=1751061609", sizes: [{ size: "20\"×5' Runner", units: 393 }, { size: "Runner", units: 125 }] },
