@@ -234,7 +234,7 @@ const collections: Collection[] = [
     totalUnits: 226,
     designCount: 3,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436",
-    sizeBuckets: ["~2×3", "~3×5", "~5×7", "~7×10", "Runners"],
+    sizeBuckets: ["2×3", "3×5", "5×7", "7×10", "Runners"],
     subDesigns: null,
     fallbackNote: FALLBACK_NOTE,
   },
