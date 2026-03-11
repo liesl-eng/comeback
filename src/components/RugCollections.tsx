@@ -414,7 +414,7 @@ const RugCollections = () => {
                           <div>
                             <h4 className="font-medium mb-1">{col.name}</h4>
                             <p className="text-sm text-muted-foreground">
-                              {col.totalUnits.toLocaleString()} units · {col.fallbackNote}
+                              In Stock · {col.fallbackNote}
                             </p>
                           </div>
                         </div>
