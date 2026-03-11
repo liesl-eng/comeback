@@ -129,7 +129,7 @@ const collections: Collection[] = [
     totalUnits: 2074,
     designCount: 5,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163",
-    sizeBuckets: ["~2×3", "~3×5", "~5×7", "~7×10", "Runners", "Round"],
+    sizeBuckets: ["2×3", "3×5", "5×7", "7×10", "Runners", "Round"],
     subDesigns: null,
     fallbackNote: FALLBACK_NOTE,
   },
