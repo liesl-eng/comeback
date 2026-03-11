@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
-  "All Sizes", "~2×3", "~3×5", "~5×7", "~7×10", "~9×12", "Runners", "Round",
+  "All Sizes", "2×3", "3×5", "5×7", "7×10", "9×12", "Runners", "Round",
 ] as const;
 
 type SizeBucket = (typeof SIZE_BUCKETS)[number];
