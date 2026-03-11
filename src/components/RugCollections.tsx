@@ -341,7 +341,7 @@ const RugCollections = () => {
                       <div>
                         <h3 className="font-semibold text-lg leading-tight">Collection: {col.name}</h3>
                         <p className="text-sm text-muted-foreground">
-                          {col.designCount} {col.designCount === 1 ? "design" : "designs"} · {col.totalUnits.toLocaleString()} units available
+                          {col.designCount} {col.designCount === 1 ? "design" : "designs"} · In Stock
                         </p>
                       </div>
                       <ChevronDown
@@ -384,7 +384,7 @@ const RugCollections = () => {
                                   <div className="flex items-center justify-between">
                                     <h4 className="font-medium text-sm">{design.name}</h4>
                                     <span className="text-xs font-medium text-muted-foreground">
-                                      {design.units.toLocaleString()} units
+                                      In Stock
                                     </span>
                                   </div>
                                   <div className="flex flex-wrap gap-1.5">
@@ -393,7 +393,7 @@ const RugCollections = () => {
                                         key={idx}
                                         className="text-[11px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
                                       >
-                                        {s.size}: {s.units.toLocaleString()}
+                                        {s.size}
                                       </span>
                                     ))}
                                   </div>
@@ -414,7 +414,7 @@ const RugCollections = () => {
                           <div>
                             <h4 className="font-medium mb-1">{col.name}</h4>
                             <p className="text-sm text-muted-foreground">
-                              {col.totalUnits.toLocaleString()} units · {col.fallbackNote}
+                              In Stock · {col.fallbackNote}
                             </p>
                           </div>
                         </div>
