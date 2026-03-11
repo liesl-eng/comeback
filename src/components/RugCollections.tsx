@@ -39,7 +39,7 @@ const rawSizeToBucket = (raw: string): SizeBucket | null => {
   const s = raw.toLowerCase();
   if (s.includes("round")) return "Round";
   if (s.includes("runner") || s.includes("roll") || s.includes("cut")) return "Runners";
-  if (s.includes("9'3\"×12'6\"") || s.includes("9'3\"x12'6\"")) return "~9×12";
+  if (s.includes("9'3\"×12'6\"") || s.includes("9'3\"x12'6\"")) return "9×12";
   if (
     s.includes("7'10\"×9'10\"") || s.includes("7'10\"×10'6\"") ||
     s.includes("6'7\"×9'3\"") || s.includes("6'7\"×9'6\"") ||
@@ -47,21 +47,21 @@ const rawSizeToBucket = (raw: string): SizeBucket | null => {
     s.includes("7'10\"x9'10\"") || s.includes("7'10\"x10'6\"") ||
     s.includes("6'7\"x9'3\"") || s.includes("6'7\"x9'6\"") ||
     s.includes("7'3\"x9'3\"") || s.includes("7'7\"x9'6\"")
-  ) return "~7×10";
+  ) return "7×10";
   if (
     s.includes("5'3\"×7'3\"") || s.includes("5'×7'") || s.includes("5'2\"×7'") ||
     s.includes("5'3\"x7'3\"") || s.includes("5'x7'") || s.includes("5'2\"x7'")
-  ) return "~5×7";
+  ) return "5×7";
   if (
     s.includes("3'11\"×5'3\"") || s.includes("3'3\"×4'7\"") || s.includes("3'3\"×5'") ||
     s.includes("3'11\"x5'3\"") || s.includes("3'3\"x4'7\"") || s.includes("3'3\"x5'")
-  ) return "~3×5";
+  ) return "3×5";
   if (
     s.includes("2'×3'11\"") || s.includes("2'3\"×3'11\"") || s.includes("2'×3'") ||
     s.includes("2'7\"×3'11\"") || s.includes("2'3\"×3'11\"") ||
     s.includes("2'x3'11\"") || s.includes("2'3\"x3'11\"") || s.includes("2'x3'") ||
     s.includes("2'7\"x3'11\"")
-  ) return "~2×3";
+  ) return "2×3";
   return null;
 };
 
