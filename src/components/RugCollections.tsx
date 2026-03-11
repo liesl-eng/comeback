@@ -341,7 +341,7 @@ const RugCollections = () => {
                       <div>
                         <h3 className="font-semibold text-lg leading-tight">Collection: {col.name}</h3>
                         <p className="text-sm text-muted-foreground">
-                          {col.designCount} {col.designCount === 1 ? "design" : "designs"} · {col.totalUnits.toLocaleString()} units available
+                          {col.designCount} {col.designCount === 1 ? "design" : "designs"} · In Stock
                         </p>
                       </div>
                       <ChevronDown
