@@ -179,8 +179,12 @@ const collections: Collection[] = [
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908",
     sizeBuckets: ["5×7", "7×10", "9×12", "Runners", "Round"],
-    subDesigns: null,
-    fallbackNote: FALLBACK_NOTE,
+    subDesigns: [
+      { name: "Dollar Front", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "2'×5' Runner", units: 1 }, { size: "9'10\"×13'", units: 1 }] },
+      { name: "Dollar Front 2006A", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-03A8x10OH.jpg?v=1751059913", sizes: [{ size: "3'11\"×9'10\" Runner", units: 1 }, { size: "3'3\"×7'10\" Runner", units: 1 }, { size: "5'×7'", units: 1 }] },
+      { name: "Dollar Stacked", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-05A8x10OH.jpg?v=1751059919", sizes: [{ size: "3'11\"×9'10\" Runner", units: 1 }, { size: "3'3\"×7'10\" Runner", units: 1 }, { size: "9'10\"×13'", units: 1 }, { size: "7'7\"×9'10\"", units: 1 }] },
+      { name: "Bitcoin", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "3'3\" Round", units: 1 }, { size: "6'7\" Round", units: 1 }] },
+    ],
   },
   {
     name: "Kennedy",
@@ -235,8 +239,11 @@ const collections: Collection[] = [
     designCount: 3,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436",
     sizeBuckets: ["2×3", "3×5", "5×7", "7×10", "Runners"],
-    subDesigns: null,
-    fallbackNote: FALLBACK_NOTE,
+    subDesigns: [
+      { name: "Lattice", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436", sizes: [{ size: "2'7\"×9'6\" Runner", units: 1 }, { size: "2'×5' Runner", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "3'3\"×5'", units: 1 }, { size: "2'3\"×3'11\"", units: 1 }] },
+      { name: "Anastasia Moroccan", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-01ARS_S_02.jpg?v=1751060400", sizes: [{ size: "2'×5' Runner", units: 1 }] },
+      { name: "Bryn Moroccan", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-02ACU5.jpg?v=1751060409", sizes: [{ size: "7'7\"×9'10\"", units: 1 }] },
+    ],
   },
   {
     name: "Brielle",
