@@ -178,7 +178,7 @@ const collections: Collection[] = [
     totalUnits: 767,
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908",
-    sizeBuckets: ["~5×7", "~7×10", "~9×12", "Runners", "Round"],
+    sizeBuckets: ["5×7", "7×10", "9×12", "Runners", "Round"],
     subDesigns: null,
     fallbackNote: FALLBACK_NOTE,
   },
