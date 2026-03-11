@@ -80,7 +80,7 @@ const collections: Collection[] = [
     totalUnits: 3987,
     designCount: 12,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856",
-    sizeBuckets: ["~2×3", "~3×5", "~5×7", "~7×10", "Runners"],
+    sizeBuckets: ["2×3", "3×5", "5×7", "7×10", "Runners"],
     subDesigns: [
       { name: "Ripon", units: 1286, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856", sizes: [{ size: "5'3\"×7'3\"", units: 1170 }, { size: "3'11\"×5'3\"", units: 116 }] },
       { name: "Argonne", units: 689, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-232CU5_W.jpg?v=1753642856", sizes: [{ size: "3'11\"×5'3\"", units: 565 }, { size: "5'3\"×7'3\"", units: 73 }, { size: "2'×3'11\"", units: 49 }, { size: "6'7\"×9'3\"", units: 2 }] },
