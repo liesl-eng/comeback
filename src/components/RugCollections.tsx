@@ -279,9 +279,9 @@ const RugCollections = () => {
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-10 md:mb-14">
-          <h2 className="text-2xl md:text-4xl font-bold mb-3">Browse Available Collections</h2>
+          <h2 className="text-2xl md:text-4xl font-bold mb-3">Browse Collections</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore our current closeout inventory. Click a collection to see designs and sizes.
+            Click a collection to see designs and sizes.
           </p>
         </div>
 
