@@ -179,8 +179,12 @@ const collections: Collection[] = [
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908",
     sizeBuckets: ["5×7", "7×10", "9×12", "Runners", "Round"],
-    subDesigns: null,
-    fallbackNote: FALLBACK_NOTE,
+    subDesigns: [
+      { name: "Dollar Front", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "2'×5' Runner", units: 1 }, { size: "9'10\"×13'", units: 1 }] },
+      { name: "Dollar Front 2006A", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-03A8x10OH.jpg?v=1751059913", sizes: [{ size: "3'11\"×9'10\" Runner", units: 1 }, { size: "3'3\"×7'10\" Runner", units: 1 }, { size: "5'×7'", units: 1 }] },
+      { name: "Dollar Stacked", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-05A8x10OH.jpg?v=1751059919", sizes: [{ size: "3'11\"×9'10\" Runner", units: 1 }, { size: "3'3\"×7'10\" Runner", units: 1 }, { size: "9'10\"×13'", units: 1 }, { size: "7'7\"×9'10\"", units: 1 }] },
+      { name: "Bitcoin", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "3'3\" Round", units: 1 }, { size: "6'7\" Round", units: 1 }] },
+    ],
   },
   {
     name: "Kennedy",
