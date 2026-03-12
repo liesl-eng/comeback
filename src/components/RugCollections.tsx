@@ -295,6 +295,15 @@ const RugCollections = () => {
           </p>
         </div>
 
+        {/* Size Guide link */}
+        <div className="text-center mb-6">
+          <Link to="/size-guide">
+            <Button variant="outline" size="sm" className="font-semibold text-sm px-6">
+              View Size Guide <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
+            </Button>
+          </Link>
+        </div>
+
         {/* Size filter pills */}
         <div className="flex flex-wrap justify-center gap-2 mb-8 max-w-4xl mx-auto">
           {SIZE_BUCKETS.map((size) => (
