@@ -192,7 +192,7 @@ const collections: Collection[] = [
     totalUnits: 618,
     designCount: 3,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653",
-    sizeBuckets: ["3×5", "Runners", "Round"],
+    sizeBuckets: ["Small-Medium", "Runner", "Small Round"],
     subDesigns: [
       { name: "Triangles", units: 269, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653", sizes: [{ size: "2'7\"×9'10\" Runner", units: 226 }, { size: "4' Round", units: 37 }, { size: "2'3\"×7'3\" Runner", units: 6 }] },
       { name: "Stars", units: 237, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-24OH.jpg?v=1751232653", sizes: [{ size: "2'7\"×9'10\" Runner", units: 235 }, { size: "2'3\"×7'3\" Runner", units: 2 }] },
