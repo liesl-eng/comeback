@@ -175,7 +175,7 @@ const collections: Collection[] = [
       { name: "Audun", units: 71, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-404RS_S_01Graphic_1.jpg?v=1744399351", sizes: [{ size: "2'7\"×9'10\" Runner", units: 71 }] },
       { name: "Neema", units: 41, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-447OH.jpg?v=1751060445", sizes: [{ size: "2'7\"×9'10\" Runner", units: 31 }, { size: "3'11\"×5'3\"", units: 10 }] },
       { name: "Arid", units: 18, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-504CU5_V2Graphic_9.jpg?v=1751060059", sizes: [{ size: "3'11\"×5'3\"", units: 18 }] },
-      { name: "Cabo", units: 3, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-334RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "Runner", units: 3 }] },
+      { name: "Cabo", units: 3, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-334RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "2'7\"×9'10\" Runner", units: 3 }] },
     ],
   },
   {
