@@ -287,7 +287,7 @@ const RugCollections = () => {
   };
 
   return (
-    <section className="pt-6 md:pt-10 pb-6 md:pb-10 bg-muted/30">
+    <section id="collections" className="pt-6 md:pt-10 pb-6 md:pb-10 bg-muted/30">
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-10 md:mb-14">
