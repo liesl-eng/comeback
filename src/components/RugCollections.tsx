@@ -114,7 +114,7 @@ const collections: Collection[] = [
     sizeBuckets: ["3×5", "5×7", "Runners"],
     subDesigns: [
       { name: "Brooklyn Trellis", units: 661, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678", sizes: [{ size: "20\"×5' Runner", units: 401 }, { size: "22\"×1' Cut", units: 217 }, { size: "Roll Runner", units: 42 }, { size: "3'3\"×4'7\"", units: 1 }] },
-      { name: "Clover", units: 518, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-128OH.jpg?v=1751061609", sizes: [{ size: "20\"×5' Runner", units: 393 }, { size: "Runner", units: 125 }] },
+      { name: "Clover", units: 518, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-128OH.jpg?v=1751061609", sizes: [{ size: "20\"×5' Runner", units: 393 }, { size: "2'7\"×9'10\" Runner", units: 125 }] },
       { name: "Kama", units: 151, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-213OH.jpg?v=1742636552", sizes: [{ size: "5'×7'", units: 90 }, { size: "Runner", units: 44 }, { size: "3'3\"×4'7\"", units: 17 }] },
       { name: "Gene", units: 117, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-1743x5OH.jpg?v=1742612716", sizes: [{ size: "5'×7'", units: 89 }, { size: "3'3\"×4'7\"", units: 28 }] },
       { name: "Zazzu", units: 54, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-2012x5OH.jpg?v=1742636499", sizes: [{ size: "5'×7'", units: 49 }, { size: "Runner", units: 3 }, { size: "3'3\"×4'7\"", units: 1 }, { size: "Runner", units: 1 }] },
