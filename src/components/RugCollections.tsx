@@ -199,7 +199,7 @@ const collections: Collection[] = [
     sizeBuckets: ["3×5", "Runners", "Round"],
     subDesigns: [
       { name: "Triangles", units: 269, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653", sizes: [{ size: "2'7\"×9'10\" Runner", units: 226 }, { size: "4' Round", units: 37 }, { size: "2'3\"×7'3\" Runner", units: 6 }] },
-      { name: "Stars", units: 237, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-24OH.jpg?v=1751232653", sizes: [{ size: "Runner", units: 235 }, { size: "2'3\"×7'3\" Runner", units: 2 }] },
+      { name: "Stars", units: 237, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-24OH.jpg?v=1751232653", sizes: [{ size: "2'7\"×9'10\" Runner", units: 235 }, { size: "2'3\"×7'3\" Runner", units: 2 }] },
       { name: "Reeve", units: 112, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-34OH.jpg?v=1751232653", sizes: [{ size: "4' Round", units: 54 }, { size: "Runner", units: 38 }, { size: "2'3\"×7'3\" Runner", units: 19 }, { size: "3'11\"×5'3\"", units: 1 }] },
     ],
   },
