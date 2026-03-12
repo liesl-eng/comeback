@@ -34,7 +34,7 @@ const SizeGuide = () => {
         <div className="text-center mb-10 md:mb-14">
           <h1 className="text-3xl md:text-5xl font-bold mb-3">Rug Size Guide</h1>
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-            Our closeout inventory organized by size category. Pricing available upon request.
+            Our closeout inventory organized by size category.
           </p>
         </div>
 
