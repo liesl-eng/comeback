@@ -307,7 +307,7 @@ const RugCollections = () => {
                 setExpandedCollection(null);
               }}
               className={cn(
-                "px-4 py-2 rounded-full text-base font-medium transition-colors border",
+                "px-4 py-2 rounded-full text-lg font-medium transition-colors border",
                 activeSize === size
                   ? "bg-accent text-accent-foreground border-accent"
                   : "bg-card text-muted-foreground border-border hover:border-accent/50 hover:text-foreground"
