@@ -408,7 +408,7 @@ const RugCollections = () => {
                                       <span className="text-sm font-medium text-foreground">{s.size}</span>
                                       <span className={cn(
                                         "text-xs font-medium",
-                                        s.units > 10 ? "text-emerald-600" : "text-amber-600"
+                                        s.units > 10 ? "text-green-600" : "text-yellow-600"
                                       )}>
                                         {s.units > 10 ? "In Stock" : "Low Stock"}
                                       </span>
