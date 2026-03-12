@@ -206,9 +206,12 @@ const RugProgram = () => {
               >
                 See Current Rugs <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
-            </div>
+          </div>
           </div>
         </section>
+
+        {/* ── COLLECTIONS ── */}
+        <RugCollections />
 
         {/* ── WHO IT'S FOR ── */}
         <section className="py-14 md:py-20 bg-muted/30">
@@ -286,9 +289,6 @@ const RugProgram = () => {
             </div>
           </div>
         </section>
-
-        {/* ── COLLECTIONS ── */}
-        <RugCollections />
 
         {/* ── COMPLETE THE ROOM ── */}
         {/* ── COMPLETE THE ROOM ── */}
