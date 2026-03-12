@@ -60,6 +60,7 @@ const App = () => (
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/rug-program" element={<RugProgram />} />
                 <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
+                <Route path="/size-guide" element={<SizeGuide />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route
                   path="/admin/import"
