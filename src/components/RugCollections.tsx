@@ -466,7 +466,7 @@ const RugCollections = () => {
                                       key={idx}
                                       className="flex flex-col items-center px-2 py-1 rounded-lg bg-muted text-center min-w-[60px]"
                                     >
-                                      <span className="text-sm font-medium text-foreground">{s.size}</span>
+                                      <span className="text-sm font-medium text-foreground">{displaySize(s.size)}</span>
                                       <span className={cn(
                                         "text-xs font-medium",
                                         s.units > 10 ? "text-green-600" : "text-yellow-600"
