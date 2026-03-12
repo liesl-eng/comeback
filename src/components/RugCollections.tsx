@@ -69,6 +69,33 @@ const collectionMatchesBucket = (col: Collection, bucket: SizeBucket): boolean =
   return col.sizeBuckets.includes(bucket);
 };
 
+/* ─── Simplify size labels to rounded feet ─── */
+const SIZE_LABEL_MAP: Record<string, string> = {
+  '2\'3"×3\'11"': '2×4', '2\'×3\'11"': '2×4', '2\'×3\'': '2×3', '2×3': '2×3',
+  '2\'6"×3\'9"': '3×4', '2\'7"×3\'11"': '3×4',
+  '3\'11"×5\'3"': '4×5', '3\'3"×4\'7"': '3×5', '3\'3"×5\'': '3×5',
+  '5\'3"×7\'3"': '5×7', '5\'×7\'': '5×7', '5\'2"×7\'': '5×7',
+  '7\'10"×9\'10"': '8×10', '7\'7"×9\'6"': '8×10', '7\'7"×9\'10"': '8×10',
+  '7\'3"×9\'3"': '7×9', '6\'7"×9\'3"': '7×9', '6\'7"×9\'6"': '7×9',
+  '7\'10"×10\'6"': '8×11',
+  '9\'3"×12\'6"': '9×13', '9\'10"×13\'': '10×13',
+  '2\'7"×9\'10" Runner': '3×10 Runner', '2\'7"×9\'6" Runner': '3×10 Runner',
+  '2\'7"×9\'3" Runner': '3×10 Runner', '2\'6"×9\'10" Runner': '3×10 Runner',
+  '2\'3"×7\'3" Runner': '2×7 Runner', '2\'×7\'3" Runner': '2×7 Runner',
+  '2\'1"×7\'3" Runner': '2×7 Runner', '2\'×7\' Runner': '2×7 Runner',
+  '2\'3"×7\'3"': '2×7 Runner',
+  '20"×5\' Runner': '2×5 Runner', '1\'8"×5\' Runner': '2×5 Runner', '1\'8"×5\'': '2×5 Runner',
+  '2\'×5\' Runner': '2×5 Runner',
+  '3\'11"×9\'10" Runner': '4×10 Runner', '3\'3"×7\'10" Runner': '3×8 Runner',
+  '22"×1\' Cut': '2×1 Cut', 'Roll Runner': 'Roll Runner',
+  '4\' Round': '4\' Round', '3\'11" Round': '4\' Round', '2\'11" Round': '3\' Round',
+  '6\' Round': '6\' Round', '6\'7" Round': '6\' Round',
+  '8\' Round': '8\' Round', '7\'10" Round': '8\' Round',
+  '3\'3" Round': '3\' Round',
+};
+
+const simplifySize = (raw: string): string => SIZE_LABEL_MAP[raw] ?? raw;
+
 /* ─── FULL COLLECTION DATA ─── */
 const FALLBACK_NOTE = "Multiple sizes available. Contact us for details.";
 
