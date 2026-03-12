@@ -103,7 +103,7 @@ const collections: Collection[] = [
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053",
     sizeBuckets: ["2×3", "3×5", "5×7", "8×10", "9×12", "Runners"],
     subDesigns: [
-      { name: "Disa", units: 2875, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053", sizes: [{ size: "5'3\"×7'3\"", units: 1372 }, { size: "Runner", units: 570 }, { size: "2'3\"×7'3\" Runner", units: 325 }, { size: "7'10\"×9'10\"", units: 261 }, { size: "3'11\"×5'3\"", units: 150 }, { size: "9'3\"×12'6\"", units: 101 }, { size: "7'3\"×9'3\"", units: 95 }, { size: "2'×3'", units: 1 }] },
+      { name: "Disa", units: 2875, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053", sizes: [{ size: "5'3\"×7'3\"", units: 1372 }, { size: "2'7\"×9'10\" Runner", units: 570 }, { size: "2'3\"×7'3\" Runner", units: 325 }, { size: "7'10\"×9'10\"", units: 261 }, { size: "3'11\"×5'3\"", units: 150 }, { size: "9'3\"×12'6\"", units: 101 }, { size: "7'3\"×9'3\"", units: 95 }, { size: "2'×3'", units: 1 }] },
     ],
   },
   {
