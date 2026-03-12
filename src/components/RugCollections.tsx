@@ -125,7 +125,7 @@ const collections: Collection[] = [
     totalUnits: 2074,
     designCount: 5,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163",
-    sizeBuckets: ["2×3", "3×5", "5×7", "8×10", "Runners", "Round"],
+    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "Runner", "Large Round"],
     subDesigns: [
       { name: "Cossima", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "2'×3'", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "3'11\"×5'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }] },
       { name: "Piper", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "3'11\"×5'3\"", units: 1 }] },
