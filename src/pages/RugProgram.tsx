@@ -136,7 +136,7 @@ const RugProgram = () => {
         <meta name="twitter:title" content="Comeback Goods Rug Program — Curated Rugs, Big Savings" />
         <meta name="twitter:description" content="Subscription-based rug sourcing from premium brands up to 60% below wholesale. Inspected, ready-to-sell inventory delivered on your schedule." />
       </Helmet>
-      <RugProgramNavbar onGetQuoteClick={() => scrollTo("get-a-quote")} onSeeRugsClick={() => scrollTo("rug-collections")} />
+      <RugProgramNavbar onGetQuoteClick={() => scrollTo("get-a-quote")} />
 
       <main>
         {/* ── HERO ── */}
@@ -279,9 +279,7 @@ const RugProgram = () => {
         </section>
 
         {/* ── COLLECTIONS ── */}
-        <section id="rug-collections" className="scroll-mt-24">
-          <RugCollections />
-        </section>
+        <RugCollections />
 
         {/* ── COMPLETE THE ROOM ── */}
         {/* ── COMPLETE THE ROOM ── */}
