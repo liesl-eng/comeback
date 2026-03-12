@@ -146,7 +146,7 @@ const collections: Collection[] = [
     sizeBuckets: ["2×3", "5×7", "Runners"],
     subDesigns: [
       { name: "Otero", units: 970, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-02_OH.jpg?v=1742601782", sizes: [{ size: "2'3\"×3'11\"", units: 846 }, { size: "5'3\"×7'3\"", units: 124 }] },
-      { name: "Virden", units: 342, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-94_OH.jpg?v=1742601909", sizes: [{ size: "2'3\"×7'3\" Runner", units: 178 }, { size: "Runner", units: 161 }, { size: "5'3\"×7'3\"", units: 3 }] },
+      { name: "Virden", units: 342, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-94_OH.jpg?v=1742601909", sizes: [{ size: "2'3\"×7'3\" Runner", units: 178 }, { size: "2'7\"×9'10\" Runner", units: 161 }, { size: "5'3\"×7'3\"", units: 3 }] },
       { name: "Chindi", units: 5, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-319OH.jpg?v=1742618345", sizes: [{ size: "Runner", units: 4 }, { size: "3'11\"×5'3\"", units: 1 }] },
       { name: "Elaine", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-304OH.jpg?v=1742618173", sizes: [{ size: "Runner", units: 1 }] },
     ],
