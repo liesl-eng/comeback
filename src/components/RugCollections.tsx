@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ChevronDown, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─── Size bucket definitions ─── */
@@ -291,6 +293,15 @@ const RugCollections = () => {
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Click a collection to see designs and sizes.
           </p>
+        </div>
+
+        {/* Size Guide link */}
+        <div className="text-center mb-6">
+          <Link to="/size-guide">
+            <Button variant="outline" size="sm" className="font-semibold text-sm px-6">
+              View Size Guide <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
+            </Button>
+          </Link>
         </div>
 
         {/* Size filter pills */}
