@@ -427,8 +427,7 @@ const RugCollections = () => {
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {[...col.subDesigns]
                             .sort((a, b) => b.units - a.units)
-                            .map((design) => (
-                              {(() => {
+                            .map((design) => {
                                 const patternId = `${col.name}::${design.name}`;
                                 const saved = isSaved(patternId);
                                 const patternData: SavedPattern = {
@@ -484,8 +483,7 @@ const RugCollections = () => {
                                 </div>
                               </div>
                                 );
-                              })()}
-                            ))}
+                            })}
                         </div>
                       ) : (
                         <div className="flex items-center gap-4 py-4">
