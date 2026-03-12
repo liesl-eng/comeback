@@ -234,7 +234,7 @@ const collections: Collection[] = [
     subDesigns: [
       { name: "Colette", units: 272, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979", sizes: [{ size: "5'3\"×7'3\"", units: 218 }, { size: "2'×7'3\" Runner", units: 54 }] },
       { name: "Nova", units: 58, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-307CU5.jpg?v=1753643163", sizes: [{ size: "2'7\"×9'10\" Runner", units: 58 }] },
-      { name: "Maddox", units: 31, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-2748x10CU5.jpg?v=1753643163", sizes: [{ size: "Runner", units: 31 }] },
+      { name: "Maddox", units: 31, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-2748x10CU5.jpg?v=1753643163", sizes: [{ size: "2'7\"×9'10\" Runner", units: 31 }] },
       { name: "Zoe", units: 12, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-59_OH.jpg?v=1742595339", sizes: [{ size: "7'10\"×9'10\"", units: 9 }, { size: "Runner", units: 3 }] },
     ],
   },
