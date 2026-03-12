@@ -251,7 +251,7 @@ const collections: Collection[] = [
     totalUnits: 211,
     designCount: 1,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BRI-42RoundRS_S_01.jpg?v=1742611088",
-    sizeBuckets: ["Round"],
+    sizeBuckets: ["Small Round"],
     subDesigns: [
       { name: "Larissa", units: 211, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BRI-42RoundRS_S_01.jpg?v=1742611088", sizes: [{ size: "4' Round", units: 211 }] },
     ],
