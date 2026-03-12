@@ -158,7 +158,7 @@ const collections: Collection[] = [
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397",
     sizeBuckets: ["2×3", "5×7", "8×10", "Runners"],
     subDesigns: [
-      { name: "Emerson", units: 1074, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397", sizes: [{ size: "Runner", units: 612 }, { size: "2'3\"×3'11\"", units: 450 }, { size: "6'7\"×9'6\"", units: 10 }, { size: "7'10\"×9'10\"", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }] },
+      { name: "Emerson", units: 1074, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397", sizes: [{ size: "2'7\"×9'6\" Runner", units: 612 }, { size: "2'3\"×3'11\"", units: 450 }, { size: "6'7\"×9'6\"", units: 10 }, { size: "7'10\"×9'10\"", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }] },
     ],
   },
   {
