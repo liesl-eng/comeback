@@ -166,6 +166,15 @@ const RugProgram = () => {
               <p className="mb-10 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
                 Inspected, ready-to-display rug inventory... delivered on your schedule.
               </p>
+              {/* See Current Rugs button */}
+              <Button
+                size="lg"
+                onClick={() => scrollTo("collections")}
+                className="bg-[hsl(43_65%_55%)] text-[hsl(210_55%_10%)] hover:bg-[hsl(43_65%_50%)] font-semibold text-base px-8 mb-12"
+              >
+                See Current Rugs <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <Button
                   size="lg"
@@ -198,15 +207,6 @@ const RugProgram = () => {
                   </li>
                 ))}
               </ul>
-
-              {/* See Current Rugs button */}
-              <Button
-                size="lg"
-                onClick={() => scrollTo("collections")}
-                className="bg-[hsl(43_65%_55%)] text-[hsl(210_55%_10%)] hover:bg-[hsl(43_65%_50%)] font-semibold text-base px-8"
-              >
-                See Current Rugs <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
           </div>
           </div>
         </section>
