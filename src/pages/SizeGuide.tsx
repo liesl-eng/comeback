@@ -75,4 +75,10 @@ const SizeGuide = () => {
   );
 };
 
-export default SizeGuide;
+const SizeGuideWrapper = () => (
+  <RugFavoritesProvider>
+    <SizeGuide />
+  </RugFavoritesProvider>
+);
+
+export default SizeGuideWrapper;
