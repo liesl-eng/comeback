@@ -20,6 +20,7 @@ import AdminImport from "./pages/AdminImport";
 import Auth from "./pages/Auth";
 import RugProgram from "./pages/RugProgram";
 import MeridianLamp from "./pages/MeridianLamp";
+import SizeGuide from "./pages/SizeGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -59,6 +60,7 @@ const App = () => (
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/rug-program" element={<RugProgram />} />
                 <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
+                <Route path="/size-guide" element={<SizeGuide />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route
                   path="/admin/import"

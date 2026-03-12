@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import RugProgramNavbar from "@/components/RugProgramNavbar";
 import { Button } from "@/components/ui/button";
@@ -212,6 +213,15 @@ const RugProgram = () => {
 
         {/* ── COLLECTIONS ── */}
         <RugCollections />
+
+        {/* Size Guide link */}
+        <div className="text-center py-6 bg-muted/30">
+          <Link to="/size-guide">
+            <Button variant="outline" size="lg" className="font-semibold text-base px-8">
+              View Size Guide <ArrowRight className="h-4 w-4 ml-2" />
+            </Button>
+          </Link>
+        </div>
 
         {/* ── WHO IT'S FOR ── */}
         <section className="py-14 md:py-20 bg-muted/30">
