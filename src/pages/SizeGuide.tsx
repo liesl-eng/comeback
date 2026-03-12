@@ -42,7 +42,10 @@ const SizeGuide = () => {
           {categories.map((cat) => (
             <Card key={cat.name} className="border border-border/60">
               <CardContent className="p-5 md:p-6">
-                <h2 className="text-xl md:text-2xl font-bold mb-3">{cat.name}</h2>
+                <div className="flex items-baseline gap-3 mb-3">
+                  <h2 className="text-xl md:text-2xl font-bold">{cat.name}</h2>
+                  <span className="text-sm text-muted-foreground">e.g. {cat.example}</span>
+                </div>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {cat.sizes.map((size) => (
                     <Badge key={size} variant="secondary" className="text-sm font-medium px-3 py-1">
