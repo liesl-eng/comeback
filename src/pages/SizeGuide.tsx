@@ -34,9 +34,6 @@ const SizeGuide = () => {
       <main className="container mx-auto px-4 py-12 md:py-20 max-w-4xl">
         <div className="text-center mb-10 md:mb-14">
           <h1 className="text-3xl md:text-5xl font-bold mb-3">Rug Size Guide</h1>
-          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-            Our closeout inventory organized by size category.
-          </p>
           <Link to="/rug-program">
             <Button variant="outline" size="sm" className="mt-4 font-semibold text-sm px-6">
               ← Back to Rug Program
