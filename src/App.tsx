@@ -20,6 +20,7 @@ import AdminImport from "./pages/AdminImport";
 import Auth from "./pages/Auth";
 import RugProgram from "./pages/RugProgram";
 import MeridianLamp from "./pages/MeridianLamp";
+import SizeGuide from "./pages/SizeGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
