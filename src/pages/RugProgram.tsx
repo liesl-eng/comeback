@@ -185,7 +185,7 @@ const RugProgram = () => {
               </div>
 
               {/* Hero bullet points */}
-              <ul className="flex flex-col gap-3 max-w-xl mx-auto text-left">
+              <ul className="flex flex-col gap-3 max-w-xl mx-auto text-left mb-8">
                 {[
                   ["Premium Rugs, Big Savings", "up to 60% off wholesale."],
                   ["Rugs You Can Count On", "graded and ready for display."],
@@ -197,6 +197,15 @@ const RugProgram = () => {
                   </li>
                 ))}
               </ul>
+
+              {/* See Current Rugs button */}
+              <Button
+                size="lg"
+                onClick={() => scrollTo("collections")}
+                className="bg-[hsl(43_65%_55%)] text-[hsl(210_55%_10%)] hover:bg-[hsl(43_65%_50%)] font-semibold text-base px-8"
+              >
+                See Current Rugs <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
             </div>
           </div>
         </section>
