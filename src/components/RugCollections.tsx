@@ -399,14 +399,20 @@ const RugCollections = () => {
                                       In Stock
                                     </span>
                                   </div>
-                                  <div className="flex flex-wrap gap-1.5">
+                                  <div className="flex flex-wrap gap-2">
                                   {design.sizes.map((s, idx) => (
-                                    <span
+                                    <div
                                       key={idx}
-                                      className="text-sm px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
+                                      className="flex flex-col items-center px-2 py-1 rounded-lg bg-muted text-center min-w-[60px]"
                                     >
-                                      {s.size}
-                                    </span>
+                                      <span className="text-sm font-medium text-foreground">{s.size}</span>
+                                      <span className={cn(
+                                        "text-xs font-medium",
+                                        s.units > 10 ? "text-emerald-600" : "text-amber-600"
+                                      )}>
+                                        {s.units > 10 ? "In Stock" : "Low Stock"}
+                                      </span>
+                                    </div>
                                   ))}
                                   </div>
                                 </div>
