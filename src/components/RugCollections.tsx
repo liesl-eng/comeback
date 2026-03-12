@@ -413,11 +413,14 @@ const RugCollections = () => {
                 <div
                   className={cn(
                     "overflow-hidden transition-all duration-300 ease-in-out",
-                    isExpanded ? "max-h-[2000px] opacity-100 mt-4" : "max-h-0 opacity-0"
+                    isExpanded ? "max-h-[2000px] opacity-100 mt-6 mb-6" : "max-h-0 opacity-0"
                   )}
                 >
                   {isExpanded && (
-                    <div className="bg-card border rounded-lg p-4 md:p-6">
+                    <div className="bg-muted/50 border-2 border-accent/30 rounded-xl p-5 md:p-8 shadow-sm">
+                      <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-4">
+                        Collection: {col.name} — {col.designCount} {col.designCount === 1 ? "pattern" : "patterns"}
+                      </p>
                       {col.subDesigns ? (
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {[...col.subDesigns]
@@ -480,6 +483,7 @@ const RugCollections = () => {
                           </div>
                         </div>
                       )}
+                      <div className="mt-5 border-t border-accent/20 pt-1" />
                     </div>
                   )}
                 </div>
