@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronDown, ArrowRight, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRugFavorites, SavedPattern } from "@/contexts/RugFavoritesContext";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
