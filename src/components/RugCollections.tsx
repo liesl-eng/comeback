@@ -93,7 +93,7 @@ const collections: Collection[] = [
       { name: "Macon", units: 144, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-204CU5_W.jpg?v=1753642856", sizes: [{ size: "5'3\"×7'3\"", units: 144 }] },
       { name: "Cambria", units: 102, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-156CU5_W.jpg?v=1753642856", sizes: [{ size: "5'3\"×7'3\"", units: 102 }] },
       { name: "Amesti", units: 51, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-136CU5_W.jpg?v=1753642914", sizes: [{ size: "5'3\"×7'3\"", units: 51 }] },
-      { name: "Ramon", units: 22, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-86OH.jpg?v=1742608792", sizes: [{ size: "Runner", units: 22 }] },
+      { name: "Ramon", units: 22, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-86OH.jpg?v=1742608792", sizes: [{ size: "2'7\"×9'10\" Runner", units: 22 }] },
     ],
   },
   {
