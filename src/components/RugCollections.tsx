@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
-  "All Sizes", "2×3", "3×5", "5×7", "7×10", "9×12", "Runners", "Round",
+  "All Sizes", "2×3", "3×5", "5×7", "8×10", "9×12", "Runners", "Round",
 ] as const;
 
 type SizeBucket = (typeof SIZE_BUCKETS)[number];
@@ -47,7 +47,7 @@ const rawSizeToBucket = (raw: string): SizeBucket | null => {
     s.includes("7'10\"x9'10\"") || s.includes("7'10\"x10'6\"") ||
     s.includes("6'7\"x9'3\"") || s.includes("6'7\"x9'6\"") ||
     s.includes("7'3\"x9'3\"") || s.includes("7'7\"x9'6\"")
-  ) return "7×10";
+  ) return "8×10";
   if (
     s.includes("5'3\"×7'3\"") || s.includes("5'×7'") || s.includes("5'2\"×7'") ||
     s.includes("5'3\"x7'3\"") || s.includes("5'x7'") || s.includes("5'2\"x7'")
@@ -80,7 +80,7 @@ const collections: Collection[] = [
     totalUnits: 3987,
     designCount: 12,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856",
-    sizeBuckets: ["2×3", "3×5", "5×7", "7×10", "Runners"],
+    sizeBuckets: ["2×3", "3×5", "5×7", "8×10", "Runners"],
     subDesigns: [
       { name: "Ripon", units: 1286, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856", sizes: [{ size: "5'3\"×7'3\"", units: 1170 }, { size: "3'11\"×5'3\"", units: 116 }] },
       { name: "Argonne", units: 689, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-232CU5_W.jpg?v=1753642856", sizes: [{ size: "3'11\"×5'3\"", units: 565 }, { size: "5'3\"×7'3\"", units: 73 }, { size: "2'×3'11\"", units: 49 }, { size: "6'7\"×9'3\"", units: 2 }] },
@@ -101,7 +101,7 @@ const collections: Collection[] = [
     totalUnits: 2875,
     designCount: 1,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053",
-    sizeBuckets: ["2×3", "3×5", "5×7", "7×10", "9×12", "Runners"],
+    sizeBuckets: ["2×3", "3×5", "5×7", "8×10", "9×12", "Runners"],
     subDesigns: [
       { name: "Disa", units: 2875, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053", sizes: [{ size: "5'3\"×7'3\"", units: 1372 }, { size: "Runner", units: 570 }, { size: "2'3\"×7'3\" Runner", units: 325 }, { size: "7'10\"×9'10\"", units: 261 }, { size: "3'11\"×5'3\"", units: 150 }, { size: "9'3\"×12'6\"", units: 101 }, { size: "7'3\"×9'3\"", units: 95 }, { size: "2'×3'", units: 1 }] },
     ],
@@ -129,7 +129,7 @@ const collections: Collection[] = [
     totalUnits: 2074,
     designCount: 5,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163",
-    sizeBuckets: ["2×3", "3×5", "5×7", "7×10", "Runners", "Round"],
+    sizeBuckets: ["2×3", "3×5", "5×7", "8×10", "Runners", "Round"],
     subDesigns: [
       { name: "Cossima", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "2'×3'", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "3'11\"×5'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }] },
       { name: "Piper", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "3'11\"×5'3\"", units: 1 }] },
@@ -156,7 +156,7 @@ const collections: Collection[] = [
     totalUnits: 1074,
     designCount: 1,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397",
-    sizeBuckets: ["2×3", "5×7", "7×10", "Runners"],
+    sizeBuckets: ["2×3", "5×7", "8×10", "Runners"],
     subDesigns: [
       { name: "Emerson", units: 1074, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397", sizes: [{ size: "Runner", units: 612 }, { size: "2'3\"×3'11\"", units: 450 }, { size: "6'7\"×9'6\"", units: 10 }, { size: "7'10\"×9'10\"", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }] },
     ],
@@ -183,7 +183,7 @@ const collections: Collection[] = [
     totalUnits: 767,
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908",
-    sizeBuckets: ["5×7", "7×10", "9×12", "Runners", "Round"],
+    sizeBuckets: ["5×7", "8×10", "9×12", "Runners", "Round"],
     subDesigns: [
       { name: "Dollar Front", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "2'×5' Runner", units: 1 }, { size: "9'10\"×13'", units: 1 }] },
       { name: "Dollar Front 2006A", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-03A8x10OH.jpg?v=1751059913", sizes: [{ size: "3'11\"×9'10\" Runner", units: 1 }, { size: "3'3\"×7'10\" Runner", units: 1 }, { size: "5'×7'", units: 1 }] },
@@ -230,7 +230,7 @@ const collections: Collection[] = [
     totalUnits: 373,
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979",
-    sizeBuckets: ["5×7", "7×10", "Runners"],
+    sizeBuckets: ["5×7", "8×10", "Runners"],
     subDesigns: [
       { name: "Colette", units: 272, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979", sizes: [{ size: "5'3\"×7'3\"", units: 218 }, { size: "Runner", units: 54 }] },
       { name: "Nova", units: 58, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-307CU5.jpg?v=1753643163", sizes: [{ size: "Runner", units: 58 }] },
@@ -243,7 +243,7 @@ const collections: Collection[] = [
     totalUnits: 226,
     designCount: 3,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436",
-    sizeBuckets: ["2×3", "3×5", "5×7", "7×10", "Runners"],
+    sizeBuckets: ["2×3", "3×5", "5×7", "8×10", "Runners"],
     subDesigns: [
       { name: "Lattice", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436", sizes: [{ size: "2'7\"×9'6\" Runner", units: 1 }, { size: "2'×5' Runner", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "3'3\"×5'", units: 1 }, { size: "2'3\"×3'11\"", units: 1 }] },
       { name: "Anastasia Moroccan", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-01ARS_S_02.jpg?v=1751060400", sizes: [{ size: "2'×5' Runner", units: 1 }] },
@@ -265,7 +265,7 @@ const collections: Collection[] = [
     totalUnits: 162,
     designCount: 3,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157",
-    sizeBuckets: ["2×3", "5×7", "7×10", "Runners"],
+    sizeBuckets: ["2×3", "5×7", "8×10", "Runners"],
     subDesigns: [
       { name: "Rendezvous", units: 74, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157", sizes: [{ size: "5'3\"×7'3\"", units: 73 }, { size: "2'3\"×7'3\"", units: 1 }] },
       { name: "Intrigue", units: 64, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-12Graphics_1.jpg?v=1751063149", sizes: [{ size: "7'10\"×9'10\"", units: 64 }] },
@@ -403,7 +403,7 @@ const RugCollections = () => {
                                   {design.sizes.map((s, idx) => (
                                     <span
                                       key={idx}
-                                      className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
+                                      className="text-sm px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
                                     >
                                       {s.size}
                                     </span>
