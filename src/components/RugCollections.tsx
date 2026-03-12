@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ChevronDown, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─── Size bucket definitions ─── */
