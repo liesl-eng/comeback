@@ -312,6 +312,7 @@ const collections: Collection[] = [
 const RugCollections = () => {
   const [activeSize, setActiveSize] = useState<SizeBucket>("All Sizes");
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
+  const { togglePattern, isSaved } = useRugFavorites();
 
   const filtered = collections
     .filter((c) => collectionMatchesBucket(c, activeSize))
