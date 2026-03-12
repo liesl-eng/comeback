@@ -403,7 +403,7 @@ const RugCollections = () => {
                                   {design.sizes.map((s, idx) => (
                                     <span
                                       key={idx}
-                                      className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
+                                      className="text-sm px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
                                     >
                                       {s.size}
                                     </span>
