@@ -261,7 +261,7 @@ const collections: Collection[] = [
     totalUnits: 162,
     designCount: 3,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157",
-    sizeBuckets: ["2×3", "5×7", "8×10", "Runners"],
+    sizeBuckets: ["Accent", "Medium", "Large", "Runner"],
     subDesigns: [
       { name: "Rendezvous", units: 74, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157", sizes: [{ size: "5'3\"×7'3\"", units: 73 }, { size: "2'3\"×7'3\"", units: 1 }] },
       { name: "Intrigue", units: 64, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-12Graphics_1.jpg?v=1751063149", sizes: [{ size: "7'10\"×9'10\"", units: 64 }] },
