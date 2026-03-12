@@ -204,7 +204,7 @@ const collections: Collection[] = [
     totalUnits: 613,
     designCount: 3,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/1940_RS_S_01_R1.jpg?v=1753643333",
-    sizeBuckets: ["2×3", "3×5", "5×7", "9×12", "Runners"],
+    sizeBuckets: ["Accent", "Small-Medium", "Medium", "XL", "Runner"],
     subDesigns: [
       { name: "Granada", units: 164, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-84OH.jpg?v=1742616163", sizes: [{ size: "5'3\"×7'3\"", units: 72 }, { size: "2'3\"×7'3\" Runner", units: 47 }, { size: "3'11\"×5'3\"", units: 45 }] },
       { name: "Aosta", units: 104, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-1348x10OH.jpg?v=1742616099", sizes: [{ size: "5'3\"×7'3\"", units: 64 }, { size: "9'3\"×12'6\"", units: 25 }, { size: "3'11\"×5'3\"", units: 13 }, { size: "2'7\"×9'10\" Runner", units: 2 }] },
