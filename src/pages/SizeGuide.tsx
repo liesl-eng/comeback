@@ -11,7 +11,7 @@ const categories = [
   { name: "Medium", example: "5×7", sizes: ["5×7"] },
   { name: "Large", example: "8×10", sizes: ["8×10", "7×9", "7×10", "8×11"] },
   { name: "XL", example: "9×13", sizes: ["9×13"] },
-  { name: "Runner", example: "3×10", sizes: ["3×10 Runner", "2×7 Runner", "2×5 Runner"] },
+  { name: "Runner", example: "2'7\"×9'10\"", sizes: ["2'7\"×9'10\"", "2'7\"×9'6\"", "2'7\"×9'3\"", "2'6\"×9'10\"", "2'3\"×7'3\"", "2'×7'3\"", "2'1\"×7'3\"", "2'×7'", "20\"×5'", "1'8\"×5'"] },
   { name: "Small Round", example: "4' Round", sizes: ["4' Round", "3' Round"] },
   { name: "Med Round", example: "6' Round", sizes: ["6' Round"] },
   { name: "Large Round", example: "8' Round", sizes: ["8' Round"] },

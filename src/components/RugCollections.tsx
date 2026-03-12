@@ -33,17 +33,6 @@ const SIZE_DISPLAY_MAP: Record<string, string> = {
   '6\'7"×9\'6"': "7×10",
   '7\'10"×10\'6"': "8×11",
   '9\'3"×12\'6"': "9×13",
-  '2\'7"×9\'10" Runner': "3×10 Runner",
-  '2\'7"×9\'6" Runner': "3×10 Runner",
-  '2\'7"×9\'3" Runner': "3×10 Runner",
-  '2\'6"×9\'10" Runner': "3×10 Runner",
-  '2\'3"×7\'3" Runner': "2×7 Runner",
-  '2\'×7\'3" Runner': "2×7 Runner",
-  '2\'1"×7\'3" Runner': "2×7 Runner",
-  "2'×7' Runner": "2×7 Runner",
-  '20"×5\' Runner': "2×5 Runner",
-  "1'8\"×5' Runner": "2×5 Runner",
-  "1'8\"×5'": "2×5 Runner",
   "4' Round": "4' Round",
   '3\'11" Round': "4' Round",
   '2\'11" Round': "3' Round",
@@ -52,16 +41,9 @@ const SIZE_DISPLAY_MAP: Record<string, string> = {
   "8' Round": "8' Round",
   '7\'10" Round': "8' Round",
   // Money collection special sizes
-  "2'×5' Runner": "2×5 Runner",
   '9\'10"×13\'': "10×13",
-  '3\'11"×9\'10" Runner': "4×10 Runner",
-  '3\'3"×7\'10" Runner': "3×8 Runner",
   '7\'7"×9\'10"': "8×10",
   '3\'3" Round': "3' Round",
-  // Non-runner labeled runner dimensions
-  '2\'3"×7\'3"': "2×7 Runner",
-  '22"×1\' Cut': "2×1 Cut",
-  "Roll Runner": "Roll Runner",
 };
 
 const displaySize = (raw: string): string => SIZE_DISPLAY_MAP[raw] || raw;
