@@ -227,7 +227,7 @@ const RugProgram = () => {
             <p className="text-base md:text-lg font-semibold uppercase tracking-widest text-accent text-center mb-6">Perfect For</p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
               {[
-                { icon: "🏪", title: "Boutique Stores", desc: "High-margin inventory your shoppers love" },
+                { icon: "🏪", title: "Specialty Stores", desc: "High-margin inventory your shoppers love" },
                 { icon: "🏢", title: "Property Managers", desc: "Turnkey rug supply for unit turnover" },
                 { icon: "🏡", title: "Short-Term Rentals", desc: "Refresh listings affordably at scale" },
                 { icon: "🎨", title: "Stagers & Designers", desc: "Premium looks without premium cost" },
