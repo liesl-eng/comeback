@@ -119,7 +119,7 @@ const collections: Collection[] = [
       { name: "Gene", units: 117, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-1743x5OH.jpg?v=1742612716", sizes: [{ size: "5'×7'", units: 89 }, { size: "3'3\"×4'7\"", units: 28 }] },
       { name: "Zazzu", units: 54, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-2012x5OH.jpg?v=1742636499", sizes: [{ size: "5'×7'", units: 49 }, { size: "2'7\"×9'10\" Runner", units: 3 }, { size: "3'3\"×4'7\"", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }] },
       { name: "Tabriz Red Traditional", units: 29, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66302x5RunnerOH_0954979f-1b9b-4753-8a8d-3932c1b6a87d.jpg?v=1751061809", sizes: [{ size: "20\"×5' Runner", units: 29 }] },
-      { name: "Florence Brown Traditional", units: 21, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-1083x5OH_c36dd545-fee3-4ddd-b2a9-73863b73b1c9.jpg?v=1751061818", sizes: [{ size: "Runner", units: 19 }, { size: "20\"×5' Runner", units: 2 }] },
+      { name: "Florence Brown Traditional", units: 21, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-1083x5OH_c36dd545-fee3-4ddd-b2a9-73863b73b1c9.jpg?v=1751061818", sizes: [{ size: "2'7\"×9'10\" Runner", units: 19 }, { size: "20\"×5' Runner", units: 2 }] },
       { name: "Warby", units: 20, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-02.jpg?v=1742596149", sizes: [{ size: "1'8\"×5'", units: 20 }] },
       { name: "Tabriz Black Traditional", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66332x5RunnerOH.jpg?v=1751061809", sizes: [{ size: "20\"×5' Runner", units: 2 }] },
     ],
