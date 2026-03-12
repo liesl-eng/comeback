@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import RugProgramNavbar from "@/components/RugProgramNavbar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const categories = [
   { name: "Accent", example: "2' x 3'", sizes: ['2\'3"×3\'11"', '2\'×3\'', '2\'×3\'11"', '2×3', '2\'6"×3\'9"', '2\'7"×3\'11"'] },
@@ -36,6 +37,11 @@ const SizeGuide = () => {
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
             Our closeout inventory organized by size category.
           </p>
+          <Link to="/rug-program">
+            <Button variant="outline" size="sm" className="mt-4 font-semibold text-sm px-6">
+              ← Back to Rug Program
+            </Button>
+          </Link>
         </div>
 
         <div className="grid gap-4 md:gap-5">
