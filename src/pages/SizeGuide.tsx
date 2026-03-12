@@ -36,6 +36,11 @@ const SizeGuide = () => {
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
             Our closeout inventory organized by size category.
           </p>
+          <Link to="/rug-program">
+            <Button variant="outline" size="sm" className="mt-4 font-semibold text-sm px-6">
+              ← Back to Rug Program
+            </Button>
+          </Link>
         </div>
 
         <div className="grid gap-4 md:gap-5">
