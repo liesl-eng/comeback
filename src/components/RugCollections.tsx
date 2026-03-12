@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
-  "All Sizes", "2×3", "3×5", "5×7", "8×10", "9×12", "Runners", "Round",
+  "All Sizes", "Accent", "Small-Medium", "Runner", "Medium", "Large", "XL", "Small Round", "Med Round", "Large Round",
 ] as const;
 
 type SizeBucket = (typeof SIZE_BUCKETS)[number];
@@ -30,38 +30,34 @@ interface Collection {
   designCount: number;
   image: string;
   sizeBuckets: SizeBucket[];
-  subDesigns: SubDesign[] | null; // null = no breakdown available
+  subDesigns: SubDesign[] | null;
   fallbackNote?: string;
 }
 
+/* ─── Size-to-bucket mapping ─── */
+const BUCKET_SIZES: Record<Exclude<SizeBucket, "All Sizes">, string[]> = {
+  "Accent": ['2\'3"×3\'11"', '2\'×3\'', '2\'×3\'11"', '2×3', '2\'6"×3\'9"', '2\'7"×3\'11"'],
+  "Small-Medium": ['3\'11"×5\'3"', '3\'3"×4\'7"', '3\'3"×5\''],
+  "Runner": ['2\'7"×9\'10"', '2\'3"×7\'3"', '2\'7"×9\'6"', '2\'×7\'3"', '2\'7"×9\'3"', '20"×5\'', '1\'8"×5\'', '2\'6"×9\'10"', '2\'1"×7\'3"', '2\'×7\''],
+  "Medium": ['5\'3"×7\'3"', '5\'×7\'', '5\'2"×7\''],
+  "Large": ['7\'10"×9\'10"', '7\'3"×9\'3"', '6\'7"×9\'3"', '6\'7"×9\'6"', '7\'10"×10\'6"', '7\'7"×9\'6"'],
+  "XL": ['9\'3"×12\'6"'],
+  "Small Round": ['4\' Round', '3\'11" Round', '2\'11" Round'],
+  "Med Round": ['6\' Round', '6\'7" Round'],
+  "Large Round": ['8\' Round', '7\'10" Round'],
+};
+
 /* ─── Helper: which bucket does a raw size belong to? ─── */
 const rawSizeToBucket = (raw: string): SizeBucket | null => {
-  const s = raw.toLowerCase();
-  if (s.includes("round")) return "Round";
-  if (s.includes("runner") || s.includes("roll") || s.includes("cut")) return "Runners";
-  if (s.includes("9'3\"×12'6\"") || s.includes("9'3\"x12'6\"")) return "9×12";
-  if (
-    s.includes("7'10\"×9'10\"") || s.includes("7'10\"×10'6\"") ||
-    s.includes("6'7\"×9'3\"") || s.includes("6'7\"×9'6\"") ||
-    s.includes("7'3\"×9'3\"") || s.includes("7'7\"×9'6\"") ||
-    s.includes("7'10\"x9'10\"") || s.includes("7'10\"x10'6\"") ||
-    s.includes("6'7\"x9'3\"") || s.includes("6'7\"x9'6\"") ||
-    s.includes("7'3\"x9'3\"") || s.includes("7'7\"x9'6\"")
-  ) return "8×10";
-  if (
-    s.includes("5'3\"×7'3\"") || s.includes("5'×7'") || s.includes("5'2\"×7'") ||
-    s.includes("5'3\"x7'3\"") || s.includes("5'x7'") || s.includes("5'2\"x7'")
-  ) return "5×7";
-  if (
-    s.includes("3'11\"×5'3\"") || s.includes("3'3\"×4'7\"") || s.includes("3'3\"×5'") ||
-    s.includes("3'11\"x5'3\"") || s.includes("3'3\"x4'7\"") || s.includes("3'3\"x5'")
-  ) return "3×5";
-  if (
-    s.includes("2'×3'11\"") || s.includes("2'3\"×3'11\"") || s.includes("2'×3'") ||
-    s.includes("2'7\"×3'11\"") || s.includes("2'3\"×3'11\"") ||
-    s.includes("2'x3'11\"") || s.includes("2'3\"x3'11\"") || s.includes("2'x3'") ||
-    s.includes("2'7\"x3'11\"")
-  ) return "2×3";
+  const s = raw.toLowerCase().replace(/\s+/g, ' ');
+  // Check runner-related keywords first
+  if (s.includes("runner") || s.includes("roll") || s.includes("cut")) return "Runner";
+  for (const [bucket, sizes] of Object.entries(BUCKET_SIZES) as [SizeBucket, string[]][]) {
+    if (bucket === "Runner") continue; // already handled above
+    for (const size of sizes) {
+      if (s.includes(size.toLowerCase())) return bucket;
+    }
+  }
   return null;
 };
 
