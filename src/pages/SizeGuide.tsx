@@ -56,7 +56,7 @@ const SizeGuide = () => {
                     </Badge>
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground italic">Pricing TBD</p>
+                
               </CardContent>
             </Card>
           ))}
