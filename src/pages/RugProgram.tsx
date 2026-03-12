@@ -364,9 +364,25 @@ const RugProgramInner = () => {
 
       <footer id="get-a-quote" className="py-12 bg-primary text-primary-foreground scroll-mt-20">
         <div className="container mx-auto px-4 text-center space-y-3">
+          {totalSaved > 0 && (
+            <div className="bg-primary-foreground/10 rounded-lg px-4 py-3 max-w-2xl mx-auto mb-4 text-left">
+              <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-1">
+                Your saved patterns ({totalSaved})
+              </p>
+              <p className="text-sm text-primary-foreground/80">
+                {savedSummary}
+              </p>
+              <p className="text-xs text-primary-foreground/50 mt-1">
+                Mention these in your email so we can include them in your quote.
+              </p>
+            </div>
+          )}
           <p className="text-xl md:text-2xl font-semibold">
             Get in contact:{" "}
-            <a href="mailto:liesl@comebackgoods.com" className="text-accent hover:underline underline-offset-4">
+            <a
+              href={`mailto:liesl@comebackgoods.com${totalSaved > 0 ? `?subject=Rug%20Program%20Quote%20Request&body=Hi%2C%20I'm%20interested%20in%20the%20following%20patterns%3A%0A${encodeURIComponent(savedSummary)}%0A%0A` : ''}`}
+              className="text-accent hover:underline underline-offset-4"
+            >
               liesl@comebackgoods.com
             </a>
           </p>
@@ -378,5 +394,11 @@ const RugProgramInner = () => {
     </div>
   );
 };
+
+const RugProgram = () => (
+  <RugFavoritesProvider>
+    <RugProgramInner />
+  </RugFavoritesProvider>
+);
 
 export default RugProgram;

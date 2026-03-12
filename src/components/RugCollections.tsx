@@ -428,10 +428,28 @@ const RugCollections = () => {
                           {[...col.subDesigns]
                             .sort((a, b) => b.units - a.units)
                             .map((design) => (
+                              {(() => {
+                                const patternId = `${col.name}::${design.name}`;
+                                const saved = isSaved(patternId);
+                                const patternData: SavedPattern = {
+                                  id: patternId,
+                                  collectionName: col.name,
+                                  designName: design.name,
+                                  image: design.image,
+                                  sizes: design.sizes.map((s) => ({ size: displaySize(s.size), units: s.units })),
+                                };
+                                return (
                               <div
                                 key={design.name}
-                                className="border rounded-lg overflow-hidden bg-background"
+                                className="border rounded-lg overflow-hidden bg-background relative"
                               >
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); togglePattern(patternData); }}
+                                  className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors shadow-sm"
+                                  aria-label={saved ? `Remove ${design.name} from saved` : `Save ${design.name}`}
+                                >
+                                  <Heart className={cn("h-4 w-4 transition-colors", saved ? "text-red-500 fill-red-500" : "text-muted-foreground hover:text-red-400")} />
+                                </button>
                                 <div className="h-40 overflow-hidden bg-muted">
                                   <img
                                     src={design.image}
@@ -465,6 +483,8 @@ const RugCollections = () => {
                                   </div>
                                 </div>
                               </div>
+                                );
+                              })()}
                             ))}
                         </div>
                       ) : (
