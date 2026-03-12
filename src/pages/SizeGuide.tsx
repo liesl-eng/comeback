@@ -5,14 +5,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const categories = [
-  { name: "Small", sizes: ['2\'3"×3\'11"', '3\'11"×5\'3"', '3\'3"×4\'7"', '3\'3"×5\'', '2×3', '2\'6"×3\'9"', '2\'7"×3\'11"'] },
-  { name: "Runner", sizes: ['2\'7"×9\'10"', '2\'3"×7\'3"', '2\'7"×9\'6"', '2\'×7\'3"', '2\'7"×9\'3"', '20"×5\'', '1\'8"×5\'', '2\'6"×9\'10"', '2\'1"×7\'3"'] },
-  { name: "Medium", sizes: ['5\'3"×7\'3"', '5\'2"×7\'', '5\'×7\''] },
-  { name: "Large", sizes: ['7\'10"×9\'10"', '7\'3"×9\'3"', '6\'7"×9\'3"', '6\'7"×9\'6"', '7\'10"×10\'6"', '7\'7"×9\'6"'] },
-  { name: "XL", sizes: ['9\'3"×12\'6"'] },
-  { name: "Small Round", sizes: ['4\' Round', '3\'11" Round', '2\'11" Round'] },
-  { name: "Med Round", sizes: ['6\' Round', '6\'7" Round'] },
-  { name: "Large Round", sizes: ['8\' Round'] },
+  { name: "Accent", example: "2' x 3'", sizes: ['2\'3"×3\'11"', '2\'×3\'', '2\'×3\'11"', '2×3', '2\'6"×3\'9"', '2\'7"×3\'11"'] },
+  { name: "Small-Medium", example: "3'11\" x 5'3\"", sizes: ['3\'11"×5\'3"', '3\'3"×4\'7"', '3\'3"×5\''] },
+  { name: "Runner", example: "2'7\" x 9'10\"", sizes: ['2\'7"×9\'10"', '2\'3"×7\'3"', '2\'7"×9\'6"', '2\'×7\'3"', '2\'7"×9\'3"', '20"×5\'', '1\'8"×5\'', '2\'6"×9\'10"', '2\'1"×7\'3"', '2\'×7\''] },
+  { name: "Medium", example: "5'3\" x 7'3\"", sizes: ['5\'3"×7\'3"', '5\'×7\'', '5\'2"×7\''] },
+  { name: "Large", example: "7'10\" x 9'10\"", sizes: ['7\'10"×9\'10"', '7\'3"×9\'3"', '6\'7"×9\'3"', '6\'7"×9\'6"', '7\'10"×10\'6"', '7\'7"×9\'6"'] },
+  { name: "XL", example: "9'3\" x 12'6\"", sizes: ['9\'3"×12\'6"'] },
+  { name: "Small Round", example: "4' Round", sizes: ['4\' Round', '3\'11" Round', '2\'11" Round'] },
+  { name: "Med Round", example: "6' Round", sizes: ['6\' Round', '6\'7" Round'] },
+  { name: "Large Round", example: "8' Round", sizes: ['8\' Round', '7\'10" Round'] },
 ];
 
 const SizeGuide = () => {
