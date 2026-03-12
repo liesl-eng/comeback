@@ -4,9 +4,10 @@ import comebackLogo from "@/assets/comeback-goods-logo.png";
 
 interface RugProgramNavbarProps {
   onGetQuoteClick: () => void;
+  onSeeRugsClick: () => void;
 }
 
-const RugProgramNavbar = ({ onGetQuoteClick }: RugProgramNavbarProps) => {
+const RugProgramNavbar = ({ onGetQuoteClick, onSeeRugsClick }: RugProgramNavbarProps) => {
   return (
     <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto px-4 md:px-6">
@@ -28,8 +29,16 @@ const RugProgramNavbar = ({ onGetQuoteClick }: RugProgramNavbarProps) => {
             </div>
           </Link>
 
-          {/* Right: Get a Quote + Marketplace link */}
-          <div className="flex items-center gap-3 md:gap-5 flex-shrink-0">
+          {/* Right: See Current Rugs + Get a Quote + Marketplace link */}
+          <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onSeeRugsClick}
+              className="hidden sm:inline-flex md:text-base md:px-4 md:h-10"
+            >
+              See Current Rugs
+            </Button>
             <Button
               variant="accent"
               size="sm"
@@ -40,7 +49,7 @@ const RugProgramNavbar = ({ onGetQuoteClick }: RugProgramNavbarProps) => {
             </Button>
             <Link
               to="/"
-              className="hidden sm:inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+              className="hidden md:inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
               Visit B2B Marketplace
               <span aria-hidden="true">→</span>

@@ -279,7 +279,9 @@ const RugProgram = () => {
         </section>
 
         {/* ── COLLECTIONS ── */}
-        <RugCollections />
+        <section id="rug-collections" className="scroll-mt-24">
+          <RugCollections />
+        </section>
 
         {/* ── COMPLETE THE ROOM ── */}
         {/* ── COMPLETE THE ROOM ── */}
