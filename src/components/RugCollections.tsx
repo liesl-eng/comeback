@@ -47,7 +47,7 @@ const rawSizeToBucket = (raw: string): SizeBucket | null => {
     s.includes("7'10\"x9'10\"") || s.includes("7'10\"x10'6\"") ||
     s.includes("6'7\"x9'3\"") || s.includes("6'7\"x9'6\"") ||
     s.includes("7'3\"x9'3\"") || s.includes("7'7\"x9'6\"")
-  ) return "7×10";
+  ) return "8×10";
   if (
     s.includes("5'3\"×7'3\"") || s.includes("5'×7'") || s.includes("5'2\"×7'") ||
     s.includes("5'3\"x7'3\"") || s.includes("5'x7'") || s.includes("5'2\"x7'")
