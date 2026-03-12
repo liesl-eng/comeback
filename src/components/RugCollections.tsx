@@ -226,7 +226,7 @@ const collections: Collection[] = [
     totalUnits: 373,
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979",
-    sizeBuckets: ["5×7", "8×10", "Runners"],
+    sizeBuckets: ["Medium", "Large", "Runner"],
     subDesigns: [
       { name: "Colette", units: 272, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979", sizes: [{ size: "5'3\"×7'3\"", units: 218 }, { size: "2'×7'3\" Runner", units: 54 }] },
       { name: "Nova", units: 58, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-307CU5.jpg?v=1753643163", sizes: [{ size: "2'7\"×9'10\" Runner", units: 58 }] },
