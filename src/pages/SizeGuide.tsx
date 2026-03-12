@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import RugProgramNavbar from "@/components/RugProgramNavbar";
+import { RugFavoritesProvider } from "@/contexts/RugFavoritesContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
