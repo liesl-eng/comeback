@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
+import SavedPatternsDrawer from "@/components/SavedPatternsDrawer";
 
 interface RugProgramNavbarProps {
   onGetQuoteClick: () => void;
@@ -28,8 +29,9 @@ const RugProgramNavbar = ({ onGetQuoteClick }: RugProgramNavbarProps) => {
             </div>
           </Link>
 
-          {/* Right: Get a Quote + Marketplace link */}
-          <div className="flex items-center gap-3 md:gap-5 flex-shrink-0">
+          {/* Right: Saved Patterns + Get a Quote + Marketplace link */}
+          <div className="flex items-center gap-2 md:gap-5 flex-shrink-0">
+            <SavedPatternsDrawer />
             <Button
               variant="accent"
               size="sm"

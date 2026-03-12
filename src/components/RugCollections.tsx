@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronDown, ArrowRight, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRugFavorites, SavedPattern } from "@/contexts/RugFavoritesContext";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
@@ -311,6 +312,7 @@ const collections: Collection[] = [
 const RugCollections = () => {
   const [activeSize, setActiveSize] = useState<SizeBucket>("All Sizes");
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
+  const { togglePattern, isSaved } = useRugFavorites();
 
   const filtered = collections
     .filter((c) => collectionMatchesBucket(c, activeSize))
@@ -425,11 +427,28 @@ const RugCollections = () => {
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {[...col.subDesigns]
                             .sort((a, b) => b.units - a.units)
-                            .map((design) => (
+                            .map((design) => {
+                                const patternId = `${col.name}::${design.name}`;
+                                const saved = isSaved(patternId);
+                                const patternData: SavedPattern = {
+                                  id: patternId,
+                                  collectionName: col.name,
+                                  designName: design.name,
+                                  image: design.image,
+                                  sizes: design.sizes.map((s) => ({ size: displaySize(s.size), units: s.units })),
+                                };
+                                return (
                               <div
                                 key={design.name}
-                                className="border rounded-lg overflow-hidden bg-background"
+                                className="border rounded-lg overflow-hidden bg-background relative"
                               >
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); togglePattern(patternData); }}
+                                  className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors shadow-sm"
+                                  aria-label={saved ? `Remove ${design.name} from saved` : `Save ${design.name}`}
+                                >
+                                  <Heart className={cn("h-4 w-4 transition-colors", saved ? "text-red-500 fill-red-500" : "text-muted-foreground hover:text-red-400")} />
+                                </button>
                                 <div className="h-40 overflow-hidden bg-muted">
                                   <img
                                     src={design.image}
@@ -463,7 +482,8 @@ const RugCollections = () => {
                                   </div>
                                 </div>
                               </div>
-                            ))}
+                                );
+                            })}
                         </div>
                       ) : (
                         <div className="flex items-center gap-4 py-4">
