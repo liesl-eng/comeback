@@ -222,7 +222,7 @@ const collections: Collection[] = [
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/ZAZ-23_8x10_OH_1.jpg?v=1742624393",
     sizeBuckets: ["5×7", "Runners"],
     subDesigns: [
-      { name: "Patras", units: 383, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/ZAZ-23_8x10_OH_1.jpg?v=1742624393", sizes: [{ size: "5'3\"×7'3\"", units: 272 }, { size: "2'3\"×7'3\" Runner", units: 64 }, { size: "Runner", units: 47 }] },
+      { name: "Patras", units: 383, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/ZAZ-23_8x10_OH_1.jpg?v=1742624393", sizes: [{ size: "5'3\"×7'3\"", units: 272 }, { size: "2'3\"×7'3\" Runner", units: 64 }, { size: "2'7\"×9'10\" Runner", units: 47 }] },
     ],
   },
   {
