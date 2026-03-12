@@ -169,7 +169,7 @@ const collections: Collection[] = [
     sizeBuckets: ["3×5", "Runners"],
     subDesigns: [
       { name: "Mariah", units: 314, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "2'7\"×9'10\" Runner", units: 306 }, { size: "2'3\"×7'3\" Runner", units: 8 }] },
-      { name: "Loewy", units: 194, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-424OH.jpg?v=1751060427", sizes: [{ size: "Runner", units: 116 }, { size: "3'11\"×5'3\"", units: 78 }] },
+      { name: "Loewy", units: 194, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-424OH.jpg?v=1751060427", sizes: [{ size: "2'7\"×9'10\" Runner", units: 116 }, { size: "3'11\"×5'3\"", units: 78 }] },
       { name: "Devotion", units: 107, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/SI-48_RS_RM45_02.jpg?v=1742596778", sizes: [{ size: "Runner", units: 107 }] },
       { name: "Neveh", units: 77, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "Runner", units: 77 }] },
       { name: "Audun", units: 71, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-404RS_S_01Graphic_1.jpg?v=1744399351", sizes: [{ size: "Runner", units: 71 }] },
