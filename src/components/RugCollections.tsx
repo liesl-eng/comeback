@@ -179,7 +179,7 @@ const collections: Collection[] = [
     totalUnits: 767,
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908",
-    sizeBuckets: ["5×7", "8×10", "9×12", "Runners", "Round"],
+    sizeBuckets: ["Medium", "Large", "Runner", "Small Round", "Med Round"],
     subDesigns: [
       { name: "Dollar Front", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "2'×5' Runner", units: 1 }, { size: "9'10\"×13'", units: 1 }] },
       { name: "Dollar Front 2006A", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-03A8x10OH.jpg?v=1751059913", sizes: [{ size: "3'11\"×9'10\" Runner", units: 1 }, { size: "3'3\"×7'10\" Runner", units: 1 }, { size: "5'×7'", units: 1 }] },
