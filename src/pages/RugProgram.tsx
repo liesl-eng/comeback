@@ -61,8 +61,9 @@ const faqs = [
   },
 ];
 
-const RugProgram = () => {
+const RugProgramInner = () => {
   const [submitted, setSubmitted] = useState(false);
+  const { savedSummary, totalSaved } = useRugFavorites();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
