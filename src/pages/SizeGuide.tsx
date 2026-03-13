@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import RugProgramNavbar from "@/components/RugProgramNavbar";
@@ -19,6 +20,11 @@ const categories = [
 ];
 
 const SizeGuide = () => {
+  useEffect(() => {
+    // Always scroll to top when page loads
+    window.scrollTo(0, 0);
+  }, []);
+
   const scrollToContact = () => {
     // Navigate to rug program contact
     window.location.href = "/rug-program#get-a-quote";
