@@ -1,25 +1,19 @@
 import Navbar from "@/components/Navbar";
-import ProductCard from "@/components/ProductCard";
 import StatsSection from "@/components/StatsSection";
 import CategorySection from "@/components/CategorySection";
 import ValuePropSection from "@/components/ValuePropSection";
 import BuyerSegmentSection from "@/components/BuyerSegmentSection";
-import { mockProducts } from "@/data/mockProducts";
-import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Lock } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-marketplace.jpg";
 
 const Index = () => {
-  const { addItem, totalItems } = useCart();
   const navigate = useNavigate();
-
-  const totalProductCount = mockProducts.length;
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar cartItemCount={totalItems} />
+      <Navbar />
 
       <main>
         {/* Hero Section */}
@@ -70,7 +64,7 @@ const Index = () => {
               
               {/* Category buttons */}
               <div className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3 justify-center">
-                {["Furniture", "Decor", "Lighting", "Mirrors", "Pillows & Rugs", "Outdoor", "Home & Wellness Tech"].map((category) => (
+                {["Furniture", "Decor", "Lighting", "Mirrors", "Pillows & Rugs", "Outdoor"].map((category) => (
                   <Button
                     key={category}
                     variant="outline"

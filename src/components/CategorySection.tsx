@@ -1,7 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-
 const categories = [
   {
     name: "Furniture",
@@ -39,6 +38,16 @@ const CategorySection = () => {
   return (
     <section className="pt-2 pb-10 md:pt-4 md:pb-16 bg-muted/30">
       <div className="container mx-auto px-4">
+        {/* New header */}
+        <div className="text-center mb-6 md:mb-10">
+          <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-2">
+            Build Your Pallet.
+          </h2>
+          <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto">
+            Browse by category, add what you need, and request a quote when you're ready. $5,000 order minimum.
+          </p>
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {categories.map((category) => (
             <button
@@ -57,7 +66,7 @@ const CategorySection = () => {
                   {category.name}
                 </h3>
                 <span className="inline-flex items-center gap-1 text-base md:text-lg font-semibold text-accent group-hover:gap-2 transition-all">
-                  Browse <ArrowRight className="h-5 w-5" />
+                  Add to Pallet <ArrowRight className="h-5 w-5" />
                 </span>
               </div>
             </button>

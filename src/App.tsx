@@ -4,15 +4,17 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { CartProvider } from "@/contexts/CartContext";
+import { PalletProvider } from "@/contexts/PalletContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import PalletTray from "@/components/PalletTray";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Pallets from "./pages/Pallets";
 import PalletDetail from "./pages/PalletDetail";
+import PalletSummary from "./pages/PalletSummary";
 import Cart from "./pages/Cart";
 import Favorites from "./pages/Favorites";
 import About from "./pages/About";
@@ -30,7 +32,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
-        <CartProvider>
+        <PalletProvider>
           <FavoritesProvider>
             <Toaster />
             <Sonner />
@@ -57,6 +59,7 @@ const App = () => (
                     </ProtectedRoute>
                   }
                 />
+                <Route path="/pallet" element={<PalletSummary />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/rug-program" element={<RugProgram />} />
                 <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
@@ -73,9 +76,10 @@ const App = () => (
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              <PalletTray />
             </BrowserRouter>
           </FavoritesProvider>
-        </CartProvider>
+        </PalletProvider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
