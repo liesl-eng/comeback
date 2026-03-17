@@ -2,23 +2,23 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { mockProducts } from "@/data/mockProducts";
-import { useCart } from "@/contexts/CartContext";
+import { usePallet } from "@/contexts/PalletContext";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShoppingCart, ArrowLeft, Package, Minus, Plus, Heart } from "lucide-react";
+import { ArrowLeft, Package, Minus, Plus, Heart, Check } from "lucide-react";
 import { toast } from "sonner";
-import { WholesaleOption } from "@/types/product";
 import { formatPrice } from "@/lib/utils";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addItem, totalItems } = useCart();
+  const { addItem, totalItems } = usePallet();
   const { isFavorite, toggleFavorite } = useFavorites();
   const product = mockProducts.find((p) => p.id === id);
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [quantity, setQuantity] = useState(1);
+  const [justAdded, setJustAdded] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,7 +27,7 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <div className="min-h-screen bg-background">
-        <Navbar cartItemCount={totalItems} />
+        <Navbar />
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold mb-4">Product not found</h1>
           <Button onClick={() => navigate("/products")}>
@@ -38,29 +38,12 @@ const ProductDetail = () => {
     );
   }
 
-  const updateQuantity = (optionType: string, delta: number) => {
-    setQuantities(prev => {
-      const current = prev[optionType] || 0;
-      const newValue = Math.max(0, current + delta);
-      return { ...prev, [optionType]: newValue };
-    });
-  };
-
-  const handleAddToCart = (option: WholesaleOption) => {
-    const qty = quantities[option.type] || option.moq;
-    if (qty < option.moq) {
-      toast.error(`Minimum order quantity is ${option.moq} units`);
-      return;
-    }
-
-    // Add items to cart based on quantity
-    for (let i = 0; i < qty; i++) {
-      addItem(product);
-    }
-
+  const handleAddToPallet = () => {
+    addItem(product, quantity);
+    setJustAdded(true);
     toast.success(
       <div className="flex flex-col gap-2">
-        <p className="font-semibold">Added {qty} units to order request!</p>
+        <p className="font-semibold">Added {quantity} unit{quantity !== 1 ? "s" : ""} to your pallet!</p>
         <div className="flex gap-2">
           <Button
             size="sm"
@@ -68,34 +51,31 @@ const ProductDetail = () => {
             onClick={() => navigate("/products")}
             className="flex-1"
           >
-            Continue Shopping
+            Continue Browsing
           </Button>
           <Button
             size="sm"
-            variant="accent"
-            onClick={() => navigate("/cart")}
+            variant="highlight"
+            onClick={() => navigate("/pallet")}
             className="flex-1"
           >
-            View Cart
+            View Pallet
           </Button>
         </div>
       </div>,
       { duration: 5000 }
     );
-
-    setQuantities(prev => ({ ...prev, [option.type]: option.moq }));
-  };
-
-  const getPurchaseTypeLabel = (type: string) => {
-    return type.charAt(0).toUpperCase() + type.slice(1) + 's';
+    setTimeout(() => {
+      setJustAdded(false);
+      setQuantity(1);
+    }, 1500);
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar cartItemCount={totalItems} />
+    <div className="min-h-screen bg-background pb-28">
+      <Navbar />
       
       <main className="container mx-auto px-4 py-6 md:py-8">
-        {/* Header */}
         <div className="mb-4 md:mb-6">
           <Button
             variant="ghost"
@@ -120,7 +100,6 @@ const ProductDetail = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-12">
-          {/* Product Section */}
           <div className="space-y-6">
             <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
               <img
@@ -192,14 +171,12 @@ const ProductDetail = () => {
             </Card>
           </div>
 
-          {/* Wholesale Ordering Section */}
           <div>
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-6">Wholesale Ordering</h2>
+                <h2 className="text-2xl font-bold mb-6">Add to Pallet</h2>
                 
                 <div className="space-y-6">
-                  {/* Price Display */}
                   <div>
                     <p className="text-sm text-muted-foreground mb-2">Unit Price</p>
                     <div className="flex items-baseline gap-3">
@@ -212,7 +189,6 @@ const ProductDetail = () => {
                     </div>
                   </div>
 
-                  {/* Quantity Selector */}
                   <div>
                     <label className="text-sm font-semibold mb-3 block">Quantity:</label>
                     <div className="flex items-center gap-3">
@@ -220,84 +196,55 @@ const ProductDetail = () => {
                         variant="outline"
                         size="icon"
                         className="h-12 w-12"
-                        onClick={() => {
-                          const currentQty = quantities['default'] || 1;
-                          setQuantities(prev => ({ ...prev, default: Math.max(1, currentQty - 1) }));
-                        }}
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       >
                         <Minus className="h-5 w-5" />
                       </Button>
                       <span className="text-2xl font-bold min-w-[4ch] text-center">
-                        {quantities['default'] || 1}
+                        {quantity}
                       </span>
                       <Button
                         variant="outline"
                         size="icon"
                         className="h-12 w-12"
-                        onClick={() => {
-                          const currentQty = quantities['default'] || 1;
-                          setQuantities(prev => ({ ...prev, default: currentQty + 1 }));
-                        }}
+                        onClick={() => setQuantity(quantity + 1)}
                       >
                         <Plus className="h-5 w-5" />
                       </Button>
                     </div>
                   </div>
 
-                  {/* Total Display */}
                   <div className="pt-4 border-t">
                     <div className="flex items-baseline justify-between">
                       <span className="text-lg font-semibold">Total:</span>
                       <span className="text-3xl font-bold text-accent">
-                        {formatPrice((quantities['default'] || 1) * product.discountedPrice)}
+                        {formatPrice(quantity * product.discountedPrice)}
                       </span>
                     </div>
                   </div>
 
-                  {/* Order Button */}
                   <Button
-                    variant="accent"
+                    variant={justAdded ? "outline" : "accent"}
                     size="lg"
-                    className="w-full gap-2 text-lg h-14"
-                    onClick={() => {
-                      const qty = quantities['default'] || 1;
-                      for (let i = 0; i < qty; i++) {
-                        addItem(product);
-                      }
-                      toast.success(
-                        <div className="flex flex-col gap-2">
-                          <p className="font-semibold">Added {qty} units to order request!</p>
-                          <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => navigate("/products")}
-                              className="flex-1"
-                            >
-                              Continue Shopping
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="accent"
-                              onClick={() => navigate("/cart")}
-                              className="flex-1"
-                            >
-                              View Cart
-                            </Button>
-                          </div>
-                        </div>,
-                        { duration: 5000 }
-                      );
-                      setQuantities(prev => ({ ...prev, default: 1 }));
-                    }}
+                    className="w-full gap-2 text-lg h-14 transition-all"
+                    onClick={handleAddToPallet}
+                    disabled={justAdded}
                   >
-                    <ShoppingCart className="h-5 w-5" />
-                    Request to Order
+                    {justAdded ? (
+                      <>
+                        <Check className="h-5 w-5" />
+                        Added to Pallet ✓
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="h-5 w-5" />
+                        Add to Pallet
+                      </>
+                    )}
                   </Button>
 
-                  {/* Optional Minimum Order Note */}
                   <p className="text-sm text-muted-foreground text-center">
-                    $5,000 minimum per brand (Arhaus, Modus, etc.)
+                    $5,000 order minimum
                   </p>
                 </div>
               </CardContent>
