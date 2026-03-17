@@ -2,19 +2,30 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types/product";
-import { ShoppingCart, Heart } from "lucide-react";
+import { Heart, Check, Plus } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { usePallet } from "@/contexts/PalletContext";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: Product;
   onAddToCart?: (product: Product) => void;
 }
 
-const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const savings = product.originalPrice - product.discountedPrice;
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { addItem } = usePallet();
+  const [justAdded, setJustAdded] = useState(false);
+
+  const handleAddToPallet = (e: React.MouseEvent) => {
+    e.preventDefault();
+    addItem(product);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1500);
+  };
 
   return (
     <Card className="group overflow-hidden transition-all hover:shadow-hover flex flex-col">
@@ -31,7 +42,6 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
         <Badge variant="accent" className="absolute right-2 bottom-2 text-[10px] px-1.5 py-0.5 font-semibold opacity-90">
           {product.discountPercentage}% OFF
         </Badge>
-        {/* Condition Badge */}
         <span className="absolute right-2 top-3 px-2 py-1 text-xs font-medium rounded bg-white/90 text-muted-foreground backdrop-blur-sm">
           New – Warehouse Direct
         </span>
@@ -96,15 +106,25 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
       </CardContent>
       <CardFooter className="p-4 pt-0 flex flex-col gap-2">
         <Button
-          variant="accent"
-          className="w-full gap-2"
-          onClick={() => onAddToCart?.(product)}
+          variant={justAdded ? "outline" : "accent"}
+          className="w-full gap-2 transition-all"
+          onClick={handleAddToPallet}
+          disabled={justAdded}
         >
-          <ShoppingCart className="h-4 w-4" />
-          Add to Request
+          {justAdded ? (
+            <>
+              <Check className="h-4 w-4" />
+              Added ✓
+            </>
+          ) : (
+            <>
+              <Plus className="h-4 w-4" />
+              Add to Pallet
+            </>
+          )}
         </Button>
         <p className="text-xs text-muted-foreground text-center">
-          $5,000 minimum per brand (Arhaus, Modus, etc.)
+          $5,000 order minimum
         </p>
       </CardFooter>
     </Card>

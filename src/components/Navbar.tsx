@@ -1,4 +1,4 @@
-import { ShoppingCart, Search, Menu, X, Heart, LogIn, LogOut, User } from "lucide-react";
+import { ShoppingCart, Search, Menu, X, Heart, LogIn, LogOut, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { usePallet } from "@/contexts/PalletContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
@@ -13,9 +14,10 @@ interface NavbarProps {
   cartItemCount?: number;
 }
 
-const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
+const Navbar = ({ cartItemCount }: NavbarProps) => {
   const navigate = useNavigate();
   const { totalFavorites } = useFavorites();
+  const { totalItems } = usePallet();
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
@@ -101,20 +103,20 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
                 )}
               </Button>
             </Link>
-            <Link to="/cart">
+            <Link to="/pallet">
               <Button
                 variant="outline"
                 size="sm"
-                className="relative gap-2 hover:border-accent/50 transition-colors"
+                className="relative gap-2 hover:border-highlight/50 transition-colors"
               >
-                <ShoppingCart className="h-4 w-4" />
-                Cart
-                {cartItemCount > 0 && (
+                <Package className="h-4 w-4" />
+                Pallet
+                {totalItems > 0 && (
                   <Badge
                     variant="accent"
                     className="absolute -right-2 -top-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
                   >
-                    {cartItemCount}
+                    {totalItems}
                   </Badge>
                 )}
               </Button>
@@ -139,7 +141,7 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
             )}
           </div>
 
-          {/* Mobile: Favorites + Cart + Menu */}
+          {/* Mobile: Favorites + Pallet + Menu */}
           <div className="flex md:hidden items-center gap-1">
             <Link to="/favorites">
               <Button
@@ -158,19 +160,19 @@ const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
                 )}
               </Button>
             </Link>
-            <Link to="/cart">
+            <Link to="/pallet">
               <Button
                 variant="ghost"
                 size="sm"
                 className="relative p-2"
               >
-                <ShoppingCart className="h-5 w-5" />
-                {cartItemCount > 0 && (
+                <Package className="h-5 w-5" />
+                {totalItems > 0 && (
                   <Badge
                     variant="accent"
                     className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
                   >
-                    {cartItemCount}
+                    {totalItems}
                   </Badge>
                 )}
               </Button>
