@@ -7,8 +7,6 @@ import zuoModernCSV from "./zuo_modern.csv?raw";
 import modusFurnitureCSV from "./modus_furniture.csv?raw";
 import mercanaCSV from "./mercana.csv?raw";
 import inspiredHomeCSV from "./inspired_home.csv?raw";
-import nutribulletCSV from "./nutribullet.csv?raw";
-import hatchCSV from "./hatch.csv?raw";
 
 // Helper function to parse price strings
 const parsePrice = (priceStr: string): number => {
