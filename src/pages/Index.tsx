@@ -28,10 +28,10 @@ const Index = () => {
           <div className="container relative mx-auto px-4 md:px-6 pt-10 pb-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="mb-3 md:mb-5 text-3xl sm:text-4xl md:text-5xl font-black text-primary-foreground lg:text-6xl tracking-tight">
-                Wholesale Home Goods, Without the Wholesale Headaches.
+                Tiny Imperfections. Huge Savings.
               </h1>
               <p className="mb-4 md:mb-5 text-lg md:text-xl text-primary-foreground/90 font-medium max-w-3xl mx-auto">
-                Curated overstock and closeout inventory — inspected, consolidated, and ready for volume orders. 30–70% below MSRP.
+                Name-brand home goods, inspected and consolidated, priced 30–70% below MSRP.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Button
