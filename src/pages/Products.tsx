@@ -30,9 +30,7 @@ const Products = () => {
   const brands = Array.from(new Set(mockProducts.map((p) => p.brand))).filter(b => b && b !== 'Brand').sort((a, b) => a.localeCompare(b));
   
   // Custom brand sort order for specific categories
-  const brandSortOrder: Record<string, string[]> = {
-    'Home & Wellness Tech': ['Hatch Sleep', 'NutriBullet'],
-  };
+  const brandSortOrder: Record<string, string[]> = {};
 
   const filteredProducts = mockProducts.filter((p) => {
     const matchesBrand = !selectedBrand || p.brand === selectedBrand;

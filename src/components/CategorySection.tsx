@@ -1,6 +1,5 @@
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import wellnessTechImage from "@/assets/category-wellness-tech.jpg";
 
 
 const categories = [
@@ -27,10 +26,6 @@ const categories = [
   {
     name: "Outdoor",
     image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400&h=300&fit=crop",
-  },
-  {
-    name: "Home & Wellness Tech",
-    image: wellnessTechImage,
   },
 ];
 

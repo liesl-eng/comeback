@@ -157,6 +157,4 @@ export const mockProducts: Product[] = [
   ...parseCSV(modusFurnitureCSV),
   // ...parseCSV(mercanaCSV), // Temporarily hidden - image issues
   ...parseCSV(inspiredHomeCSV),
-  ...parseCSV(nutribulletCSV),
-  ...parseCSV(hatchCSV),
 ].filter(product => product !== null);
