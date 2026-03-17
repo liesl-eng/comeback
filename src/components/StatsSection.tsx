@@ -5,7 +5,7 @@ const StatsSection = () => {
     {
       icon: Package,
       value: "9,000+",
-      label: "Products",
+      label: "SKUs",
     },
     {
       icon: Boxes,
@@ -14,8 +14,8 @@ const StatsSection = () => {
     },
     {
       icon: PackageCheck,
-      value: "Low",
-      label: "Order Minimums",
+      value: "30–70%",
+      label: "Below MSRP",
     },
   ];
 
