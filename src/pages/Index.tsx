@@ -88,8 +88,8 @@ const Index = () => {
         {/* Value Prop Section */}
         <ValuePropSection />
 
-        {/* Shop by Category */}
-        <CategorySection />
+
+
 
         {/* Who It's For */}
         <BuyerSegmentSection />
