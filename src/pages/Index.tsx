@@ -79,11 +79,11 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Stats Banner */}
-        <StatsSection />
-
         {/* Value Prop Section */}
         <ValuePropSection />
+
+        {/* Stats Banner */}
+        <StatsSection />
 
         {/* Shop by Category */}
         <CategorySection />
