@@ -122,8 +122,8 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="border-t bg-card py-8">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2025 Comeback Goods. Almost Perfect. Always Loved.</p>
+        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground">
+          <p>Almost Perfect. &nbsp;Always Loved.</p>
         </div>
       </footer>
     </div>
