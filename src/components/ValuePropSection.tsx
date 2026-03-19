@@ -4,23 +4,23 @@ import { Card, CardContent } from "@/components/ui/card";
 const valueProps = [
   {
     icon: Tag,
-    title: "Real Savings, Clear Math",
-    body: "Every item is priced 30–70% below MSRP. No mystery lots, no auction dynamics. You see what you're getting and what you're saving — before you commit.",
+    title: "Real Savings, Zero Waste",
+    body: "Get items up to 70% below wholesale. No mystery lots or weird auction dynamics.",
   },
   {
     icon: LayoutGrid,
     title: "Curated for How You Actually Buy",
-    body: "Coordinated assortments, room-ready kits, and scheduled refresh programs. We do the curation work so you're not piecing together a room from 12 separate orders.",
+    body: "Build your own pallets. Room-ready kits and scheduled refresh programs.",
   },
   {
     icon: CalendarSync,
     title: "Replenishment on Your Schedule",
-    body: "Small-batch orders. Quick turns. Whether you're furnishing one unit or refreshing fifty rooms, we work around your procurement timeline.",
+    body: "Small-batch orders and quick turns.",
   },
   {
     icon: ShieldCheck,
-    title: "Inspected at Our Crossdock",
-    body: "We don't broker. We touch the product. Every item is graded and consolidated at our crossdock — overstock and closeout goods sourced responsibly, shipped confidently.",
+    title: "Inspected by Comeback",
+    body: "We don't broker — every item is graded and consolidated at our facility. Sourced responsibly, shipped confidently.",
   },
 ];
 
