@@ -25,13 +25,16 @@ const Index = () => {
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="container relative mx-auto px-4 md:px-6 pt-10 pb-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12">
+          <div className="container relative mx-auto px-4 md:px-6 pt-14 pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="mb-3 md:mb-5 text-3xl sm:text-4xl md:text-5xl font-black text-primary-foreground lg:text-6xl tracking-tight">
+              <h1 className="mb-4 md:mb-6 text-3xl sm:text-4xl md:text-5xl font-black text-primary-foreground lg:text-6xl tracking-tight">
                 Tiny Imperfections. Huge Savings.
               </h1>
-              <p className="mb-4 md:mb-5 text-lg md:text-xl text-primary-foreground/90 font-medium max-w-3xl mx-auto">
-                High quality home goods — priced up to <span className="underline underline-offset-4 decoration-2">60% below wholesale</span>. Shop by SKU and build your own pallet.
+              <p className="mb-2 md:mb-3 text-lg md:text-xl text-primary-foreground/90 font-medium max-w-3xl mx-auto">
+                High quality home goods — priced up to <span className="underline underline-offset-4 decoration-2">60% below wholesale</span>.
+              </p>
+              <p className="mb-6 md:mb-8 text-lg md:text-xl text-primary-foreground/90 font-medium">
+                Shop by SKU. Build your own pallet.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Button
