@@ -6,7 +6,7 @@ const valueProps = [
   {
     icon: Tag,
     title: "Real Savings, Zero Waste",
-    body: "Get items up to 70% below wholesale. No mystery lots or weird auction dynamics.",
+    body: "30–60% below wholesale. SKU-level ordering — no mystery lots.",
     showStamp: false,
   },
   {
