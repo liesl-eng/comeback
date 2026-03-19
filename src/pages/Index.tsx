@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-marketplace.jpg";
-import crayonScrawl from "@/assets/crayon-scrawl.png";
+
 
 const Index = () => {
   const navigate = useNavigate();
