@@ -31,7 +31,7 @@ const valueProps = [
 
 const ValuePropSection = () => {
   return (
-    <section className="pt-8 pb-2 md:pt-14 md:pb-4 bg-muted/30">
+    <section className="pt-4 pb-2 md:pt-6 md:pb-4 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
           {valueProps.map((prop) => (
