@@ -78,7 +78,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
             <Link to="/products">
               <Button variant="accent" size="sm">
-                Browse Products
+                Build Your Pallet
               </Button>
             </Link>
             <Link to="/rug-program">
@@ -194,7 +194,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
             <div className="flex flex-col gap-2">
               <Link to="/products" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="accent" className="w-full">
-                  Browse Products
+                  Build Your Pallet
                 </Button>
               </Link>
               <Link to="/rug-program" onClick={() => setMobileMenuOpen(false)}>
