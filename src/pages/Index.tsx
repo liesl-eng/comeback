@@ -93,7 +93,7 @@ const Index = () => {
         <BuyerSegmentSection />
 
         {/* CTA Section */}
-        <section className="py-10 md:py-16 bg-gradient-hero">
+        <section className="py-6 md:py-10 bg-gradient-hero">
           <div className="container mx-auto px-4 text-center">
             <h2 className="mb-6 md:mb-8 text-lg md:text-2xl font-bold text-primary-foreground">
               Almost Perfect. Always Loved.
