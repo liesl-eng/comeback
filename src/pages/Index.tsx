@@ -44,15 +44,6 @@ const Index = () => {
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
-                  variant="highlight"
-                  size="lg"
-                  className="gap-2"
-                  onClick={() => navigate("/products")}
-                >
-                  Build Your Pallet
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
-                <Button
                   variant="secondary"
                   size="lg"
                   onClick={() => navigate("/about")}
