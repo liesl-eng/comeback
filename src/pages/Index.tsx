@@ -4,7 +4,7 @@ import CategorySection from "@/components/CategorySection";
 import ValuePropSection from "@/components/ValuePropSection";
 import BuyerSegmentSection from "@/components/BuyerSegmentSection";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Lock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-marketplace.jpg";
 
@@ -47,10 +47,9 @@ const Index = () => {
                   variant="highlight"
                   size="lg"
                   className="gap-2"
-                  onClick={() => navigate("/pallets")}
+                  onClick={() => navigate("/products")}
                 >
-                  <Lock className="h-[18px] w-[18px]" />
-                  Pallet Program
+                  Build Your Pallet
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
