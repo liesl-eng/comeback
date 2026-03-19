@@ -76,7 +76,7 @@ const Index = () => {
         <StatsSection />
 
         {/* Stretch Your Budget headline */}
-        <section className="pt-10 pb-4 md:pt-14 md:pb-6 bg-muted/30">
+        <section className="pt-10 pb-1 md:pt-14 md:pb-2 bg-muted/30">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-2xl md:text-4xl font-bold mb-3">Stretch Your Budget, Not Your Standards.</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
