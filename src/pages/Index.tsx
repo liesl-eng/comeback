@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import StatsSection from "@/components/StatsSection";
 import ValuePropSection from "@/components/ValuePropSection";
 import BuyerSegmentSection from "@/components/BuyerSegmentSection";
-import BuyerSegmentSection from "@/components/BuyerSegmentSection";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
