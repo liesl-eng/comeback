@@ -24,7 +24,7 @@ const valueProps = [
   {
     icon: ShieldCheck,
     title: "Inspected by Comeback",
-    body: "We don't broker — every item is graded and consolidated at our facility. Sourced responsibly, shipped confidently.",
+    body: "We don't broker — every item is graded and consolidated at our facility.",
     showStamp: true,
   },
 ];
