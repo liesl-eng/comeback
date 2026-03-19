@@ -31,7 +31,7 @@ const Index = () => {
                 Tiny Imperfections. Huge Savings.
               </h1>
               <p className="mb-2 md:mb-3 text-lg md:text-xl text-primary-foreground/90 font-medium max-w-3xl mx-auto">
-                High quality home goods — priced up to <span className="underline underline-offset-4 decoration-2">60% below wholesale</span>.
+                High quality home goods — priced <span className="underline underline-offset-4 decoration-2">30–60% below wholesale</span>.
               </p>
               <p className="mb-6 md:mb-8 text-lg md:text-xl text-primary-foreground/90 font-medium">
                 Shop by SKU. Build your own pallet.
