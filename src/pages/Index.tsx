@@ -75,20 +75,18 @@ const Index = () => {
         {/* Stats Banner */}
         <StatsSection />
 
-        {/* Transition Line */}
-        <section className="pt-4 pb-2 md:pt-6 md:pb-4 bg-muted/30">
+        {/* Stretch Your Budget headline */}
+        <section className="pt-10 pb-4 md:pt-14 md:pb-6 bg-muted/30">
           <div className="container mx-auto px-4 text-center">
-            <p className="text-xl md:text-3xl text-muted-foreground font-medium">
-              Stretch your budget, not your standards.
+            <h2 className="text-2xl md:text-4xl font-bold mb-3">Stretch Your Budget, Not Your Standards.</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Reliable, affordable inventory — without the sourcing headaches.
             </p>
           </div>
         </section>
 
         {/* Value Prop Section */}
         <ValuePropSection />
-
-
-
 
         {/* Who It's For */}
         <BuyerSegmentSection />
