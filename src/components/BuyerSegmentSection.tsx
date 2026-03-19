@@ -9,7 +9,7 @@ const segments = [
 
 const BuyerSegmentSection = () => {
   return (
-    <section className="py-10 md:py-14 bg-muted/30">
+    <section className="pt-4 pb-10 md:pt-6 md:pb-14 bg-muted/30">
       <div className="container mx-auto px-4">
         <p className="text-base md:text-lg font-semibold uppercase tracking-widest text-accent text-center mb-6">Perfect For</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">

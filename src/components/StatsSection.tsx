@@ -14,7 +14,7 @@ const StatsSection = () => {
     },
     {
       icon: PackageCheck,
-      value: "60%",
+      value: "30–60%",
       label: "Below Wholesale",
     },
   ];
