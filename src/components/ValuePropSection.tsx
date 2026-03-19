@@ -35,8 +35,8 @@ const ValuePropSection = () => {
                 <div className="p-2.5 rounded-full bg-accent/10">
                   <prop.icon className="h-6 w-6 text-accent" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground">{prop.title}</h3>
-                <p className="text-base text-muted-foreground leading-relaxed">{prop.body}</p>
+                <h3 className="text-lg font-bold text-foreground">{prop.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{prop.body}</p>
               </CardContent>
             </Card>
           ))}
