@@ -31,7 +31,7 @@ const Index = () => {
                 Tiny Imperfections. Huge Savings.
               </h1>
               <p className="mb-4 md:mb-5 text-lg md:text-xl text-primary-foreground/90 font-medium max-w-3xl mx-auto">
-                Home goods from top retailers and brands — priced 30–70% below MSRP. Shop by SKU and build your own pallet.
+                High quality home goods — priced up to <span className="underline underline-offset-4 decoration-2">60% below wholesale</span>. Shop by SKU and build your own pallet.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Button
