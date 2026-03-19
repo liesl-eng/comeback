@@ -4,7 +4,7 @@ import CategorySection from "@/components/CategorySection";
 import ValuePropSection from "@/components/ValuePropSection";
 import BuyerSegmentSection from "@/components/BuyerSegmentSection";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Lock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-marketplace.jpg";
 
