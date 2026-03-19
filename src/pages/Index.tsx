@@ -95,8 +95,8 @@ const Index = () => {
         {/* CTA Section */}
         <section className="py-10 md:py-16 bg-gradient-hero">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="mb-6 md:mb-8 text-2xl md:text-4xl font-bold text-primary-foreground">
-              High-quality brands. Less-than-wholesale pricing.
+            <h2 className="mb-6 md:mb-8 text-lg md:text-2xl font-bold text-primary-foreground">
+              Almost Perfect. Always Loved.
             </h2>
             <Button
               variant="accent"
