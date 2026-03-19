@@ -37,8 +37,8 @@ const ValuePropSection = () => {
           {valueProps.map((prop) => (
             <Card key={prop.title} className="border-border/60 bg-card">
               <CardContent className="p-5 md:p-6 flex flex-col items-start gap-3">
-                <div className="p-2.5 rounded-full bg-accent/10">
-                  <prop.icon className="h-6 w-6 text-accent" />
+                <div className="p-3 rounded-full bg-accent/10">
+                  <prop.icon className="h-8 w-8 text-accent" />
                 </div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-xl font-bold text-foreground">{prop.title}</h3>

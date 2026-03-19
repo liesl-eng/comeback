@@ -32,7 +32,7 @@ const StatsSection = () => {
                 <stat.icon className="h-6 w-6 md:h-10 md:w-10 text-accent" />
               </div>
               <div className="flex flex-col">
-                <span className="text-2xl sm:text-3xl md:text-5xl font-black text-foreground leading-none">
+                <span className="text-xl sm:text-2xl md:text-3xl font-semibold text-foreground leading-none">
                   {stat.value}
                 </span>
                 <span className="text-xs sm:text-sm md:text-base text-muted-foreground font-medium">
