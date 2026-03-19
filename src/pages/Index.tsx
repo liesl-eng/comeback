@@ -31,42 +31,7 @@ const Index = () => {
                 Tiny Imperfections. Huge Savings.
               </h1>
               <p className="mb-2 md:mb-3 text-lg md:text-xl text-primary-foreground/90 font-medium max-w-3xl mx-auto">
-                High quality home goods — priced{" "}
-                <span className="relative inline-block">
-                  30–60% below wholesale
-                  <svg
-                    className="absolute -bottom-2 left-0 w-full"
-                    viewBox="0 0 200 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M2 8.5C20 3 40 10 60 5.5C80 1 100 9 120 4C140 -1 160 8 180 3.5C190 1.5 198 6 198 6"
-                      stroke="hsl(43, 65%, 55%)"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      style={{ filter: "url(#crayon)" }}
-                    />
-                    <path
-                      d="M4 10C30 5 50 11 75 6C100 2 125 10 150 5.5C170 2 185 8 196 5"
-                      stroke="hsl(43, 65%, 55%)"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      opacity="0.5"
-                      style={{ filter: "url(#crayon)" }}
-                    />
-                    <defs>
-                      <filter id="crayon">
-                        <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="4" result="noise" />
-                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
-                      </filter>
-                    </defs>
-                  </svg>
-                </span>.
+                High quality home goods — priced <span className="underline underline-offset-4 decoration-2">30–60% below wholesale</span>.
               </p>
               <p className="mb-6 md:mb-8 text-lg md:text-xl text-primary-foreground/90 font-medium">
                 Shop by SKU. Build your own pallet.
