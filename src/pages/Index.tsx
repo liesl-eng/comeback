@@ -47,10 +47,9 @@ const Index = () => {
                   variant="highlight"
                   size="lg"
                   className="gap-2"
-                  onClick={() => navigate("/pallets")}
+                  onClick={() => navigate("/products")}
                 >
-                  <Lock className="h-[18px] w-[18px]" />
-                  Pallet Program
+                  Build Your Pallet
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
