@@ -18,7 +18,7 @@ const valueProps = [
   {
     icon: CalendarSync,
     title: "Replenishment on Your Schedule",
-    body: "Small-batch orders and quick turns.",
+    body: "Small batch orders with fast, reliable shipping. Procurement-ready and operationally easy.",
     showStamp: false,
   },
   {
