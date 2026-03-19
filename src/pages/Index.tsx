@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import StatsSection from "@/components/StatsSection";
-import CategorySection from "@/components/CategorySection";
 import ValuePropSection from "@/components/ValuePropSection";
 import BuyerSegmentSection from "@/components/BuyerSegmentSection";
 import { Button } from "@/components/ui/button";
@@ -88,8 +87,8 @@ const Index = () => {
         {/* Value Prop Section */}
         <ValuePropSection />
 
-        {/* Shop by Category */}
-        <CategorySection />
+
+
 
         {/* Who It's For */}
         <BuyerSegmentSection />
