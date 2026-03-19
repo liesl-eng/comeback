@@ -73,17 +73,17 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Stats Banner */}
+        <StatsSection />
+
         {/* Transition Line */}
-        <section className="pt-6 pb-2 md:pt-8 md:pb-4 bg-muted/30">
+        <section className="pt-4 pb-2 md:pt-6 md:pb-4 bg-muted/30">
           <div className="container mx-auto px-4 text-center">
             <p className="text-xl md:text-3xl text-muted-foreground font-medium">
               Stretch your budget, not your standards.
             </p>
           </div>
         </section>
-
-        {/* Stats Banner */}
-        <StatsSection />
 
         {/* Value Prop Section */}
         <ValuePropSection />
