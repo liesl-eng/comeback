@@ -241,13 +241,14 @@ const collections: Collection[] = [
   {
     name: "Dulcet",
     totalUnits: 613,
-    designCount: 3,
+    designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/1940_RS_S_01_R1.jpg?v=1753643333",
-    sizeBuckets: ["Accent", "Small-Medium", "Medium", "XL", "Runner"],
+    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "XL", "Runner"],
     subDesigns: [
-      { name: "Granada", units: 164, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-84OH.jpg?v=1742616163", sizes: [{ size: "5'3\"×7'3\"", units: 72 }, { size: "2'3\"×7'3\" Runner", units: 47 }, { size: "3'11\"×5'3\"", units: 45 }] },
-      { name: "Aosta", units: 104, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-1348x10OH.jpg?v=1742616099", sizes: [{ size: "5'3\"×7'3\"", units: 64 }, { size: "9'3\"×12'6\"", units: 25 }, { size: "3'11\"×5'3\"", units: 13 }, { size: "2'7\"×9'10\" Runner", units: 2 }] },
-      { name: "Trieste", units: 99, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-928x10OH.jpg?v=1742616209", sizes: [{ size: "3'11\"×5'3\"", units: 54 }, { size: "2'3\"×7'3\" Runner", units: 36 }, { size: "5'3\"×7'3\"", units: 8 }, { size: "2'7\"×3'11\"", units: 1 }] },
+      { name: "Bingo", units: 246, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/1940_RS_S_01_R1.jpg?v=1753643333", sizes: [{ size: "2'7\"×9'10\" Runner", units: 1 }, { size: "7'10\"×9'10\"", units: 1 }, { size: "2'7\"×3'11\"", units: 1 }, { size: "9'3\"×12'6\"", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }] },
+      { name: "Granada", units: 164, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-84OH.jpg?v=1742616163", sizes: [{ size: "5'3\"×7'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }, { size: "3'11\"×5'3\"", units: 1 }] },
+      { name: "Aosta", units: 104, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-1348x10OH.jpg?v=1742616099", sizes: [{ size: "5'3\"×7'3\"", units: 1 }, { size: "9'3\"×12'6\"", units: 1 }, { size: "3'11\"×5'3\"", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }] },
+      { name: "Trieste", units: 99, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-928x10OH.jpg?v=1742616209", sizes: [{ size: "3'11\"×5'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "2'7\"×3'11\"", units: 1 }] },
     ],
   },
   {
