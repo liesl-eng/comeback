@@ -104,7 +104,7 @@ const Index = () => {
               className="gap-2"
               onClick={() => navigate("/products")}
             >
-              Build Your Pallet
+              Start Now
               <ArrowRight className="h-5 w-5" />
             </Button>
           </div>
