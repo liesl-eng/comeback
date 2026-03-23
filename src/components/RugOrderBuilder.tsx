@@ -113,7 +113,8 @@ const createLineItem = (): LineItem => ({
 
 const getLineTotal = (item: LineItem): number => {
   const tier = SIZE_TIERS.find((t) => t.id === item.sizeTier);
-  return tier ? tier.price * item.quantity : 0;
+  const qty = item.quantity === "" ? 0 : item.quantity;
+  return tier ? tier.price * qty : 0;
 };
 
 const RugOrderBuilder = () => {
