@@ -187,6 +187,9 @@ const RugOrderBuilder = () => {
       source: "rug-order-builder",
     };
 
+    console.log("[RugOrderBuilder] Submitting to:", RUG_ORDER_WEBHOOK_URL);
+    console.log("[RugOrderBuilder] Payload:", JSON.stringify(payload, null, 2));
+
     try {
       const response = await fetch(RUG_ORDER_WEBHOOK_URL, {
         method: "POST",
