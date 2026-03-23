@@ -167,20 +167,17 @@ const RugOrderBuilder = () => {
     console.log("[RugOrderBuilder] moqMet:", moqMet, "isContactValid:", isContactValid);
     setIsSubmitting(true);
 
+    const formattedItems = lineItems
+      .filter((item) => item.collection && item.pattern && item.sizeTier)
+      .map((item) => {
+        const tier = SIZE_TIERS.find((t) => t.id === item.sizeTier);
+        const qty = item.quantity === "" ? 0 : item.quantity;
+        return `${item.collection} — ${item.pattern} — ${tier?.label || item.sizeTier} × ${qty} = $${getLineTotal(item).toLocaleString()}`;
+      })
+      .join("\n");
+
     const payload = {
-      lineItems: lineItems
-        .filter((item) => item.collection && item.pattern && item.sizeTier)
-        .map((item) => {
-          const tier = SIZE_TIERS.find((t) => t.id === item.sizeTier);
-          return {
-            collection: item.collection,
-            pattern: item.pattern,
-            size: tier?.label || item.sizeTier,
-            quantity: item.quantity,
-            unitPrice: tier?.price || 0,
-            lineTotal: getLineTotal(item),
-          };
-        }),
+      lineItems: formattedItems,
       orderTotal,
       totalItems,
       contact: contactForm,
