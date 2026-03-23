@@ -320,7 +320,7 @@ const RugOrderBuilder = () => {
                 <div className="flex-1 space-y-1.5">
                   <Progress value={progress} className="h-3 bg-muted" />
                   {moqMet ? (
-                    <p className="text-sm font-semibold text-green-600 flex items-center gap-1">
+                    <p className="text-sm font-semibold text-accent flex items-center gap-1">
                       <CheckCircle2 className="h-4 w-4" /> Minimum met!
                     </p>
                   ) : (
