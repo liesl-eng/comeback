@@ -118,6 +118,7 @@ const getLineTotal = (item: LineItem): number => {
 };
 
 const RugOrderBuilder = () => {
+  console.log("[RugOrderBuilder] Webhook URL:", RUG_ORDER_WEBHOOK_URL);
   const [lineItems, setLineItems] = useState<LineItem[]>([createLineItem()]);
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -185,6 +186,9 @@ const RugOrderBuilder = () => {
       timestamp: new Date().toISOString(),
       source: "rug-order-builder",
     };
+
+    console.log("[RugOrderBuilder] Submitting to:", RUG_ORDER_WEBHOOK_URL);
+    console.log("[RugOrderBuilder] Payload:", JSON.stringify(payload, null, 2));
 
     try {
       const response = await fetch(RUG_ORDER_WEBHOOK_URL, {
