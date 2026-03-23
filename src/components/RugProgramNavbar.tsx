@@ -13,7 +13,10 @@ const RugProgramNavbar = ({ onGetQuoteClick }: RugProgramNavbarProps) => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex h-16 md:h-20 items-center justify-between">
           {/* Left: Logo + Rug Program sub-brand */}
-          <Link to="/rug-program" className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="flex items-center gap-2 md:gap-3 flex-shrink-0"
+          >
             <img
               src={comebackLogo}
               alt="Comeback Goods"
@@ -27,7 +30,7 @@ const RugProgramNavbar = ({ onGetQuoteClick }: RugProgramNavbarProps) => {
                 Rug Program
               </span>
             </div>
-          </Link>
+          </button>
 
           {/* Right: Saved Patterns + Get a Quote + Marketplace link */}
           <div className="flex items-center gap-2 md:gap-5 flex-shrink-0">
