@@ -118,6 +118,7 @@ const getLineTotal = (item: LineItem): number => {
 };
 
 const RugOrderBuilder = () => {
+  console.log("[RugOrderBuilder] Webhook URL:", RUG_ORDER_WEBHOOK_URL);
   const [lineItems, setLineItems] = useState<LineItem[]>([createLineItem()]);
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [submitted, setSubmitted] = useState(false);
