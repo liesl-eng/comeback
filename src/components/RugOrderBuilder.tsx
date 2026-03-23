@@ -199,6 +199,9 @@ const RugOrderBuilder = () => {
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Select patterns and sizes from our catalog. $6,000 minimum order.
           </p>
+          <p className="text-sm text-muted-foreground/80 max-w-2xl mx-auto mt-2 italic">
+            Quantities are subject to availability. We'll confirm final counts in your quote.
+          </p>
         </div>
 
         {/* Line Items */}
@@ -214,7 +217,7 @@ const RugOrderBuilder = () => {
                     </Button>
                   )}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_80px_90px_40px] gap-3 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_100px_90px_40px] gap-3 items-end">
                   {/* Collection */}
                   <div className="space-y-1.5">
                     <Label className="text-xs text-muted-foreground">Collection</Label>
