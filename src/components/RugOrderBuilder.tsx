@@ -25,7 +25,7 @@ import { getQuantityWarning } from "@/lib/rugAvailability";
 import { collections, rawSizeToBucket } from "@/components/RugCollections";
 
 // ⚠️ PASTE YOUR RUG ORDER WEBHOOK URL HERE ⚠️
-const RUG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_ORDER_WEBHOOK_URL";
+const RUG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/8wstvs05lm6jjip54inr6wclgqclmp27";
 
 const MOQ = 6000;
 
