@@ -312,6 +312,9 @@ const collections: Collection[] = [
   },
 ];
 
+export { collections, rawSizeToBucket };
+export type { Collection, SubDesign, SizeBreakdown };
+
 const RugCollections = () => {
   const [activeSize, setActiveSize] = useState<SizeBucket>("All Sizes");
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
