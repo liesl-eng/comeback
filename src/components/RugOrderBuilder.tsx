@@ -100,7 +100,7 @@ interface LineItem {
   collection: string;
   pattern: string;
   sizeTier: string;
-  quantity: number;
+  quantity: number | "";
 }
 
 const createLineItem = (): LineItem => ({
@@ -113,7 +113,8 @@ const createLineItem = (): LineItem => ({
 
 const getLineTotal = (item: LineItem): number => {
   const tier = SIZE_TIERS.find((t) => t.id === item.sizeTier);
-  return tier ? tier.price * item.quantity : 0;
+  const qty = item.quantity === "" ? 0 : item.quantity;
+  return tier ? tier.price * qty : 0;
 };
 
 const RugOrderBuilder = () => {
@@ -130,7 +131,7 @@ const RugOrderBuilder = () => {
   });
 
   const orderTotal = lineItems.reduce((sum, item) => sum + getLineTotal(item), 0);
-  const totalItems = lineItems.reduce((sum, item) => sum + (item.sizeTier ? item.quantity : 0), 0);
+  const totalItems = lineItems.reduce((sum, item) => sum + (item.sizeTier ? (item.quantity === "" ? 0 : item.quantity) : 0), 0);
   const moqMet = orderTotal >= MOQ;
   const remaining = MOQ - orderTotal;
   const progress = Math.min((orderTotal / MOQ) * 100, 100);
@@ -305,14 +306,27 @@ const RugOrderBuilder = () => {
                       step={1}
                       placeholder="1"
                       value={item.quantity}
-                      onChange={(e) => updateLineItem(item.id, { quantity: Math.max(1, parseInt(e.target.value) || 1) })}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === "") {
+                          updateLineItem(item.id, { quantity: "" as any });
+                        } else {
+                          updateLineItem(item.id, { quantity: Math.max(1, parseInt(val) || 1) });
+                        }
+                      }}
+                      onBlur={() => {
+                        if (item.quantity === "" || item.quantity < 1) {
+                          updateLineItem(item.id, { quantity: 1 });
+                        }
+                      }}
                       className="flex h-10 w-full rounded-md border border-input bg-background text-foreground px-3 py-2 text-base text-center ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:text-sm"
                     />
                     {(() => {
                       if (!item.collection || !item.pattern || !item.sizeTier) return null;
                       const units = lookupUnits(item.collection, item.pattern, item.sizeTier);
                       if (units === null) return null;
-                      const warning = getQuantityWarning(units, item.quantity);
+                      const qty = item.quantity === "" ? 0 : item.quantity;
+                      const warning = getQuantityWarning(units, qty);
                       if (!warning) return null;
                       return (
                         <p className="text-xs text-orange-500 mt-1 leading-tight">{warning}</p>
