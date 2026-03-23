@@ -22,7 +22,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, Lightbulb } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, Lightbulb, ShoppingCart } from "lucide-react";
 import RugCollections from "@/components/RugCollections";
 import RugOrderBuilder from "@/components/RugOrderBuilder";
 import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
