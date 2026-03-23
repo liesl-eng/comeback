@@ -66,6 +66,37 @@ const RugProgramInner = () => {
   const [submitted, setSubmitted] = useState(false);
   const { savedSummary, totalSaved } = useRugFavorites();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const hasPushedState = useRef(false);
+
+  // Push a history state when user scrolls past the hero, so back button scrolls to top first
+  useEffect(() => {
+    const handleScroll = () => {
+      const pastHero = window.scrollY > 200;
+      if (pastHero && !hasPushedState.current) {
+        window.history.pushState({ rugScrolled: true }, "");
+        hasPushedState.current = true;
+      }
+    };
+
+    const handlePopState = (e: PopStateEvent) => {
+      if (e.state?.rugScrolled || hasPushedState.current) {
+        // They pressed back while scrolled down — scroll to top instead of navigating away
+        if (window.scrollY > 50) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          hasPushedState.current = false;
+        }
+        // If already at top, allow normal back navigation (don't prevent it)
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
 
   const [formData, setFormData] = useState({
     companyName: "",
