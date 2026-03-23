@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ArrowRight, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRugFavorites, SavedPattern } from "@/contexts/RugFavoritesContext";
+import { getAvailability } from "@/lib/rugAvailability";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
