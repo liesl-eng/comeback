@@ -8,7 +8,7 @@ import { useRugFavorites, SavedPattern } from "@/contexts/RugFavoritesContext";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
-  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Small Round", "Med Round", "Large Round",
+  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Stair Tread", "Small Round", "Med Round", "Large Round",
 ] as const;
 
 type SizeBucket = (typeof SIZE_BUCKETS)[number];
@@ -84,6 +84,7 @@ const BUCKET_SIZES: Record<Exclude<SizeBucket, "All Sizes">, string[]> = {
   "Small Round": ['4\' Round', '3\'11" Round', '2\'11" Round'],
   "Med Round": ['6\' Round', '6\'7" Round'],
   "Large Round": ['8\' Round', '7\'10" Round'],
+  "Stair Tread": ['Stair Tread'],
 };
 
 /* ─── Helper: which bucket does a raw size belong to? ─── */
@@ -146,17 +147,17 @@ const collections: Collection[] = [
     totalUnits: 2762,
     designCount: 9,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678",
-    sizeBuckets: ["Small-Medium", "Medium", "Runner"],
+    sizeBuckets: ["Small-Medium", "Medium", "Large", "Runner", "Stair Tread"],
     subDesigns: [
-      { name: "Brooklyn Trellis", units: 402, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678", sizes: [{ size: "20\"×5' Runner", units: 401 }, { size: "3'3\"×4'7\"", units: 1 }] },
-      { name: "Clover", units: 518, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-128OH.jpg?v=1751061609", sizes: [{ size: "20\"×5' Runner", units: 393 }, { size: "2'7\"×9'10\" Runner", units: 125 }] },
-      { name: "Kama", units: 151, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-213OH.jpg?v=1742636552", sizes: [{ size: "5'×7'", units: 90 }, { size: "2'7\"×9'10\" Runner", units: 44 }, { size: "3'3\"×4'7\"", units: 17 }] },
-      { name: "Gene", units: 117, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-1743x5OH.jpg?v=1742612716", sizes: [{ size: "5'×7'", units: 89 }, { size: "3'3\"×4'7\"", units: 28 }] },
-      { name: "Zazzu", units: 54, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-2012x5OH.jpg?v=1742636499", sizes: [{ size: "5'×7'", units: 49 }, { size: "2'7\"×9'10\" Runner", units: 3 }, { size: "3'3\"×4'7\"", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }] },
-      { name: "Tabriz Red Traditional", units: 29, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66302x5RunnerOH_0954979f-1b9b-4753-8a8d-3932c1b6a87d.jpg?v=1751061809", sizes: [{ size: "20\"×5' Runner", units: 29 }] },
-      { name: "Florence Brown Traditional", units: 21, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-1083x5OH_c36dd545-fee3-4ddd-b2a9-73863b73b1c9.jpg?v=1751061818", sizes: [{ size: "2'7\"×9'10\" Runner", units: 19 }, { size: "20\"×5' Runner", units: 2 }] },
-      { name: "Warby", units: 20, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-02.jpg?v=1742596149", sizes: [{ size: "1'8\"×5'", units: 20 }] },
-      { name: "Tabriz Black Traditional", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66332x5RunnerOH.jpg?v=1751061809", sizes: [{ size: "20\"×5' Runner", units: 2 }] },
+      { name: "Brooklyn Trellis", units: 402, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678", sizes: [{ size: "Stair Tread", units: 1 }, { size: "20\"×5' Runner", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "20\"×5' Runner", units: 1 }, { size: "3'3\"×4'7\"", units: 1 }, { size: "7'10\"×9'10\"", units: 1 }] },
+      { name: "Clover", units: 518, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-128OH.jpg?v=1751061609", sizes: [{ size: "20\"×5' Runner", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }] },
+      { name: "Kama", units: 151, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-213OH.jpg?v=1742636552", sizes: [{ size: "5'×7'", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "3'3\"×4'7\"", units: 1 }] },
+      { name: "Gene", units: 117, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-1743x5OH.jpg?v=1742612716", sizes: [{ size: "5'×7'", units: 1 }, { size: "3'3\"×4'7\"", units: 1 }] },
+      { name: "Zazzu", units: 54, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-2012x5OH.jpg?v=1742636499", sizes: [{ size: "5'×7'", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }, { size: "3'3\"×4'7\"", units: 1 }] },
+      { name: "Tabriz Red Traditional", units: 29, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66302x5RunnerOH_0954979f-1b9b-4753-8a8d-3932c1b6a87d.jpg?v=1751061809", sizes: [{ size: "20\"×5' Runner", units: 1 }] },
+      { name: "Florence Brown Traditional", units: 21, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-1083x5OH_c36dd545-fee3-4ddd-b2a9-73863b73b1c9.jpg?v=1751061818", sizes: [{ size: "2'7\"×9'10\" Runner", units: 1 }, { size: "20\"×5' Runner", units: 1 }] },
+      { name: "Warby", units: 20, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-02.jpg?v=1742596149", sizes: [{ size: "1'8\"×5'", units: 1 }] },
+      { name: "Tabriz Black Traditional", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66332x5RunnerOH.jpg?v=1751061957", sizes: [{ size: "20\"×5' Runner", units: 1 }] },
     ],
   },
   {
