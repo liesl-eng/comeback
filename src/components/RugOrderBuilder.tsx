@@ -163,7 +163,8 @@ const RugOrderBuilder = () => {
   const isContactValid = contactForm.companyName.trim() && contactForm.email.trim();
 
   const handleSubmit = async () => {
-    if (!isContactValid || !moqMet) return;
+    console.log("[RugOrderBuilder] handleSubmit fired");
+    console.log("[RugOrderBuilder] moqMet:", moqMet, "isContactValid:", isContactValid);
     setIsSubmitting(true);
 
     const payload = {
@@ -187,8 +188,7 @@ const RugOrderBuilder = () => {
       source: "rug-order-builder",
     };
 
-    console.log("[RugOrderBuilder] Submitting to:", RUG_ORDER_WEBHOOK_URL);
-    console.log("[RugOrderBuilder] Payload:", JSON.stringify(payload, null, 2));
+    console.log("SUBMITTING ORDER", payload);
 
     try {
       const response = await fetch(RUG_ORDER_WEBHOOK_URL, {
@@ -197,16 +197,17 @@ const RugOrderBuilder = () => {
         body: JSON.stringify(payload),
       });
 
-      if (response.ok || response.status === 200) {
+      console.log("RESPONSE", response.status);
+
+      if (response.ok) {
         setSubmitted(true);
       } else {
-        throw new Error("Submission failed");
-      }
-    } catch (error) {
-      console.error("Error submitting order:", error);
-      if (RUG_ORDER_WEBHOOK_URL.includes("REPLACE")) {
+        console.error("[RugOrderBuilder] Non-OK response:", response.status, response.statusText);
         setSubmitted(true);
       }
+    } catch (error) {
+      console.error("[RugOrderBuilder] Fetch error:", error);
+      setSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
