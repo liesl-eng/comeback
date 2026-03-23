@@ -43,6 +43,37 @@ const SIZE_TIERS = [
   { id: "large-round", label: "Large Round (8')", price: 28 },
 ] as const;
 
+/* ─── Map order builder size tier IDs to inventory bucket names ─── */
+const TIER_TO_BUCKET: Record<string, string> = {
+  "accent": "Accent",
+  "small-medium": "Small-Medium",
+  "runner": "Runner",
+  "stair-tread": "Stair Tread",
+  "medium": "Medium",
+  "large": "Large",
+  "xl": "XL",
+  "small-round": "Small Round",
+  "med-round": "Med Round",
+  "large-round": "Large Round",
+};
+
+/* ─── Look up total units for a collection + pattern + size bucket ─── */
+const lookupUnits = (collectionName: string, patternName: string, sizeTierId: string): number | null => {
+  const bucketName = TIER_TO_BUCKET[sizeTierId];
+  if (!bucketName) return null;
+  const col = collections.find((c) => c.name === collectionName);
+  if (!col?.subDesigns) return null;
+  const design = col.subDesigns.find((d) => d.name === patternName);
+  if (!design) return null;
+  // Sum units across all raw sizes that map to this bucket
+  let total = 0;
+  for (const s of design.sizes) {
+    const bucket = rawSizeToBucket(s.size);
+    if (bucket === bucketName) total += s.units;
+  }
+  return total > 0 ? total : null;
+};
+
 /* ─── Collection → Pattern map (all 15 collections) ─── */
 const COLLECTION_PATTERNS: Record<string, string[]> = {
   "Lotus": ["Ripon", "Argonne", "Habra", "Menda", "Shasta", "Pomona", "Tonti", "Towne", "Macon", "Cambria", "Amesti", "Ramon"],
