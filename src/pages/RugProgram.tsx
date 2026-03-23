@@ -217,6 +217,8 @@ const RugProgramInner = () => {
         {/* ── COLLECTIONS ── */}
         <RugCollections />
 
+        {/* ── ORDER BUILDER ── */}
+        <RugOrderBuilder />
 
         {/* ── WHO IT'S FOR ── */}
         <section className="py-14 md:py-20 bg-muted/30">
