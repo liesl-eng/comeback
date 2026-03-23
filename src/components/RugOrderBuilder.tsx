@@ -179,7 +179,7 @@ const RugOrderBuilder = () => {
       <section id="order-builder" className="py-14 md:py-20 scroll-mt-20">
         <div className="container mx-auto px-4 max-w-4xl">
           <Card className="p-8 md:p-12 text-center">
-            <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            <CheckCircle2 className="h-16 w-16 text-accent mx-auto mb-4" />
             <h2 className="text-2xl md:text-3xl font-bold mb-3">Order Request Submitted!</h2>
             <p className="text-muted-foreground text-lg">
               We'll review your order and get back to you within 1–2 business days.
