@@ -296,15 +296,17 @@ const RugOrderBuilder = () => {
                     </Select>
                   </div>
 
-                  {/* Quantity */}
+                  {/* Quantity — plain number input, NOT a dropdown */}
                   <div className="space-y-1.5">
                     <Label className="text-xs text-muted-foreground">Qty</Label>
-                    <Input
+                    <input
                       type="number"
                       min={1}
+                      step={1}
+                      placeholder="1"
                       value={item.quantity}
                       onChange={(e) => updateLineItem(item.id, { quantity: Math.max(1, parseInt(e.target.value) || 1) })}
-                      className="text-center"
+                      className="flex h-10 w-full rounded-md border border-input bg-background text-foreground px-3 py-2 text-base text-center ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:text-sm"
                     />
                     {(() => {
                       if (!item.collection || !item.pattern || !item.sizeTier) return null;
