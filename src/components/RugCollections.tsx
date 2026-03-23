@@ -8,7 +8,7 @@ import { useRugFavorites, SavedPattern } from "@/contexts/RugFavoritesContext";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
-  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Small Round", "Med Round", "Large Round",
+  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Stair Tread", "Small Round", "Med Round", "Large Round",
 ] as const;
 
 type SizeBucket = (typeof SIZE_BUCKETS)[number];
