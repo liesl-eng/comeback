@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/dialog";
 import { Trash2, Plus, CheckCircle2, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getQuantityWarning } from "@/lib/rugAvailability";
+import { collections, rawSizeToBucket } from "@/components/RugCollections";
 
 // ⚠️ PASTE YOUR RUG ORDER WEBHOOK URL HERE ⚠️
 const RUG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_ORDER_WEBHOOK_URL";
@@ -40,6 +42,37 @@ const SIZE_TIERS = [
   { id: "med-round", label: "Med Round (6')", price: 18 },
   { id: "large-round", label: "Large Round (8')", price: 28 },
 ] as const;
+
+/* ─── Map order builder size tier IDs to inventory bucket names ─── */
+const TIER_TO_BUCKET: Record<string, string> = {
+  "accent": "Accent",
+  "small-medium": "Small-Medium",
+  "runner": "Runner",
+  "stair-tread": "Stair Tread",
+  "medium": "Medium",
+  "large": "Large",
+  "xl": "XL",
+  "small-round": "Small Round",
+  "med-round": "Med Round",
+  "large-round": "Large Round",
+};
+
+/* ─── Look up total units for a collection + pattern + size bucket ─── */
+const lookupUnits = (collectionName: string, patternName: string, sizeTierId: string): number | null => {
+  const bucketName = TIER_TO_BUCKET[sizeTierId];
+  if (!bucketName) return null;
+  const col = collections.find((c) => c.name === collectionName);
+  if (!col?.subDesigns) return null;
+  const design = col.subDesigns.find((d) => d.name === patternName);
+  if (!design) return null;
+  // Sum units across all raw sizes that map to this bucket
+  let total = 0;
+  for (const s of design.sizes) {
+    const bucket = rawSizeToBucket(s.size);
+    if (bucket === bucketName) total += s.units;
+  }
+  return total > 0 ? total : null;
+};
 
 /* ─── Collection → Pattern map (all 15 collections) ─── */
 const COLLECTION_PATTERNS: Record<string, string[]> = {
@@ -273,6 +306,16 @@ const RugOrderBuilder = () => {
                       onChange={(e) => updateLineItem(item.id, { quantity: Math.max(1, parseInt(e.target.value) || 1) })}
                       className="text-center"
                     />
+                    {(() => {
+                      if (!item.collection || !item.pattern || !item.sizeTier) return null;
+                      const units = lookupUnits(item.collection, item.pattern, item.sizeTier);
+                      if (units === null) return null;
+                      const warning = getQuantityWarning(units, item.quantity);
+                      if (!warning) return null;
+                      return (
+                        <p className="text-xs text-orange-500 mt-1 leading-tight">{warning}</p>
+                      );
+                    })()}
                   </div>
 
                   {/* Line Total */}

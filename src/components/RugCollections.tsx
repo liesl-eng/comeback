@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ArrowRight, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRugFavorites, SavedPattern } from "@/contexts/RugFavoritesContext";
+import { getAvailability } from "@/lib/rugAvailability";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
@@ -311,6 +312,9 @@ const collections: Collection[] = [
   },
 ];
 
+export { collections, rawSizeToBucket };
+export type { Collection, SubDesign, SizeBreakdown };
+
 const RugCollections = () => {
   const [activeSize, setActiveSize] = useState<SizeBucket>("All Sizes");
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
@@ -467,20 +471,20 @@ const RugCollections = () => {
                                     </span>
                                   </div>
                                   <div className="flex flex-wrap gap-2">
-                                  {design.sizes.map((s, idx) => (
+                                  {design.sizes.map((s, idx) => {
+                                    const avail = getAvailability(s.units);
+                                    return (
                                     <div
                                       key={idx}
                                       className="flex flex-col items-center px-2 py-1 rounded-lg bg-muted text-center min-w-[60px]"
                                     >
                                       <span className="text-sm font-medium text-foreground">{displaySize(s.size)}</span>
-                                      <span className={cn(
-                                        "text-xs font-medium",
-                                        s.units > 10 ? "text-green-600" : "text-yellow-600"
-                                      )}>
-                                        {s.units > 10 ? "In Stock" : "Low Stock"}
+                                      <span className={cn("text-xs font-medium", avail.color)}>
+                                        {avail.label}
                                       </span>
                                     </div>
-                                  ))}
+                                    );
+                                  })}
                                   </div>
                                 </div>
                               </div>
