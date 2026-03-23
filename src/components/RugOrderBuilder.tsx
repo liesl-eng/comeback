@@ -325,7 +325,8 @@ const RugOrderBuilder = () => {
                       if (!item.collection || !item.pattern || !item.sizeTier) return null;
                       const units = lookupUnits(item.collection, item.pattern, item.sizeTier);
                       if (units === null) return null;
-                      const warning = getQuantityWarning(units, item.quantity);
+                      const qty = item.quantity === "" ? 0 : item.quantity;
+                      const warning = getQuantityWarning(units, qty);
                       if (!warning) return null;
                       return (
                         <p className="text-xs text-orange-500 mt-1 leading-tight">{warning}</p>
