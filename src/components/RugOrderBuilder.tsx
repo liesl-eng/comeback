@@ -100,7 +100,7 @@ interface LineItem {
   collection: string;
   pattern: string;
   sizeTier: string;
-  quantity: number;
+  quantity: number | "";
 }
 
 const createLineItem = (): LineItem => ({
