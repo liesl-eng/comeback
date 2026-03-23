@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/dialog";
 import { Trash2, Plus, CheckCircle2, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getQuantityWarning } from "@/lib/rugAvailability";
+import { collections, rawSizeToBucket } from "@/components/RugCollections";
 
 // ⚠️ PASTE YOUR RUG ORDER WEBHOOK URL HERE ⚠️
 const RUG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_ORDER_WEBHOOK_URL";
