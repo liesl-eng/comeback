@@ -84,6 +84,7 @@ const BUCKET_SIZES: Record<Exclude<SizeBucket, "All Sizes">, string[]> = {
   "Small Round": ['4\' Round', '3\'11" Round', '2\'11" Round'],
   "Med Round": ['6\' Round', '6\'7" Round'],
   "Large Round": ['8\' Round', '7\'10" Round'],
+  "Stair Tread": ['Stair Tread'],
 };
 
 /* ─── Helper: which bucket does a raw size belong to? ─── */
