@@ -317,7 +317,7 @@ const RugProgramInner = () => {
                 Pair your rugs with premium lighting
               </p>
             </div>
-            <a href="/rechargeable-table-lamps" className="block max-w-3xl mx-auto group">
+            <Link to="/rechargeable-table-lamps" className="block max-w-3xl mx-auto group">
               <Card className="overflow-hidden transition-shadow hover:shadow-xl">
                 <div className="flex flex-col sm:flex-row">
                   <div className="sm:w-2/5 h-56 sm:h-auto overflow-hidden bg-[hsl(30_20%_93%)] shrink-0">
@@ -346,7 +346,7 @@ const RugProgramInner = () => {
                   </CardContent>
                 </div>
               </Card>
-            </a>
+            </Link>
             <p className="text-center text-sm text-muted-foreground italic mt-8 max-w-xl mx-auto">
               Add lighting to your rug program quote — just mention it in your request.
             </p>
