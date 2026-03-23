@@ -217,7 +217,7 @@ const RugOrderBuilder = () => {
                     </Button>
                   )}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_80px_90px_40px] gap-3 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_100px_90px_40px] gap-3 items-end">
                   {/* Collection */}
                   <div className="space-y-1.5">
                     <Label className="text-xs text-muted-foreground">Collection</Label>
