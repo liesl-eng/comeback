@@ -131,7 +131,7 @@ const RugOrderBuilder = () => {
   });
 
   const orderTotal = lineItems.reduce((sum, item) => sum + getLineTotal(item), 0);
-  const totalItems = lineItems.reduce((sum, item) => sum + (item.sizeTier ? item.quantity : 0), 0);
+  const totalItems = lineItems.reduce((sum, item) => sum + (item.sizeTier ? (item.quantity === "" ? 0 : item.quantity) : 0), 0);
   const moqMet = orderTotal >= MOQ;
   const remaining = MOQ - orderTotal;
   const progress = Math.min((orderTotal / MOQ) * 100, 100);
