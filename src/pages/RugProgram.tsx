@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/accordion";
 import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, Lightbulb } from "lucide-react";
 import RugCollections from "@/components/RugCollections";
+import RugOrderBuilder from "@/components/RugOrderBuilder";
 import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
 import meridianBrassShelf from "@/assets/lighting/meridian-brass-shelf.webp";
 
@@ -216,6 +217,8 @@ const RugProgramInner = () => {
         {/* ── COLLECTIONS ── */}
         <RugCollections />
 
+        {/* ── ORDER BUILDER ── */}
+        <RugOrderBuilder />
 
         {/* ── WHO IT'S FOR ── */}
         <section className="py-14 md:py-20 bg-muted/30">
