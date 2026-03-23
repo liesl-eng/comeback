@@ -306,7 +306,7 @@ const RugOrderBuilder = () => {
                       type="number"
                       min={1}
                       step={1}
-                      placeholder="1"
+                      placeholder="Qty"
                       value={item.quantity}
                       onChange={(e) => {
                         const val = e.target.value;
