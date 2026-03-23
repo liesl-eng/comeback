@@ -108,7 +108,7 @@ const createLineItem = (): LineItem => ({
   collection: "",
   pattern: "",
   sizeTier: "",
-  quantity: 1,
+  quantity: "",
 });
 
 const getLineTotal = (item: LineItem): number => {
