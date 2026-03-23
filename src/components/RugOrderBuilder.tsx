@@ -306,7 +306,19 @@ const RugOrderBuilder = () => {
                       step={1}
                       placeholder="1"
                       value={item.quantity}
-                      onChange={(e) => updateLineItem(item.id, { quantity: Math.max(1, parseInt(e.target.value) || 1) })}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === "") {
+                          updateLineItem(item.id, { quantity: "" as any });
+                        } else {
+                          updateLineItem(item.id, { quantity: Math.max(1, parseInt(val) || 1) });
+                        }
+                      }}
+                      onBlur={() => {
+                        if (item.quantity === "" || item.quantity < 1) {
+                          updateLineItem(item.id, { quantity: 1 });
+                        }
+                      }}
                       className="flex h-10 w-full rounded-md border border-input bg-background text-foreground px-3 py-2 text-base text-center ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:text-sm"
                     />
                     {(() => {
