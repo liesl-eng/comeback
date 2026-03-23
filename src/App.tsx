@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PalletProvider } from "@/contexts/PalletContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import PalletTray from "@/components/PalletTray";
 import Index from "./pages/Index";
@@ -32,54 +33,56 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
-        <PalletProvider>
-          <FavoritesProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route
-                  path="/pallets"
-                  element={
-                    <ProtectedRoute>
-                      <Pallets />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/pallets/:palletId"
-                  element={
-                    <ProtectedRoute>
-                      <PalletDetail />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/pallet" element={<PalletSummary />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/rug-program" element={<RugProgram />} />
-                <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
-                <Route path="/size-guide" element={<SizeGuide />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route
-                  path="/admin/import"
-                  element={
-                    <ProtectedRoute>
-                      <AdminImport />
-                    </ProtectedRoute>
-                  }
-                />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <PalletTray />
-            </BrowserRouter>
-          </FavoritesProvider>
-        </PalletProvider>
+        <CartProvider>
+          <PalletProvider>
+            <FavoritesProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/product/:id" element={<ProductDetail />} />
+                  <Route
+                    path="/pallets"
+                    element={
+                      <ProtectedRoute>
+                        <Pallets />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/pallets/:palletId"
+                    element={
+                      <ProtectedRoute>
+                        <PalletDetail />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="/pallet" element={<PalletSummary />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/rug-program" element={<RugProgram />} />
+                  <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
+                  <Route path="/size-guide" element={<SizeGuide />} />
+                  <Route path="/favorites" element={<Favorites />} />
+                  <Route
+                    path="/admin/import"
+                    element={
+                      <ProtectedRoute>
+                        <AdminImport />
+                      </ProtectedRoute>
+                    }
+                  />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                <PalletTray />
+              </BrowserRouter>
+            </FavoritesProvider>
+          </PalletProvider>
+        </CartProvider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
