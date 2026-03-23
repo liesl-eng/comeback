@@ -346,7 +346,7 @@ const RugProgramInner = () => {
                   </CardContent>
                 </div>
               </Card>
-            </a>
+            </Link>
             <p className="text-center text-sm text-muted-foreground italic mt-8 max-w-xl mx-auto">
               Add lighting to your rug program quote — just mention it in your request.
             </p>
