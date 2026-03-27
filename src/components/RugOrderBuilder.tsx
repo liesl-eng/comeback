@@ -39,7 +39,8 @@ const SIZE_TIERS = [
   { id: "large", label: "Large (8×10)", price: 38 },
   { id: "xl", label: "XL (9×13)", price: 58 },
   { id: "small-round", label: "Small Round (4')", price: 10 },
-  { id: "med-round", label: "Med Round (6')", price: 18 },
+  { id: "med-round", label: "Med Round (5'–6')", price: 18 },
+  { id: "med-oval", label: "Med Oval (5×7)", price: 25 },
   { id: "large-round", label: "Large Round (8')", price: 28 },
 ] as const;
 
@@ -54,6 +55,7 @@ const TIER_TO_BUCKET: Record<string, string> = {
   "xl": "XL",
   "small-round": "Small Round",
   "med-round": "Med Round",
+  "med-oval": "Med Oval",
   "large-round": "Large Round",
 };
 
@@ -74,27 +76,30 @@ const lookupUnits = (collectionName: string, patternName: string, sizeTierId: st
   return total > 0 ? total : null;
 };
 
-/* ─── Collection → Pattern map (all 19 collections) ─── */
+/* ─── Collection → Pattern map (all 22 collections) ─── */
 const COLLECTION_PATTERNS: Record<string, string[]> = {
-  "Lotus": ["Ripon", "Argonne", "Shasta", "Habra", "Menda", "Pomona", "Tonti", "Towne", "Macon", "Cambria", "Amesti", "Ramon"],
-  "Madison Shag": ["Cossima", "Piper", "Moroccan Lattice", "Plain", "Cole"],
-  "Kings Court": ["Brooklyn Trellis", "Clover", "Kama", "Gene", "Zazzu", "Tabriz Red Traditional", "Florence Brown Traditional", "Warby", "Tabriz Black Traditional"],
-  "Rodeo": ["Otero", "Virden", "Chindi", "Elaine"],
+  "Lotus": ["Ripon", "Argonne", "Shasta", "Habra", "Menda", "Pomona", "Tonti", "Towne", "Macon", "Cambria", "Amesti", "Ramon", "Binita"],
   "Dazzle": ["Disa"],
-  "Dorado": ["Mariah", "Devotion", "Neveh", "Loewy", "Audun", "Cabo", "Neema", "Arid"],
-  "Dulcet": ["Bingo", "Granada", "Trieste", "Aosta"],
-  "Money": ["Dollar Front", "Dollar Stacked", "Dollar Front 2006A", "Bitcoin"],
-  "Kennedy": ["Triangles", "Stars", "Reeve"],
-  "Ell Basics": ["Rendezvous", "Intrigue", "Gala"],
+  "Madison Shag": ["Cossima", "Piper", "Moroccan Lattice", "Cole", "Plain"],
+  "Kings Court": ["Brooklyn Trellis", "Clover", "Kama", "Gene", "Zazzu", "Florence Brown Traditional"],
+  "Rodeo": ["Otero", "Virden", "Chindi", "Elaine"],
   "Elle Basics": ["Emerson"],
+  "Indira": ["Manor", "Minos"],
+  "Dulcet": ["Bingo", "Granada", "Aosta", "Trieste"],
+  "Dorado": ["Mariah", "Neveh", "Audun", "Cabo", "Loewy"],
+  "Kennedy": ["Triangles", "Stars", "Reeve"],
+  "Money": ["Dollar Front", "Dollar Stacked", "Dollar Front 2006A", "Bitcoin"],
   "Zazzle": ["Patras"],
-  "Brielle": ["Larissa"],
   "Mystic": ["Colette", "Nova", "Maddox", "Zoe"],
-  "Apollo": ["Lattice", "Anastasia Moroccan", "Bryn Moroccan"],
-  "Baldwin": ["Carter", "Levi"],
-  "Omaha": ["Alu", "Laslow", "Camilla", "Leon"],
-  "Loop-De-Loop": ["Cruce", "Kaya", "Arbor", "Carina"],
-  "Serenity2": ["Darcy", "Ada"],
+  "Barclay": ["Avi", "Shai", "River", "Vane Willow Damask", "Yaren", "Hannover", "Eslem"],
+  "Brielle": ["Larissa"],
+  "Ell Basics": ["Rendezvous", "Intrigue", "Gala"],
+  "Loop-De-Loop": ["Cruce", "Kaya"],
+  "Serenity2": ["Darcy"],
+  "Malaga": ["Huron"],
+  "Horosan": ["Abstract"],
+  "Omaha": ["Laslow", "Alu", "Camilla", "Leon"],
+  "Maya": ["Odina", "Adriel", "Nokomis", "Tallulah"],
 };
 
 const COLLECTION_NAMES = Object.keys(COLLECTION_PATTERNS);
