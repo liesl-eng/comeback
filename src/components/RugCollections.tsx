@@ -9,46 +9,13 @@ import { getAvailability } from "@/lib/rugAvailability";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
-  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Stair Tread", "Small Round", "Med Round", "Large Round",
+  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Stair Tread", "Small Round", "Med Round", "Large Round", "Custom Cut",
 ] as const;
 
 type SizeBucket = (typeof SIZE_BUCKETS)[number];
 
-/* ─── Display size mapping (round to nearest foot) ─── */
-const SIZE_DISPLAY_MAP: Record<string, string> = {
-  '2\'3"×3\'11"': "2×4",
-  '2\'×3\'11"': "2×4",
-  "2'×3'": "2×4",
-  "2×3": "2×4",
-  '2\'6"×3\'9"': "3×4",
-  '2\'7"×3\'11"': "3×4",
-  '3\'11"×5\'3"': "4×5",
-  '3\'3"×4\'7"': "3×5",
-  "3'3\"×5'": "3×5",
-  '5\'3"×7\'3"': "5×7",
-  "5'×7'": "5×7",
-  "5'2\"×7'": "5×7",
-  '7\'10"×9\'10"': "8×10",
-  '7\'7"×9\'6"': "8×10",
-  '7\'3"×9\'3"': "7×9",
-  '6\'7"×9\'3"': "7×9",
-  '6\'7"×9\'6"': "7×10",
-  '7\'10"×10\'6"': "8×11",
-  '9\'3"×12\'6"': "9×13",
-  "4' Round": "4' Round",
-  '3\'11" Round': "4' Round",
-  '2\'11" Round': "3' Round",
-  "6' Round": "6' Round",
-  '6\'7" Round': "6' Round",
-  "8' Round": "8' Round",
-  '7\'10" Round': "8' Round",
-  // Money collection special sizes
-  '9\'10"×13\'': "10×13",
-  '7\'7"×9\'10"': "8×10",
-  '3\'3" Round': "3' Round",
-};
-
-const displaySize = (raw: string): string => SIZE_DISPLAY_MAP[raw] || raw;
+/* ─── Display size — pass-through for short labels ─── */
+const displaySize = (raw: string): string => raw;
 
 /* ─── Sub-design type ─── */
 interface SizeBreakdown {
@@ -75,30 +42,20 @@ interface Collection {
 }
 
 /* ─── Size-to-bucket mapping ─── */
-const BUCKET_SIZES: Record<Exclude<SizeBucket, "All Sizes">, string[]> = {
-  "Accent": ['2\'3"×3\'11"', '2\'×3\'', '2\'×3\'11"', '2×3', '2\'6"×3\'9"', '2\'7"×3\'11"'],
-  "Small-Medium": ['3\'11"×5\'3"', '3\'3"×4\'7"', '3\'3"×5\''],
-  "Runner": ['2\'7"×9\'10"', '2\'3"×7\'3"', '2\'7"×9\'6"', '2\'×7\'3"', '2\'7"×9\'3"', '20"×5\'', '1\'8"×5\'', '2\'6"×9\'10"', '2\'1"×7\'3"', '2\'×7\''],
-  "Medium": ['5\'3"×7\'3"', '5\'×7\'', '5\'2"×7\''],
-  "Large": ['7\'10"×9\'10"', '7\'3"×9\'3"', '6\'7"×9\'3"', '6\'7"×9\'6"', '7\'10"×10\'6"', '7\'7"×9\'6"'],
-  "XL": ['9\'3"×12\'6"'],
-  "Small Round": ['4\' Round', '3\'11" Round', '2\'11" Round'],
-  "Med Round": ['6\' Round', '6\'7" Round'],
-  "Large Round": ['8\' Round', '7\'10" Round'],
-  "Stair Tread": ['Stair Tread'],
-};
-
-/* ─── Helper: which bucket does a raw size belong to? ─── */
 const rawSizeToBucket = (raw: string): SizeBucket | null => {
-  const s = raw.toLowerCase().replace(/\s+/g, ' ');
-  // Check runner-related keywords first
+  const s = raw.toLowerCase().replace(/\s+/g, " ").trim();
+  if (s === "custom cut") return "Custom Cut";
+  if (s === "stair tread") return "Stair Tread";
   if (s.includes("runner") || s.includes("roll") || s.includes("cut")) return "Runner";
-  for (const [bucket, sizes] of Object.entries(BUCKET_SIZES) as [SizeBucket, string[]][]) {
-    if (bucket === "Runner") continue; // already handled above
-    for (const size of sizes) {
-      if (s.includes(size.toLowerCase())) return bucket;
-    }
-  }
+  if (s === "small round" || s === "4' round" || s === "3' round") return "Small Round";
+  if (s === "med round" || s === "6' round") return "Med Round";
+  if (s === "8' round") return "Large Round";
+  // dimension-based
+  if (["2×3", "2×4", "3×4"].some((x) => s === x)) return "Accent";
+  if (["3×5", "4×5"].some((x) => s === x)) return "Small-Medium";
+  if (s === "5×7") return "Medium";
+  if (["7×9", "7×10", "8×10", "8×11"].some((x) => s === x)) return "Large";
+  if (["9×13", "10×13"].some((x) => s === x)) return "XL";
   return null;
 };
 
@@ -108,206 +65,253 @@ const collectionMatchesBucket = (col: Collection, bucket: SizeBucket): boolean =
   return col.sizeBuckets.includes(bucket);
 };
 
-/* ─── FULL COLLECTION DATA ─── */
-const FALLBACK_NOTE = "Multiple sizes available. Contact us for details.";
+/* ─── FULL COLLECTION DATA (updated March 27, 2026) ─── */
 
 const collections: Collection[] = [
   {
     name: "Lotus",
-    totalUnits: 3987,
+    totalUnits: 3567,
     designCount: 12,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856",
     sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "Runner"],
     subDesigns: [
-      { name: "Ripon", units: 1286, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856", sizes: [{ size: "5'3\"×7'3\"", units: 1170 }, { size: "3'11\"×5'3\"", units: 116 }] },
-      { name: "Argonne", units: 689, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-232CU5_W.jpg?v=1753642856", sizes: [{ size: "3'11\"×5'3\"", units: 565 }, { size: "5'3\"×7'3\"", units: 73 }, { size: "2'×3'11\"", units: 49 }, { size: "6'7\"×9'3\"", units: 2 }] },
-      { name: "Habra", units: 435, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-16CU5_W.jpg?v=1753642857", sizes: [{ size: "5'3\"×7'3\"", units: 435 }] },
-      { name: "Menda", units: 383, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-36CU5_W.jpg?v=1753642857", sizes: [{ size: "7'10\"×9'10\"", units: 280 }, { size: "2'7\"×9'10\" Runner", units: 101 }, { size: "3'11\"×5'3\"", units: 2 }] },
-      { name: "Shasta", units: 367, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-79CU5_W.jpg?v=1753642851", sizes: [{ size: "2'×3'11\"", units: 246 }, { size: "2'7\"×9'10\" Runner", units: 121 }] },
-      { name: "Pomona", units: 203, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-62CU5_W.jpg?v=1753642857", sizes: [{ size: "5'3\"×7'3\"", units: 121 }, { size: "6'7\"×9'3\"", units: 75 }, { size: "3'11\"×5'3\"", units: 7 }] },
-      { name: "Tonti", units: 156, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-170OH.jpg?v=1753642856", sizes: [{ size: "2'7\"×9'10\" Runner", units: 124 }, { size: "7'10\"×9'10\"", units: 32 }] },
-      { name: "Towne", units: 149, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-210OH.jpg?v=1742608637", sizes: [{ size: "2'7\"×9'10\" Runner", units: 149 }] },
-      { name: "Macon", units: 144, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-204CU5_W.jpg?v=1753642856", sizes: [{ size: "5'3\"×7'3\"", units: 144 }] },
-      { name: "Cambria", units: 102, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-156CU5_W.jpg?v=1753642856", sizes: [{ size: "5'3\"×7'3\"", units: 102 }] },
-      { name: "Amesti", units: 51, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-136CU5_W.jpg?v=1753642914", sizes: [{ size: "5'3\"×7'3\"", units: 51 }] },
-      { name: "Ramon", units: 22, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-86OH.jpg?v=1742608792", sizes: [{ size: "2'7\"×9'10\" Runner", units: 22 }] },
-    ],
-  },
-  {
-    name: "Dazzle",
-    totalUnits: 2875,
-    designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053",
-    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "XL", "Runner"],
-    subDesigns: [
-      { name: "Disa", units: 2875, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053", sizes: [{ size: "5'3\"×7'3\"", units: 1372 }, { size: "2'7\"×9'10\" Runner", units: 570 }, { size: "2'3\"×7'3\" Runner", units: 325 }, { size: "7'10\"×9'10\"", units: 261 }, { size: "3'11\"×5'3\"", units: 150 }, { size: "9'3\"×12'6\"", units: 101 }, { size: "7'3\"×9'3\"", units: 95 }, { size: "2'×3'", units: 1 }] },
-    ],
-  },
-  {
-    name: "Kings Court",
-    totalUnits: 2762,
-    designCount: 9,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678",
-    sizeBuckets: ["Small-Medium", "Medium", "Large", "Runner", "Stair Tread"],
-    subDesigns: [
-      { name: "Brooklyn Trellis", units: 402, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678", sizes: [{ size: "Stair Tread", units: 1 }, { size: "20\"×5' Runner", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "20\"×5' Runner", units: 1 }, { size: "3'3\"×4'7\"", units: 1 }, { size: "7'10\"×9'10\"", units: 1 }] },
-      { name: "Clover", units: 518, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-128OH.jpg?v=1751061609", sizes: [{ size: "20\"×5' Runner", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }] },
-      { name: "Kama", units: 151, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-213OH.jpg?v=1742636552", sizes: [{ size: "5'×7'", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "3'3\"×4'7\"", units: 1 }] },
-      { name: "Gene", units: 117, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-1743x5OH.jpg?v=1742612716", sizes: [{ size: "5'×7'", units: 1 }, { size: "3'3\"×4'7\"", units: 1 }] },
-      { name: "Zazzu", units: 54, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-2012x5OH.jpg?v=1742636499", sizes: [{ size: "5'×7'", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }, { size: "3'3\"×4'7\"", units: 1 }] },
-      { name: "Tabriz Red Traditional", units: 29, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66302x5RunnerOH_0954979f-1b9b-4753-8a8d-3932c1b6a87d.jpg?v=1751061809", sizes: [{ size: "20\"×5' Runner", units: 1 }] },
-      { name: "Florence Brown Traditional", units: 21, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-1083x5OH_c36dd545-fee3-4ddd-b2a9-73863b73b1c9.jpg?v=1751061818", sizes: [{ size: "2'7\"×9'10\" Runner", units: 1 }, { size: "20\"×5' Runner", units: 1 }] },
-      { name: "Warby", units: 20, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-02.jpg?v=1742596149", sizes: [{ size: "1'8\"×5'", units: 1 }] },
-      { name: "Tabriz Black Traditional", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66332x5RunnerOH.jpg?v=1751061957", sizes: [{ size: "20\"×5' Runner", units: 1 }] },
+      { name: "Ripon", units: 1068, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856", sizes: [{ size: "5×7", units: 952 }, { size: "4×5", units: 116 }] },
+      { name: "Argonne", units: 464, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-232CU5_W.jpg?v=1753642856", sizes: [{ size: "4×5", units: 344 }, { size: "5×7", units: 73 }, { size: "2×4", units: 43 }, { size: "7×9", units: 4 }] },
+      { name: "Shasta", units: 437, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-79CU5_W.jpg?v=1753642851", sizes: [{ size: "2×4", units: 317 }, { size: "3×10 Runner", units: 120 }] },
+      { name: "Habra", units: 399, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-16CU5_W.jpg?v=1753642857", sizes: [{ size: "5×7", units: 399 }] },
+      { name: "Menda", units: 380, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-36CU5_W.jpg?v=1753642857", sizes: [{ size: "8×10", units: 279 }, { size: "3×10 Runner", units: 99 }, { size: "4×5", units: 2 }] },
+      { name: "Pomona", units: 201, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-62CU5_W.jpg?v=1753642857", sizes: [{ size: "5×7", units: 120 }, { size: "7×9", units: 75 }, { size: "4×5", units: 6 }] },
+      { name: "Tonti", units: 157, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-170OH.jpg?v=1753642856", sizes: [{ size: "3×10 Runner", units: 124 }, { size: "8×10", units: 33 }] },
+      { name: "Towne", units: 149, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-210OH.jpg?v=1742608637", sizes: [{ size: "3×10 Runner", units: 149 }] },
+      { name: "Macon", units: 138, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-204CU5_W.jpg?v=1753642856", sizes: [{ size: "5×7", units: 138 }] },
+      { name: "Cambria", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-156CU5_W.jpg?v=1753642856", sizes: [{ size: "5×7", units: 100 }] },
+      { name: "Amesti", units: 52, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-136CU5_W.jpg?v=1753642914", sizes: [{ size: "5×7", units: 52 }] },
+      { name: "Ramon", units: 22, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-86OH.jpg?v=1742608792", sizes: [{ size: "3×10 Runner", units: 22 }] },
     ],
   },
   {
     name: "Madison Shag",
-    totalUnits: 2074,
+    totalUnits: 1868,
     designCount: 5,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163",
     sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "Runner", "Large Round"],
     subDesigns: [
-      { name: "Cossima", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "2'×3'", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "3'11\"×5'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }] },
-      { name: "Piper", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "3'11\"×5'3\"", units: 1 }] },
-      { name: "Moroccan Lattice", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "5'3\"×7'3\"", units: 1 }, { size: "3'11\"×5'3\"", units: 1 }] },
-      { name: "Plain", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/NO-34_FL2.jpg?v=1742596112", sizes: [{ size: "7'10\" Round", units: 1 }] },
-      { name: "Cole", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "7'10\"×9'10\"", units: 1 }] },
+      { name: "Cossima", units: 1193, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "2×3", units: 605 }, { size: "3×10 Runner", units: 255 }, { size: "5×7", units: 192 }, { size: "4×5", units: 99 }, { size: "2×7 Runner", units: 42 }] },
+      { name: "Piper", units: 300, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "4×5", units: 300 }] },
+      { name: "Moroccan Lattice", units: 277, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "5×7", units: 188 }, { size: "4×5", units: 89 }] },
+      { name: "Plain", units: 65, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/NO-34_FL2.jpg?v=1742596112", sizes: [{ size: "8' Round", units: 65 }] },
+      { name: "Cole", units: 33, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "8×10", units: 33 }] },
+    ],
+  },
+  {
+    name: "Kings Court",
+    totalUnits: 1729,
+    designCount: 9,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678",
+    sizeBuckets: ["Small-Medium", "Medium", "Large", "Runner", "Stair Tread"],
+    subDesigns: [
+      { name: "Brooklyn Trellis", units: 817, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678", sizes: [{ size: "22\"×1' Cut", units: 239 }, { size: "2×5 Runner", units: 196 }, { size: "Stair Tread", units: 96 }, { size: "31\"×1' Cut", units: 90 }, { size: "31\"×100' Roll", units: 67 }, { size: "26\"×1' Cut", units: 44 }, { size: "27\"×100' Roll", units: 41 }, { size: "26\"×100' Roll", units: 21 }, { size: "3×10 Runner", units: 14 }, { size: "2×7 Runner", units: 3 }, { size: "3×5", units: 2 }, { size: "8×10", units: 1 }] },
+      { name: "Clover", units: 510, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-128OH.jpg?v=1751061609", sizes: [{ size: "2×5 Runner", units: 385 }, { size: "3×10 Runner", units: 125 }] },
+      { name: "Kama", units: 151, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-213OH.jpg?v=1742636552", sizes: [{ size: "5×7", units: 90 }, { size: "3×10 Runner", units: 44 }, { size: "3×5", units: 17 }] },
+      { name: "Gene", units: 120, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-1743x5OH.jpg?v=1742612716", sizes: [{ size: "5×7", units: 90 }, { size: "3×5", units: 30 }] },
+      { name: "Zazzu", units: 60, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-2012x5OH.jpg?v=1742636499", sizes: [{ size: "5×7", units: 48 }, { size: "2×7 Runner", units: 5 }, { size: "3×10 Runner", units: 4 }, { size: "3×5", units: 3 }] },
+      { name: "Tabriz Red Traditional", units: 29, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66302x5RunnerOH_0954979f-1b9b-4753-8a8d-3932c1b6a87d.jpg?v=1751061809", sizes: [{ size: "2×5 Runner", units: 29 }] },
+      { name: "Florence Brown Traditional", units: 20, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-1083x5OH_c36dd545-fee3-4ddd-b2a9-73863b73b1c9.jpg?v=1751061818", sizes: [{ size: "3×10 Runner", units: 18 }, { size: "2×5 Runner", units: 2 }] },
+      { name: "Warby", units: 20, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-02.jpg?v=1742596149", sizes: [{ size: "2×5 Runner", units: 20 }] },
+      { name: "Tabriz Black Traditional", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/66332x5RunnerOH.jpg?v=1751061957", sizes: [{ size: "2×5 Runner", units: 2 }] },
     ],
   },
   {
     name: "Rodeo",
-    totalUnits: 1318,
+    totalUnits: 1301,
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-02_OH.jpg?v=1742601782",
     sizeBuckets: ["Accent", "Medium", "Runner"],
     subDesigns: [
-      { name: "Otero", units: 970, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-02_OH.jpg?v=1742601782", sizes: [{ size: "2'3\"×3'11\"", units: 846 }, { size: "5'3\"×7'3\"", units: 124 }] },
-      { name: "Virden", units: 342, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-94_OH.jpg?v=1742601909", sizes: [{ size: "2'3\"×7'3\" Runner", units: 178 }, { size: "2'7\"×9'10\" Runner", units: 161 }, { size: "5'3\"×7'3\"", units: 3 }] },
-      { name: "Chindi", units: 5, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-319OH.jpg?v=1742618345", sizes: [{ size: "2'7\"×9'10\" Runner", units: 4 }, { size: "3'11\"×5'3\"", units: 1 }] },
-      { name: "Elaine", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-304OH.jpg?v=1742618173", sizes: [{ size: "2'7\"×9'10\" Runner", units: 1 }] },
+      { name: "Otero", units: 954, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-02_OH.jpg?v=1742601782", sizes: [{ size: "2×4", units: 836 }, { size: "5×7", units: 118 }] },
+      { name: "Virden", units: 341, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-94_OH.jpg?v=1742601909", sizes: [{ size: "2×7 Runner", units: 178 }, { size: "3×10 Runner", units: 160 }, { size: "5×7", units: 3 }] },
+      { name: "Chindi", units: 5, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-319OH.jpg?v=1742618345", sizes: [{ size: "3×10 Runner", units: 4 }, { size: "4×5", units: 1 }] },
+      { name: "Elaine", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-304OH.jpg?v=1742618173", sizes: [{ size: "3×10 Runner", units: 1 }] },
     ],
   },
   {
-    name: "Elle Basics",
-    totalUnits: 1074,
+    name: "Dazzle",
+    totalUnits: 1006,
     designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397",
-    sizeBuckets: ["Accent", "Medium", "Large", "Runner"],
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053",
+    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "XL", "Runner"],
     subDesigns: [
-      { name: "Emerson", units: 1074, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397", sizes: [{ size: "2'7\"×9'6\" Runner", units: 612 }, { size: "2'3\"×3'11\"", units: 450 }, { size: "6'7\"×9'6\"", units: 10 }, { size: "7'10\"×9'10\"", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }] },
+      { name: "Disa", units: 1006, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053", sizes: [{ size: "5×7", units: 332 }, { size: "3×10 Runner", units: 230 }, { size: "8×10", units: 195 }, { size: "2×7 Runner", units: 112 }, { size: "9×13", units: 78 }, { size: "7×9", units: 47 }, { size: "4×5", units: 11 }, { size: "2×3", units: 1 }] },
     ],
   },
   {
     name: "Dorado",
-    totalUnits: 825,
+    totalUnits: 694,
     designCount: 8,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076",
     sizeBuckets: ["Small-Medium", "Runner"],
     subDesigns: [
-      { name: "Mariah", units: 314, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "2'7\"×9'10\" Runner", units: 306 }, { size: "2'3\"×7'3\" Runner", units: 8 }] },
-      { name: "Loewy", units: 194, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-424OH.jpg?v=1751060427", sizes: [{ size: "2'7\"×9'10\" Runner", units: 116 }, { size: "3'11\"×5'3\"", units: 78 }] },
-      { name: "Devotion", units: 107, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/SI-48_RS_RM45_02.jpg?v=1742596778", sizes: [{ size: "2'7\"×9'10\" Runner", units: 107 }] },
-      { name: "Neveh", units: 77, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "2'7\"×9'10\" Runner", units: 77 }] },
-      { name: "Audun", units: 71, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-404RS_S_01Graphic_1.jpg?v=1744399351", sizes: [{ size: "2'7\"×9'10\" Runner", units: 71 }] },
-      { name: "Neema", units: 41, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-447OH.jpg?v=1751060445", sizes: [{ size: "2'7\"×9'10\" Runner", units: 31 }, { size: "3'11\"×5'3\"", units: 10 }] },
-      { name: "Arid", units: 18, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-504CU5_V2Graphic_9.jpg?v=1751060059", sizes: [{ size: "3'11\"×5'3\"", units: 18 }] },
-      { name: "Cabo", units: 3, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-334RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "2'7\"×9'10\" Runner", units: 3 }] },
-    ],
-  },
-  {
-    name: "Money",
-    totalUnits: 767,
-    designCount: 4,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908",
-    sizeBuckets: ["Medium", "Large", "Runner", "Small Round", "Med Round"],
-    subDesigns: [
-      { name: "Dollar Front", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "2'×5' Runner", units: 1 }, { size: "9'10\"×13'", units: 1 }] },
-      { name: "Dollar Front 2006A", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-03A8x10OH.jpg?v=1751059913", sizes: [{ size: "3'11\"×9'10\" Runner", units: 1 }, { size: "3'3\"×7'10\" Runner", units: 1 }, { size: "5'×7'", units: 1 }] },
-      { name: "Dollar Stacked", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-05A8x10OH.jpg?v=1751059919", sizes: [{ size: "3'11\"×9'10\" Runner", units: 1 }, { size: "3'3\"×7'10\" Runner", units: 1 }, { size: "9'10\"×13'", units: 1 }, { size: "7'7\"×9'10\"", units: 1 }] },
-      { name: "Bitcoin", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "3'3\" Round", units: 1 }, { size: "6'7\" Round", units: 1 }] },
-    ],
-  },
-  {
-    name: "Kennedy",
-    totalUnits: 618,
-    designCount: 3,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653",
-    sizeBuckets: ["Small-Medium", "Runner", "Small Round"],
-    subDesigns: [
-      { name: "Triangles", units: 269, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653", sizes: [{ size: "2'7\"×9'10\" Runner", units: 226 }, { size: "4' Round", units: 37 }, { size: "2'3\"×7'3\" Runner", units: 6 }] },
-      { name: "Stars", units: 237, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-24OH.jpg?v=1751232653", sizes: [{ size: "2'7\"×9'10\" Runner", units: 235 }, { size: "2'3\"×7'3\" Runner", units: 2 }] },
-      { name: "Reeve", units: 112, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-34OH.jpg?v=1751232653", sizes: [{ size: "4' Round", units: 54 }, { size: "2'7\"×9'10\" Runner", units: 38 }, { size: "2'3\"×7'3\" Runner", units: 19 }, { size: "3'11\"×5'3\"", units: 1 }] },
+      { name: "Mariah", units: 215, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "3×10 Runner", units: 207 }, { size: "2×7 Runner", units: 8 }] },
+      { name: "Devotion", units: 107, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/SI-48_RS_RM45_02.jpg?v=1742596778", sizes: [{ size: "3×10 Runner", units: 107 }] },
+      { name: "Neveh", units: 87, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "3×10 Runner", units: 87 }] },
+      { name: "Loewy", units: 80, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-424OH.jpg?v=1751060427", sizes: [{ size: "4×5", units: 78 }, { size: "3×10 Runner", units: 2 }] },
+      { name: "Audun", units: 77, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-404RS_S_01Graphic_1.jpg?v=1744399351", sizes: [{ size: "3×10 Runner", units: 77 }] },
+      { name: "Cabo", units: 69, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-334RS_S_01Graphic_1.jpg?v=1753643053", sizes: [{ size: "3×10 Runner", units: 69 }] },
+      { name: "Neema", units: 41, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-447OH.jpg?v=1751060445", sizes: [{ size: "3×10 Runner", units: 31 }, { size: "4×5", units: 10 }] },
+      { name: "Arid", units: 18, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-504CU5_V2Graphic_9.jpg?v=1751060059", sizes: [{ size: "4×5", units: 18 }] },
     ],
   },
   {
     name: "Dulcet",
-    totalUnits: 613,
+    totalUnits: 573,
     designCount: 4,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/1940_RS_S_01_R1.jpg?v=1753643333",
     sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "XL", "Runner"],
     subDesigns: [
-      { name: "Bingo", units: 246, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/1940_RS_S_01_R1.jpg?v=1753643333", sizes: [{ size: "2'7\"×9'10\" Runner", units: 1 }, { size: "7'10\"×9'10\"", units: 1 }, { size: "2'7\"×3'11\"", units: 1 }, { size: "9'3\"×12'6\"", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }] },
-      { name: "Granada", units: 164, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-84OH.jpg?v=1742616163", sizes: [{ size: "5'3\"×7'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }, { size: "3'11\"×5'3\"", units: 1 }] },
-      { name: "Aosta", units: 104, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-1348x10OH.jpg?v=1742616099", sizes: [{ size: "5'3\"×7'3\"", units: 1 }, { size: "9'3\"×12'6\"", units: 1 }, { size: "3'11\"×5'3\"", units: 1 }, { size: "2'7\"×9'10\" Runner", units: 1 }] },
-      { name: "Trieste", units: 99, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-928x10OH.jpg?v=1742616209", sizes: [{ size: "3'11\"×5'3\"", units: 1 }, { size: "2'3\"×7'3\" Runner", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "2'7\"×3'11\"", units: 1 }] },
+      { name: "Bingo", units: 278, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/1940_RS_S_01_R1.jpg?v=1753643333", sizes: [{ size: "3×10 Runner", units: 95 }, { size: "3×4", units: 92 }, { size: "8×10", units: 49 }, { size: "9×13", units: 38 }, { size: "5×7", units: 3 }, { size: "2×7 Runner", units: 1 }] },
+      { name: "Granada", units: 133, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-84OH.jpg?v=1742616163", sizes: [{ size: "5×7", units: 85 }, { size: "4×5", units: 28 }, { size: "2×7 Runner", units: 20 }] },
+      { name: "Trieste", units: 95, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-928x10OH.jpg?v=1742616209", sizes: [{ size: "4×5", units: 54 }, { size: "2×7 Runner", units: 33 }, { size: "5×7", units: 7 }, { size: "3×4", units: 1 }] },
+      { name: "Aosta", units: 67, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-1348x10OH.jpg?v=1742616099", sizes: [{ size: "9×13", units: 47 }, { size: "5×7", units: 14 }, { size: "4×5", units: 5 }, { size: "2×7 Runner", units: 1 }] },
+    ],
+  },
+  {
+    name: "Money",
+    totalUnits: 489,
+    designCount: 4,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908",
+    sizeBuckets: ["Medium", "Large", "XL", "Runner", "Small Round", "Med Round"],
+    subDesigns: [
+      { name: "Dollar Front", units: 453, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "2×5 Runner", units: 439 }, { size: "10×13", units: 14 }] },
+      { name: "Dollar Stacked", units: 20, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-05A8x10OH.jpg?v=1751059919", sizes: [{ size: "3×10 Runner", units: 8 }, { size: "2×7 Runner", units: 8 }, { size: "10×13", units: 2 }, { size: "8×10", units: 2 }] },
+      { name: "Dollar Front 2006A", units: 14, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-03A8x10OH.jpg?v=1751059913", sizes: [{ size: "2×7 Runner", units: 7 }, { size: "3×10 Runner", units: 6 }, { size: "5×7", units: 1 }] },
+      { name: "Bitcoin", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "Small Round", units: 1 }, { size: "Med Round", units: 1 }] },
+    ],
+  },
+  {
+    name: "Kennedy",
+    totalUnits: 378,
+    designCount: 3,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653",
+    sizeBuckets: ["Small-Medium", "Runner", "Small Round"],
+    subDesigns: [
+      { name: "Triangles", units: 176, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653", sizes: [{ size: "3×10 Runner", units: 137 }, { size: "4' Round", units: 33 }, { size: "2×7 Runner", units: 6 }] },
+      { name: "Stars", units: 139, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-24OH.jpg?v=1751232653", sizes: [{ size: "3×10 Runner", units: 137 }, { size: "2×7 Runner", units: 2 }] },
+      { name: "Reeve", units: 63, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-34OH.jpg?v=1751232653", sizes: [{ size: "3×10 Runner", units: 27 }, { size: "2×7 Runner", units: 19 }, { size: "4' Round", units: 16 }, { size: "4×5", units: 1 }] },
     ],
   },
   {
     name: "Zazzle",
-    totalUnits: 383,
+    totalUnits: 212,
     designCount: 1,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/ZAZ-23_8x10_OH_1.jpg?v=1742624393",
     sizeBuckets: ["Medium", "Runner"],
     subDesigns: [
-      { name: "Patras", units: 383, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/ZAZ-23_8x10_OH_1.jpg?v=1742624393", sizes: [{ size: "5'3\"×7'3\"", units: 272 }, { size: "2'3\"×7'3\" Runner", units: 64 }, { size: "2'7\"×9'10\" Runner", units: 47 }] },
+      { name: "Patras", units: 212, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/ZAZ-23_8x10_OH_1.jpg?v=1742624393", sizes: [{ size: "5×7", units: 91 }, { size: "2×7 Runner", units: 73 }, { size: "3×10 Runner", units: 48 }] },
     ],
   },
   {
-    name: "Mystic",
-    totalUnits: 373,
-    designCount: 4,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979",
-    sizeBuckets: ["Medium", "Large", "Runner"],
+    name: "Elle Basics",
+    totalUnits: 212,
+    designCount: 1,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397",
+    sizeBuckets: ["Accent", "Medium", "Large", "Runner"],
     subDesigns: [
-      { name: "Colette", units: 272, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979", sizes: [{ size: "5'3\"×7'3\"", units: 218 }, { size: "2'×7'3\" Runner", units: 54 }] },
-      { name: "Nova", units: 58, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-307CU5.jpg?v=1753643163", sizes: [{ size: "2'7\"×9'10\" Runner", units: 58 }] },
-      { name: "Maddox", units: 31, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-2748x10CU5.jpg?v=1753643163", sizes: [{ size: "2'7\"×9'10\" Runner", units: 31 }] },
-      { name: "Zoe", units: 12, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-59_OH.jpg?v=1742595339", sizes: [{ size: "7'10\"×9'10\"", units: 9 }, { size: "2'×7'3\" Runner", units: 3 }] },
-    ],
-  },
-  {
-    name: "Apollo",
-    totalUnits: 226,
-    designCount: 3,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436",
-    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "Runner"],
-    subDesigns: [
-      { name: "Lattice", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436", sizes: [{ size: "2'7\"×9'6\" Runner", units: 1 }, { size: "2'×5' Runner", units: 1 }, { size: "5'3\"×7'3\"", units: 1 }, { size: "3'3\"×5'", units: 1 }, { size: "2'3\"×3'11\"", units: 1 }] },
-      { name: "Anastasia Moroccan", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-01ARS_S_02.jpg?v=1751060400", sizes: [{ size: "2'×5' Runner", units: 1 }] },
-      { name: "Bryn Moroccan", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-02ACU5.jpg?v=1751060409", sizes: [{ size: "7'7\"×9'10\"", units: 1 }] },
+      { name: "Emerson", units: 212, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397", sizes: [{ size: "2×4", units: 115 }, { size: "3×10 Runner", units: 85 }, { size: "7×10", units: 10 }, { size: "8×10", units: 1 }, { size: "5×7", units: 1 }] },
     ],
   },
   {
     name: "Brielle",
-    totalUnits: 211,
+    totalUnits: 207,
     designCount: 1,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BRI-42RoundRS_S_01.jpg?v=1742611088",
     sizeBuckets: ["Small Round"],
     subDesigns: [
-      { name: "Larissa", units: 211, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BRI-42RoundRS_S_01.jpg?v=1742611088", sizes: [{ size: "4' Round", units: 211 }] },
+      { name: "Larissa", units: 207, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BRI-42RoundRS_S_01.jpg?v=1742611088", sizes: [{ size: "4' Round", units: 207 }] },
+    ],
+  },
+  {
+    name: "Mystic",
+    totalUnits: 196,
+    designCount: 4,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979",
+    sizeBuckets: ["Medium", "Large", "Runner"],
+    subDesigns: [
+      { name: "Colette", units: 96, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979", sizes: [{ size: "5×7", units: 70 }, { size: "2×7 Runner", units: 26 }] },
+      { name: "Nova", units: 56, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-307CU5.jpg?v=1753643163", sizes: [{ size: "3×10 Runner", units: 56 }] },
+      { name: "Maddox", units: 32, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-2748x10CU5.jpg?v=1753643163", sizes: [{ size: "3×10 Runner", units: 32 }] },
+      { name: "Zoe", units: 12, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-59_OH.jpg?v=1742595339", sizes: [{ size: "8×10", units: 9 }, { size: "2×7 Runner", units: 3 }] },
+    ],
+  },
+  {
+    name: "Apollo",
+    totalUnits: 182,
+    designCount: 3,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436",
+    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "Runner"],
+    subDesigns: [
+      { name: "Lattice", units: 153, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-04E2x4OH.jpg?v=1742627436", sizes: [{ size: "5×7", units: 62 }, { size: "3×5", units: 42 }, { size: "2×5 Runner", units: 27 }, { size: "3×10 Runner", units: 21 }, { size: "2×4", units: 1 }] },
+      { name: "Anastasia Moroccan", units: 27, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-01ARS_S_02.jpg?v=1751060400", sizes: [{ size: "2×5 Runner", units: 27 }] },
+      { name: "Bryn Moroccan", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MR-02ACU5.jpg?v=1751060409", sizes: [{ size: "8×10", units: 2 }] },
     ],
   },
   {
     name: "Ell Basics",
-    totalUnits: 162,
+    totalUnits: 155,
     designCount: 3,
     image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157",
     sizeBuckets: ["Accent", "Medium", "Large", "Runner"],
     subDesigns: [
-      { name: "Rendezvous", units: 74, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157", sizes: [{ size: "5'3\"×7'3\"", units: 73 }, { size: "2'3\"×7'3\"", units: 1 }] },
-      { name: "Intrigue", units: 64, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-12Graphics_1.jpg?v=1751063149", sizes: [{ size: "7'10\"×9'10\"", units: 64 }] },
-      { name: "Gala", units: 24, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-30Graphics_1.jpg?v=1751063678", sizes: [{ size: "5'3\"×7'3\"", units: 18 }, { size: "2'3\"×7'3\"", units: 3 }, { size: "7'10\"×9'10\"", units: 2 }, { size: "2'×3'", units: 1 }] },
+      { name: "Rendezvous", units: 74, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157", sizes: [{ size: "5×7", units: 73 }, { size: "2×7 Runner", units: 1 }] },
+      { name: "Intrigue", units: 64, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-12Graphics_1.jpg?v=1751063149", sizes: [{ size: "8×10", units: 64 }] },
+      { name: "Gala", units: 17, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-30Graphics_1.jpg?v=1751063678", sizes: [{ size: "5×7", units: 12 }, { size: "2×7 Runner", units: 3 }, { size: "8×10", units: 1 }, { size: "2×3", units: 1 }] },
+    ],
+  },
+  {
+    name: "Baldwin",
+    totalUnits: 128,
+    designCount: 2,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BAL-77OH.jpg?v=1742619180",
+    sizeBuckets: ["Custom Cut"],
+    subDesigns: [
+      { name: "Carter", units: 119, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BAL-77OH.jpg?v=1742619180", sizes: [{ size: "Custom Cut", units: 119 }] },
+      { name: "Levi", units: 9, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BAL-54OH.jpg?v=1742619135", sizes: [{ size: "Custom Cut", units: 9 }] },
+    ],
+  },
+  {
+    name: "Omaha",
+    totalUnits: 124,
+    designCount: 4,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/OM-174_OH.jpg?v=1742601014",
+    sizeBuckets: ["Small-Medium", "XL", "Runner"],
+    subDesigns: [
+      { name: "Alu", units: 58, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/OM-174_OH.jpg?v=1742601014", sizes: [{ size: "4×5", units: 39 }, { size: "3×10 Runner", units: 19 }] },
+      { name: "Laslow", units: 46, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/OM-222_8x10_RS_S_01_V2_edited.jpg?v=1751063367", sizes: [{ size: "2×7 Runner", units: 46 }] },
+      { name: "Camilla", units: 19, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/OM-214_Roll_OH_edited_a2d93a63-2059-490d-b974-ff03fe11c1c3.jpg?v=1751063276", sizes: [{ size: "Roll", units: 9 }, { size: "Cut", units: 6 }, { size: "2×7 Runner", units: 4 }] },
+      { name: "Leon", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/OM-237_RS_S_01_c52673e1-4b1a-430f-9771-833b2b4cfb8e.jpg?v=1751063477", sizes: [{ size: "9×13", units: 1 }] },
+    ],
+  },
+  {
+    name: "Loop-De-Loop",
+    totalUnits: 102,
+    designCount: 4,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LDL-78_RS_S_01.jpg?v=1751060637",
+    sizeBuckets: ["Medium", "Large", "Runner", "Small Round"],
+    subDesigns: [
+      { name: "Cruce", units: 96, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LDL-78_RS_S_01.jpg?v=1751060637", sizes: [{ size: "5×7", units: 78 }, { size: "3×9 Runner", units: 13 }, { size: "8×11", units: 3 }, { size: "4' Round", units: 2 }] },
+      { name: "Kaya", units: 4, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LDL-39_OH.jpg?v=1742604952", sizes: [{ size: "2×7 Runner", units: 4 }] },
+      { name: "Arbor", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LDL-04_OH.jpg?v=1742604673", sizes: [{ size: "4' Round", units: 1 }] },
+      { name: "Carina", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LDL-1528x10OH.jpg?v=1753642915", sizes: [{ size: "2×7 Runner", units: 1 }] },
+    ],
+  },
+  {
+    name: "Serenity2",
+    totalUnits: 102,
+    designCount: 2,
+    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/SE-232OH.jpg?v=1753642912",
+    sizeBuckets: ["Medium", "Large", "Runner"],
+    subDesigns: [
+      { name: "Darcy", units: 101, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/SE-232OH.jpg?v=1753642912", sizes: [{ size: "3×10 Runner", units: 97 }, { size: "5×7", units: 4 }] },
+      { name: "Ada", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/SE-158OH.jpg?v=1742607404", sizes: [{ size: "8×10", units: 1 }] },
     ],
   },
 ];

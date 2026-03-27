@@ -74,23 +74,27 @@ const lookupUnits = (collectionName: string, patternName: string, sizeTierId: st
   return total > 0 ? total : null;
 };
 
-/* ─── Collection → Pattern map (all 15 collections) ─── */
+/* ─── Collection → Pattern map (all 19 collections) ─── */
 const COLLECTION_PATTERNS: Record<string, string[]> = {
-  "Lotus": ["Ripon", "Argonne", "Habra", "Menda", "Shasta", "Pomona", "Tonti", "Towne", "Macon", "Cambria", "Amesti", "Ramon"],
-  "Dazzle": ["Disa"],
-  "Kings Court": ["Brooklyn Trellis", "Clover", "Kama", "Gene", "Zazzu", "Tabriz Red Traditional", "Florence Brown Traditional", "Warby", "Tabriz Black Traditional"],
+  "Lotus": ["Ripon", "Argonne", "Shasta", "Habra", "Menda", "Pomona", "Tonti", "Towne", "Macon", "Cambria", "Amesti", "Ramon"],
   "Madison Shag": ["Cossima", "Piper", "Moroccan Lattice", "Plain", "Cole"],
+  "Kings Court": ["Brooklyn Trellis", "Clover", "Kama", "Gene", "Zazzu", "Tabriz Red Traditional", "Florence Brown Traditional", "Warby", "Tabriz Black Traditional"],
   "Rodeo": ["Otero", "Virden", "Chindi", "Elaine"],
-  "Elle Basics": ["Emerson"],
-  "Dorado": ["Mariah", "Loewy", "Devotion", "Neveh", "Audun", "Neema", "Arid", "Cabo"],
-  "Money": ["Dollar Front", "Dollar Front 2006A", "Dollar Stacked", "Bitcoin"],
+  "Dazzle": ["Disa"],
+  "Dorado": ["Mariah", "Devotion", "Neveh", "Loewy", "Audun", "Cabo", "Neema", "Arid"],
+  "Dulcet": ["Bingo", "Granada", "Trieste", "Aosta"],
+  "Money": ["Dollar Front", "Dollar Stacked", "Dollar Front 2006A", "Bitcoin"],
   "Kennedy": ["Triangles", "Stars", "Reeve"],
-  "Dulcet": ["Bingo", "Granada", "Aosta", "Trieste"],
+  "Ell Basics": ["Rendezvous", "Intrigue", "Gala"],
+  "Elle Basics": ["Emerson"],
   "Zazzle": ["Patras"],
+  "Brielle": ["Larissa"],
   "Mystic": ["Colette", "Nova", "Maddox", "Zoe"],
   "Apollo": ["Lattice", "Anastasia Moroccan", "Bryn Moroccan"],
-  "Brielle": ["Larissa"],
-  "Ell Basics": ["Rendezvous", "Intrigue", "Gala"],
+  "Baldwin": ["Carter", "Levi"],
+  "Omaha": ["Alu", "Laslow", "Camilla", "Leon"],
+  "Loop-De-Loop": ["Cruce", "Kaya", "Arbor", "Carina"],
+  "Serenity2": ["Darcy", "Ada"],
 };
 
 const COLLECTION_NAMES = Object.keys(COLLECTION_PATTERNS);
