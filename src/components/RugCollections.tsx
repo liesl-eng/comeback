@@ -44,9 +44,8 @@ interface Collection {
 /* ─── Size-to-bucket mapping ─── */
 const rawSizeToBucket = (raw: string): SizeBucket | null => {
   const s = raw.toLowerCase().replace(/\s+/g, " ").trim();
-  if (s === "custom cut") return "Custom Cut";
-  if (s === "stair tread") return "Stair Tread";
   if (s === "5×7 oval") return "Med Oval";
+  if (s.includes("runner") || s.includes("roll") || s.includes("cut") || s === "unspecified") return "Runner";
   if (s.includes("runner") || s.includes("roll") || s.includes("cut") || s === "unspecified") return "Runner";
   if (s === "small round" || s === "4' round" || s === "3' round") return "Small Round";
   if (s === "med round" || s === "5' round" || s === "6' round") return "Med Round";
