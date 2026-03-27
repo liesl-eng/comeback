@@ -244,7 +244,7 @@ const ProductDetail = () => {
                   </Button>
 
                   <p className="text-sm text-muted-foreground text-center">
-                    $5,000 order minimum
+                    $10,000 order minimum
                   </p>
                 </div>
               </CardContent>

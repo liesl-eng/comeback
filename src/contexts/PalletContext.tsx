@@ -22,7 +22,7 @@ interface PalletContextType {
 }
 
 const PALLET_STORAGE_KEY = "comeback-pallet-items";
-const MINIMUM_ORDER = 5000;
+const MINIMUM_ORDER = 10000;
 
 const PalletContext = createContext<PalletContextType | undefined>(undefined);
 

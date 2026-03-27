@@ -27,7 +27,7 @@ import { collections, rawSizeToBucket } from "@/components/RugCollections";
 // ⚠️ PASTE YOUR RUG ORDER WEBHOOK URL HERE ⚠️
 const RUG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/8wstvs05lm6jjip54inr6wclgqclmp27";
 
-const MOQ = 6000;
+const MOQ = 10000;
 
 /* ─── Size tiers with pricing ─── */
 const SIZE_TIERS = [
@@ -233,7 +233,7 @@ const RugOrderBuilder = () => {
         <div className="text-center mb-10 md:mb-14">
           <h2 className="text-2xl md:text-4xl font-bold mb-3">Build Your Order</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Select patterns and sizes from our catalog. $6,000 minimum order.
+            Select patterns and sizes from our catalog. $10,000 minimum order.
           </p>
           <p className="text-sm text-muted-foreground/80 max-w-2xl mx-auto mt-2 italic">
             Quantities are subject to availability. We'll confirm final counts in your quote.
@@ -389,7 +389,7 @@ const RugOrderBuilder = () => {
                     </p>
                   ) : (
                     <p className="text-sm text-muted-foreground">
-                      You need <span className="font-semibold text-foreground">${remaining.toLocaleString()}</span> more to meet the $6,000 minimum
+                      You need <span className="font-semibold text-foreground">${remaining.toLocaleString()}</span> more to meet the $10,000 minimum
                     </p>
                   )}
                 </div>

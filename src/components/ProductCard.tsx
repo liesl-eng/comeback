@@ -124,7 +124,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           )}
         </Button>
         <p className="text-xs text-muted-foreground text-center">
-          $5,000 order minimum
+          $10,000 order minimum
         </p>
       </CardFooter>
     </Card>
