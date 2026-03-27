@@ -291,14 +291,27 @@ const RugOrderBuilder = () => {
                   {/* Size Tier */}
                   <div className="space-y-1.5">
                     <Label className="text-xs text-muted-foreground">Size</Label>
-                    <Select value={item.sizeTier} onValueChange={(v) => updateLineItem(item.id, { sizeTier: v })}>
-                      <SelectTrigger><SelectValue placeholder="Select size" /></SelectTrigger>
+                    <Select
+                      value={item.sizeTier}
+                      onValueChange={(v) => updateLineItem(item.id, { sizeTier: v })}
+                      disabled={!item.collection || !item.pattern}
+                    >
+                      <SelectTrigger><SelectValue placeholder={item.pattern ? "Select size" : "Pick pattern first"} /></SelectTrigger>
                       <SelectContent>
-                        {SIZE_TIERS.map((tier) => (
-                          <SelectItem key={tier.id} value={tier.id}>
-                            {tier.label} — ${tier.price}
-                          </SelectItem>
-                        ))}
+                        {(() => {
+                          if (!item.collection || !item.pattern) return SIZE_TIERS.map((tier) => (
+                            <SelectItem key={tier.id} value={tier.id}>{tier.label} — ${tier.price}</SelectItem>
+                          ));
+                          // Filter to only sizes that exist for this collection+pattern
+                          return SIZE_TIERS.filter((tier) => {
+                            const units = lookupUnits(item.collection, item.pattern, tier.id);
+                            return units !== null && units > 0;
+                          }).map((tier) => (
+                            <SelectItem key={tier.id} value={tier.id}>
+                              {tier.label} — ${tier.price}
+                            </SelectItem>
+                          ));
+                        })()}
                       </SelectContent>
                     </Select>
                   </div>
