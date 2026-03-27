@@ -9,7 +9,7 @@ import { getAvailability } from "@/lib/rugAvailability";
 
 /* ─── Size bucket definitions ─── */
 const SIZE_BUCKETS = [
-  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Stair Tread", "Small Round", "Med Round", "Large Round", "Custom Cut",
+  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Stair Tread", "Small Round", "Med Round", "Med Oval", "Large Round",
 ] as const;
 
 type SizeBucket = (typeof SIZE_BUCKETS)[number];
@@ -46,9 +46,10 @@ const rawSizeToBucket = (raw: string): SizeBucket | null => {
   const s = raw.toLowerCase().replace(/\s+/g, " ").trim();
   if (s === "custom cut") return "Custom Cut";
   if (s === "stair tread") return "Stair Tread";
-  if (s.includes("runner") || s.includes("roll") || s.includes("cut")) return "Runner";
+  if (s === "5×7 oval") return "Med Oval";
+  if (s.includes("runner") || s.includes("roll") || s.includes("cut") || s === "unspecified") return "Runner";
   if (s === "small round" || s === "4' round" || s === "3' round") return "Small Round";
-  if (s === "med round" || s === "6' round") return "Med Round";
+  if (s === "med round" || s === "5' round" || s === "6' round") return "Med Round";
   if (s === "8' round") return "Large Round";
   // dimension-based
   if (["2×3", "2×4", "3×4"].some((x) => s === x)) return "Accent";
