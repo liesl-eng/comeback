@@ -146,9 +146,14 @@ const RugOrderBuilder = () => {
       prev.map((item) => {
         if (item.id !== id) return item;
         const updated = { ...item, ...updates };
-        // Reset pattern when collection changes
+        // Reset pattern & size when collection changes
         if (updates.collection && updates.collection !== item.collection) {
           updated.pattern = "";
+          updated.sizeTier = "";
+        }
+        // Reset size when pattern changes
+        if (updates.pattern && updates.pattern !== item.pattern) {
+          updated.sizeTier = "";
         }
         return updated;
       })
