@@ -80,7 +80,7 @@ const Products = () => {
           <div>
             <h1 className="text-2xl md:text-4xl font-bold mb-2">Build Your Pallet</h1>
             <p className="text-sm md:text-base text-muted-foreground">
-              Browse products, add to your pallet, and request a quote. $5,000 order minimum.
+              Browse products, add to your pallet, and request a quote. $10,000 order minimum.
             </p>
           </div>
           <div className="flex gap-2">

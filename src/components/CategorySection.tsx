@@ -44,7 +44,7 @@ const CategorySection = () => {
             Build Your Pallet.
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Browse by category, add what you need, and request a final quote when you're ready. $5,000 order minimum.
+            Browse by category, add what you need, and request a final quote when you're ready. $10,000 order minimum.
           </p>
         </div>
 

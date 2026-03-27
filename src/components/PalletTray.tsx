@@ -6,7 +6,7 @@ import { Package, ChevronUp, ChevronDown, Trash2, ArrowRight, Minus, Plus } from
 import { formatPrice } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
-const MINIMUM_ORDER = 5000;
+const MINIMUM_ORDER = 10000;
 
 const PalletTray = () => {
   const { items, totalItems, totalPrice, amountToMinimum, isMinimumMet, removeItem, updateQuantity } = usePallet();

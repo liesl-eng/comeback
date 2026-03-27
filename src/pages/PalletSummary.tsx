@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { formatPrice, formatPriceFixed } from "@/lib/utils";
 import { toast } from "sonner";
 
-const MINIMUM_ORDER = 5000;
+const MINIMUM_ORDER = 10000;
 
 const PalletSummary = () => {
   const { items, totalItems, totalPrice, amountToMinimum, isMinimumMet, removeItem, clearPallet } = usePallet();
@@ -197,7 +197,7 @@ const PalletSummary = () => {
                 <p className={`text-sm mt-2 ${isMinimumMet ? "text-success font-semibold" : "text-muted-foreground"}`}>
                   {isMinimumMet
                     ? "✓ Ready to quote!"
-                    : `${formatPrice(amountToMinimum)} more to reach $5,000 minimum`}
+                    : `${formatPrice(amountToMinimum)} more to reach $10,000 minimum`}
                 </p>
               </div>
               <div className="space-y-2 pt-2 border-t">
