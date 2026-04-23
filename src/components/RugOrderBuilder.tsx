@@ -22,7 +22,7 @@ import {
 import { Trash2, Plus, CheckCircle2, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getQuantityWarning } from "@/lib/rugAvailability";
-import { collections, rawSizeToBucket } from "@/components/RugCollections";
+import { useRugInventory, rawSizeToBucket } from "@/lib/rugInventory";
 
 // ⚠️ PASTE YOUR RUG ORDER WEBHOOK URL HERE ⚠️
 const RUG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/8wstvs05lm6jjip54inr6wclgqclmp27";
