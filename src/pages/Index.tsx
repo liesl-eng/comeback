@@ -27,8 +27,13 @@ const Index = () => {
           </div>
           <div className="container relative mx-auto px-4 md:px-6 pt-14 pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="mb-4 md:mb-6 text-3xl sm:text-4xl md:text-5xl font-black text-primary-foreground lg:text-6xl tracking-tight">
-                Tiny Imperfections. Huge Savings.
+              <h1 className="mb-4 md:mb-6 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95]" style={{ textShadow: "6px 6px 0 hsl(0 0% 0% / 0.55)" }}>
+                Tiny Imperfections.{" "}
+                <span className="relative inline-block">
+                  <span className="relative z-10">Huge</span>
+                  <span aria-hidden className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-[hsl(15_75%_70%)] z-0 -translate-x-1 translate-y-1" />
+                </span>{" "}
+                Savings.
               </h1>
               <p className="mb-2 md:mb-3 text-lg md:text-xl text-primary-foreground/90 font-medium max-w-3xl mx-auto">
                 High quality home goods — priced <span className="underline underline-offset-4 decoration-2">30–60% below wholesale</span>.
