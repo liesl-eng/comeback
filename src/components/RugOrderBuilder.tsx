@@ -86,6 +86,7 @@ const getLineTotal = (item: LineItem): number => {
 
 const RugOrderBuilder = () => {
   console.log("[RugOrderBuilder] Webhook URL:", RUG_ORDER_WEBHOOK_URL);
+  const { collections } = useRugInventory();
   const [lineItems, setLineItems] = useState<LineItem[]>([createLineItem()]);
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -97,6 +98,41 @@ const RugOrderBuilder = () => {
     phone: "",
     notes: "",
   });
+
+  // Derive collection -> patterns map from live inventory, sorted by total units desc
+  const COLLECTION_PATTERNS = useMemo(() => {
+    const map: Record<string, string[]> = {};
+    [...collections]
+      .sort((a, b) => b.totalUnits - a.totalUnits)
+      .forEach((c) => {
+        if (!c.subDesigns) return;
+        map[c.name] = [...c.subDesigns]
+          .sort((a, b) => b.units - a.units)
+          .map((d) => d.name);
+      });
+    return map;
+  }, [collections]);
+
+  const COLLECTION_NAMES = useMemo(() => Object.keys(COLLECTION_PATTERNS), [COLLECTION_PATTERNS]);
+
+  // Look up total units for a collection + pattern + size tier (bucket)
+  const lookupUnits = useMemo(() => {
+    return (collectionName: string, patternName: string, sizeTierId: string): number | null => {
+      const bucketName = TIER_TO_BUCKET[sizeTierId];
+      if (!bucketName) return null;
+      const col = collections.find((c) => c.name === collectionName);
+      if (!col?.subDesigns) return null;
+      const design = col.subDesigns.find((d) => d.name === patternName);
+      if (!design) return null;
+      let total = 0;
+      for (const s of design.sizes) {
+        const bucket = rawSizeToBucket(s.size);
+        if (bucket === bucketName) total += s.units;
+      }
+      return total > 0 ? total : null;
+    };
+  }, [collections]);
+
 
   const orderTotal = lineItems.reduce((sum, item) => sum + getLineTotal(item), 0);
   const totalItems = lineItems.reduce((sum, item) => sum + (item.sizeTier ? (item.quantity === "" ? 0 : item.quantity) : 0), 0);
