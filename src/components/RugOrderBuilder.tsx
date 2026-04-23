@@ -22,7 +22,7 @@ import {
 import { Trash2, Plus, CheckCircle2, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getQuantityWarning } from "@/lib/rugAvailability";
-import { collections, rawSizeToBucket } from "@/components/RugCollections";
+import { useRugInventory, rawSizeToBucket } from "@/lib/rugInventory";
 
 // ⚠️ PASTE YOUR RUG ORDER WEBHOOK URL HERE ⚠️
 const RUG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/8wstvs05lm6jjip54inr6wclgqclmp27";
@@ -59,50 +59,8 @@ const TIER_TO_BUCKET: Record<string, string> = {
   "large-round": "Large Round",
 };
 
-/* ─── Look up total units for a collection + pattern + size bucket ─── */
-const lookupUnits = (collectionName: string, patternName: string, sizeTierId: string): number | null => {
-  const bucketName = TIER_TO_BUCKET[sizeTierId];
-  if (!bucketName) return null;
-  const col = collections.find((c) => c.name === collectionName);
-  if (!col?.subDesigns) return null;
-  const design = col.subDesigns.find((d) => d.name === patternName);
-  if (!design) return null;
-  // Sum units across all raw sizes that map to this bucket
-  let total = 0;
-  for (const s of design.sizes) {
-    const bucket = rawSizeToBucket(s.size);
-    if (bucket === bucketName) total += s.units;
-  }
-  return total > 0 ? total : null;
-};
-
-/* ─── Collection → Pattern map (all 22 collections) ─── */
-const COLLECTION_PATTERNS: Record<string, string[]> = {
-  "Lotus": ["Ripon", "Argonne", "Shasta", "Habra", "Menda", "Pomona", "Tonti", "Towne", "Macon", "Cambria", "Amesti", "Ramon", "Binita"],
-  "Dazzle": ["Disa"],
-  "Madison Shag": ["Cossima", "Piper", "Moroccan Lattice", "Cole", "Plain"],
-  "Kings Court": ["Brooklyn Trellis", "Clover", "Kama", "Gene", "Zazzu", "Florence Brown Traditional"],
-  "Rodeo": ["Otero", "Virden", "Chindi", "Elaine"],
-  "Elle Basics": ["Emerson"],
-  "Indira": ["Manor", "Minos"],
-  "Dulcet": ["Bingo", "Granada", "Aosta", "Trieste"],
-  "Dorado": ["Mariah", "Neveh", "Audun", "Cabo", "Loewy"],
-  "Kennedy": ["Triangles", "Stars", "Reeve"],
-  "Money": ["Dollar Front", "Dollar Stacked", "Dollar Front 2006A", "Bitcoin"],
-  "Zazzle": ["Patras"],
-  "Mystic": ["Colette", "Nova", "Maddox", "Zoe"],
-  "Barclay": ["Avi", "Shai", "River", "Vane Willow Damask", "Yaren", "Hannover", "Eslem"],
-  "Brielle": ["Larissa"],
-  "Ell Basics": ["Rendezvous", "Intrigue", "Gala"],
-  "Loop-De-Loop": ["Cruce", "Kaya"],
-  "Serenity2": ["Darcy"],
-  "Malaga": ["Huron"],
-  "Horosan": ["Abstract"],
-  "Omaha": ["Laslow", "Alu", "Camilla", "Leon"],
-  "Maya": ["Odina", "Adriel", "Nokomis", "Tallulah"],
-};
-
-const COLLECTION_NAMES = Object.keys(COLLECTION_PATTERNS);
+/* COLLECTION_PATTERNS, COLLECTION_NAMES and lookupUnits are derived
+ * from live inventory inside the component (see useMemo below). */
 
 interface LineItem {
   id: string;
@@ -128,6 +86,7 @@ const getLineTotal = (item: LineItem): number => {
 
 const RugOrderBuilder = () => {
   console.log("[RugOrderBuilder] Webhook URL:", RUG_ORDER_WEBHOOK_URL);
+  const { collections } = useRugInventory();
   const [lineItems, setLineItems] = useState<LineItem[]>([createLineItem()]);
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -139,6 +98,41 @@ const RugOrderBuilder = () => {
     phone: "",
     notes: "",
   });
+
+  // Derive collection -> patterns map from live inventory, sorted by total units desc
+  const COLLECTION_PATTERNS = useMemo(() => {
+    const map: Record<string, string[]> = {};
+    [...collections]
+      .sort((a, b) => b.totalUnits - a.totalUnits)
+      .forEach((c) => {
+        if (!c.subDesigns) return;
+        map[c.name] = [...c.subDesigns]
+          .sort((a, b) => b.units - a.units)
+          .map((d) => d.name);
+      });
+    return map;
+  }, [collections]);
+
+  const COLLECTION_NAMES = useMemo(() => Object.keys(COLLECTION_PATTERNS), [COLLECTION_PATTERNS]);
+
+  // Look up total units for a collection + pattern + size tier (bucket)
+  const lookupUnits = useMemo(() => {
+    return (collectionName: string, patternName: string, sizeTierId: string): number | null => {
+      const bucketName = TIER_TO_BUCKET[sizeTierId];
+      if (!bucketName) return null;
+      const col = collections.find((c) => c.name === collectionName);
+      if (!col?.subDesigns) return null;
+      const design = col.subDesigns.find((d) => d.name === patternName);
+      if (!design) return null;
+      let total = 0;
+      for (const s of design.sizes) {
+        const bucket = rawSizeToBucket(s.size);
+        if (bucket === bucketName) total += s.units;
+      }
+      return total > 0 ? total : null;
+    };
+  }, [collections]);
+
 
   const orderTotal = lineItems.reduce((sum, item) => sum + getLineTotal(item), 0);
   const totalItems = lineItems.reduce((sum, item) => sum + (item.sizeTier ? (item.quantity === "" ? 0 : item.quantity) : 0), 0);

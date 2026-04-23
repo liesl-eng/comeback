@@ -2,359 +2,36 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ArrowRight, Heart } from "lucide-react";
+import { ChevronDown, ArrowRight, Heart, Loader2, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRugFavorites, SavedPattern } from "@/contexts/RugFavoritesContext";
 import { getAvailability } from "@/lib/rugAvailability";
+import {
+  SIZE_BUCKETS,
+  SizeBucket,
+  Collection,
+  SubDesign,
+  SizeBreakdown,
+  useRugInventory,
+  rawSizeToBucket,
+} from "@/lib/rugInventory";
 
-/* ─── Size bucket definitions ─── */
-const SIZE_BUCKETS = [
-  "All Sizes", "Accent", "Small-Medium", "Medium", "Large", "XL", "Runner", "Stair Tread", "Small Round", "Med Round", "Med Oval", "Large Round",
-] as const;
+/* Re-exports kept for backward compatibility with consumers like RugOrderBuilder. */
+export { rawSizeToBucket };
+export type { Collection, SubDesign, SizeBreakdown };
 
-type SizeBucket = (typeof SIZE_BUCKETS)[number];
-
-/* ─── Display size — pass-through for short labels ─── */
 const displaySize = (raw: string): string => raw;
 
-/* ─── Sub-design type ─── */
-interface SizeBreakdown {
-  size: string;
-  units: number;
-}
-
-interface SubDesign {
-  name: string;
-  units: number;
-  image: string;
-  sizes: SizeBreakdown[];
-}
-
-/* ─── Collection type ─── */
-interface Collection {
-  name: string;
-  totalUnits: number;
-  designCount: number;
-  image: string;
-  sizeBuckets: SizeBucket[];
-  subDesigns: SubDesign[] | null;
-  fallbackNote?: string;
-}
-
-/* ─── Size-to-bucket mapping ─── */
-const rawSizeToBucket = (raw: string): SizeBucket | null => {
-  const s = raw.toLowerCase().replace(/\s+/g, " ").trim();
-  if (s === "5×7 oval") return "Med Oval";
-  if (s.includes("runner") || s.includes("roll") || s.includes("cut") || s === "unspecified") return "Runner";
-  if (s.includes("runner") || s.includes("roll") || s.includes("cut") || s === "unspecified") return "Runner";
-  if (s === "small round" || s === "4' round" || s === "3' round") return "Small Round";
-  if (s === "med round" || s === "5' round" || s === "6' round") return "Med Round";
-  if (s === "8' round") return "Large Round";
-  // dimension-based
-  if (["2×3", "2×4", "3×4"].some((x) => s === x)) return "Accent";
-  if (["3×5", "4×5"].some((x) => s === x)) return "Small-Medium";
-  if (s === "5×7") return "Medium";
-  if (["7×9", "7×10", "8×10", "8×11"].some((x) => s === x)) return "Large";
-  if (["9×13", "10×13"].some((x) => s === x)) return "XL";
-  return null;
-};
-
-/* ─── Check if a collection has inventory in a given bucket ─── */
 const collectionMatchesBucket = (col: Collection, bucket: SizeBucket): boolean => {
   if (bucket === "All Sizes") return true;
   return col.sizeBuckets.includes(bucket);
 };
 
-/* ─── Placeholder for collections without images ─── */
-const PLACEHOLDER_IMG = "/placeholder.svg";
-
-/* ─── FULL COLLECTION DATA (updated March 27, 2026) ─── */
-
-const collections: Collection[] = [
-  {
-    name: "Lotus",
-    totalUnits: 3569,
-    designCount: 13,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856",
-    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "Runner"],
-    subDesigns: [
-      { name: "Ripon", units: 1068, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856", sizes: [{ size: "5×7", units: 952 }, { size: "4×5", units: 116 }] },
-      { name: "Argonne", units: 464, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-232CU5_W.jpg?v=1753642856", sizes: [{ size: "4×5", units: 344 }, { size: "5×7", units: 73 }, { size: "2×4", units: 43 }, { size: "7×9", units: 4 }] },
-      { name: "Shasta", units: 437, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-79CU5_W.jpg?v=1753642851", sizes: [{ size: "2×4", units: 317 }, { size: "3×10 Runner", units: 120 }] },
-      { name: "Habra", units: 399, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-16CU5_W.jpg?v=1753642857", sizes: [{ size: "5×7", units: 399 }] },
-      { name: "Menda", units: 380, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-36CU5_W.jpg?v=1753642857", sizes: [{ size: "8×10", units: 279 }, { size: "3×10 Runner", units: 99 }, { size: "4×5", units: 2 }] },
-      { name: "Pomona", units: 201, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-62CU5_W.jpg?v=1753642857", sizes: [{ size: "5×7", units: 120 }, { size: "7×9", units: 75 }, { size: "4×5", units: 6 }] },
-      { name: "Tonti", units: 157, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-170OH.jpg?v=1753642856", sizes: [{ size: "3×10 Runner", units: 124 }, { size: "8×10", units: 33 }] },
-      { name: "Towne", units: 149, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-210OH.jpg?v=1742608637", sizes: [{ size: "3×10 Runner", units: 149 }] },
-      { name: "Macon", units: 138, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-204CU5_W.jpg?v=1753642856", sizes: [{ size: "5×7", units: 138 }] },
-      { name: "Cambria", units: 100, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-156CU5_W.jpg?v=1753642856", sizes: [{ size: "5×7", units: 100 }] },
-      { name: "Amesti", units: 52, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-136CU5_W.jpg?v=1753642914", sizes: [{ size: "5×7", units: 52 }] },
-      { name: "Ramon", units: 22, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-86OH.jpg?v=1742608792", sizes: [{ size: "3×10 Runner", units: 22 }] },
-      { name: "Binita", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LOT-50CU5_W.jpg?v=1753642856", sizes: [{ size: "4×5", units: 2 }] },
-    ],
-  },
-  {
-    name: "Dazzle",
-    totalUnits: 3290,
-    designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053",
-    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "XL", "Runner"],
-    subDesigns: [
-      { name: "Disa", units: 3290, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DZ-088x10CU5.jpg?v=1753643053", sizes: [{ size: "5×7", units: 1345 }, { size: "3×10 Runner", units: 556 }, { size: "8×10", units: 443 }, { size: "2×7 Runner", units: 317 }, { size: "7×9", units: 301 }, { size: "9×13", units: 172 }, { size: "4×5", units: 155 }, { size: "2×3", units: 1 }] },
-    ],
-  },
-  {
-    name: "Madison Shag",
-    totalUnits: 2023,
-    designCount: 5,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163",
-    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "Runner", "Large Round"],
-    subDesigns: [
-      { name: "Cossima", units: 1193, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "2×3", units: 605 }, { size: "3×10 Runner", units: 255 }, { size: "5×7", units: 192 }, { size: "4×5", units: 99 }, { size: "2×7 Runner", units: 42 }] },
-      { name: "Piper", units: 386, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "4×5", units: 386 }] },
-      { name: "Moroccan Lattice", units: 277, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "5×7", units: 188 }, { size: "4×5", units: 89 }] },
-      { name: "Cole", units: 102, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/7062_4_Round_073da78d-540d-4322-b43d-2db3328b4322.jpg?v=1753643163", sizes: [{ size: "8×10", units: 102 }] },
-      { name: "Plain", units: 65, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/NO-34_FL2.jpg?v=1742596112", sizes: [{ size: "8' Round", units: 65 }] },
-    ],
-  },
-  {
-    name: "Kings Court",
-    totalUnits: 1692,
-    designCount: 6,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678",
-    sizeBuckets: ["Small-Medium", "Medium", "Runner", "Stair Tread"],
-    subDesigns: [
-      { name: "Brooklyn Trellis", units: 833, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/6516_Runner_OH.jpg?v=1742600678", sizes: [{ size: "Stair Tread", units: 410 }, { size: "2×5 Runner", units: 196 }, { size: "3×10 Runner", units: 92 }, { size: "Roll", units: 151 }, { size: "2×7 Runner", units: 3 }, { size: "3×5", units: 2 }] },
-      { name: "Clover", units: 510, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-128OH.jpg?v=1751061609", sizes: [{ size: "2×5 Runner", units: 385 }, { size: "3×10 Runner", units: 125 }] },
-      { name: "Kama", units: 151, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-213OH.jpg?v=1742636552", sizes: [{ size: "5×7", units: 90 }, { size: "3×10 Runner", units: 44 }, { size: "3×5", units: 17 }] },
-      { name: "Gene", units: 120, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-1743x5OH.jpg?v=1742612716", sizes: [{ size: "5×7", units: 90 }, { size: "3×5", units: 30 }] },
-      { name: "Zazzu", units: 60, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/KC-2012x5OH.jpg?v=1742636499", sizes: [{ size: "5×7", units: 48 }, { size: "2×7 Runner", units: 5 }, { size: "3×10 Runner", units: 4 }, { size: "3×5", units: 3 }] },
-      { name: "Florence Brown Traditional", units: 18, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KC-1083x5OH_c36dd545-fee3-4ddd-b2a9-73863b73b1c9.jpg?v=1751061818", sizes: [{ size: "3×10 Runner", units: 18 }] },
-    ],
-  },
-  {
-    name: "Rodeo",
-    totalUnits: 1119,
-    designCount: 4,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-02_OH.jpg?v=1742601782",
-    sizeBuckets: ["Accent", "Medium", "Runner"],
-    subDesigns: [
-      { name: "Otero", units: 954, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-02_OH.jpg?v=1742601782", sizes: [{ size: "2×4", units: 836 }, { size: "5×7", units: 118 }] },
-      { name: "Virden", units: 160, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-94_OH.jpg?v=1742601909", sizes: [{ size: "3×10 Runner", units: 160 }] },
-      { name: "Chindi", units: 4, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-319OH.jpg?v=1742618345", sizes: [{ size: "3×10 Runner", units: 4 }] },
-      { name: "Elaine", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/RO-304OH.jpg?v=1742618173", sizes: [{ size: "3×10 Runner", units: 1 }] },
-    ],
-  },
-  {
-    name: "Elle Basics",
-    totalUnits: 910,
-    designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397",
-    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Runner"],
-    subDesigns: [
-      { name: "Emerson", units: 910, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/ELL-128x10OH.jpg?v=1742620397", sizes: [{ size: "3×10 Runner", units: 552 }, { size: "2×4", units: 355 }, { size: "4×5", units: 1 }, { size: "5×7", units: 1 }, { size: "2×7 Runner", units: 1 }] },
-    ],
-  },
-  {
-    name: "Indira",
-    totalUnits: 721,
-    designCount: 2,
-    image: PLACEHOLDER_IMG,
-    sizeBuckets: ["Medium", "Runner"],
-    subDesigns: [
-      { name: "Manor", units: 488, image: PLACEHOLDER_IMG, sizes: [{ size: "3×10 Runner", units: 431 }, { size: "5×7", units: 57 }] },
-      { name: "Minos", units: 233, image: PLACEHOLDER_IMG, sizes: [{ size: "3×10 Runner", units: 156 }, { size: "5×7", units: 77 }] },
-    ],
-  },
-  {
-    name: "Dulcet",
-    totalUnits: 627,
-    designCount: 4,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/files/1940_RS_S_01_R1.jpg?v=1753643333",
-    sizeBuckets: ["Accent", "Small-Medium", "Medium", "Large", "XL", "Runner"],
-    subDesigns: [
-      { name: "Bingo", units: 230, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/1940_RS_S_01_R1.jpg?v=1753643333", sizes: [{ size: "3×4", units: 92 }, { size: "8×10", units: 49 }, { size: "Unspecified", units: 50 }, { size: "9×13", units: 38 }, { size: "5×7", units: 3 }, { size: "2×7 Runner", units: 1 }] },
-      { name: "Granada", units: 178, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-84OH.jpg?v=1742616163", sizes: [{ size: "5×7", units: 85 }, { size: "2×7 Runner", units: 48 }, { size: "4×5", units: 45 }] },
-      { name: "Aosta", units: 123, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-1348x10OH.jpg?v=1742616099", sizes: [{ size: "5×7", units: 62 }, { size: "9×13", units: 47 }, { size: "4×5", units: 13 }, { size: "2×7 Runner", units: 1 }] },
-      { name: "Trieste", units: 96, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DU-928x10OH.jpg?v=1742616209", sizes: [{ size: "4×5", units: 54 }, { size: "2×7 Runner", units: 33 }, { size: "5×7", units: 7 }, { size: "9×13", units: 2 }] },
-    ],
-  },
-  {
-    name: "Dorado",
-    totalUnits: 546,
-    designCount: 5,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076",
-    sizeBuckets: ["Large", "Runner"],
-    subDesigns: [
-      { name: "Mariah", units: 311, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "3×10 Runner", units: 304 }, { size: "7×10", units: 7 }] },
-      { name: "Neveh", units: 87, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-512RS_S_01Graphic_1.jpg?v=1751060076", sizes: [{ size: "3×10 Runner", units: 87 }] },
-      { name: "Audun", units: 77, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-404RS_S_01Graphic_1.jpg?v=1744399351", sizes: [{ size: "3×10 Runner", units: 77 }] },
-      { name: "Cabo", units: 69, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-334RS_S_01Graphic_1.jpg?v=1753643053", sizes: [{ size: "3×10 Runner", units: 69 }] },
-      { name: "Loewy", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/DO-424OH.jpg?v=1751060427", sizes: [{ size: "3×10 Runner", units: 2 }] },
-    ],
-  },
-  {
-    name: "Kennedy",
-    totalUnits: 509,
-    designCount: 3,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653",
-    sizeBuckets: ["Small-Medium", "Runner", "Small Round"],
-    subDesigns: [
-      { name: "Triangles", units: 279, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-14OH.jpg?v=1751232653", sizes: [{ size: "3×10 Runner", units: 246 }, { size: "4' Round", units: 33 }] },
-      { name: "Stars", units: 138, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-24OH.jpg?v=1751232653", sizes: [{ size: "3×10 Runner", units: 138 }] },
-      { name: "Reeve", units: 92, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/KEN-34OH.jpg?v=1751232653", sizes: [{ size: "4' Round", units: 53 }, { size: "3×10 Runner", units: 38 }, { size: "4×5", units: 1 }] },
-    ],
-  },
-  {
-    name: "Money",
-    totalUnits: 489,
-    designCount: 4,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908",
-    sizeBuckets: ["Medium", "Large", "XL", "Runner", "Small Round", "Med Round"],
-    subDesigns: [
-      { name: "Dollar Front", units: 453, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "2×5 Runner", units: 439 }, { size: "10×13", units: 14 }] },
-      { name: "Dollar Stacked", units: 20, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-05A8x10OH.jpg?v=1751059919", sizes: [{ size: "3×10 Runner", units: 8 }, { size: "2×7 Runner", units: 8 }, { size: "8×10", units: 2 }, { size: "10×13", units: 2 }] },
-      { name: "Dollar Front 2006A", units: 14, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-03A8x10OH.jpg?v=1751059913", sizes: [{ size: "2×7 Runner", units: 7 }, { size: "3×10 Runner", units: 6 }, { size: "5×7", units: 1 }] },
-      { name: "Bitcoin", units: 2, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/W-MN-01A8x10OH.jpg?v=1751059908", sizes: [{ size: "Small Round", units: 1 }, { size: "Med Round", units: 1 }] },
-    ],
-  },
-  {
-    name: "Zazzle",
-    totalUnits: 391,
-    designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/files/ZAZ-23_8x10_OH_1.jpg?v=1742624393",
-    sizeBuckets: ["Medium", "Runner"],
-    subDesigns: [
-      { name: "Patras", units: 391, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/ZAZ-23_8x10_OH_1.jpg?v=1742624393", sizes: [{ size: "5×7", units: 270 }, { size: "2×7 Runner", units: 73 }, { size: "3×10 Runner", units: 48 }] },
-    ],
-  },
-  {
-    name: "Mystic",
-    totalUnits: 362,
-    designCount: 4,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979",
-    sizeBuckets: ["Medium", "Runner"],
-    subDesigns: [
-      { name: "Colette", units: 271, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-457OH.jpg?v=1751061979", sizes: [{ size: "5×7", units: 217 }, { size: "2×7 Runner", units: 54 }] },
-      { name: "Nova", units: 56, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MC-307CU5.jpg?v=1753643163", sizes: [{ size: "3×10 Runner", units: 56 }] },
-      { name: "Maddox", units: 32, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-2748x10CU5.jpg?v=1753643163", sizes: [{ size: "3×10 Runner", units: 32 }] },
-      { name: "Zoe", units: 3, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MC-59_OH.jpg?v=1742595339", sizes: [{ size: "2×7 Runner", units: 3 }] },
-    ],
-  },
-  {
-    name: "Barclay",
-    totalUnits: 341,
-    designCount: 7,
-    image: PLACEHOLDER_IMG,
-    sizeBuckets: ["Medium", "Large", "Runner", "Med Round"],
-    subDesigns: [
-      { name: "Avi", units: 190, image: PLACEHOLDER_IMG, sizes: [{ size: "2×7 Runner", units: 83 }, { size: "5×7", units: 65 }, { size: "8×10", units: 42 }] },
-      { name: "Shai", units: 48, image: PLACEHOLDER_IMG, sizes: [{ size: "2×7 Runner", units: 30 }, { size: "8×10", units: 18 }] },
-      { name: "River", units: 47, image: PLACEHOLDER_IMG, sizes: [{ size: "5×7 Oval", units: 47 }] },
-      { name: "Vane Willow Damask", units: 27, image: PLACEHOLDER_IMG, sizes: [{ size: "5' Round", units: 27 }] },
-      { name: "Yaren", units: 23, image: PLACEHOLDER_IMG, sizes: [{ size: "Roll", units: 23 }] },
-      { name: "Hannover", units: 4, image: PLACEHOLDER_IMG, sizes: [{ size: "2×7 Runner", units: 3 }, { size: "8×10", units: 1 }] },
-      { name: "Eslem", units: 2, image: PLACEHOLDER_IMG, sizes: [{ size: "Roll", units: 2 }] },
-    ],
-  },
-  {
-    name: "Brielle",
-    totalUnits: 207,
-    designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BRI-42RoundRS_S_01.jpg?v=1742611088",
-    sizeBuckets: ["Small Round"],
-    subDesigns: [
-      { name: "Larissa", units: 207, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/BRI-42RoundRS_S_01.jpg?v=1742611088", sizes: [{ size: "4' Round", units: 207 }] },
-    ],
-  },
-  {
-    name: "Ell Basics",
-    totalUnits: 164,
-    designCount: 3,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157",
-    sizeBuckets: ["Medium", "Large", "Runner"],
-    subDesigns: [
-      { name: "Rendezvous", units: 72, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-20Graphics_1.jpg?v=1751063157", sizes: [{ size: "5×7", units: 71 }, { size: "2×7 Runner", units: 1 }] },
-      { name: "Intrigue", units: 66, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-12Graphics_1.jpg?v=1751063149", sizes: [{ size: "8×10", units: 66 }] },
-      { name: "Gala", units: 26, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/EBP-30Graphics_1.jpg?v=1751063678", sizes: [{ size: "5×7", units: 18 }, { size: "2×7 Runner", units: 6 }, { size: "8×10", units: 2 }] },
-    ],
-  },
-  {
-    name: "Loop-De-Loop",
-    totalUnits: 105,
-    designCount: 2,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LDL-78_RS_S_01.jpg?v=1751060637",
-    sizeBuckets: ["Medium", "Large", "Runner", "Small Round"],
-    subDesigns: [
-      { name: "Cruce", units: 101, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LDL-78_RS_S_01.jpg?v=1751060637", sizes: [{ size: "5×7", units: 78 }, { size: "3×9 Runner", units: 13 }, { size: "8×11", units: 3 }, { size: "4' Round", units: 7 }] },
-      { name: "Kaya", units: 4, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/LDL-39_OH.jpg?v=1742604952", sizes: [{ size: "2×7 Runner", units: 4 }] },
-    ],
-  },
-  {
-    name: "Serenity2",
-    totalUnits: 97,
-    designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/SE-232OH.jpg?v=1753642912",
-    sizeBuckets: ["Runner"],
-    subDesigns: [
-      { name: "Darcy", units: 97, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/SE-232OH.jpg?v=1753642912", sizes: [{ size: "3×10 Runner", units: 97 }] },
-    ],
-  },
-  {
-    name: "Malaga",
-    totalUnits: 95,
-    designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MG-152OH.jpg?v=1753642976",
-    sizeBuckets: ["Runner"],
-    subDesigns: [
-      { name: "Huron", units: 95, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/MG-152OH.jpg?v=1753642976", sizes: [{ size: "3×10 Runner", units: 95 }] },
-    ],
-  },
-  {
-    name: "Horosan",
-    totalUnits: 93,
-    designCount: 1,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/HR-11CU5.jpg?v=1751061258",
-    sizeBuckets: ["Medium", "Runner"],
-    subDesigns: [
-      { name: "Abstract", units: 93, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/HR-11CU5.jpg?v=1751061258", sizes: [{ size: "5×7", units: 83 }, { size: "3×9 Runner", units: 10 }] },
-    ],
-  },
-  {
-    name: "Omaha",
-    totalUnits: 79,
-    designCount: 4,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/OM-174_OH.jpg?v=1742601014",
-    sizeBuckets: ["XL", "Runner"],
-    subDesigns: [
-      { name: "Laslow", units: 46, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/OM-222_8x10_RS_S_01_V2_edited.jpg?v=1751063367", sizes: [{ size: "2×7 Runner", units: 46 }] },
-      { name: "Alu", units: 19, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/OM-174_OH.jpg?v=1742601014", sizes: [{ size: "3×10 Runner", units: 19 }] },
-      { name: "Camilla", units: 13, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/OM-214_Roll_OH_edited_a2d93a63-2059-490d-b974-ff03fe11c1c3.jpg?v=1751063276", sizes: [{ size: "Roll", units: 9 }, { size: "2×7 Runner", units: 4 }] },
-      { name: "Leon", units: 1, image: "https://cdn.shopify.com/s/files/1/0669/1123/files/OM-237_RS_S_01_c52673e1-4b1a-430f-9771-833b2b4cfb8e.jpg?v=1751063477", sizes: [{ size: "9×13", units: 1 }] },
-    ],
-  },
-  {
-    name: "Maya",
-    totalUnits: 74,
-    designCount: 4,
-    image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MYA-27RS_S_01.jpg?v=1753642764",
-    sizeBuckets: ["Runner"],
-    subDesigns: [
-      { name: "Odina", units: 27, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MYA-27RS_S_01.jpg?v=1753642764", sizes: [{ size: "3×10 Runner", units: 27 }] },
-      { name: "Adriel", units: 18, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MYA-112CU5.jpg?v=1753642766", sizes: [{ size: "3×10 Runner", units: 18 }] },
-      { name: "Nokomis", units: 17, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MYA-17RS_S_01.jpg?v=1753642766", sizes: [{ size: "3×10 Runner", units: 17 }] },
-      { name: "Tallulah", units: 12, image: "https://cdn.shopify.com/s/files/1/0669/1123/products/MYA-37RS_S_01.jpg?v=1753642764", sizes: [{ size: "3×10 Runner", units: 12 }] },
-    ],
-  },
-];
-
-export { collections, rawSizeToBucket };
-export type { Collection, SubDesign, SizeBreakdown };
-
 const RugCollections = () => {
   const [activeSize, setActiveSize] = useState<SizeBucket>("All Sizes");
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
   const { togglePattern, isSaved } = useRugFavorites();
+  const { collections, loading, error } = useRugInventory();
 
   const filtered = collections
     .filter((c) => collectionMatchesBucket(c, activeSize))
@@ -405,71 +82,94 @@ const RugCollections = () => {
           ))}
         </div>
 
+        {/* Loading state */}
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+            <Loader2 className="h-8 w-8 animate-spin mb-3" />
+            <p className="text-sm">Loading latest inventory…</p>
+          </div>
+        )}
+
+        {/* Error state */}
+        {!loading && error && (
+          <div className="max-w-xl mx-auto bg-destructive/5 border border-destructive/30 rounded-lg p-6 text-center">
+            <AlertTriangle className="h-8 w-8 text-destructive mx-auto mb-3" />
+            <h3 className="font-semibold text-lg mb-1">We couldn't load inventory right now</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Please refresh the page in a moment, or contact us for the latest availability.
+            </p>
+            <Button variant="outline" onClick={() => window.location.reload()}>
+              Retry
+            </Button>
+          </div>
+        )}
+
         {/* Collection grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
-          {filtered.map((col) => {
-            const isExpanded = expandedCollection === col.name;
+        {!loading && !error && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
+            {filtered.map((col) => {
+              const isExpanded = expandedCollection === col.name;
 
-            return (
-              <div
-                key={col.name}
-                className={cn(
-                  "transition-all duration-300",
-                  isExpanded && "sm:col-span-2 lg:col-span-3"
-                )}
-              >
-                <Card
-                  className={cn(
-                    "overflow-hidden cursor-pointer transition-shadow hover:shadow-md",
-                    isExpanded && "ring-2 ring-accent"
-                  )}
-                  onClick={() => handleCardClick(col.name)}
-                >
-                  {!isExpanded && (
-                    <div className="h-52 overflow-hidden bg-muted">
-                      <img
-                        src={col.image}
-                        alt={col.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-                  <CardContent className={cn("p-4", isExpanded ? "pt-4" : "")}>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-bold text-lg leading-tight">Collection: {col.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {col.designCount} {col.designCount === 1 ? "pattern" : "patterns"} · In Stock
-                        </p>
-                      </div>
-                      <ChevronDown
-                        className={cn(
-                          "h-5 w-5 text-muted-foreground shrink-0 transition-transform duration-300",
-                          isExpanded && "rotate-180"
-                        )}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Expanded sub-design panel */}
+              return (
                 <div
+                  key={col.name}
                   className={cn(
-                    "overflow-hidden transition-all duration-300 ease-in-out",
-                    isExpanded ? "max-h-[2000px] opacity-100 mt-6 mb-6" : "max-h-0 opacity-0"
+                    "transition-all duration-300",
+                    isExpanded && "sm:col-span-2 lg:col-span-3"
                   )}
                 >
-                  {isExpanded && (
-                    <div className="bg-muted/50 border-2 border-accent/30 rounded-xl p-5 md:p-8 shadow-sm">
-                      <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-4">
-                        Collection: {col.name} — {col.designCount} {col.designCount === 1 ? "pattern" : "patterns"}
-                      </p>
-                      {col.subDesigns ? (
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {[...col.subDesigns]
-                            .sort((a, b) => b.units - a.units)
-                            .map((design) => {
+                  <Card
+                    className={cn(
+                      "overflow-hidden cursor-pointer transition-shadow hover:shadow-md",
+                      isExpanded && "ring-2 ring-accent"
+                    )}
+                    onClick={() => handleCardClick(col.name)}
+                  >
+                    {!isExpanded && (
+                      <div className="h-52 overflow-hidden bg-muted">
+                        <img
+                          src={col.image}
+                          alt={col.name}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <CardContent className={cn("p-4", isExpanded ? "pt-4" : "")}>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="font-bold text-lg leading-tight">Collection: {col.name}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {col.designCount} {col.designCount === 1 ? "pattern" : "patterns"} · In Stock
+                          </p>
+                        </div>
+                        <ChevronDown
+                          className={cn(
+                            "h-5 w-5 text-muted-foreground shrink-0 transition-transform duration-300",
+                            isExpanded && "rotate-180"
+                          )}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Expanded sub-design panel */}
+                  <div
+                    className={cn(
+                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      isExpanded ? "max-h-[2000px] opacity-100 mt-6 mb-6" : "max-h-0 opacity-0"
+                    )}
+                  >
+                    {isExpanded && (
+                      <div className="bg-muted/50 border-2 border-accent/30 rounded-xl p-5 md:p-8 shadow-sm">
+                        <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-4">
+                          Collection: {col.name} — {col.designCount} {col.designCount === 1 ? "pattern" : "patterns"}
+                        </p>
+                        {col.subDesigns ? (
+                          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {[...col.subDesigns]
+                              .sort((a, b) => b.units - a.units)
+                              .map((design) => {
                                 const patternId = `${col.name}::${design.name}`;
                                 const saved = isSaved(patternId);
                                 const patternData: SavedPattern = {
@@ -480,83 +180,86 @@ const RugCollections = () => {
                                   sizes: design.sizes.map((s) => ({ size: displaySize(s.size), units: s.units })),
                                 };
                                 return (
-                              <div
-                                key={design.name}
-                                className="border rounded-lg overflow-hidden bg-background relative"
-                              >
-                                <button
-                                  onClick={(e) => { e.stopPropagation(); togglePattern(patternData); }}
-                                  className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors shadow-sm"
-                                  aria-label={saved ? `Remove ${design.name} from saved` : `Save ${design.name}`}
-                                >
-                                  <Heart className={cn("h-4 w-4 transition-colors", saved ? "text-red-500 fill-red-500" : "text-muted-foreground hover:text-red-400")} />
-                                </button>
-                                <div className="h-40 overflow-hidden bg-muted">
-                                  <img
-                                    src={design.image}
-                                    alt={design.name}
-                                    className="w-full h-full object-cover"
-                                    loading="lazy"
-                                  />
-                                </div>
-                                <div className="p-3 space-y-2">
-                                  <div className="flex items-center justify-between">
-                                    <h4 className="font-medium text-sm">{design.name}</h4>
-                                    <span className="text-xs font-medium text-muted-foreground">
-                                      In Stock
-                                    </span>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                  {design.sizes.map((s, idx) => {
-                                    const avail = getAvailability(s.units);
-                                    return (
-                                    <div
-                                      key={idx}
-                                      className="flex flex-col items-center px-2 py-1 rounded-lg bg-muted text-center min-w-[60px]"
+                                  <div
+                                    key={design.name}
+                                    className="border rounded-lg overflow-hidden bg-background relative"
+                                  >
+                                    <button
+                                      onClick={(e) => { e.stopPropagation(); togglePattern(patternData); }}
+                                      className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors shadow-sm"
+                                      aria-label={saved ? `Remove ${design.name} from saved` : `Save ${design.name}`}
                                     >
-                                      <span className="text-sm font-medium text-foreground">{displaySize(s.size)}</span>
-                                      <span className={cn("text-xs font-medium", avail.color)}>
-                                        {avail.label}
-                                      </span>
+                                      <Heart className={cn("h-4 w-4 transition-colors", saved ? "text-red-500 fill-red-500" : "text-muted-foreground hover:text-red-400")} />
+                                    </button>
+                                    <div className="h-40 overflow-hidden bg-muted">
+                                      <img
+                                        src={design.image}
+                                        alt={design.name}
+                                        className="w-full h-full object-cover"
+                                        loading="lazy"
+                                      />
                                     </div>
-                                    );
-                                  })}
+                                    <div className="p-3 space-y-2">
+                                      <div className="flex items-center justify-between">
+                                        <h4 className="font-medium text-sm">{design.name}</h4>
+                                        <span className="text-xs font-medium text-muted-foreground">
+                                          In Stock
+                                        </span>
+                                      </div>
+                                      <div className="flex flex-wrap gap-2">
+                                        {design.sizes.map((s, idx) => {
+                                          const avail = getAvailability(s.units);
+                                          return (
+                                            <div
+                                              key={idx}
+                                              className="flex flex-col items-center px-2 py-1 rounded-lg bg-muted text-center min-w-[60px]"
+                                            >
+                                              <span className="text-sm font-medium text-foreground">{displaySize(s.size)}</span>
+                                              <span className={cn("text-xs font-medium", avail.color)}>
+                                                {avail.label}
+                                              </span>
+                                            </div>
+                                          );
+                                        })}
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              </div>
                                 );
-                            })}
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-4 py-4">
-                          <div className="h-32 w-32 shrink-0 overflow-hidden rounded-lg bg-muted">
-                            <img
-                              src={col.image}
-                              alt={col.name}
-                              className="w-full h-full object-cover"
-                              loading="lazy"
-                            />
+                              })}
                           </div>
-                          <div>
-                            <h4 className="font-medium mb-1">{col.name}</h4>
-                            <p className="text-sm text-muted-foreground">
-                              In Stock · {col.fallbackNote}
-                            </p>
+                        ) : (
+                          <div className="flex items-center gap-4 py-4">
+                            <div className="h-32 w-32 shrink-0 overflow-hidden rounded-lg bg-muted">
+                              <img
+                                src={col.image}
+                                alt={col.name}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
+                            </div>
+                            <div>
+                              <h4 className="font-medium mb-1">{col.name}</h4>
+                              <p className="text-sm text-muted-foreground">
+                                In Stock · {col.fallbackNote}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      <div className="mt-5 border-t border-accent/20 pt-1" />
-                    </div>
-                  )}
+                        )}
+                        <div className="mt-5 border-t border-accent/20 pt-1" />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
 
-        <p className="text-center text-sm text-muted-foreground italic mt-8 max-w-xl mx-auto">
-          Pricing varies by volume and mix. Request a quote for current availability and rates.
-        </p>
+        {!loading && !error && (
+          <p className="text-center text-sm text-muted-foreground italic mt-8 max-w-xl mx-auto">
+            Pricing varies by volume and mix. Request a quote for current availability and rates.
+          </p>
+        )}
       </div>
     </section>
   );
