@@ -93,12 +93,6 @@ const Products = () => {
               <Filter className="h-4 w-4 mr-1" />
               Filters
             </Button>
-            <Button variant="highlight" asChild className="w-fit">
-              <Link to="/pallets">
-                <Lock className="mr-2 h-4 w-4" />
-                Shop Pallets
-              </Link>
-            </Button>
           </div>
         </div>
 
