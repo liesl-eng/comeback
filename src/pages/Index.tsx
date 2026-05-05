@@ -27,18 +27,18 @@ const Index = () => {
           </div>
           <div className="container relative mx-auto px-4 md:px-6 pt-14 pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="mb-4 md:mb-6 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95]" style={{ textShadow: "6px 6px 0 hsl(0 0% 0% / 0.55)" }}>
+              <h1 className="mb-4 md:mb-6 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95] text-center" style={{ textShadow: "3px 3px 0 hsl(0 0% 0% / 0.55)" }}>
                 Tiny Imperfections.{" "}
                 <span className="relative inline-block">
                   <span className="relative z-10">Huge</span>
-                  <span aria-hidden className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-[hsl(15_75%_70%)] z-0 -translate-x-1 translate-y-1" />
+                  <span aria-hidden className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-[hsl(15_75%_70%)] z-0" />
                 </span>{" "}
                 Savings.
               </h1>
-              <p className="mb-2 md:mb-3 text-lg md:text-xl text-primary-foreground/90 font-medium max-w-3xl mx-auto">
+              <p className="mb-2 md:mb-3 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
                 High quality home goods — priced <span className="underline underline-offset-4 decoration-2">30–60% below wholesale</span>.
               </p>
-              <p className="mb-6 md:mb-8 text-lg md:text-xl text-primary-foreground/90 font-medium">
+              <p className="mb-6 md:mb-8 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium text-center">
                 Shop by SKU. Build your own pallet.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
