@@ -14,7 +14,16 @@ import {
   SizeBreakdown,
   useRugInventory,
   rawSizeToBucket,
+  PLACEHOLDER_IMG,
 } from "@/lib/rugInventory";
+
+const ComingSoon = ({ className }: { className?: string }) => (
+  <div className={cn("w-full h-full flex items-center justify-center bg-muted text-muted-foreground", className)}>
+    <span className="text-sm font-medium uppercase tracking-wider">Coming Soon</span>
+  </div>
+);
+
+const isMissingImage = (src: string) => !src || src === PLACEHOLDER_IMG;
 
 /* Re-exports kept for backward compatibility with consumers like RugOrderBuilder. */
 export { rawSizeToBucket };
@@ -127,12 +136,16 @@ const RugCollections = () => {
                   >
                     {!isExpanded && (
                       <div className="h-52 overflow-hidden bg-muted">
-                        <img
-                          src={col.image}
-                          alt={col.name}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
+                        {isMissingImage(col.image) ? (
+                          <ComingSoon />
+                        ) : (
+                          <img
+                            src={col.image}
+                            alt={col.name}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        )}
                       </div>
                     )}
                     <CardContent className={cn("p-4", isExpanded ? "pt-4" : "")}>
@@ -192,12 +205,16 @@ const RugCollections = () => {
                                       <Heart className={cn("h-4 w-4 transition-colors", saved ? "text-red-500 fill-red-500" : "text-muted-foreground hover:text-red-400")} />
                                     </button>
                                     <div className="h-40 overflow-hidden bg-muted">
-                                      <img
-                                        src={design.image}
-                                        alt={design.name}
-                                        className="w-full h-full object-cover"
-                                        loading="lazy"
-                                      />
+                                      {isMissingImage(design.image) ? (
+                                        <ComingSoon />
+                                      ) : (
+                                        <img
+                                          src={design.image}
+                                          alt={design.name}
+                                          className="w-full h-full object-cover"
+                                          loading="lazy"
+                                        />
+                                      )}
                                     </div>
                                     <div className="p-3 space-y-2">
                                       <div className="flex items-center justify-between">
@@ -230,12 +247,16 @@ const RugCollections = () => {
                         ) : (
                           <div className="flex items-center gap-4 py-4">
                             <div className="h-32 w-32 shrink-0 overflow-hidden rounded-lg bg-muted">
-                              <img
-                                src={col.image}
-                                alt={col.name}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                              />
+                              {isMissingImage(col.image) ? (
+                                <ComingSoon />
+                              ) : (
+                                <img
+                                  src={col.image}
+                                  alt={col.name}
+                                  className="w-full h-full object-cover"
+                                  loading="lazy"
+                                />
+                              )}
                             </div>
                             <div>
                               <h4 className="font-medium mb-1">{col.name}</h4>
