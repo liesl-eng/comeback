@@ -14,7 +14,16 @@ import {
   SizeBreakdown,
   useRugInventory,
   rawSizeToBucket,
+  PLACEHOLDER_IMG,
 } from "@/lib/rugInventory";
+
+const ComingSoon = ({ className }: { className?: string }) => (
+  <div className={cn("w-full h-full flex items-center justify-center bg-muted text-muted-foreground", className)}>
+    <span className="text-sm font-medium uppercase tracking-wider">Coming Soon</span>
+  </div>
+);
+
+const isMissingImage = (src: string) => !src || src === PLACEHOLDER_IMG;
 
 /* Re-exports kept for backward compatibility with consumers like RugOrderBuilder. */
 export { rawSizeToBucket };
