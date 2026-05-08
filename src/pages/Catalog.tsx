@@ -71,7 +71,7 @@ export default function Catalog() {
           <div>
             <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Category</div>
             <div className="flex flex-wrap gap-2">
-              {[ALL, ...PRODUCT_CATEGORIES].map((c) => (
+              {PRODUCT_CATEGORIES.map((c) => (
                 <Button
                   key={c}
                   size="sm"
