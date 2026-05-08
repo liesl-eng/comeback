@@ -330,51 +330,8 @@ const RugProgramInner = () => {
           </div>
         </section>
 
-        {/* ── COMPLETE THE ROOM ── */}
-        {/* ── COMPLETE THE ROOM ── */}
-        <section id="complete-the-room" className="py-10 md:py-14 bg-muted/30 scroll-mt-20">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-10 md:mb-14">
-              <h2 className="text-2xl md:text-4xl font-bold mb-3">Complete The Room</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Pair your rugs with premium lighting
-              </p>
-            </div>
-            <Link to="/rechargeable-table-lamps" className="block max-w-3xl mx-auto group">
-              <Card className="overflow-hidden transition-shadow hover:shadow-xl">
-                <div className="flex flex-col sm:flex-row">
-                  <div className="sm:w-2/5 h-56 sm:h-auto overflow-hidden bg-[hsl(30_20%_93%)] shrink-0">
-                    <img
-                      src={meridianBrassShelf}
-                      alt="Ferm Living Meridian Rechargeable Lamps"
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <CardContent className="sm:w-3/5 p-6 md:p-8 flex flex-col justify-center space-y-3">
-                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Ferm Living · Featured Product</p>
-                    <h3 className="text-xl md:text-2xl font-semibold leading-tight">Meridian Rechargeable Table Lamp</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                      Designed by the design studio Regular Company for Ferm Living. The Meridian is a portable, dimmable LED table lamp built around three simple geometric forms — cone, arc, and cylinder. Cordless and rechargeable via USB-C, it delivers up to 12 hours of warm white light per charge. Compact enough for nightstands, shelves, and side tables — ideal for staging, rentals, and hospitality.
-                    </p>
-                    <div className="flex items-baseline gap-2 pt-1">
-                      <span className="text-2xl font-bold">$50</span>
-                      <span className="text-base text-muted-foreground line-through">$265</span>
-                      <Badge variant="accent" className="text-xs">81% off</Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground">Warehouse Direct — New</p>
-                    <p className="text-xs text-muted-foreground">4 finishes: Cashmere, Brass, Brushed Steel, Black</p>
-                    <p className="text-base font-semibold text-accent group-hover:underline underline-offset-4 pt-1">
-                      View Details →
-                    </p>
-                  </CardContent>
-                </div>
-              </Card>
-            </Link>
-            <p className="text-center text-sm text-muted-foreground italic mt-8 max-w-xl mx-auto">
-              Add lighting to your rug program quote — just mention it in your request.
-            </p>
-          </div>
-        </section>
+
+
 
         {/* ── FAQ ── */}
         <section className="pt-6 md:pt-10 pb-14 md:pb-20 bg-muted/30">
