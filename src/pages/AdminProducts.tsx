@@ -543,7 +543,7 @@ export default function AdminProducts() {
                             )}
                           </div>
                         )}
-                        {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Price — will be skipped.</div>}
+                        {noPrice > 0 && <div className="text-amber-600">{noPrice} row(s) missing Comeback Price — will import with no price.</div>}
                         {nonMercanaBadUrl > 0 && <div className="text-destructive">{nonMercanaBadUrl} non-Mercana row(s) have an Image value that isn't a URL.</div>}
                       </div>
                     );
