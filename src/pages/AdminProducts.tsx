@@ -66,6 +66,30 @@ export default function AdminProducts() {
   const [dupGroups, setDupGroups] = useState<{ key: string; items: DupRow[] }[] | null>(null);
   const [dupBusy, setDupBusy] = useState<string | null>(null);
 
+  // Wipe catalog
+  const [wiping, setWiping] = useState(false);
+  const [wipeConfirm, setWipeConfirm] = useState("");
+
+  async function wipeCatalog() {
+    if (wipeConfirm !== "WIPE") {
+      toast({ title: "Type WIPE to confirm", variant: "destructive" });
+      return;
+    }
+    setWiping(true);
+    const { error, count } = await supabase
+      .from("products")
+      .delete({ count: "exact" })
+      .not("id", "is", null);
+    setWiping(false);
+    if (error) {
+      toast({ title: "Wipe failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    setWipeConfirm("");
+    toast({ title: `Deleted ${count ?? 0} products`, description: "Catalog is now empty." });
+  }
+
+
   async function scanDuplicates() {
     setDupScanning(true);
     setDupGroups(null);
@@ -303,7 +327,35 @@ export default function AdminProducts() {
             </p>
           </div>
 
+          <Card className="border-destructive/50">
+            <CardHeader>
+              <CardTitle className="text-destructive">Wipe Catalog</CardTitle>
+              <CardDescription>
+                Permanently deletes <strong>all</strong> products from the catalog. Pallets are
+                not affected. Type <code className="font-mono">WIPE</code> to confirm.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex items-center gap-2">
+              <Input
+                placeholder="Type WIPE to confirm"
+                value={wipeConfirm}
+                onChange={(e) => setWipeConfirm(e.target.value)}
+                className="max-w-xs"
+                disabled={wiping}
+              />
+              <Button
+                variant="destructive"
+                onClick={wipeCatalog}
+                disabled={wiping || wipeConfirm !== "WIPE"}
+              >
+                {wiping ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
+                Delete all products
+              </Button>
+            </CardContent>
+          </Card>
+
           <Card>
+
             <CardHeader>
               <CardTitle>Duplicate Scanner</CardTitle>
               <CardDescription>
