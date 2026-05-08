@@ -102,16 +102,9 @@ export default function AdminProducts() {
       }
       let imageUrl: string | null = null;
       if (isMercana) {
-        if (!r.imageFilename) {
-          skipped.push({ name: r.name, reason: "no image filename" });
-          continue;
+        if (r.imageFilename) {
+          imageUrl = s.uploadedFiles.get(r.imageFilename.toLowerCase()) ?? null;
         }
-        const url = s.uploadedFiles.get(r.imageFilename.toLowerCase());
-        if (!url) {
-          skipped.push({ name: r.name, reason: `image "${r.imageFilename}" not uploaded` });
-          continue;
-        }
-        imageUrl = url;
       } else {
         imageUrl = r.imageUrl;
       }
