@@ -303,7 +303,80 @@ export default function AdminProducts() {
             </p>
           </div>
 
-          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as BrandTab)}>
+          <Card>
+            <CardHeader>
+              <CardTitle>Duplicate Scanner</CardTitle>
+              <CardDescription>
+                Finds products with the same brand + normalized name (ignores case, punctuation,
+                and "(#N)" suffixes). Merge combines units, keeps the best image, lowest price,
+                highest MSRP.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Button onClick={scanDuplicates} disabled={dupScanning}>
+                {dupScanning ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <ShieldAlert className="h-4 w-4 mr-2" />
+                )}
+                Scan for duplicates
+              </Button>
+              {dupGroups && dupGroups.length === 0 && (
+                <p className="text-sm text-muted-foreground">
+                  <CheckCircle className="inline h-4 w-4 text-primary mr-1" />
+                  No duplicates found.
+                </p>
+              )}
+              {dupGroups && dupGroups.length > 0 && (
+                <div className="space-y-3 max-h-[600px] overflow-y-auto">
+                  {dupGroups.map((g) => (
+                    <div key={g.key} className="border rounded p-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="text-sm font-medium">
+                          {g.items[0].brand} — {normalizeProductName(g.items[0].name)}
+                        </div>
+                        <Button
+                          size="sm"
+                          onClick={() => mergeGroup(g)}
+                          disabled={dupBusy === g.key}
+                        >
+                          {dupBusy === g.key ? (
+                            <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                          ) : null}
+                          Merge ({g.items.length})
+                        </Button>
+                      </div>
+                      <div className="space-y-1">
+                        {g.items.map((it) => (
+                          <div
+                            key={it.id}
+                            className="flex items-center justify-between gap-2 text-xs border-t pt-1"
+                          >
+                            <div className="flex-1 min-w-0">
+                              <div className="truncate">{it.name}</div>
+                              <div className="text-muted-foreground">
+                                {it.units_available} units · ${it.price ?? "—"} ·{" "}
+                                {it.image_url ? "image ✓" : "no image"}
+                              </div>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => deleteDuplicate(g, it.id)}
+                              disabled={dupBusy === g.key + it.id}
+                            >
+                              <XCircle className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
             <TabsList className="grid grid-cols-4 w-full">
               {BRAND_TABS.map((b) => (
                 <TabsTrigger key={b} value={b}>
