@@ -65,6 +65,48 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          brand: string
+          created_at: string
+          id: string
+          image_filename: string | null
+          image_url: string | null
+          msrp: number | null
+          name: string
+          price: number | null
+          source_last_updated: string | null
+          units_available: number
+          updated_at: string
+        }
+        Insert: {
+          brand: string
+          created_at?: string
+          id?: string
+          image_filename?: string | null
+          image_url?: string | null
+          msrp?: number | null
+          name: string
+          price?: number | null
+          source_last_updated?: string | null
+          units_available?: number
+          updated_at?: string
+        }
+        Update: {
+          brand?: string
+          created_at?: string
+          id?: string
+          image_filename?: string | null
+          image_url?: string | null
+          msrp?: number | null
+          name?: string
+          price?: number | null
+          source_last_updated?: string | null
+          units_available?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
