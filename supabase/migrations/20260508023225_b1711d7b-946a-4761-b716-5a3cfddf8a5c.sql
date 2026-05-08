@@ -1,0 +1,1 @@
+UPDATE public.products SET category = 'Accessories' WHERE category = 'Decor';
