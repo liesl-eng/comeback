@@ -20,6 +20,8 @@ import Cart from "./pages/Cart";
 import Favorites from "./pages/Favorites";
 import About from "./pages/About";
 import AdminImport from "./pages/AdminImport";
+import AdminProducts from "./pages/AdminProducts";
+import Catalog from "./pages/Catalog";
 import Auth from "./pages/Auth";
 import RugProgram from "./pages/RugProgram";
 import MeridianLamp from "./pages/MeridianLamp";
@@ -67,6 +69,15 @@ const App = () => (
                   <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
                   <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/favorites" element={<Favorites />} />
+                  <Route path="/catalog" element={<Catalog />} />
+                  <Route
+                    path="/admin/products"
+                    element={
+                      <ProtectedRoute>
+                        <AdminProducts />
+                      </ProtectedRoute>
+                    }
+                  />
                   <Route
                     path="/admin/import"
                     element={
