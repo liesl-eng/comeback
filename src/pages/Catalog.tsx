@@ -9,6 +9,7 @@ import { PRODUCT_CATEGORIES } from "@/lib/productCategory";
 import { matchesSearchQuery } from "@/lib/searchSynonyms";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { X } from "lucide-react";
+import { comebackPrice, isBuyerVisible, formatComebackPrice } from "@/lib/pricing";
 
 interface Product {
   id: string;
