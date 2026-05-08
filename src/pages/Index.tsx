@@ -68,7 +68,7 @@ const Index = () => {
                     variant="outline"
                     size="sm"
                     className="bg-white/10 border-white/30 text-primary-foreground hover:bg-white/20 hover:text-primary-foreground backdrop-blur-sm"
-                    onClick={() => navigate(`/catalog`)}
+                    onClick={() => navigate(`/catalog?category=${encodeURIComponent(category)}`)}
                   >
                     {category}
                   </Button>
