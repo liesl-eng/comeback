@@ -112,6 +112,17 @@ export default function Catalog() {
               ))}
             </div>
           </div>
+          <div>
+            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Sort by</div>
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant={sortBy === "price" ? "default" : "outline"} onClick={() => setSortBy("price")}>
+                Price: Low to High
+              </Button>
+              <Button size="sm" variant={sortBy === "quantity" ? "default" : "outline"} onClick={() => setSortBy("quantity")}>
+                Quantity: Low to High
+              </Button>
+            </div>
+          </div>
         </div>
 
 
