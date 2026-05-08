@@ -83,8 +83,8 @@ export default function Catalog() {
     }
     const sorted = [...list].sort((a, b) => {
       if (sortBy.startsWith("price")) {
-        const ap = comebackPrice(a.msrp) ?? Infinity;
-        const bp = comebackPrice(b.msrp) ?? Infinity;
+        const ap = comebackPrice(a.msrp, a.price) ?? Infinity;
+        const bp = comebackPrice(b.msrp, b.price) ?? Infinity;
         return sortBy === "price-asc" ? ap - bp : bp - ap;
       }
       const aq = a.units_available ?? 0;
@@ -162,7 +162,7 @@ export default function Catalog() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.map((p) => {
             const sb = stockBadge(p.units_available);
-            const cb = comebackPrice(p.msrp);
+            const cb = comebackPrice(p.msrp, p.price);
             return (
               <div key={p.id} className="border rounded-lg overflow-hidden bg-card flex flex-col">
                 <div className="relative aspect-square bg-muted flex items-center justify-center overflow-hidden">
