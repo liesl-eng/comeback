@@ -158,16 +158,6 @@ export default function AdminProducts() {
     toast({ title: `Imported ${inserted} ${brand} products`, description: `${skipped.length} skipped` });
   }
 
-  if (checking) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <main className="container mx-auto px-4 py-8 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </main>
-      </div>
-    );
-  }
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-background">
