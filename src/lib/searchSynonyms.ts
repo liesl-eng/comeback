@@ -1,13 +1,17 @@
 // Search synonym groups - when user searches for any term, all related terms are matched
 const synonymGroups: string[][] = [
   // FURNITURE SYNONYMS
-  ["couch", "sofa", "sectional"],
-  ["table", "dining table", "coffee table", "side table", "console table", "accent table"],
-  ["chair", "seat", "seating", "dining chair", "accent chair", "bar stool", "counter stool"],
-  ["stool", "bar stool", "counter stool", "accent stool"],
-  ["storage", "cabinet", "sideboard", "media console", "shelving"],
-  ["shelf", "shelving", "bookcase", "bookshelf"],
-  ["bench", "ottoman"],
+  ["couch", "sofa", "sectional", "loveseat", "settee"],
+  ["table", "dining table", "coffee table", "side table", "end table", "console table", "accent table", "nightstand", "night stand", "bedside table"],
+  ["side table", "end table", "accent table", "nightstand", "bedside table"],
+  ["coffee table", "cocktail table"],
+  ["chair", "seat", "seating", "dining chair", "accent chair", "armchair", "arm chair", "lounge chair", "side chair"],
+  ["stool", "bar stool", "counter stool", "accent stool", "footstool"],
+  ["storage", "cabinet", "sideboard", "credenza", "buffet", "media console", "shelving", "dresser", "chest"],
+  ["shelf", "shelving", "bookcase", "bookshelf", "etagere"],
+  ["bench", "ottoman", "pouf", "footstool"],
+  ["desk", "writing desk", "work desk"],
+  ["bed", "headboard", "bed frame"],
   
   // DECOR SYNONYMS
   ["mirror", "wall mirror", "floor mirror", "framed mirror"],
