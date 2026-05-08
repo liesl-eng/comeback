@@ -12,7 +12,7 @@ const valueProps = [
   {
     icon: LayoutGrid,
     title: "Curated for How You Actually Buy",
-    body: "Shop by SKU. Build room-ready kits and scheduled refresh programs.",
+    body: "Room-ready kits and scheduled refresh programs.",
     showStamp: false,
   },
   {
