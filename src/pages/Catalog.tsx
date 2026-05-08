@@ -41,6 +41,7 @@ export default function Catalog() {
     ? (urlCat as string)
     : PRODUCT_CATEGORIES[0];
   const [category, setCategory] = useState<string>(initialCat);
+  const [sortBy, setSortBy] = useState<"price" | "quantity">("price");
 
   useEffect(() => {
     const c = searchParams.get("category");
@@ -70,10 +71,19 @@ export default function Catalog() {
     })();
   }, []);
 
-  const filtered = useMemo(
-    () => products.filter((p) => p.category === category),
-    [products, category],
-  );
+  const filtered = useMemo(() => {
+    const list = products.filter((p) => p.category === category);
+    const sorted = [...list].sort((a, b) => {
+      if (sortBy === "price") {
+        const ap = a.price ?? Infinity;
+        const bp = b.price ?? Infinity;
+        return ap - bp;
+      }
+      return (a.units_available ?? 0) - (b.units_available ?? 0);
+    });
+    return sorted;
+  }, [products, category, sortBy]);
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -100,6 +110,17 @@ export default function Catalog() {
                   {c}
                 </Button>
               ))}
+            </div>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Sort by</div>
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant={sortBy === "price" ? "default" : "outline"} onClick={() => setSortBy("price")}>
+                Price: Low to High
+              </Button>
+              <Button size="sm" variant={sortBy === "quantity" ? "default" : "outline"} onClick={() => setSortBy("quantity")}>
+                Quantity: Low to High
+              </Button>
             </div>
           </div>
         </div>
