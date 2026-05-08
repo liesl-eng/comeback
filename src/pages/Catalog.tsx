@@ -63,7 +63,7 @@ export default function Catalog() {
         <div className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold">Catalog</h1>
           <p className="text-muted-foreground">
-            {filtered.length} {category === ALL ? "products" : `${category} products`}
+            {filtered.length} {category} products
           </p>
         </div>
 
