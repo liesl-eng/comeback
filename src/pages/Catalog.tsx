@@ -172,8 +172,16 @@ export default function Catalog() {
                 <div className="p-3 flex flex-col gap-1 flex-1">
                   <div className="text-xs text-muted-foreground">{p.brand}</div>
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
-                  <div className="flex items-baseline gap-2 mt-1">
+                  <div className="flex items-baseline gap-2 mt-1 flex-wrap">
                     <span className="font-bold">{fmtPrice(p.price)}</span>
+                    {p.msrp != null && p.price != null && p.msrp > p.price && (
+                      <>
+                        <span className="text-xs text-muted-foreground line-through">{fmtPrice(p.msrp)}</span>
+                        {savings != null && (
+                          <span className="text-xs font-semibold text-accent">{savings}% off</span>
+                        )}
+                      </>
+                    )}
                   </div>
                   <div className="mt-auto pt-2 flex items-center justify-between">
                     <Badge variant={sb.variant}>{sb.label}</Badge>
