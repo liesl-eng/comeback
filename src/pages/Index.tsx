@@ -39,7 +39,7 @@ const Index = () => {
                 High quality home goods — priced <span className="underline underline-offset-4 decoration-2">30–60% below wholesale</span>.
               </p>
               <p className="mb-6 md:mb-8 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium text-center">
-                Shop by SKU. Build your own pallet.
+                Shop by SKU.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <Button
@@ -48,7 +48,7 @@ const Index = () => {
                   className="gap-2"
                   onClick={() => navigate("/catalog")}
                 >
-                  Build Your Pallet
+                  Shop Catalog
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
