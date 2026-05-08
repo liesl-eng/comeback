@@ -133,8 +133,9 @@ export default function Catalog() {
                       <span className="text-xs font-semibold text-primary">−{savings}%</span>
                     )}
                   </div>
-                  <div className="mt-auto pt-2">
+                  <div className="mt-auto pt-2 flex items-center justify-between">
                     <Badge variant={sb.variant}>{sb.label}</Badge>
+                    <span className="text-xs text-muted-foreground">{p.units_available} units</span>
                   </div>
                 </div>
               </div>
