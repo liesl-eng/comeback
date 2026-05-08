@@ -9,7 +9,7 @@ import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import PalletTray from "@/components/PalletTray";
+
 import Index from "./pages/Index";
 import Favorites from "./pages/Favorites";
 import About from "./pages/About";
