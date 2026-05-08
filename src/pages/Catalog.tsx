@@ -35,13 +35,14 @@ export default function Catalog() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [brand, setBrand] = useState<string>(ALL);
+  const [category, setCategory] = useState<string>(ALL);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       const { data, error } = await supabase
         .from("products")
-        .select("id,name,brand,image_url,price,msrp,units_available")
+        .select("id,name,brand,category,image_url,price,msrp,units_available")
         .order("units_available", { ascending: false })
         .order("brand")
         .limit(2000);
@@ -57,8 +58,13 @@ export default function Catalog() {
   );
 
   const filtered = useMemo(
-    () => (brand === ALL ? products : products.filter((p) => p.brand === brand)),
-    [products, brand],
+    () =>
+      products.filter(
+        (p) =>
+          (brand === ALL || p.brand === brand) &&
+          (category === ALL || p.category === category),
+      ),
+    [products, brand, category],
   );
 
   return (
