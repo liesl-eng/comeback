@@ -4,8 +4,9 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2 } from "lucide-react";
+import { Loader2, Heart } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/lib/productCategory";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 interface Product {
   id: string;
@@ -41,7 +42,8 @@ export default function Catalog() {
     ? (urlCat as string)
     : PRODUCT_CATEGORIES[0];
   const [category, setCategory] = useState<string>(initialCat);
-  const [sortBy, setSortBy] = useState<"price" | "quantity">("price");
+  const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "qty-asc" | "qty-desc">("price-asc");
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     const c = searchParams.get("category");
@@ -74,12 +76,14 @@ export default function Catalog() {
   const filtered = useMemo(() => {
     const list = products.filter((p) => p.category === category);
     const sorted = [...list].sort((a, b) => {
-      if (sortBy === "price") {
+      if (sortBy.startsWith("price")) {
         const ap = a.price ?? Infinity;
         const bp = b.price ?? Infinity;
-        return ap - bp;
+        return sortBy === "price-asc" ? ap - bp : bp - ap;
       }
-      return (a.units_available ?? 0) - (b.units_available ?? 0);
+      const aq = a.units_available ?? 0;
+      const bq = b.units_available ?? 0;
+      return sortBy === "qty-asc" ? aq - bq : bq - aq;
     });
     return sorted;
   }, [products, category, sortBy]);
@@ -115,11 +119,17 @@ export default function Catalog() {
           <div>
             <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Sort by</div>
             <div className="flex flex-wrap gap-2">
-              <Button size="sm" variant={sortBy === "price" ? "default" : "outline"} onClick={() => setSortBy("price")}>
+              <Button size="sm" variant={sortBy === "price-asc" ? "default" : "outline"} onClick={() => setSortBy("price-asc")}>
                 Price: Low to High
               </Button>
-              <Button size="sm" variant={sortBy === "quantity" ? "default" : "outline"} onClick={() => setSortBy("quantity")}>
+              <Button size="sm" variant={sortBy === "price-desc" ? "default" : "outline"} onClick={() => setSortBy("price-desc")}>
+                Price: High to Low
+              </Button>
+              <Button size="sm" variant={sortBy === "qty-asc" ? "default" : "outline"} onClick={() => setSortBy("qty-asc")}>
                 Quantity: Low to High
+              </Button>
+              <Button size="sm" variant={sortBy === "qty-desc" ? "default" : "outline"} onClick={() => setSortBy("qty-desc")}>
+                Quantity: High to Low
               </Button>
             </div>
           </div>
@@ -145,7 +155,7 @@ export default function Catalog() {
                 : null;
             return (
               <div key={p.id} className="border rounded-lg overflow-hidden bg-card flex flex-col">
-                <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
+                <div className="relative aspect-square bg-muted flex items-center justify-center overflow-hidden">
                   {p.image_url ? (
                     <img
                       src={p.image_url}
@@ -157,6 +167,14 @@ export default function Catalog() {
                   ) : (
                     <span className="text-xs text-muted-foreground uppercase">Image Coming Soon</span>
                   )}
+                  <button
+                    type="button"
+                    aria-label={isFavorite(p.id) ? "Remove from favorites" : "Add to favorites"}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(p.id); }}
+                    className="absolute top-2 right-2 h-8 w-8 rounded-full bg-background/90 hover:bg-background border flex items-center justify-center shadow-sm transition-colors"
+                  >
+                    <Heart className={`h-4 w-4 ${isFavorite(p.id) ? "fill-accent text-accent" : "text-muted-foreground"}`} />
+                  </button>
                 </div>
                 <div className="p-3 flex flex-col gap-1 flex-1">
                   <div className="text-xs text-muted-foreground">{p.brand}</div>
