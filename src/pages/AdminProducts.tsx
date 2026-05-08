@@ -113,6 +113,7 @@ export default function AdminProducts() {
       records.push({
         name: r.name,
         brand,
+        category: categorizeProduct(r.name),
         image_url: imageUrl,
         image_filename: r.imageFilename,
         price: r.price,
