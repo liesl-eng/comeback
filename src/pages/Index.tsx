@@ -36,7 +36,7 @@ const Index = () => {
                 Savings.
               </h1>
               <p className="mb-2 md:mb-3 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
-                High quality home goods — priced <span className="underline underline-offset-4 decoration-2">30–60% below wholesale</span>.
+                High quality home goods. Small batches. <span className="underline underline-offset-4 decoration-2">Priced below wholesale</span>.
               </p>
               <p className="mb-6 md:mb-8 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium text-center">
                 Shop by SKU.
