@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { PRODUCT_CATEGORIES } from "@/lib/productCategory";
 
 interface Product {
   id: string;
   name: string;
   brand: string;
+  category: string | null;
   image_url: string | null;
   price: number | null;
   msrp: number | null;
