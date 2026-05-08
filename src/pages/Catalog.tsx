@@ -100,7 +100,7 @@ export default function Catalog() {
           </p>
         </div>
 
-        <div className="space-y-3 mb-6">
+        <div className="sticky top-16 md:top-20 z-40 -mx-4 px-4 py-3 mb-6 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b space-y-3">
           <div>
             <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Category</div>
             <div className="flex flex-wrap gap-2">
