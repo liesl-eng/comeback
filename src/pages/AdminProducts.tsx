@@ -478,7 +478,9 @@ export default function AdminProducts() {
                 Single-file import with columns: Name, Brand, Image URL, Units Available,
                 Our Cost, MSRP, Comeback Price, Pricing Rule, Our Margin $, Our Margin %.
                 Categories are auto-derived from the product name. Comeback Price is the
-                only price displayed to buyers.
+                only price displayed to buyers. For <strong>Mercana</strong>, the Image
+                column should be a filename — it's matched against the 777 images already
+                in storage. For other brands, Image must be a direct URL.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
