@@ -6,13 +6,13 @@ const valueProps = [
   {
     icon: Tag,
     title: "Real Savings, Zero Waste",
-    body: "30–60% below wholesale. SKU-level ordering — no mystery lots.",
+    body: "30–60% below wholesale.",
     showStamp: false,
   },
   {
     icon: LayoutGrid,
     title: "Curated for How You Actually Buy",
-    body: "Shop SKU by SKU. Room-ready kits and scheduled refresh programs.",
+    body: "Shop by SKU. Build room-ready kits and scheduled refresh programs.",
     showStamp: false,
   },
   {
@@ -24,7 +24,7 @@ const valueProps = [
   {
     icon: ShieldCheck,
     title: "Inspected by Comeback",
-    body: "We don't broker — every item is graded and consolidated at our facility.",
+    body: "Every item is graded and display-ready.",
     showStamp: true,
   },
 ];
