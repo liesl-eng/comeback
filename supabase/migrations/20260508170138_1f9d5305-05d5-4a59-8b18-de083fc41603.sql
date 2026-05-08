@@ -1,0 +1,1 @@
+UPDATE public.products SET category = 'Accessories' WHERE (name ILIKE '%candle%' OR name ILIKE '%clock%') AND category != 'Accessories';
