@@ -1,4 +1,4 @@
-import { ShoppingCart, Search, Menu, X, Heart, LogIn, LogOut, Package } from "lucide-react";
+import { Search, Menu, X, Heart, LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
 import { useFavorites } from "@/contexts/FavoritesContext";
-import { usePallet } from "@/contexts/PalletContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
@@ -17,7 +16,6 @@ interface NavbarProps {
 const Navbar = ({ cartItemCount }: NavbarProps) => {
   const navigate = useNavigate();
   const { totalFavorites } = useFavorites();
-  const { totalItems } = usePallet();
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
