@@ -34,7 +34,6 @@ export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [brand, setBrand] = useState<string>(ALL);
   const [category, setCategory] = useState<string>(ALL);
 
   useEffect(() => {
@@ -52,19 +51,9 @@ export default function Catalog() {
     })();
   }, []);
 
-  const brands = useMemo(
-    () => [ALL, ...Array.from(new Set(products.map((p) => p.brand))).sort()],
-    [products],
-  );
-
   const filtered = useMemo(
-    () =>
-      products.filter(
-        (p) =>
-          (brand === ALL || p.brand === brand) &&
-          (category === ALL || p.category === category),
-      ),
-    [products, brand, category],
+    () => products.filter((p) => category === ALL || p.category === category),
+    [products, category],
   );
 
   return (
@@ -74,7 +63,7 @@ export default function Catalog() {
         <div className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold">Catalog</h1>
           <p className="text-muted-foreground">
-            {filtered.length} {brand === ALL ? "products" : `${brand} products`}
+            {filtered.length} {category === ALL ? "products" : `${category} products`}
           </p>
         </div>
 
@@ -90,21 +79,6 @@ export default function Catalog() {
                   onClick={() => setCategory(c)}
                 >
                   {c}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Brand</div>
-            <div className="flex flex-wrap gap-2">
-              {brands.map((b) => (
-                <Button
-                  key={b}
-                  size="sm"
-                  variant={brand === b ? "default" : "outline"}
-                  onClick={() => setBrand(b)}
-                >
-                  {b}
                 </Button>
               ))}
             </div>
