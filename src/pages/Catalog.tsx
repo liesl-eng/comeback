@@ -92,8 +92,8 @@ export default function Catalog() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-6">
+      <main className="container mx-auto px-4 pt-3 pb-8">
+        <div className="mb-3">
           <h1 className="text-3xl md:text-4xl font-bold">Catalog</h1>
           <p className="text-muted-foreground">
             {filtered.length} {category} products
