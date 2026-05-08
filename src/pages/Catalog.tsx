@@ -35,7 +35,25 @@ export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState<string>(PRODUCT_CATEGORIES[0]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlCat = searchParams.get("category");
+  const initialCat = (PRODUCT_CATEGORIES as readonly string[]).includes(urlCat ?? "")
+    ? (urlCat as string)
+    : PRODUCT_CATEGORIES[0];
+  const [category, setCategory] = useState<string>(initialCat);
+
+  useEffect(() => {
+    const c = searchParams.get("category");
+    if (c && (PRODUCT_CATEGORIES as readonly string[]).includes(c) && c !== category) {
+      setCategory(c);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  function selectCategory(c: string) {
+    setCategory(c);
+    setSearchParams({ category: c }, { replace: true });
+  }
 
   useEffect(() => {
     (async () => {
