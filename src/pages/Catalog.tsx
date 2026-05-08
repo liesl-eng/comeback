@@ -95,7 +95,7 @@ export default function Catalog() {
                   key={c}
                   size="sm"
                   variant={category === c ? "default" : "outline"}
-                  onClick={() => setCategory(c)}
+                  onClick={() => selectCategory(c)}
                 >
                   {c}
                 </Button>
