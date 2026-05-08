@@ -6,7 +6,7 @@ const valueProps = [
   {
     icon: Tag,
     title: "Real Savings, Zero Waste",
-    body: "30–60% below wholesale.",
+    body: "Small batches. Sustainability sourced.",
     showStamp: false,
   },
   {
