@@ -1,0 +1,1 @@
+UPDATE public.products SET category = 'Lighting' WHERE name ILIKE '%lamp%';
