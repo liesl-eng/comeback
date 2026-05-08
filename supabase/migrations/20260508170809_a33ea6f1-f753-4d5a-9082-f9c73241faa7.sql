@@ -1,0 +1,1 @@
+UPDATE public.products SET price = ROUND(price) WHERE price IS NOT NULL;
