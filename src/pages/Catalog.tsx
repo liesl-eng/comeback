@@ -192,15 +192,10 @@ export default function Catalog() {
                   <div className="flex items-baseline gap-2 mt-1 flex-wrap">
                     <span className="text-xs text-muted-foreground">Price</span>
                     <span className="font-bold">{formatComebackPrice(cb)}</span>
-                    {p.msrp != null && (
-                      <span className="text-xs text-muted-foreground line-through">
-                        MSRP ${Number.isInteger(Number(p.msrp)) ? Number(p.msrp) : Number(p.msrp).toFixed(2)}
-                      </span>
-                    )}
                   </div>
                   <div className="mt-auto pt-2 flex items-center justify-between">
                     <Badge variant={sb.variant}>{sb.label}</Badge>
-                    <span className="text-xs text-muted-foreground">{p.units_available > 100 ? "100+" : p.units_available} units</span>
+                    <span className="text-sm font-semibold text-foreground">{p.units_available > 100 ? "100+" : p.units_available} units</span>
                   </div>
                 </div>
               </div>
