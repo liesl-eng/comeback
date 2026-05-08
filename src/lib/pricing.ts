@@ -1,32 +1,20 @@
-// Buyer-facing pricing rules.
-// If MSRP × 0.45 > cost → price = MSRP × 0.45
-// Otherwise → price = cost × 1.20
-// All items are shown. No exclusions.
+// Buyer-facing pricing.
+// The `price` column stores the Comeback Pricing — the only price shown to buyers.
+// MSRP and Floorfound Pricing are stored but never displayed.
 
 export function comebackPrice(
   msrp: number | null | undefined,
-  cost?: number | null | undefined,
+  price?: number | null | undefined,
 ): number | null {
+  const p = price == null ? null : Number(price);
+  if (p != null && Number.isFinite(p)) return Math.round(p * 100) / 100;
   const m = msrp == null ? null : Number(msrp);
-  const c = cost == null ? null : Number(cost);
-  let value: number | null = null;
-  if (m != null && c != null) {
-    const discounted = m * 0.45;
-    value = discounted > c ? discounted : c * 1.2;
-  } else if (m != null) {
-    value = m * 0.45;
-  } else if (c != null) {
-    value = c * 1.2;
-  }
-  if (value == null) return null;
-  return Math.round(value * 100) / 100;
+  if (m != null && Number.isFinite(m)) return Math.round(m * 0.45 * 100) / 100;
+  return null;
 }
 
-// All items are buyer-visible now.
-export function isBuyerVisible(_p: {
-  price: number | null;
-  msrp: number | null;
-}): boolean {
+// All items with a price are buyer-visible.
+export function isBuyerVisible(_p: { price: number | null; msrp: number | null }): boolean {
   return true;
 }
 

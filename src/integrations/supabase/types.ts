@@ -70,6 +70,7 @@ export type Database = {
           brand: string
           category: string | null
           created_at: string
+          floorfound_price: number | null
           id: string
           image_filename: string | null
           image_url: string | null
@@ -84,6 +85,7 @@ export type Database = {
           brand: string
           category?: string | null
           created_at?: string
+          floorfound_price?: number | null
           id?: string
           image_filename?: string | null
           image_url?: string | null
@@ -98,6 +100,7 @@ export type Database = {
           brand?: string
           category?: string | null
           created_at?: string
+          floorfound_price?: number | null
           id?: string
           image_filename?: string | null
           image_url?: string | null

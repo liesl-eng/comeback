@@ -13,6 +13,7 @@ import { Loader2, ShieldAlert, Download, Upload, Eye, CheckCircle, XCircle } fro
 import { BRAND_TABS, BrandTab, SheetRow, fetchSheetTab } from "@/lib/productSheet";
 import { categorizeProduct } from "@/lib/productCategory";
 import { findDuplicates, normalizeProductName, productKey } from "@/lib/duplicateDetection";
+import { parseMasterCsv, MasterRow } from "@/lib/masterCsv";
 
 interface BrandState {
   loading: boolean;
@@ -89,6 +90,111 @@ export default function AdminProducts() {
     toast({ title: `Deleted ${count ?? 0} products`, description: "Catalog is now empty." });
   }
 
+
+  // Master CSV import state
+  const [masterRows, setMasterRows] = useState<MasterRow[] | null>(null);
+  const [masterCsvName, setMasterCsvName] = useState<string>("");
+  const [masterErrors, setMasterErrors] = useState<string[]>([]);
+  const [mercanaImages, setMercanaImages] = useState<Map<string, string>>(new Map());
+  const [mercanaUploading, setMercanaUploading] = useState(false);
+  const [mercanaProgress, setMercanaProgress] = useState({ done: 0, total: 0 });
+  const [masterImporting, setMasterImporting] = useState(false);
+  const [masterProgress, setMasterProgress] = useState({ done: 0, total: 0 });
+  const [masterReport, setMasterReport] = useState<{ ok: number; skipped: { name: string; reason: string }[] } | null>(null);
+
+  async function handleMasterCsvFile(file: File) {
+    setMasterReport(null);
+    setMasterErrors([]);
+    setMasterCsvName(file.name);
+    const text = await file.text();
+    const { rows, errors } = parseMasterCsv(text);
+    setMasterRows(rows);
+    setMasterErrors(errors);
+    if (errors.length) {
+      toast({ title: "CSV parse issues", description: errors.join("; "), variant: "destructive" });
+    } else {
+      toast({ title: `Parsed ${rows.length} rows` });
+    }
+  }
+
+  async function handleMercanaImagesUpload(files: FileList) {
+    const arr = Array.from(files);
+    setMercanaUploading(true);
+    setMercanaProgress({ done: 0, total: arr.length });
+    const map = new Map(mercanaImages);
+    let done = 0;
+    for (const file of arr) {
+      const path = `mercana/${file.name}`;
+      const { error } = await supabase.storage
+        .from("product-images")
+        .upload(path, file, { upsert: true, contentType: file.type || "image/jpeg" });
+      if (!error) {
+        const { data } = supabase.storage.from("product-images").getPublicUrl(path);
+        map.set(file.name.toLowerCase(), data.publicUrl);
+      }
+      done++;
+      setMercanaProgress({ done, total: arr.length });
+      setMercanaImages(new Map(map));
+    }
+    setMercanaUploading(false);
+    toast({ title: `Uploaded ${map.size} Mercana images` });
+  }
+
+  async function importMaster() {
+    if (!masterRows) return;
+    setMasterImporting(true);
+    setMasterReport(null);
+    const skipped: { name: string; reason: string }[] = [];
+    const records: any[] = [];
+
+    for (const r of masterRows) {
+      if (r.comebackPrice == null) {
+        skipped.push({ name: r.name, reason: "missing Comeback Pricing" });
+        continue;
+      }
+      const isMercana = r.brand.trim().toLowerCase() === "mercana";
+      let imageUrl: string | null = null;
+      let imageFilename: string | null = null;
+      if (r.image) {
+        if (isMercana) {
+          imageFilename = r.image;
+          imageUrl = mercanaImages.get(r.image.toLowerCase()) ?? null;
+          if (!imageUrl) skipped.push({ name: r.name, reason: `Mercana image not uploaded: ${r.image}` });
+        } else if (/^https?:\/\//i.test(r.image)) {
+          imageUrl = r.image;
+        } else {
+          skipped.push({ name: r.name, reason: `Non-Mercana image is not a URL: ${r.image}` });
+        }
+      }
+      records.push({
+        name: r.name,
+        brand: r.brand,
+        category: r.category,
+        image_url: imageUrl,
+        image_filename: imageFilename,
+        price: r.comebackPrice,
+        msrp: r.msrp,
+        floorfound_price: r.floorfoundPrice,
+        units_available: r.unitsAvailable,
+      });
+    }
+
+    setMasterProgress({ done: 0, total: records.length });
+    const chunkSize = 200;
+    let inserted = 0;
+    for (let i = 0; i < records.length; i += chunkSize) {
+      const chunk = records.slice(i, i + chunkSize);
+      const { error } = await supabase
+        .from("products")
+        .upsert(chunk, { onConflict: "brand,name" });
+      if (error) chunk.forEach((c) => skipped.push({ name: c.name, reason: error.message }));
+      else inserted += chunk.length;
+      setMasterProgress({ done: i + chunk.length, total: records.length });
+    }
+    setMasterImporting(false);
+    setMasterReport({ ok: inserted, skipped });
+    toast({ title: `Imported ${inserted} products`, description: `${skipped.length} skipped` });
+  }
 
   async function scanDuplicates() {
     setDupScanning(true);
@@ -351,6 +457,110 @@ export default function AdminProducts() {
                 {wiping ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
                 Delete all products
               </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-primary/40">
+            <CardHeader>
+              <CardTitle>Master CSV Import</CardTitle>
+              <CardDescription>
+                Single-file import with columns: Brand, Product Name, Category, MSRP, Floorfound
+                Pricing, Comeback Pricing, Units Available, Image. For Mercana, the "Image"
+                column is a filename — upload the image files below first. For other brands,
+                "Image" must be a direct URL.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <div className="space-y-2">
+                <div className="text-sm font-medium">1. Upload Mercana images (optional)</div>
+                <Input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  disabled={mercanaUploading}
+                  onChange={(e) => e.target.files && handleMercanaImagesUpload(e.target.files)}
+                />
+                {mercanaUploading && (
+                  <Progress value={(mercanaProgress.done / Math.max(1, mercanaProgress.total)) * 100} />
+                )}
+                <div className="text-xs text-muted-foreground">
+                  {mercanaImages.size} image{mercanaImages.size === 1 ? "" : "s"} ready
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="text-sm font-medium">2. Upload Master CSV</div>
+                <Input
+                  type="file"
+                  accept=".csv,text/csv"
+                  onChange={(e) => e.target.files?.[0] && handleMasterCsvFile(e.target.files[0])}
+                />
+                {masterCsvName && (
+                  <div className="text-xs text-muted-foreground">
+                    {masterCsvName} — {masterRows?.length ?? 0} rows parsed
+                  </div>
+                )}
+                {masterErrors.length > 0 && (
+                  <ul className="text-sm text-destructive list-disc pl-5">
+                    {masterErrors.map((e, i) => <li key={i}>{e}</li>)}
+                  </ul>
+                )}
+              </div>
+
+              {masterRows && masterRows.length > 0 && (
+                <div className="space-y-2">
+                  <div className="text-sm font-medium">3. Import</div>
+                  {(() => {
+                    const byBrand = masterRows.reduce<Record<string, number>>((acc, r) => {
+                      acc[r.brand] = (acc[r.brand] ?? 0) + 1;
+                      return acc;
+                    }, {});
+                    const noCat = masterRows.filter((r) => !r.category).length;
+                    const noPrice = masterRows.filter((r) => r.comebackPrice == null).length;
+                    const mercanaMissing = masterRows.filter(
+                      (r) =>
+                        r.brand.trim().toLowerCase() === "mercana" &&
+                        r.image &&
+                        !mercanaImages.has(r.image.toLowerCase()),
+                    ).length;
+                    return (
+                      <div className="text-xs text-muted-foreground space-y-0.5">
+                        <div>By brand: {Object.entries(byBrand).map(([b, n]) => `${b} (${n})`).join(", ")}</div>
+                        {noCat > 0 && <div className="text-amber-600">{noCat} row(s) have an unrecognized category — they'll import with no category and won't show in filters.</div>}
+                        {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Pricing — will be skipped.</div>}
+                        {mercanaMissing > 0 && <div className="text-destructive">{mercanaMissing} Mercana row(s) reference an image that hasn't been uploaded.</div>}
+                      </div>
+                    );
+                  })()}
+                  <Button onClick={importMaster} disabled={masterImporting}>
+                    {masterImporting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Upload className="h-4 w-4 mr-2" />}
+                    Import {masterRows.length} products
+                  </Button>
+                  {masterImporting && (
+                    <Progress value={(masterProgress.done / Math.max(1, masterProgress.total)) * 100} />
+                  )}
+                  {masterReport && (
+                    <div className="text-sm">
+                      <div className="text-primary">
+                        <CheckCircle className="inline h-4 w-4 mr-1" />
+                        Inserted/updated {masterReport.ok}
+                      </div>
+                      {masterReport.skipped.length > 0 && (
+                        <details className="mt-1">
+                          <summary className="cursor-pointer text-muted-foreground">
+                            {masterReport.skipped.length} skipped
+                          </summary>
+                          <ul className="mt-2 max-h-48 overflow-y-auto text-xs">
+                            {masterReport.skipped.map((s, i) => (
+                              <li key={i}>{s.name} — {s.reason}</li>
+                            ))}
+                          </ul>
+                        </details>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
             </CardContent>
           </Card>
 
