@@ -6,7 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Heart } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/lib/productCategory";
+import { matchesSearchQuery } from "@/lib/searchSynonyms";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { X } from "lucide-react";
 
 interface Product {
   id: string;
@@ -73,8 +75,15 @@ export default function Catalog() {
     })();
   }, []);
 
+  const searchQuery = searchParams.get("search") ?? "";
+
   const filtered = useMemo(() => {
-    const list = products.filter((p) => p.category === category);
+    let list = products;
+    if (searchQuery.trim()) {
+      list = list.filter((p) => matchesSearchQuery(p.name, searchQuery));
+    } else {
+      list = list.filter((p) => p.category === category);
+    }
     const sorted = [...list].sort((a, b) => {
       if (sortBy.startsWith("price")) {
         const ap = a.price ?? Infinity;
@@ -86,7 +95,14 @@ export default function Catalog() {
       return sortBy === "qty-asc" ? aq - bq : bq - aq;
     });
     return sorted;
-  }, [products, category, sortBy]);
+  }, [products, category, sortBy, searchQuery]);
+
+  function clearSearch() {
+    const next = new URLSearchParams(searchParams);
+    next.delete("search");
+    next.set("category", category);
+    setSearchParams(next, { replace: true });
+  }
 
 
   return (
@@ -94,10 +110,17 @@ export default function Catalog() {
       <Navbar />
       <main className="container mx-auto px-4 pt-3 pb-8">
         <div className="mb-3">
-          <h1 className="text-3xl md:text-4xl font-bold">Catalog</h1>
+          <h1 className="text-3xl md:text-4xl font-bold">
+            {searchQuery ? `Results for "${searchQuery}"` : "Catalog"}
+          </h1>
           <p className="text-muted-foreground">
-            {filtered.length} {category} products
+            {filtered.length} {searchQuery ? "matching" : category} products
           </p>
+          {searchQuery && (
+            <Button variant="outline" size="sm" className="mt-2 gap-1" onClick={clearSearch}>
+              <X className="h-3.5 w-3.5" /> Clear search
+            </Button>
+          )}
         </div>
 
         <div className="sticky top-16 md:top-20 z-40 -mx-4 px-4 py-2 mb-6 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b">
