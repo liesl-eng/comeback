@@ -35,7 +35,7 @@ const Favorites = () => {
         .from("products")
         .select("id,name,brand,image_url,price,msrp,units_available")
         .in("id", favorites);
-      setItems(data ?? []);
+      setItems((data ?? []).filter(isBuyerVisible));
       setLoading(false);
     })();
   }, [favorites]);
