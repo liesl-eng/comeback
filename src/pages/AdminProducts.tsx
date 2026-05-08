@@ -433,32 +433,15 @@ export default function AdminProducts() {
             <CardHeader>
               <CardTitle>Master CSV Import</CardTitle>
               <CardDescription>
-                Single-file import with columns: Brand, Product Name, Category, MSRP, Floorfound
-                Pricing, Comeback Pricing, Units Available, Image. For Mercana, the "Image"
-                column is a filename — upload the image files below first. For other brands,
-                "Image" must be a direct URL.
+                Single-file import with columns: Name, Brand, Image URL, Units Available,
+                Our Cost, MSRP, Comeback Price, Pricing Rule, Our Margin $, Our Margin %.
+                Categories are auto-derived from the product name. Comeback Price is the
+                only price displayed to buyers.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="space-y-2">
-                <div className="text-sm font-medium">1. Upload Mercana images (optional)</div>
-                <Input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  disabled={mercanaUploading}
-                  onChange={(e) => e.target.files && handleMercanaImagesUpload(e.target.files)}
-                />
-                {mercanaUploading && (
-                  <Progress value={(mercanaProgress.done / Math.max(1, mercanaProgress.total)) * 100} />
-                )}
-                <div className="text-xs text-muted-foreground">
-                  {mercanaImages.size} image{mercanaImages.size === 1 ? "" : "s"} ready
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="text-sm font-medium">2. Upload Master CSV</div>
+                <div className="text-sm font-medium">1. Upload Master CSV</div>
                 <Input
                   type="file"
                   accept=".csv,text/csv"
@@ -478,26 +461,26 @@ export default function AdminProducts() {
 
               {masterRows && masterRows.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-sm font-medium">3. Import</div>
+                  <div className="text-sm font-medium">2. Import</div>
                   {(() => {
                     const byBrand = masterRows.reduce<Record<string, number>>((acc, r) => {
                       acc[r.brand] = (acc[r.brand] ?? 0) + 1;
                       return acc;
                     }, {});
-                    const noCat = masterRows.filter((r) => !r.category).length;
+                    const byCat = masterRows.reduce<Record<string, number>>((acc, r) => {
+                      acc[r.category] = (acc[r.category] ?? 0) + 1;
+                      return acc;
+                    }, {});
                     const noPrice = masterRows.filter((r) => r.comebackPrice == null).length;
-                    const mercanaMissing = masterRows.filter(
-                      (r) =>
-                        r.brand.trim().toLowerCase() === "mercana" &&
-                        r.image &&
-                        !mercanaImages.has(r.image.toLowerCase()),
+                    const badImage = masterRows.filter(
+                      (r) => r.imageUrl && !/^https?:\/\//i.test(r.imageUrl),
                     ).length;
                     return (
                       <div className="text-xs text-muted-foreground space-y-0.5">
                         <div>By brand: {Object.entries(byBrand).map(([b, n]) => `${b} (${n})`).join(", ")}</div>
-                        {noCat > 0 && <div className="text-amber-600">{noCat} row(s) have an unrecognized category — they'll import with no category and won't show in filters.</div>}
-                        {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Pricing — will be skipped.</div>}
-                        {mercanaMissing > 0 && <div className="text-destructive">{mercanaMissing} Mercana row(s) reference an image that hasn't been uploaded.</div>}
+                        <div>By category: {Object.entries(byCat).map(([c, n]) => `${c} (${n})`).join(", ")}</div>
+                        {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Price — will be skipped.</div>}
+                        {badImage > 0 && <div className="text-destructive">{badImage} row(s) have an Image URL that doesn't start with http(s).</div>}
                       </div>
                     );
                   })()}
