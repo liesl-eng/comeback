@@ -83,8 +83,8 @@ export default function Catalog() {
     }
     const sorted = [...list].sort((a, b) => {
       if (sortBy.startsWith("price")) {
-        const ap = comebackPrice(a.msrp) ?? Infinity;
-        const bp = comebackPrice(b.msrp) ?? Infinity;
+        const ap = comebackPrice(a.msrp, a.price) ?? Infinity;
+        const bp = comebackPrice(b.msrp, b.price) ?? Infinity;
         return sortBy === "price-asc" ? ap - bp : bp - ap;
       }
       const aq = a.units_available ?? 0;
