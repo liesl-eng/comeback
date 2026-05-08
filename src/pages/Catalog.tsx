@@ -42,7 +42,7 @@ export default function Catalog() {
       const { data, error } = await supabase
         .from("products")
         .select("id,name,brand,category,image_url,price,msrp,units_available")
-        .order("units_available", { ascending: false })
+        .order("price", { ascending: true, nullsFirst: false })
         .order("brand")
         .limit(2000);
       if (error) setError(error.message);
