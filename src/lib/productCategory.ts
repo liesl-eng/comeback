@@ -1,9 +1,9 @@
 export const PRODUCT_CATEGORIES = [
-  "Small Furniture",
-  "Large Furniture",
   "Lighting",
   "Mirrors",
-  "Decor",
+  "Accessories",
+  "Small Furniture",
+  "Large Furniture",
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
