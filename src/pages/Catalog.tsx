@@ -30,11 +30,6 @@ function stockBadge(units: number) {
   return { label: "In Stock", variant: "default" as const };
 }
 
-function fmtPrice(n: number | null) {
-  if (n == null) return "—";
-  return Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`;
-}
-
 export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
