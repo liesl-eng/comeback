@@ -74,7 +74,8 @@ export default function Catalog() {
   const searchQuery = searchParams.get("search") ?? "";
 
   const filtered = useMemo(() => {
-    let list = products;
+    // Global rule: only show items where comeback_price (MSRP × 0.45) > cost.
+    let list = products.filter(isBuyerVisible);
     if (searchQuery.trim()) {
       list = list.filter((p) => matchesSearchQuery(p.name, searchQuery));
     } else {
@@ -82,8 +83,8 @@ export default function Catalog() {
     }
     const sorted = [...list].sort((a, b) => {
       if (sortBy.startsWith("price")) {
-        const ap = a.price ?? Infinity;
-        const bp = b.price ?? Infinity;
+        const ap = comebackPrice(a.msrp) ?? Infinity;
+        const bp = comebackPrice(b.msrp) ?? Infinity;
         return sortBy === "price-asc" ? ap - bp : bp - ap;
       }
       const aq = a.units_available ?? 0;
