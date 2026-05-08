@@ -6,6 +6,7 @@ import { Heart, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { comebackPrice, isBuyerVisible, formatComebackPrice } from "@/lib/pricing";
 
 interface Product {
   id: string;
