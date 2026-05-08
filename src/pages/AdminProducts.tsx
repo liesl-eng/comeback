@@ -327,7 +327,35 @@ export default function AdminProducts() {
             </p>
           </div>
 
+          <Card className="border-destructive/50">
+            <CardHeader>
+              <CardTitle className="text-destructive">Wipe Catalog</CardTitle>
+              <CardDescription>
+                Permanently deletes <strong>all</strong> products from the catalog. Pallets are
+                not affected. Type <code className="font-mono">WIPE</code> to confirm.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex items-center gap-2">
+              <Input
+                placeholder="Type WIPE to confirm"
+                value={wipeConfirm}
+                onChange={(e) => setWipeConfirm(e.target.value)}
+                className="max-w-xs"
+                disabled={wiping}
+              />
+              <Button
+                variant="destructive"
+                onClick={wipeCatalog}
+                disabled={wiping || wipeConfirm !== "WIPE"}
+              >
+                {wiping ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
+                Delete all products
+              </Button>
+            </CardContent>
+          </Card>
+
           <Card>
+
             <CardHeader>
               <CardTitle>Duplicate Scanner</CardTitle>
               <CardDescription>
