@@ -1,0 +1,1 @@
+UPDATE public.products SET category = 'Small Furniture' WHERE (name ILIKE '%side table%' OR name ILIKE '%accent table%') AND category != 'Small Furniture';
