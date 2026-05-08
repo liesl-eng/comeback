@@ -151,14 +151,26 @@ export default function AdminProducts() {
     const skipped: { name: string; reason: string }[] = [];
     const records: any[] = [];
 
+    let mercanaMap = mercanaIndex;
+    const hasMercana = masterRows.some((r) => r.brand.trim().toLowerCase() === "mercana");
+    if (hasMercana && !mercanaMap) {
+      mercanaMap = await loadMercanaIndex();
+    }
+
     for (const r of masterRows) {
       if (r.comebackPrice == null) {
         skipped.push({ name: r.name, reason: "missing Comeback Price" });
         continue;
       }
+      const isMercana = r.brand.trim().toLowerCase() === "mercana";
       let imageUrl: string | null = null;
+      let imageFilename: string | null = null;
       if (r.imageUrl) {
-        if (/^https?:\/\//i.test(r.imageUrl)) {
+        if (isMercana && !/^https?:\/\//i.test(r.imageUrl)) {
+          imageFilename = r.imageUrl;
+          imageUrl = mercanaMap?.get(r.imageUrl.toLowerCase()) ?? null;
+          if (!imageUrl) skipped.push({ name: r.name, reason: `Mercana image not found in storage: ${r.imageUrl}` });
+        } else if (/^https?:\/\//i.test(r.imageUrl)) {
           imageUrl = r.imageUrl;
         } else {
           skipped.push({ name: r.name, reason: `Image is not a URL: ${r.imageUrl}` });
@@ -169,7 +181,7 @@ export default function AdminProducts() {
         brand: r.brand,
         category: r.category,
         image_url: imageUrl,
-        image_filename: null,
+        image_filename: imageFilename,
         price: r.comebackPrice,
         msrp: r.msrp,
         cost: r.cost,
