@@ -41,33 +41,13 @@ const emptyState: BrandState = {
 };
 
 export default function AdminProducts() {
-  const { user } = useAuth();
   const { toast } = useToast();
-  const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [checking, setChecking] = useState(true);
   const [activeTab, setActiveTab] = useState<BrandTab>("Mercana");
   const [state, setState] = useState<Record<BrandTab, BrandState>>(() => {
     const init: Record<string, BrandState> = {};
     BRAND_TABS.forEach((b) => (init[b] = { ...emptyState, uploadedFiles: new Map() }));
     return init as Record<BrandTab, BrandState>;
   });
-
-  useEffect(() => {
-    (async () => {
-      if (!user) {
-        setChecking(false);
-        setIsAdmin(false);
-        return;
-      }
-      const { data, error } = await supabase.rpc("has_role", {
-        _user_id: user.id,
-        _role: "admin",
-      });
-      setIsAdmin(!error && data === true);
-      setChecking(false);
-    })();
-  }, [user]);
 
   function patch(brand: BrandTab, p: Partial<BrandState>) {
     setState((prev) => ({ ...prev, [brand]: { ...prev[brand], ...p } }));
