@@ -34,7 +34,7 @@ export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState<string>(ALL);
+  const [category, setCategory] = useState<string>(PRODUCT_CATEGORIES[0]);
 
   useEffect(() => {
     (async () => {
