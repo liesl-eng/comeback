@@ -130,18 +130,16 @@ export default function AdminProducts() {
       });
     }
 
-    // Merge duplicate (brand, name) rows from the sheet — sum units, keep last price/image.
-    // Required because Postgres ON CONFLICT can't update the same row twice in one statement.
-    const seen = new Map<string, any>();
-    for (const rec of records) {
+    // Make duplicate (brand, name) rows unique by appending " (#2)", " (#3)" etc.
+    // The DB has UNIQUE(brand, name) and Postgres ON CONFLICT can't update the same row twice.
+    const counts = new Map<string, number>();
+    const deduped = records.map((rec) => {
       const key = `${rec.brand}|${rec.name}`;
-      const prev = seen.get(key);
-      if (prev) {
-        rec.units_available = (prev.units_available ?? 0) + (rec.units_available ?? 0);
-      }
-      seen.set(key, rec);
-    }
-    const deduped = Array.from(seen.values());
+      const n = (counts.get(key) ?? 0) + 1;
+      counts.set(key, n);
+      if (n > 1) rec.name = `${rec.name} (#${n})`;
+      return rec;
+    });
 
     patch(brand, {
       importing: true,
