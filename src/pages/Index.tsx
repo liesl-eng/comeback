@@ -62,7 +62,7 @@ const Index = () => {
               
               {/* Category buttons */}
               <div className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3 justify-center">
-                {["Furniture", "Decor", "Lighting", "Mirrors", "Pillows & Rugs", "Outdoor"].map((category) => (
+                {["Lighting", "Mirrors", "Accessories", "Small Furniture", "Large Furniture"].map((category) => (
                   <Button
                     key={category}
                     variant="outline"
