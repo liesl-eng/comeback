@@ -26,7 +26,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+      navigate(`/catalog?search=${encodeURIComponent(searchQuery.trim())}`);
       setMobileMenuOpen(false);
     }
   };
@@ -76,9 +76,9 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
           </form>
 
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-            <Link to="/products">
+            <Link to="/catalog">
               <Button variant="accent" size="sm">
-                Build Your Pallet
+                Shop Catalog
               </Button>
             </Link>
             <Link to="/rug-program">
@@ -103,24 +103,6 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
                 )}
               </Button>
             </Link>
-            <Link to="/pallet">
-              <Button
-                variant="outline"
-                size="sm"
-                className="relative gap-2 hover:border-highlight/50 transition-colors"
-              >
-                <Package className="h-4 w-4" />
-                Pallet
-                {totalItems > 0 && (
-                  <Badge
-                    variant="accent"
-                    className="absolute -right-2 -top-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
-                  >
-                    {totalItems}
-                  </Badge>
-                )}
-              </Button>
-            </Link>
             {user ? (
               <Button
                 variant="ghost"
@@ -141,7 +123,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
             )}
           </div>
 
-          {/* Mobile: Favorites + Pallet + Menu */}
+          {/* Mobile: Favorites + Menu */}
           <div className="flex md:hidden items-center gap-1">
             <Link to="/favorites">
               <Button
@@ -156,23 +138,6 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
                     className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
                   >
                     {totalFavorites}
-                  </Badge>
-                )}
-              </Button>
-            </Link>
-            <Link to="/pallet">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="relative p-2"
-              >
-                <Package className="h-5 w-5" />
-                {totalItems > 0 && (
-                  <Badge
-                    variant="accent"
-                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
-                  >
-                    {totalItems}
                   </Badge>
                 )}
               </Button>
@@ -192,9 +157,9 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
         {mobileMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
             <div className="flex flex-col gap-2">
-              <Link to="/products" onClick={() => setMobileMenuOpen(false)}>
+              <Link to="/catalog" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="accent" className="w-full">
-                  Build Your Pallet
+                  Shop Catalog
                 </Button>
               </Link>
               <Link to="/rug-program" onClick={() => setMobileMenuOpen(false)}>
