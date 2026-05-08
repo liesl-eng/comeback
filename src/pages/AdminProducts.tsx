@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Loader2, ShieldAlert, Download, Upload, Eye, CheckCircle, XCircle } from "lucide-react";
 import { BRAND_TABS, BrandTab, SheetRow, fetchSheetTab } from "@/lib/productSheet";
+import { categorizeProduct } from "@/lib/productCategory";
 
 interface BrandState {
   loading: boolean;
@@ -112,6 +113,7 @@ export default function AdminProducts() {
       records.push({
         name: r.name,
         brand,
+        category: categorizeProduct(r.name),
         image_url: imageUrl,
         image_filename: r.imageFilename,
         price: r.price,

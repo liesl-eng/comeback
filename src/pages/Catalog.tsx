@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { PRODUCT_CATEGORIES } from "@/lib/productCategory";
 
 interface Product {
   id: string;
   name: string;
   brand: string;
+  category: string | null;
   image_url: string | null;
   price: number | null;
   msrp: number | null;
@@ -33,13 +35,14 @@ export default function Catalog() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [brand, setBrand] = useState<string>(ALL);
+  const [category, setCategory] = useState<string>(ALL);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       const { data, error } = await supabase
         .from("products")
-        .select("id,name,brand,image_url,price,msrp,units_available")
+        .select("id,name,brand,category,image_url,price,msrp,units_available")
         .order("units_available", { ascending: false })
         .order("brand")
         .limit(2000);
@@ -55,8 +58,13 @@ export default function Catalog() {
   );
 
   const filtered = useMemo(
-    () => (brand === ALL ? products : products.filter((p) => p.brand === brand)),
-    [products, brand],
+    () =>
+      products.filter(
+        (p) =>
+          (brand === ALL || p.brand === brand) &&
+          (category === ALL || p.category === category),
+      ),
+    [products, brand, category],
   );
 
   return (
@@ -70,18 +78,39 @@ export default function Catalog() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-6">
-          {brands.map((b) => (
-            <Button
-              key={b}
-              size="sm"
-              variant={brand === b ? "default" : "outline"}
-              onClick={() => setBrand(b)}
-            >
-              {b}
-            </Button>
-          ))}
+        <div className="space-y-3 mb-6">
+          <div>
+            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Category</div>
+            <div className="flex flex-wrap gap-2">
+              {[ALL, ...PRODUCT_CATEGORIES].map((c) => (
+                <Button
+                  key={c}
+                  size="sm"
+                  variant={category === c ? "default" : "outline"}
+                  onClick={() => setCategory(c)}
+                >
+                  {c}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Brand</div>
+            <div className="flex flex-wrap gap-2">
+              {brands.map((b) => (
+                <Button
+                  key={b}
+                  size="sm"
+                  variant={brand === b ? "default" : "outline"}
+                  onClick={() => setBrand(b)}
+                >
+                  {b}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
+
 
         {loading && (
           <div className="flex justify-center py-20">
