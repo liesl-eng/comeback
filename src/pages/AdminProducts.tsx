@@ -13,6 +13,7 @@ import { Loader2, ShieldAlert, Download, Upload, Eye, CheckCircle, XCircle } fro
 import { BRAND_TABS, BrandTab, SheetRow, fetchSheetTab } from "@/lib/productSheet";
 import { categorizeProduct } from "@/lib/productCategory";
 import { findDuplicates, normalizeProductName, productKey } from "@/lib/duplicateDetection";
+import { parseMasterCsv, MasterRow } from "@/lib/masterCsv";
 
 interface BrandState {
   loading: boolean;
