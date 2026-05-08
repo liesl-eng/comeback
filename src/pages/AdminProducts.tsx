@@ -98,6 +98,36 @@ export default function AdminProducts() {
   const [masterImporting, setMasterImporting] = useState(false);
   const [masterProgress, setMasterProgress] = useState({ done: 0, total: 0 });
   const [masterReport, setMasterReport] = useState<{ ok: number; skipped: { name: string; reason: string }[] } | null>(null);
+  const [mercanaIndex, setMercanaIndex] = useState<Map<string, string> | null>(null);
+  const [mercanaIndexLoading, setMercanaIndexLoading] = useState(false);
+
+  async function loadMercanaIndex(): Promise<Map<string, string>> {
+    setMercanaIndexLoading(true);
+    const map = new Map<string, string>();
+    let offset = 0;
+    const limit = 1000;
+    while (true) {
+      const { data, error } = await supabase.storage
+        .from("product-images")
+        .list("mercana", { limit, offset, sortBy: { column: "name", order: "asc" } });
+      if (error) {
+        toast({ title: "Could not list Mercana images", description: error.message, variant: "destructive" });
+        break;
+      }
+      if (!data || data.length === 0) break;
+      for (const obj of data) {
+        if (!obj.name) continue;
+        const { data: pub } = supabase.storage.from("product-images").getPublicUrl(`mercana/${obj.name}`);
+        map.set(obj.name.toLowerCase(), pub.publicUrl);
+      }
+      if (data.length < limit) break;
+      offset += limit;
+    }
+    setMercanaIndex(map);
+    setMercanaIndexLoading(false);
+    toast({ title: `Indexed ${map.size} Mercana images` });
+    return map;
+  }
 
   async function handleMasterCsvFile(file: File) {
     setMasterReport(null);
