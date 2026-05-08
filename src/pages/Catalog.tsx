@@ -142,7 +142,6 @@ export default function Catalog() {
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
                   <div className="flex items-baseline gap-2 mt-1">
                     <span className="font-bold">{fmtPrice(p.price)}</span>
-                    {p.price != null && <span className="text-xs text-muted-foreground">Each</span>}
                   </div>
                   <div className="mt-auto pt-2 flex items-center justify-between">
                     <Badge variant={sb.variant}>{sb.label}</Badge>
