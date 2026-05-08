@@ -158,29 +158,6 @@ export default function AdminProducts() {
     toast({ title: `Imported ${inserted} ${brand} products`, description: `${skipped.length} skipped` });
   }
 
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <main className="container mx-auto px-4 py-8">
-          <Card className="max-w-md mx-auto">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-destructive">
-                <ShieldAlert className="h-6 w-6" /> Access Denied
-              </CardTitle>
-              <CardDescription>Admin privileges required.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button onClick={() => navigate("/")} variant="outline" className="w-full">
-                Return Home
-              </Button>
-            </CardContent>
-          </Card>
-        </main>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
