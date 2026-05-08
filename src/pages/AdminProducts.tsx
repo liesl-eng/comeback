@@ -95,9 +95,6 @@ export default function AdminProducts() {
   const [masterRows, setMasterRows] = useState<MasterRow[] | null>(null);
   const [masterCsvName, setMasterCsvName] = useState<string>("");
   const [masterErrors, setMasterErrors] = useState<string[]>([]);
-  const [mercanaImages, setMercanaImages] = useState<Map<string, string>>(new Map());
-  const [mercanaUploading, setMercanaUploading] = useState(false);
-  const [mercanaProgress, setMercanaProgress] = useState({ done: 0, total: 0 });
   const [masterImporting, setMasterImporting] = useState(false);
   const [masterProgress, setMasterProgress] = useState({ done: 0, total: 0 });
   const [masterReport, setMasterReport] = useState<{ ok: number; skipped: { name: string; reason: string }[] } | null>(null);
@@ -117,29 +114,6 @@ export default function AdminProducts() {
     }
   }
 
-  async function handleMercanaImagesUpload(files: FileList) {
-    const arr = Array.from(files);
-    setMercanaUploading(true);
-    setMercanaProgress({ done: 0, total: arr.length });
-    const map = new Map(mercanaImages);
-    let done = 0;
-    for (const file of arr) {
-      const path = `mercana/${file.name}`;
-      const { error } = await supabase.storage
-        .from("product-images")
-        .upload(path, file, { upsert: true, contentType: file.type || "image/jpeg" });
-      if (!error) {
-        const { data } = supabase.storage.from("product-images").getPublicUrl(path);
-        map.set(file.name.toLowerCase(), data.publicUrl);
-      }
-      done++;
-      setMercanaProgress({ done, total: arr.length });
-      setMercanaImages(new Map(map));
-    }
-    setMercanaUploading(false);
-    toast({ title: `Uploaded ${map.size} Mercana images` });
-  }
-
   async function importMaster() {
     if (!masterRows) return;
     setMasterImporting(true);
@@ -149,21 +123,15 @@ export default function AdminProducts() {
 
     for (const r of masterRows) {
       if (r.comebackPrice == null) {
-        skipped.push({ name: r.name, reason: "missing Comeback Pricing" });
+        skipped.push({ name: r.name, reason: "missing Comeback Price" });
         continue;
       }
-      const isMercana = r.brand.trim().toLowerCase() === "mercana";
       let imageUrl: string | null = null;
-      let imageFilename: string | null = null;
-      if (r.image) {
-        if (isMercana) {
-          imageFilename = r.image;
-          imageUrl = mercanaImages.get(r.image.toLowerCase()) ?? null;
-          if (!imageUrl) skipped.push({ name: r.name, reason: `Mercana image not uploaded: ${r.image}` });
-        } else if (/^https?:\/\//i.test(r.image)) {
-          imageUrl = r.image;
+      if (r.imageUrl) {
+        if (/^https?:\/\//i.test(r.imageUrl)) {
+          imageUrl = r.imageUrl;
         } else {
-          skipped.push({ name: r.name, reason: `Non-Mercana image is not a URL: ${r.image}` });
+          skipped.push({ name: r.name, reason: `Image is not a URL: ${r.imageUrl}` });
         }
       }
       records.push({
@@ -171,10 +139,11 @@ export default function AdminProducts() {
         brand: r.brand,
         category: r.category,
         image_url: imageUrl,
-        image_filename: imageFilename,
+        image_filename: null,
         price: r.comebackPrice,
         msrp: r.msrp,
-        floorfound_price: r.floorfoundPrice,
+        cost: r.cost,
+        pricing_rule: r.pricingRule,
         units_available: r.unitsAvailable,
       });
     }
@@ -464,32 +433,15 @@ export default function AdminProducts() {
             <CardHeader>
               <CardTitle>Master CSV Import</CardTitle>
               <CardDescription>
-                Single-file import with columns: Brand, Product Name, Category, MSRP, Floorfound
-                Pricing, Comeback Pricing, Units Available, Image. For Mercana, the "Image"
-                column is a filename — upload the image files below first. For other brands,
-                "Image" must be a direct URL.
+                Single-file import with columns: Name, Brand, Image URL, Units Available,
+                Our Cost, MSRP, Comeback Price, Pricing Rule, Our Margin $, Our Margin %.
+                Categories are auto-derived from the product name. Comeback Price is the
+                only price displayed to buyers.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="space-y-2">
-                <div className="text-sm font-medium">1. Upload Mercana images (optional)</div>
-                <Input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  disabled={mercanaUploading}
-                  onChange={(e) => e.target.files && handleMercanaImagesUpload(e.target.files)}
-                />
-                {mercanaUploading && (
-                  <Progress value={(mercanaProgress.done / Math.max(1, mercanaProgress.total)) * 100} />
-                )}
-                <div className="text-xs text-muted-foreground">
-                  {mercanaImages.size} image{mercanaImages.size === 1 ? "" : "s"} ready
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="text-sm font-medium">2. Upload Master CSV</div>
+                <div className="text-sm font-medium">1. Upload Master CSV</div>
                 <Input
                   type="file"
                   accept=".csv,text/csv"
@@ -509,26 +461,26 @@ export default function AdminProducts() {
 
               {masterRows && masterRows.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-sm font-medium">3. Import</div>
+                  <div className="text-sm font-medium">2. Import</div>
                   {(() => {
                     const byBrand = masterRows.reduce<Record<string, number>>((acc, r) => {
                       acc[r.brand] = (acc[r.brand] ?? 0) + 1;
                       return acc;
                     }, {});
-                    const noCat = masterRows.filter((r) => !r.category).length;
+                    const byCat = masterRows.reduce<Record<string, number>>((acc, r) => {
+                      acc[r.category] = (acc[r.category] ?? 0) + 1;
+                      return acc;
+                    }, {});
                     const noPrice = masterRows.filter((r) => r.comebackPrice == null).length;
-                    const mercanaMissing = masterRows.filter(
-                      (r) =>
-                        r.brand.trim().toLowerCase() === "mercana" &&
-                        r.image &&
-                        !mercanaImages.has(r.image.toLowerCase()),
+                    const badImage = masterRows.filter(
+                      (r) => r.imageUrl && !/^https?:\/\//i.test(r.imageUrl),
                     ).length;
                     return (
                       <div className="text-xs text-muted-foreground space-y-0.5">
                         <div>By brand: {Object.entries(byBrand).map(([b, n]) => `${b} (${n})`).join(", ")}</div>
-                        {noCat > 0 && <div className="text-amber-600">{noCat} row(s) have an unrecognized category — they'll import with no category and won't show in filters.</div>}
-                        {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Pricing — will be skipped.</div>}
-                        {mercanaMissing > 0 && <div className="text-destructive">{mercanaMissing} Mercana row(s) reference an image that hasn't been uploaded.</div>}
+                        <div>By category: {Object.entries(byCat).map(([c, n]) => `${c} (${n})`).join(", ")}</div>
+                        {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Price — will be skipped.</div>}
+                        {badImage > 0 && <div className="text-destructive">{badImage} row(s) have an Image URL that doesn't start with http(s).</div>}
                       </div>
                     );
                   })()}

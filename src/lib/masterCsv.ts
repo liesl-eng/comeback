@@ -1,18 +1,20 @@
 // Parser for the Master Product CSV.
 // Expected headers (case-insensitive, order-flexible):
-//   Brand, Product Name, Category, MSRP, Floorfound Pricing,
-//   Comeback Pricing, Units Available, Image
-import { PRODUCT_CATEGORIES, ProductCategory } from "./productCategory";
+//   Name, Brand, Image URL, Units Available, Our Cost, MSRP,
+//   Comeback Price, Pricing Rule, Our Margin $, Our Margin %
+// Category is auto-derived from the product name.
+import { categorizeProduct, ProductCategory } from "./productCategory";
 
 export interface MasterRow {
   brand: string;
   name: string;
-  category: ProductCategory | null;
+  category: ProductCategory;
   msrp: number | null;
-  floorfoundPrice: number | null;
+  cost: number | null;
   comebackPrice: number | null;
+  pricingRule: string | null;
   unitsAvailable: number;
-  image: string | null; // filename (Mercana) or URL (others)
+  imageUrl: string | null;
 }
 
 function parseCSV(text: string): string[][] {
@@ -42,7 +44,7 @@ function money(s: string | undefined): number | null {
   if (!s) return null;
   const t = s.trim();
   if (!t || /^n\/?a$/i.test(t)) return null;
-  const n = parseFloat(t.replace(/[$,]/g, "").replace(/each/i, "").trim());
+  const n = parseFloat(t.replace(/[$,%]/g, "").replace(/each/i, "").trim());
   return Number.isFinite(n) ? n : null;
 }
 
@@ -59,13 +61,6 @@ function str(s: string | undefined): string | null {
   return t;
 }
 
-function normalizeCategory(raw: string | null): ProductCategory | null {
-  if (!raw) return null;
-  const r = raw.trim().toLowerCase();
-  for (const c of PRODUCT_CATEGORIES) if (c.toLowerCase() === r) return c;
-  return null;
-}
-
 export function parseMasterCsv(text: string): { rows: MasterRow[]; errors: string[] } {
   const grid = parseCSV(text).filter((r) => r.some((c) => c && c.trim() !== ""));
   const errors: string[] = [];
@@ -75,17 +70,17 @@ export function parseMasterCsv(text: string): { rows: MasterRow[]; errors: strin
   const idx = (...names: string[]) =>
     header.findIndex((h) => names.some((n) => n.toLowerCase() === h));
 
+  const iName = idx("Name", "Product Name");
   const iBrand = idx("Brand");
-  const iName = idx("Product Name", "Name");
-  const iCat = idx("Category");
-  const iMsrp = idx("MSRP");
-  const iFloor = idx("Floorfound Pricing", "Floorfound Price");
-  const iCb = idx("Comeback Pricing", "Comeback Price");
+  const iImage = idx("Image URL", "Image");
   const iUnits = idx("Units Available", "Units");
-  const iImage = idx("Image", "Image Filename", "Image URL");
+  const iCost = idx("Our Cost", "Cost");
+  const iMsrp = idx("MSRP");
+  const iCb = idx("Comeback Price", "Comeback Pricing");
+  const iRule = idx("Pricing Rule");
 
   const required: Array<[string, number]> = [
-    ["Brand", iBrand], ["Product Name", iName], ["Comeback Pricing", iCb], ["Image", iImage],
+    ["Name", iName], ["Brand", iBrand], ["Comeback Price", iCb], ["Image URL", iImage],
   ];
   for (const [n, i] of required) if (i < 0) errors.push(`Missing required column: ${n}`);
   if (errors.length) return { rows: [], errors };
@@ -96,16 +91,16 @@ export function parseMasterCsv(text: string): { rows: MasterRow[]; errors: strin
     const name = str(r[iName]);
     const brand = str(r[iBrand]);
     if (!name || !brand) continue;
-    const catRaw = iCat >= 0 ? str(r[iCat]) : null;
     rows.push({
       brand,
       name,
-      category: normalizeCategory(catRaw),
+      category: categorizeProduct(name),
       msrp: iMsrp >= 0 ? money(r[iMsrp]) : null,
-      floorfoundPrice: iFloor >= 0 ? money(r[iFloor]) : null,
+      cost: iCost >= 0 ? money(r[iCost]) : null,
       comebackPrice: money(r[iCb]),
+      pricingRule: iRule >= 0 ? str(r[iRule]) : null,
       unitsAvailable: iUnits >= 0 ? intVal(r[iUnits]) : 0,
-      image: str(r[iImage]),
+      imageUrl: str(r[iImage]),
     });
   }
   return { rows, errors };

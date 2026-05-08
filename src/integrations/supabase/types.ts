@@ -69,6 +69,7 @@ export type Database = {
         Row: {
           brand: string
           category: string | null
+          cost: number | null
           created_at: string
           floorfound_price: number | null
           id: string
@@ -77,6 +78,7 @@ export type Database = {
           msrp: number | null
           name: string
           price: number | null
+          pricing_rule: string | null
           source_last_updated: string | null
           units_available: number
           updated_at: string
@@ -84,6 +86,7 @@ export type Database = {
         Insert: {
           brand: string
           category?: string | null
+          cost?: number | null
           created_at?: string
           floorfound_price?: number | null
           id?: string
@@ -92,6 +95,7 @@ export type Database = {
           msrp?: number | null
           name: string
           price?: number | null
+          pricing_rule?: string | null
           source_last_updated?: string | null
           units_available?: number
           updated_at?: string
@@ -99,6 +103,7 @@ export type Database = {
         Update: {
           brand?: string
           category?: string | null
+          cost?: number | null
           created_at?: string
           floorfound_price?: number | null
           id?: string
@@ -107,6 +112,7 @@ export type Database = {
           msrp?: number | null
           name?: string
           price?: number | null
+          pricing_rule?: string | null
           source_last_updated?: string | null
           units_available?: number
           updated_at?: string
