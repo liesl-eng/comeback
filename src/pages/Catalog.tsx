@@ -6,7 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Heart } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/lib/productCategory";
+import { matchesSearchQuery } from "@/lib/searchSynonyms";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { X } from "lucide-react";
 
 interface Product {
   id: string;
