@@ -2,7 +2,7 @@ export const PRODUCT_CATEGORIES = [
   "Lighting",
   "Mirrors",
   "Accessories",
-  "Small Furniture",
+  "Furniture",
   "Beds",
   "Sofas",
   "Chairs",
@@ -10,7 +10,7 @@ export const PRODUCT_CATEGORIES = [
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
 
-const SMALL_FURNITURE = ["nightstand", "bench", "console", "ottoman", "side table", "end table", "accent table", "coffee table", "dresser", "cabinet", "sideboard", "armoire", "wardrobe", "credenza", "buffet", "bookcase", "hutch"];
+const FURNITURE = ["nightstand", "bench", "console", "ottoman", "side table", "end table", "accent table", "coffee table", "dresser", "cabinet", "sideboard", "armoire", "wardrobe", "credenza", "buffet", "bookcase", "hutch", "table", "desk"];
 const BEDS = ["bed", "headboard"];
 const SOFAS = ["sofa", "loveseat", "settee", "sectional"];
 const CHAIRS = ["chair", "stool", "armchair", "recliner"];
@@ -25,7 +25,6 @@ export function categorizeProduct(name: string): ProductCategory {
   if (SOFAS.some((k) => n.includes(k))) return "Sofas";
   if (CHAIRS.some((k) => n.includes(k))) return "Chairs";
   if (BEDS.some((k) => n.includes(k))) return "Beds";
-  if (SMALL_FURNITURE.some((k) => n.includes(k))) return "Small Furniture";
-  if (n.includes("table")) return "Small Furniture";
+  if (FURNITURE.some((k) => n.includes(k))) return "Furniture";
   return "Accessories";
 }
