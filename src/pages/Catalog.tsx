@@ -162,10 +162,7 @@ export default function Catalog() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.map((p) => {
             const sb = stockBadge(p.units_available);
-            const savings =
-              p.msrp && p.price && p.msrp > p.price
-                ? Math.round(((p.msrp - p.price) / p.msrp) * 100)
-                : null;
+            const cb = comebackPrice(p.msrp);
             return (
               <div key={p.id} className="border rounded-lg overflow-hidden bg-card flex flex-col">
                 <div className="relative aspect-square bg-muted flex items-center justify-center overflow-hidden">
@@ -193,15 +190,8 @@ export default function Catalog() {
                   <div className="text-xs text-muted-foreground">{p.brand}</div>
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
                   <div className="flex items-baseline gap-2 mt-1 flex-wrap">
-                    <span className="font-bold">{fmtPrice(p.price)}</span>
-                    {p.msrp != null && p.price != null && p.msrp > p.price && (
-                      <>
-                        <span className="text-xs text-muted-foreground line-through">{fmtPrice(p.msrp)}</span>
-                        {savings != null && (
-                          <span className="text-xs font-semibold text-accent">{savings}% off</span>
-                        )}
-                      </>
-                    )}
+                    <span className="text-xs text-muted-foreground">Price</span>
+                    <span className="font-bold">{formatComebackPrice(cb)}</span>
                   </div>
                   <div className="mt-auto pt-2 flex items-center justify-between">
                     <Badge variant={sb.variant}>{sb.label}</Badge>
