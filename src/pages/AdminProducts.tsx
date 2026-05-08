@@ -130,9 +130,20 @@ export default function AdminProducts() {
       });
     }
 
+    // De-duplicate by (brand, name) — Postgres ON CONFLICT can't update the same row twice in one statement
+    const seen = new Map<string, any>();
+    for (const rec of records) {
+      const key = `${rec.brand}|${rec.name}`;
+      if (seen.has(key)) {
+        skipped.push({ name: rec.name, reason: "duplicate name in sheet (kept last occurrence)" });
+      }
+      seen.set(key, rec);
+    }
+    const deduped = Array.from(seen.values());
+
     patch(brand, {
       importing: true,
-      importProgress: { done: 0, total: records.length },
+      importProgress: { done: 0, total: deduped.length },
       importReport: null,
     });
 
