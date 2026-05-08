@@ -18,6 +18,8 @@ const LIGHTING = ["lamp", "chandelier", "sconce", "pendant", "light", "lantern"]
 
 export function categorizeProduct(name: string): ProductCategory {
   const n = (name || "").toLowerCase();
+  // Accessories take priority over other matches
+  if (n.includes("candle") || n.includes("clock")) return "Accessories";
   if (n.includes("mirror")) return "Mirrors";
   if (LIGHTING.some((k) => n.includes(k))) return "Lighting";
   if (SOFAS.some((k) => n.includes(k))) return "Sofas";
