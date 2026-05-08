@@ -98,6 +98,36 @@ export default function AdminProducts() {
   const [masterImporting, setMasterImporting] = useState(false);
   const [masterProgress, setMasterProgress] = useState({ done: 0, total: 0 });
   const [masterReport, setMasterReport] = useState<{ ok: number; skipped: { name: string; reason: string }[] } | null>(null);
+  const [mercanaIndex, setMercanaIndex] = useState<Map<string, string> | null>(null);
+  const [mercanaIndexLoading, setMercanaIndexLoading] = useState(false);
+
+  async function loadMercanaIndex(): Promise<Map<string, string>> {
+    setMercanaIndexLoading(true);
+    const map = new Map<string, string>();
+    let offset = 0;
+    const limit = 1000;
+    while (true) {
+      const { data, error } = await supabase.storage
+        .from("product-images")
+        .list("mercana", { limit, offset, sortBy: { column: "name", order: "asc" } });
+      if (error) {
+        toast({ title: "Could not list Mercana images", description: error.message, variant: "destructive" });
+        break;
+      }
+      if (!data || data.length === 0) break;
+      for (const obj of data) {
+        if (!obj.name) continue;
+        const { data: pub } = supabase.storage.from("product-images").getPublicUrl(`mercana/${obj.name}`);
+        map.set(obj.name.toLowerCase(), pub.publicUrl);
+      }
+      if (data.length < limit) break;
+      offset += limit;
+    }
+    setMercanaIndex(map);
+    setMercanaIndexLoading(false);
+    toast({ title: `Indexed ${map.size} Mercana images` });
+    return map;
+  }
 
   async function handleMasterCsvFile(file: File) {
     setMasterReport(null);
@@ -121,14 +151,26 @@ export default function AdminProducts() {
     const skipped: { name: string; reason: string }[] = [];
     const records: any[] = [];
 
+    let mercanaMap = mercanaIndex;
+    const hasMercana = masterRows.some((r) => r.brand.trim().toLowerCase() === "mercana");
+    if (hasMercana && !mercanaMap) {
+      mercanaMap = await loadMercanaIndex();
+    }
+
     for (const r of masterRows) {
       if (r.comebackPrice == null) {
         skipped.push({ name: r.name, reason: "missing Comeback Price" });
         continue;
       }
+      const isMercana = r.brand.trim().toLowerCase() === "mercana";
       let imageUrl: string | null = null;
+      let imageFilename: string | null = null;
       if (r.imageUrl) {
-        if (/^https?:\/\//i.test(r.imageUrl)) {
+        if (isMercana && !/^https?:\/\//i.test(r.imageUrl)) {
+          imageFilename = r.imageUrl;
+          imageUrl = mercanaMap?.get(r.imageUrl.toLowerCase()) ?? null;
+          if (!imageUrl) skipped.push({ name: r.name, reason: `Mercana image not found in storage: ${r.imageUrl}` });
+        } else if (/^https?:\/\//i.test(r.imageUrl)) {
           imageUrl = r.imageUrl;
         } else {
           skipped.push({ name: r.name, reason: `Image is not a URL: ${r.imageUrl}` });
@@ -139,7 +181,7 @@ export default function AdminProducts() {
         brand: r.brand,
         category: r.category,
         image_url: imageUrl,
-        image_filename: null,
+        image_filename: imageFilename,
         price: r.comebackPrice,
         msrp: r.msrp,
         cost: r.cost,
@@ -436,7 +478,9 @@ export default function AdminProducts() {
                 Single-file import with columns: Name, Brand, Image URL, Units Available,
                 Our Cost, MSRP, Comeback Price, Pricing Rule, Our Margin $, Our Margin %.
                 Categories are auto-derived from the product name. Comeback Price is the
-                only price displayed to buyers.
+                only price displayed to buyers. For <strong>Mercana</strong>, the Image
+                column should be a filename — it's matched against the 777 images already
+                in storage. For other brands, Image must be a direct URL.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
@@ -472,18 +516,48 @@ export default function AdminProducts() {
                       return acc;
                     }, {});
                     const noPrice = masterRows.filter((r) => r.comebackPrice == null).length;
-                    const badImage = masterRows.filter(
-                      (r) => r.imageUrl && !/^https?:\/\//i.test(r.imageUrl),
+                    const nonMercanaBadUrl = masterRows.filter(
+                      (r) =>
+                        r.brand.trim().toLowerCase() !== "mercana" &&
+                        r.imageUrl &&
+                        !/^https?:\/\//i.test(r.imageUrl),
                     ).length;
+                    const mercanaRows = masterRows.filter(
+                      (r) => r.brand.trim().toLowerCase() === "mercana" && r.imageUrl,
+                    );
+                    const mercanaUnmatched = mercanaIndex
+                      ? mercanaRows.filter((r) => !mercanaIndex.get(r.imageUrl!.toLowerCase())).length
+                      : null;
                     return (
                       <div className="text-xs text-muted-foreground space-y-0.5">
                         <div>By brand: {Object.entries(byBrand).map(([b, n]) => `${b} (${n})`).join(", ")}</div>
                         <div>By category: {Object.entries(byCat).map(([c, n]) => `${c} (${n})`).join(", ")}</div>
+                        {mercanaRows.length > 0 && (
+                          <div>
+                            Mercana storage index: {mercanaIndex
+                              ? `${mercanaIndex.size} files indexed`
+                              : "not loaded yet (will load automatically on import)"}
+                            {mercanaUnmatched != null && mercanaUnmatched > 0 && (
+                              <span className="text-destructive"> — {mercanaUnmatched} row(s) reference a filename not in storage.</span>
+                            )}
+                          </div>
+                        )}
                         {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Price — will be skipped.</div>}
-                        {badImage > 0 && <div className="text-destructive">{badImage} row(s) have an Image URL that doesn't start with http(s).</div>}
+                        {nonMercanaBadUrl > 0 && <div className="text-destructive">{nonMercanaBadUrl} non-Mercana row(s) have an Image value that isn't a URL.</div>}
                       </div>
                     );
                   })()}
+                  <div className="flex gap-2 flex-wrap">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => loadMercanaIndex()}
+                      disabled={mercanaIndexLoading}
+                    >
+                      {mercanaIndexLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
+                      {mercanaIndex ? "Reload Mercana index" : "Load Mercana image index"}
+                    </Button>
+                  </div>
                   <Button onClick={importMaster} disabled={masterImporting}>
                     {masterImporting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Upload className="h-4 w-4 mr-2" />}
                     Import {masterRows.length} products
