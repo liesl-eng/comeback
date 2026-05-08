@@ -460,6 +460,110 @@ export default function AdminProducts() {
             </CardContent>
           </Card>
 
+          <Card className="border-primary/40">
+            <CardHeader>
+              <CardTitle>Master CSV Import</CardTitle>
+              <CardDescription>
+                Single-file import with columns: Brand, Product Name, Category, MSRP, Floorfound
+                Pricing, Comeback Pricing, Units Available, Image. For Mercana, the "Image"
+                column is a filename — upload the image files below first. For other brands,
+                "Image" must be a direct URL.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <div className="space-y-2">
+                <div className="text-sm font-medium">1. Upload Mercana images (optional)</div>
+                <Input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  disabled={mercanaUploading}
+                  onChange={(e) => e.target.files && handleMercanaImagesUpload(e.target.files)}
+                />
+                {mercanaUploading && (
+                  <Progress value={(mercanaProgress.done / Math.max(1, mercanaProgress.total)) * 100} />
+                )}
+                <div className="text-xs text-muted-foreground">
+                  {mercanaImages.size} image{mercanaImages.size === 1 ? "" : "s"} ready
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="text-sm font-medium">2. Upload Master CSV</div>
+                <Input
+                  type="file"
+                  accept=".csv,text/csv"
+                  onChange={(e) => e.target.files?.[0] && handleMasterCsvFile(e.target.files[0])}
+                />
+                {masterCsvName && (
+                  <div className="text-xs text-muted-foreground">
+                    {masterCsvName} — {masterRows?.length ?? 0} rows parsed
+                  </div>
+                )}
+                {masterErrors.length > 0 && (
+                  <ul className="text-sm text-destructive list-disc pl-5">
+                    {masterErrors.map((e, i) => <li key={i}>{e}</li>)}
+                  </ul>
+                )}
+              </div>
+
+              {masterRows && masterRows.length > 0 && (
+                <div className="space-y-2">
+                  <div className="text-sm font-medium">3. Import</div>
+                  {(() => {
+                    const byBrand = masterRows.reduce<Record<string, number>>((acc, r) => {
+                      acc[r.brand] = (acc[r.brand] ?? 0) + 1;
+                      return acc;
+                    }, {});
+                    const noCat = masterRows.filter((r) => !r.category).length;
+                    const noPrice = masterRows.filter((r) => r.comebackPrice == null).length;
+                    const mercanaMissing = masterRows.filter(
+                      (r) =>
+                        r.brand.trim().toLowerCase() === "mercana" &&
+                        r.image &&
+                        !mercanaImages.has(r.image.toLowerCase()),
+                    ).length;
+                    return (
+                      <div className="text-xs text-muted-foreground space-y-0.5">
+                        <div>By brand: {Object.entries(byBrand).map(([b, n]) => `${b} (${n})`).join(", ")}</div>
+                        {noCat > 0 && <div className="text-amber-600">{noCat} row(s) have an unrecognized category — they'll import with no category and won't show in filters.</div>}
+                        {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Pricing — will be skipped.</div>}
+                        {mercanaMissing > 0 && <div className="text-destructive">{mercanaMissing} Mercana row(s) reference an image that hasn't been uploaded.</div>}
+                      </div>
+                    );
+                  })()}
+                  <Button onClick={importMaster} disabled={masterImporting}>
+                    {masterImporting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Upload className="h-4 w-4 mr-2" />}
+                    Import {masterRows.length} products
+                  </Button>
+                  {masterImporting && (
+                    <Progress value={(masterProgress.done / Math.max(1, masterProgress.total)) * 100} />
+                  )}
+                  {masterReport && (
+                    <div className="text-sm">
+                      <div className="text-primary">
+                        <CheckCircle className="inline h-4 w-4 mr-1" />
+                        Inserted/updated {masterReport.ok}
+                      </div>
+                      {masterReport.skipped.length > 0 && (
+                        <details className="mt-1">
+                          <summary className="cursor-pointer text-muted-foreground">
+                            {masterReport.skipped.length} skipped
+                          </summary>
+                          <ul className="mt-2 max-h-48 overflow-y-auto text-xs">
+                            {masterReport.skipped.map((s, i) => (
+                              <li key={i}>{s.name} — {s.reason}</li>
+                            ))}
+                          </ul>
+                        </details>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
           <Card>
 
             <CardHeader>
