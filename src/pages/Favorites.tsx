@@ -6,6 +6,7 @@ import { Heart, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { comebackPrice, isBuyerVisible, formatComebackPrice } from "@/lib/pricing";
 
 interface Product {
   id: string;
@@ -34,7 +35,7 @@ const Favorites = () => {
         .from("products")
         .select("id,name,brand,image_url,price,msrp,units_available")
         .in("id", favorites);
-      setItems(data ?? []);
+      setItems((data ?? []).filter(isBuyerVisible));
       setLoading(false);
     })();
   }, [favorites]);
@@ -85,11 +86,10 @@ const Favorites = () => {
                 <div className="p-3">
                   <div className="text-xs text-muted-foreground">{p.brand}</div>
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
-                  {p.price != null && (
-                    <div className="font-bold mt-1">
-                      ${Number.isInteger(p.price) ? p.price : p.price.toFixed(2)}
-                    </div>
-                  )}
+                  <div className="font-bold mt-1 flex items-baseline gap-2">
+                    <span className="text-xs text-muted-foreground font-normal">Price</span>
+                    {formatComebackPrice(comebackPrice(p.msrp))}
+                  </div>
                 </div>
               </div>
             ))}

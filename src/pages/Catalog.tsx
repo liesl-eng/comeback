@@ -9,6 +9,7 @@ import { PRODUCT_CATEGORIES } from "@/lib/productCategory";
 import { matchesSearchQuery } from "@/lib/searchSynonyms";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { X } from "lucide-react";
+import { comebackPrice, isBuyerVisible, formatComebackPrice } from "@/lib/pricing";
 
 interface Product {
   id: string;
@@ -27,11 +28,6 @@ function stockBadge(units: number) {
   if (units <= 0) return { label: "Out of Stock", variant: "secondary" as const };
   if (units < 10) return { label: "Low Stock", variant: "outline" as const };
   return { label: "In Stock", variant: "default" as const };
-}
-
-function fmtPrice(n: number | null) {
-  if (n == null) return "—";
-  return Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`;
 }
 
 export default function Catalog() {
@@ -78,7 +74,8 @@ export default function Catalog() {
   const searchQuery = searchParams.get("search") ?? "";
 
   const filtered = useMemo(() => {
-    let list = products;
+    // Global rule: only show items where comeback_price (MSRP × 0.45) > cost.
+    let list = products.filter(isBuyerVisible);
     if (searchQuery.trim()) {
       list = list.filter((p) => matchesSearchQuery(p.name, searchQuery));
     } else {
@@ -86,8 +83,8 @@ export default function Catalog() {
     }
     const sorted = [...list].sort((a, b) => {
       if (sortBy.startsWith("price")) {
-        const ap = a.price ?? Infinity;
-        const bp = b.price ?? Infinity;
+        const ap = comebackPrice(a.msrp) ?? Infinity;
+        const bp = comebackPrice(b.msrp) ?? Infinity;
         return sortBy === "price-asc" ? ap - bp : bp - ap;
       }
       const aq = a.units_available ?? 0;
@@ -165,10 +162,7 @@ export default function Catalog() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.map((p) => {
             const sb = stockBadge(p.units_available);
-            const savings =
-              p.msrp && p.price && p.msrp > p.price
-                ? Math.round(((p.msrp - p.price) / p.msrp) * 100)
-                : null;
+            const cb = comebackPrice(p.msrp);
             return (
               <div key={p.id} className="border rounded-lg overflow-hidden bg-card flex flex-col">
                 <div className="relative aspect-square bg-muted flex items-center justify-center overflow-hidden">
@@ -196,15 +190,8 @@ export default function Catalog() {
                   <div className="text-xs text-muted-foreground">{p.brand}</div>
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
                   <div className="flex items-baseline gap-2 mt-1 flex-wrap">
-                    <span className="font-bold">{fmtPrice(p.price)}</span>
-                    {p.msrp != null && p.price != null && p.msrp > p.price && (
-                      <>
-                        <span className="text-xs text-muted-foreground line-through">{fmtPrice(p.msrp)}</span>
-                        {savings != null && (
-                          <span className="text-xs font-semibold text-accent">{savings}% off</span>
-                        )}
-                      </>
-                    )}
+                    <span className="text-xs text-muted-foreground">Price</span>
+                    <span className="font-bold">{formatComebackPrice(cb)}</span>
                   </div>
                   <div className="mt-auto pt-2 flex items-center justify-between">
                     <Badge variant={sb.variant}>{sb.label}</Badge>
