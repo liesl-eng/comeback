@@ -95,9 +95,6 @@ export default function AdminProducts() {
   const [masterRows, setMasterRows] = useState<MasterRow[] | null>(null);
   const [masterCsvName, setMasterCsvName] = useState<string>("");
   const [masterErrors, setMasterErrors] = useState<string[]>([]);
-  const [mercanaImages, setMercanaImages] = useState<Map<string, string>>(new Map());
-  const [mercanaUploading, setMercanaUploading] = useState(false);
-  const [mercanaProgress, setMercanaProgress] = useState({ done: 0, total: 0 });
   const [masterImporting, setMasterImporting] = useState(false);
   const [masterProgress, setMasterProgress] = useState({ done: 0, total: 0 });
   const [masterReport, setMasterReport] = useState<{ ok: number; skipped: { name: string; reason: string }[] } | null>(null);
