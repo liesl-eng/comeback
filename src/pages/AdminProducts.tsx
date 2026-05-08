@@ -130,16 +130,27 @@ export default function AdminProducts() {
       });
     }
 
+    // De-duplicate by (brand, name) — Postgres ON CONFLICT can't update the same row twice in one statement
+    const seen = new Map<string, any>();
+    for (const rec of records) {
+      const key = `${rec.brand}|${rec.name}`;
+      if (seen.has(key)) {
+        skipped.push({ name: rec.name, reason: "duplicate name in sheet (kept last occurrence)" });
+      }
+      seen.set(key, rec);
+    }
+    const deduped = Array.from(seen.values());
+
     patch(brand, {
       importing: true,
-      importProgress: { done: 0, total: records.length },
+      importProgress: { done: 0, total: deduped.length },
       importReport: null,
     });
 
     const chunkSize = 100;
     let inserted = 0;
-    for (let i = 0; i < records.length; i += chunkSize) {
-      const chunk = records.slice(i, i + chunkSize);
+    for (let i = 0; i < deduped.length; i += chunkSize) {
+      const chunk = deduped.slice(i, i + chunkSize);
       const { error } = await supabase
         .from("products")
         .upsert(chunk, { onConflict: "brand,name" });
@@ -148,7 +159,7 @@ export default function AdminProducts() {
       } else {
         inserted += chunk.length;
       }
-      patch(brand, { importProgress: { done: i + chunk.length, total: records.length } });
+      patch(brand, { importProgress: { done: i + chunk.length, total: deduped.length } });
     }
 
     patch(brand, {
