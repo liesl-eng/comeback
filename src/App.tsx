@@ -39,7 +39,7 @@ const App = () => (
                   <Route path="/" element={<Index />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/catalog" element={<Catalog />} />
+                  <Route path="/catalog" element={<ProtectedRoute><Catalog /></ProtectedRoute>} />
                   {/* Legacy redirects → catalog */}
                   <Route path="/products" element={<Navigate to="/catalog" replace />} />
                   <Route path="/product/:id" element={<Navigate to="/catalog" replace />} />
