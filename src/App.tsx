@@ -51,9 +51,9 @@ const App = () => (
                   <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
                   <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/favorites" element={<Favorites />} />
-                  <Route path="/admin" element={<Navigate to="/admin/products" replace />} />
+                  <Route path="/admin/products" element={<Navigate to="/admin" replace />} />
                   <Route
-                    path="/admin/products"
+                    path="/admin"
                     element={
                       <ProtectedRoute>
                         <AdminProducts />
