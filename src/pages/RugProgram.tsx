@@ -22,11 +22,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, Lightbulb, ShoppingCart } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, ShoppingCart } from "lucide-react";
 import RugCollections from "@/components/RugCollections";
 import RugOrderBuilder from "@/components/RugOrderBuilder";
 import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
-import meridianBrassShelf from "@/assets/lighting/meridian-brass-shelf.webp";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
