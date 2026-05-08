@@ -114,29 +114,6 @@ export default function AdminProducts() {
     }
   }
 
-  async function handleMercanaImagesUpload(files: FileList) {
-    const arr = Array.from(files);
-    setMercanaUploading(true);
-    setMercanaProgress({ done: 0, total: arr.length });
-    const map = new Map(mercanaImages);
-    let done = 0;
-    for (const file of arr) {
-      const path = `mercana/${file.name}`;
-      const { error } = await supabase.storage
-        .from("product-images")
-        .upload(path, file, { upsert: true, contentType: file.type || "image/jpeg" });
-      if (!error) {
-        const { data } = supabase.storage.from("product-images").getPublicUrl(path);
-        map.set(file.name.toLowerCase(), data.publicUrl);
-      }
-      done++;
-      setMercanaProgress({ done, total: arr.length });
-      setMercanaImages(new Map(map));
-    }
-    setMercanaUploading(false);
-    toast({ title: `Uploaded ${map.size} Mercana images` });
-  }
-
   async function importMaster() {
     if (!masterRows) return;
     setMasterImporting(true);
@@ -146,21 +123,15 @@ export default function AdminProducts() {
 
     for (const r of masterRows) {
       if (r.comebackPrice == null) {
-        skipped.push({ name: r.name, reason: "missing Comeback Pricing" });
+        skipped.push({ name: r.name, reason: "missing Comeback Price" });
         continue;
       }
-      const isMercana = r.brand.trim().toLowerCase() === "mercana";
       let imageUrl: string | null = null;
-      let imageFilename: string | null = null;
-      if (r.image) {
-        if (isMercana) {
-          imageFilename = r.image;
-          imageUrl = mercanaImages.get(r.image.toLowerCase()) ?? null;
-          if (!imageUrl) skipped.push({ name: r.name, reason: `Mercana image not uploaded: ${r.image}` });
-        } else if (/^https?:\/\//i.test(r.image)) {
-          imageUrl = r.image;
+      if (r.imageUrl) {
+        if (/^https?:\/\//i.test(r.imageUrl)) {
+          imageUrl = r.imageUrl;
         } else {
-          skipped.push({ name: r.name, reason: `Non-Mercana image is not a URL: ${r.image}` });
+          skipped.push({ name: r.name, reason: `Image is not a URL: ${r.imageUrl}` });
         }
       }
       records.push({
@@ -168,10 +139,11 @@ export default function AdminProducts() {
         brand: r.brand,
         category: r.category,
         image_url: imageUrl,
-        image_filename: imageFilename,
+        image_filename: null,
         price: r.comebackPrice,
         msrp: r.msrp,
-        floorfound_price: r.floorfoundPrice,
+        cost: r.cost,
+        pricing_rule: r.pricingRule,
         units_available: r.unitsAvailable,
       });
     }
