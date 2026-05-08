@@ -1,9 +1,9 @@
 export const PRODUCT_CATEGORIES = [
-  "Small Furniture",
-  "Large Furniture",
   "Lighting",
   "Mirrors",
-  "Decor",
+  "Accessories",
+  "Small Furniture",
+  "Large Furniture",
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
@@ -20,5 +20,5 @@ export function categorizeProduct(name: string): ProductCategory {
   if (SMALL_FURNITURE.some((k) => n.includes(k))) return "Small Furniture";
   // generic "table" → small (after large-furniture check above so dining/console handled)
   if (n.includes("table")) return "Small Furniture";
-  return "Decor";
+  return "Accessories";
 }
