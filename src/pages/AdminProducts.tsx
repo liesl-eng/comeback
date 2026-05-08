@@ -42,6 +42,16 @@ const emptyState: BrandState = {
   preview: false,
 };
 
+interface DupRow {
+  id: string;
+  name: string;
+  brand: string;
+  units_available: number;
+  price: number | null;
+  msrp: number | null;
+  image_url: string | null;
+}
+
 export default function AdminProducts() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<BrandTab>("Mercana");
@@ -50,6 +60,108 @@ export default function AdminProducts() {
     BRAND_TABS.forEach((b) => (init[b] = { ...emptyState, uploadedFiles: new Map() }));
     return init as Record<BrandTab, BrandState>;
   });
+
+  // Duplicate scanner state
+  const [dupScanning, setDupScanning] = useState(false);
+  const [dupGroups, setDupGroups] = useState<{ key: string; items: DupRow[] }[] | null>(null);
+  const [dupBusy, setDupBusy] = useState<string | null>(null);
+
+  async function scanDuplicates() {
+    setDupScanning(true);
+    setDupGroups(null);
+    const all: DupRow[] = [];
+    let from = 0;
+    const pageSize = 1000;
+    while (true) {
+      const { data, error } = await supabase
+        .from("products")
+        .select("id,name,brand,units_available,price,msrp,image_url")
+        .range(from, from + pageSize - 1);
+      if (error) {
+        toast({ title: "Scan failed", description: error.message, variant: "destructive" });
+        setDupScanning(false);
+        return;
+      }
+      if (!data || data.length === 0) break;
+      all.push(...(data as DupRow[]));
+      if (data.length < pageSize) break;
+      from += pageSize;
+    }
+    const groups = findDuplicates(all);
+    setDupGroups(groups);
+    setDupScanning(false);
+    toast({
+      title: `Scanned ${all.length} products`,
+      description: `${groups.length} duplicate group(s) found`,
+    });
+  }
+
+  async function mergeGroup(group: { key: string; items: DupRow[] }) {
+    setDupBusy(group.key);
+    // Pick keeper: prefer one with image, then highest units, then lowest id
+    const sorted = [...group.items].sort((a, b) => {
+      if (!!b.image_url !== !!a.image_url) return b.image_url ? 1 : -1;
+      return b.units_available - a.units_available;
+    });
+    const keeper = sorted[0];
+    const others = sorted.slice(1);
+    const totalUnits = group.items.reduce((s, r) => s + (r.units_available ?? 0), 0);
+    const bestImage = group.items.find((r) => r.image_url)?.image_url ?? null;
+    const minPrice = group.items
+      .map((r) => r.price)
+      .filter((p): p is number => p != null)
+      .reduce<number | null>((m, p) => (m == null || p < m ? p : m), null);
+    const maxMsrp = group.items
+      .map((r) => r.msrp)
+      .filter((p): p is number => p != null)
+      .reduce<number | null>((m, p) => (m == null || p > m ? p : m), null);
+
+    const { error: updErr } = await supabase
+      .from("products")
+      .update({
+        units_available: totalUnits,
+        image_url: keeper.image_url ?? bestImage,
+        price: minPrice ?? keeper.price,
+        msrp: maxMsrp ?? keeper.msrp,
+      })
+      .eq("id", keeper.id);
+    if (updErr) {
+      toast({ title: "Merge failed", description: updErr.message, variant: "destructive" });
+      setDupBusy(null);
+      return;
+    }
+    const { error: delErr } = await supabase
+      .from("products")
+      .delete()
+      .in("id", others.map((o) => o.id));
+    if (delErr) {
+      toast({ title: "Cleanup failed", description: delErr.message, variant: "destructive" });
+      setDupBusy(null);
+      return;
+    }
+    setDupGroups((prev) => (prev ? prev.filter((g) => g.key !== group.key) : prev));
+    setDupBusy(null);
+    toast({ title: `Merged ${others.length + 1} → 1`, description: keeper.name });
+  }
+
+  async function deleteDuplicate(group: { key: string; items: DupRow[] }, id: string) {
+    setDupBusy(group.key + id);
+    const { error } = await supabase.from("products").delete().eq("id", id);
+    setDupBusy(null);
+    if (error) {
+      toast({ title: "Delete failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    setDupGroups((prev) =>
+      prev
+        ? prev
+            .map((g) =>
+              g.key === group.key ? { ...g, items: g.items.filter((i) => i.id !== id) } : g,
+            )
+            .filter((g) => g.items.length > 1)
+        : prev,
+    );
+  }
 
   function patch(brand: BrandTab, p: Partial<BrandState>) {
     setState((prev) => ({ ...prev, [brand]: { ...prev[brand], ...p } }));
