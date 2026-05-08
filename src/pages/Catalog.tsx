@@ -52,7 +52,7 @@ export default function Catalog() {
   }, []);
 
   const filtered = useMemo(
-    () => products.filter((p) => category === ALL || p.category === category),
+    () => products.filter((p) => p.category === category),
     [products, category],
   );
 
