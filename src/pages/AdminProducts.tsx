@@ -12,6 +12,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Loader2, ShieldAlert, Download, Upload, Eye, CheckCircle, XCircle } from "lucide-react";
 import { BRAND_TABS, BrandTab, SheetRow, fetchSheetTab } from "@/lib/productSheet";
 import { categorizeProduct } from "@/lib/productCategory";
+import { findDuplicates, normalizeProductName, productKey } from "@/lib/duplicateDetection";
 
 interface BrandState {
   loading: boolean;
