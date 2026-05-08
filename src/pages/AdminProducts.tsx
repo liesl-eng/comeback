@@ -196,6 +196,7 @@ export default function AdminProducts() {
     toast({ title: `Imported ${inserted} products`, description: `${skipped.length} skipped` });
   }
 
+  async function scanDuplicates() {
     setDupScanning(true);
     setDupGroups(null);
     const all: DupRow[] = [];
