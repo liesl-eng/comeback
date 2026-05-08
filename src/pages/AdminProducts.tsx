@@ -12,6 +12,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Loader2, ShieldAlert, Download, Upload, Eye, CheckCircle, XCircle } from "lucide-react";
 import { BRAND_TABS, BrandTab, SheetRow, fetchSheetTab } from "@/lib/productSheet";
 import { categorizeProduct } from "@/lib/productCategory";
+import { findDuplicates, normalizeProductName, productKey } from "@/lib/duplicateDetection";
 
 interface BrandState {
   loading: boolean;
@@ -41,6 +42,16 @@ const emptyState: BrandState = {
   preview: false,
 };
 
+interface DupRow {
+  id: string;
+  name: string;
+  brand: string;
+  units_available: number;
+  price: number | null;
+  msrp: number | null;
+  image_url: string | null;
+}
+
 export default function AdminProducts() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<BrandTab>("Mercana");
@@ -49,6 +60,108 @@ export default function AdminProducts() {
     BRAND_TABS.forEach((b) => (init[b] = { ...emptyState, uploadedFiles: new Map() }));
     return init as Record<BrandTab, BrandState>;
   });
+
+  // Duplicate scanner state
+  const [dupScanning, setDupScanning] = useState(false);
+  const [dupGroups, setDupGroups] = useState<{ key: string; items: DupRow[] }[] | null>(null);
+  const [dupBusy, setDupBusy] = useState<string | null>(null);
+
+  async function scanDuplicates() {
+    setDupScanning(true);
+    setDupGroups(null);
+    const all: DupRow[] = [];
+    let from = 0;
+    const pageSize = 1000;
+    while (true) {
+      const { data, error } = await supabase
+        .from("products")
+        .select("id,name,brand,units_available,price,msrp,image_url")
+        .range(from, from + pageSize - 1);
+      if (error) {
+        toast({ title: "Scan failed", description: error.message, variant: "destructive" });
+        setDupScanning(false);
+        return;
+      }
+      if (!data || data.length === 0) break;
+      all.push(...(data as DupRow[]));
+      if (data.length < pageSize) break;
+      from += pageSize;
+    }
+    const groups = findDuplicates(all);
+    setDupGroups(groups);
+    setDupScanning(false);
+    toast({
+      title: `Scanned ${all.length} products`,
+      description: `${groups.length} duplicate group(s) found`,
+    });
+  }
+
+  async function mergeGroup(group: { key: string; items: DupRow[] }) {
+    setDupBusy(group.key);
+    // Pick keeper: prefer one with image, then highest units, then lowest id
+    const sorted = [...group.items].sort((a, b) => {
+      if (!!b.image_url !== !!a.image_url) return b.image_url ? 1 : -1;
+      return b.units_available - a.units_available;
+    });
+    const keeper = sorted[0];
+    const others = sorted.slice(1);
+    const totalUnits = group.items.reduce((s, r) => s + (r.units_available ?? 0), 0);
+    const bestImage = group.items.find((r) => r.image_url)?.image_url ?? null;
+    const minPrice = group.items
+      .map((r) => r.price)
+      .filter((p): p is number => p != null)
+      .reduce<number | null>((m, p) => (m == null || p < m ? p : m), null);
+    const maxMsrp = group.items
+      .map((r) => r.msrp)
+      .filter((p): p is number => p != null)
+      .reduce<number | null>((m, p) => (m == null || p > m ? p : m), null);
+
+    const { error: updErr } = await supabase
+      .from("products")
+      .update({
+        units_available: totalUnits,
+        image_url: keeper.image_url ?? bestImage,
+        price: minPrice ?? keeper.price,
+        msrp: maxMsrp ?? keeper.msrp,
+      })
+      .eq("id", keeper.id);
+    if (updErr) {
+      toast({ title: "Merge failed", description: updErr.message, variant: "destructive" });
+      setDupBusy(null);
+      return;
+    }
+    const { error: delErr } = await supabase
+      .from("products")
+      .delete()
+      .in("id", others.map((o) => o.id));
+    if (delErr) {
+      toast({ title: "Cleanup failed", description: delErr.message, variant: "destructive" });
+      setDupBusy(null);
+      return;
+    }
+    setDupGroups((prev) => (prev ? prev.filter((g) => g.key !== group.key) : prev));
+    setDupBusy(null);
+    toast({ title: `Merged ${others.length + 1} → 1`, description: keeper.name });
+  }
+
+  async function deleteDuplicate(group: { key: string; items: DupRow[] }, id: string) {
+    setDupBusy(group.key + id);
+    const { error } = await supabase.from("products").delete().eq("id", id);
+    setDupBusy(null);
+    if (error) {
+      toast({ title: "Delete failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    setDupGroups((prev) =>
+      prev
+        ? prev
+            .map((g) =>
+              g.key === group.key ? { ...g, items: g.items.filter((i) => i.id !== id) } : g,
+            )
+            .filter((g) => g.items.length > 1)
+        : prev,
+    );
+  }
 
   function patch(brand: BrandTab, p: Partial<BrandState>) {
     setState((prev) => ({ ...prev, [brand]: { ...prev[brand], ...p } }));
@@ -125,16 +238,30 @@ export default function AdminProducts() {
       });
     }
 
-    // Make duplicate (brand, name) rows unique by appending " (#2)", " (#3)" etc.
-    // The DB has UNIQUE(brand, name) and Postgres ON CONFLICT can't update the same row twice.
-    const counts = new Map<string, number>();
-    const deduped = records.map((rec) => {
-      const key = `${rec.brand}|${rec.name}`;
-      const n = (counts.get(key) ?? 0) + 1;
-      counts.set(key, n);
-      if (n > 1) rec.name = `${rec.name} (#${n})`;
-      return rec;
-    });
+    // Merge in-batch duplicates by normalized (brand, name): sum units, prefer
+    // a row with an image, keep the lower price and the higher MSRP.
+    const merged = new Map<string, any>();
+    for (const rec of records) {
+      const key = productKey(rec.brand, rec.name);
+      const existing = merged.get(key);
+      if (!existing) {
+        merged.set(key, rec);
+        continue;
+      }
+      existing.units_available = (existing.units_available ?? 0) + (rec.units_available ?? 0);
+      if (!existing.image_url && rec.image_url) {
+        existing.image_url = rec.image_url;
+        existing.image_filename = rec.image_filename;
+      }
+      if (rec.price != null && (existing.price == null || rec.price < existing.price)) {
+        existing.price = rec.price;
+      }
+      if (rec.msrp != null && (existing.msrp == null || rec.msrp > existing.msrp)) {
+        existing.msrp = rec.msrp;
+      }
+      skipped.push({ name: rec.name, reason: "merged into existing duplicate in import batch" });
+    }
+    const deduped = Array.from(merged.values());
 
     patch(brand, {
       importing: true,
@@ -175,6 +302,80 @@ export default function AdminProducts() {
               Import products from the Google Sheet. Mercana requires uploading images first.
             </p>
           </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Duplicate Scanner</CardTitle>
+              <CardDescription>
+                Finds products with the same brand + normalized name (ignores case, punctuation,
+                and "(#N)" suffixes). Merge combines units, keeps the best image, lowest price,
+                highest MSRP.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Button onClick={scanDuplicates} disabled={dupScanning}>
+                {dupScanning ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <ShieldAlert className="h-4 w-4 mr-2" />
+                )}
+                Scan for duplicates
+              </Button>
+              {dupGroups && dupGroups.length === 0 && (
+                <p className="text-sm text-muted-foreground">
+                  <CheckCircle className="inline h-4 w-4 text-primary mr-1" />
+                  No duplicates found.
+                </p>
+              )}
+              {dupGroups && dupGroups.length > 0 && (
+                <div className="space-y-3 max-h-[600px] overflow-y-auto">
+                  {dupGroups.map((g) => (
+                    <div key={g.key} className="border rounded p-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="text-sm font-medium">
+                          {g.items[0].brand} — {normalizeProductName(g.items[0].name)}
+                        </div>
+                        <Button
+                          size="sm"
+                          onClick={() => mergeGroup(g)}
+                          disabled={dupBusy === g.key}
+                        >
+                          {dupBusy === g.key ? (
+                            <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                          ) : null}
+                          Merge ({g.items.length})
+                        </Button>
+                      </div>
+                      <div className="space-y-1">
+                        {g.items.map((it) => (
+                          <div
+                            key={it.id}
+                            className="flex items-center justify-between gap-2 text-xs border-t pt-1"
+                          >
+                            <div className="flex-1 min-w-0">
+                              <div className="truncate">{it.name}</div>
+                              <div className="text-muted-foreground">
+                                {it.units_available} units · ${it.price ?? "—"} ·{" "}
+                                {it.image_url ? "image ✓" : "no image"}
+                              </div>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => deleteDuplicate(g, it.id)}
+                              disabled={dupBusy === g.key + it.id}
+                            >
+                              <XCircle className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as BrandTab)}>
             <TabsList className="grid grid-cols-4 w-full">
