@@ -51,7 +51,7 @@ const App = () => (
                   <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
                   <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/favorites" element={<Favorites />} />
-                  <Route path="/catalog" element={<Catalog />} />
+                  <Route path="/admin" element={<Navigate to="/admin/products" replace />} />
                   <Route
                     path="/admin/products"
                     element={
