@@ -66,6 +66,30 @@ export default function AdminProducts() {
   const [dupGroups, setDupGroups] = useState<{ key: string; items: DupRow[] }[] | null>(null);
   const [dupBusy, setDupBusy] = useState<string | null>(null);
 
+  // Wipe catalog
+  const [wiping, setWiping] = useState(false);
+  const [wipeConfirm, setWipeConfirm] = useState("");
+
+  async function wipeCatalog() {
+    if (wipeConfirm !== "WIPE") {
+      toast({ title: "Type WIPE to confirm", variant: "destructive" });
+      return;
+    }
+    setWiping(true);
+    const { error, count } = await supabase
+      .from("products")
+      .delete({ count: "exact" })
+      .not("id", "is", null);
+    setWiping(false);
+    if (error) {
+      toast({ title: "Wipe failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    setWipeConfirm("");
+    toast({ title: `Deleted ${count ?? 0} products`, description: "Catalog is now empty." });
+  }
+
+
   async function scanDuplicates() {
     setDupScanning(true);
     setDupGroups(null);
