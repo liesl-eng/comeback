@@ -34,7 +34,7 @@ export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState<string>(ALL);
+  const [category, setCategory] = useState<string>(PRODUCT_CATEGORIES[0]);
 
   useEffect(() => {
     (async () => {
@@ -52,7 +52,7 @@ export default function Catalog() {
   }, []);
 
   const filtered = useMemo(
-    () => products.filter((p) => category === ALL || p.category === category),
+    () => products.filter((p) => p.category === category),
     [products, category],
   );
 
@@ -63,7 +63,7 @@ export default function Catalog() {
         <div className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold">Catalog</h1>
           <p className="text-muted-foreground">
-            {filtered.length} {category === ALL ? "products" : `${category} products`}
+            {filtered.length} {category} products
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export default function Catalog() {
           <div>
             <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Category</div>
             <div className="flex flex-wrap gap-2">
-              {[ALL, ...PRODUCT_CATEGORIES].map((c) => (
+              {PRODUCT_CATEGORIES.map((c) => (
                 <Button
                   key={c}
                   size="sm"
