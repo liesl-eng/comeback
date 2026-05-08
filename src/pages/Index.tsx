@@ -46,7 +46,7 @@ const Index = () => {
                   variant="accent"
                   size="lg"
                   className="gap-2"
-                  onClick={() => navigate("/products")}
+                  onClick={() => navigate("/catalog")}
                 >
                   Build Your Pallet
                   <ArrowRight className="h-5 w-5" />
@@ -68,7 +68,7 @@ const Index = () => {
                     variant="outline"
                     size="sm"
                     className="bg-white/10 border-white/30 text-primary-foreground hover:bg-white/20 hover:text-primary-foreground backdrop-blur-sm"
-                    onClick={() => navigate(`/products?category=${encodeURIComponent(category)}`)}
+                    onClick={() => navigate(`/catalog`)}
                   >
                     {category}
                   </Button>
@@ -107,7 +107,7 @@ const Index = () => {
               variant="accent"
               size="lg"
               className="gap-2"
-              onClick={() => navigate("/products")}
+              onClick={() => navigate("/catalog")}
             >
               Start Now
               <ArrowRight className="h-5 w-5" />
