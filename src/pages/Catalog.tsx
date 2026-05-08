@@ -100,37 +100,30 @@ export default function Catalog() {
           </p>
         </div>
 
-        <div className="sticky top-16 md:top-20 z-40 -mx-4 px-4 py-3 mb-6 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b space-y-3">
-          <div>
-            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Category</div>
-            <div className="flex flex-wrap gap-2">
-              {PRODUCT_CATEGORIES.map((c) => (
-                <Button
-                  key={c}
-                  size="sm"
-                  variant={category === c ? "default" : "outline"}
-                  onClick={() => selectCategory(c)}
-                >
-                  {c}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Sort by</div>
-            <div className="flex flex-wrap gap-2">
-              <Button size="sm" variant={sortBy === "price-asc" ? "default" : "outline"} onClick={() => setSortBy("price-asc")}>
-                Price: Low to High
+        <div className="sticky top-16 md:top-20 z-40 -mx-4 px-4 py-2 mb-6 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b">
+          <div className="flex items-center gap-2 flex-wrap">
+            {PRODUCT_CATEGORIES.map((c) => (
+              <Button
+                key={c}
+                size="sm"
+                variant={category === c ? "default" : "outline"}
+                onClick={() => selectCategory(c)}
+              >
+                {c}
               </Button>
-              <Button size="sm" variant={sortBy === "price-desc" ? "default" : "outline"} onClick={() => setSortBy("price-desc")}>
-                Price: High to Low
-              </Button>
-              <Button size="sm" variant={sortBy === "qty-asc" ? "default" : "outline"} onClick={() => setSortBy("qty-asc")}>
-                Quantity: Low to High
-              </Button>
-              <Button size="sm" variant={sortBy === "qty-desc" ? "default" : "outline"} onClick={() => setSortBy("qty-desc")}>
-                Quantity: High to Low
-              </Button>
+            ))}
+            <div className="ml-auto flex items-center gap-2">
+              <span className="text-xs uppercase tracking-wide text-muted-foreground">Sort</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                className="h-9 rounded-md border border-input bg-background px-2 text-sm"
+              >
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="qty-asc">Quantity: Low to High</option>
+                <option value="qty-desc">Quantity: High to Low</option>
+              </select>
             </div>
           </div>
         </div>
