@@ -135,7 +135,7 @@ export default function Catalog() {
                   </div>
                   <div className="mt-auto pt-2 flex items-center justify-between">
                     <Badge variant={sb.variant}>{sb.label}</Badge>
-                    <span className="text-xs text-muted-foreground">{p.units_available} units</span>
+                    <span className="text-xs text-muted-foreground">{p.units_available > 100 ? "100+" : p.units_available} units</span>
                   </div>
                 </div>
               </div>
