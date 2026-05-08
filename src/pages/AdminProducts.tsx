@@ -126,16 +126,30 @@ export default function AdminProducts() {
       });
     }
 
-    // Make duplicate (brand, name) rows unique by appending " (#2)", " (#3)" etc.
-    // The DB has UNIQUE(brand, name) and Postgres ON CONFLICT can't update the same row twice.
-    const counts = new Map<string, number>();
-    const deduped = records.map((rec) => {
-      const key = `${rec.brand}|${rec.name}`;
-      const n = (counts.get(key) ?? 0) + 1;
-      counts.set(key, n);
-      if (n > 1) rec.name = `${rec.name} (#${n})`;
-      return rec;
-    });
+    // Merge in-batch duplicates by normalized (brand, name): sum units, prefer
+    // a row with an image, keep the lower price and the higher MSRP.
+    const merged = new Map<string, any>();
+    for (const rec of records) {
+      const key = productKey(rec.brand, rec.name);
+      const existing = merged.get(key);
+      if (!existing) {
+        merged.set(key, rec);
+        continue;
+      }
+      existing.units_available = (existing.units_available ?? 0) + (rec.units_available ?? 0);
+      if (!existing.image_url && rec.image_url) {
+        existing.image_url = rec.image_url;
+        existing.image_filename = rec.image_filename;
+      }
+      if (rec.price != null && (existing.price == null || rec.price < existing.price)) {
+        existing.price = rec.price;
+      }
+      if (rec.msrp != null && (existing.msrp == null || rec.msrp > existing.msrp)) {
+        existing.msrp = rec.msrp;
+      }
+      skipped.push({ name: rec.name, reason: "merged into existing duplicate in import batch" });
+    }
+    const deduped = Array.from(merged.values());
 
     patch(brand, {
       importing: true,
