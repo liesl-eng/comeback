@@ -157,11 +157,8 @@ export default function AdminProducts() {
       mercanaMap = await loadMercanaIndex();
     }
 
+    const warnings: { name: string; reason: string }[] = [];
     for (const r of masterRows) {
-      if (r.comebackPrice == null) {
-        skipped.push({ name: r.name, reason: "missing Comeback Price" });
-        continue;
-      }
       const isMercana = r.brand.trim().toLowerCase() === "mercana";
       let imageUrl: string | null = null;
       let imageFilename: string | null = null;
@@ -169,12 +166,15 @@ export default function AdminProducts() {
         if (isMercana && !/^https?:\/\//i.test(r.imageUrl)) {
           imageFilename = r.imageUrl;
           imageUrl = mercanaMap?.get(r.imageUrl.toLowerCase()) ?? null;
-          if (!imageUrl) skipped.push({ name: r.name, reason: `Mercana image not found in storage: ${r.imageUrl}` });
+          if (!imageUrl) warnings.push({ name: r.name, reason: `Mercana image not found in storage: ${r.imageUrl}` });
         } else if (/^https?:\/\//i.test(r.imageUrl)) {
           imageUrl = r.imageUrl;
         } else {
-          skipped.push({ name: r.name, reason: `Image is not a URL: ${r.imageUrl}` });
+          warnings.push({ name: r.name, reason: `Image is not a URL: ${r.imageUrl}` });
         }
+      }
+      if (r.comebackPrice == null) {
+        warnings.push({ name: r.name, reason: "missing Comeback Price (imported with no price)" });
       }
       records.push({
         name: r.name,
@@ -189,6 +189,7 @@ export default function AdminProducts() {
         units_available: r.unitsAvailable,
       });
     }
+    skipped.push(...warnings);
 
     setMasterProgress({ done: 0, total: records.length });
     const chunkSize = 200;
@@ -542,7 +543,7 @@ export default function AdminProducts() {
                             )}
                           </div>
                         )}
-                        {noPrice > 0 && <div className="text-destructive">{noPrice} row(s) missing Comeback Price — will be skipped.</div>}
+                        {noPrice > 0 && <div className="text-amber-600">{noPrice} row(s) missing Comeback Price — will import with no price.</div>}
                         {nonMercanaBadUrl > 0 && <div className="text-destructive">{nonMercanaBadUrl} non-Mercana row(s) have an Image value that isn't a URL.</div>}
                       </div>
                     );
