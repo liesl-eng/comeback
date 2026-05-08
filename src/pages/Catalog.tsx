@@ -78,18 +78,39 @@ export default function Catalog() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-6">
-          {brands.map((b) => (
-            <Button
-              key={b}
-              size="sm"
-              variant={brand === b ? "default" : "outline"}
-              onClick={() => setBrand(b)}
-            >
-              {b}
-            </Button>
-          ))}
+        <div className="space-y-3 mb-6">
+          <div>
+            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Category</div>
+            <div className="flex flex-wrap gap-2">
+              {[ALL, ...PRODUCT_CATEGORIES].map((c) => (
+                <Button
+                  key={c}
+                  size="sm"
+                  variant={category === c ? "default" : "outline"}
+                  onClick={() => setCategory(c)}
+                >
+                  {c}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Brand</div>
+            <div className="flex flex-wrap gap-2">
+              {brands.map((b) => (
+                <Button
+                  key={b}
+                  size="sm"
+                  variant={brand === b ? "default" : "outline"}
+                  onClick={() => setBrand(b)}
+                >
+                  {b}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
+
 
         {loading && (
           <div className="flex justify-center py-20">
