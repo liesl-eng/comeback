@@ -87,8 +87,7 @@ const Favorites = () => {
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
                   {p.price != null && (
                     <div className="font-bold mt-1">
-                      ${Number.isInteger(p.price) ? p.price : p.price.toFixed(2)}{" "}
-                      <span className="text-xs font-normal text-muted-foreground">Each</span>
+                      ${Number.isInteger(p.price) ? p.price : p.price.toFixed(2)}
                     </div>
                   )}
                 </div>
