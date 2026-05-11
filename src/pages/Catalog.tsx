@@ -10,6 +10,9 @@ import { matchesSearchQuery } from "@/lib/searchSynonyms";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { X } from "lucide-react";
 import { comebackPrice, isBuyerVisible, formatComebackPrice } from "@/lib/pricing";
+import { useCatalogOrder } from "@/contexts/CatalogOrderContext";
+import CatalogOrderBar from "@/components/CatalogOrderBar";
+import { Plus, Minus } from "lucide-react";
 
 interface Product {
   id: string;
@@ -43,6 +46,7 @@ export default function Catalog() {
   const [category, setCategory] = useState<string>(initialCat);
   const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "qty-asc" | "qty-desc">("price-asc");
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { lines, increment, decrement, setQuantity } = useCatalogOrder();
 
   useEffect(() => {
     const c = searchParams.get("category");
@@ -106,7 +110,7 @@ export default function Catalog() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container mx-auto px-4 pt-3 pb-8">
+      <main className="container mx-auto px-4 pt-3 pb-32">
         <div className="mb-3">
           <h1 className="text-3xl md:text-4xl font-bold">
             {searchQuery ? `Results for "${searchQuery}"` : "Catalog"}
@@ -193,17 +197,53 @@ export default function Catalog() {
                   <div className="flex items-baseline gap-2 mt-1 flex-wrap">
                     <span className="text-xs text-muted-foreground">Price</span>
                     <span className="font-bold">{formatComebackPrice(cb)}</span>
+                    <span className="text-[10px] text-muted-foreground">Each</span>
                   </div>
-                  <div className="mt-auto pt-2 flex items-center justify-between">
-                    <Badge variant={sb.variant}>{sb.label}</Badge>
-                    <span className="text-sm font-semibold text-foreground">{p.units_available > 100 ? "100+" : p.units_available} units</span>
+                  <div className="mt-auto pt-2 flex items-center justify-between gap-2">
+                    <Badge variant={sb.variant} className="shrink-0">{sb.label}</Badge>
+                    <span className="text-xs font-semibold text-foreground">{p.units_available > 100 ? "100+" : p.units_available} units</span>
                   </div>
+                  {(() => {
+                    const inOrder = lines[p.id]?.quantity ?? 0;
+                    const meta = {
+                      name: p.name, brand: p.brand, imageUrl: p.image_url,
+                      unitPrice: cb ?? 0, unitsAvailable: p.units_available,
+                    };
+                    if (cb == null || p.units_available <= 0) return null;
+                    if (inOrder === 0) {
+                      return (
+                        <Button size="sm" className="mt-2 w-full bg-accent text-accent-foreground hover:bg-accent/90"
+                          onClick={() => increment(p.id, meta)}>
+                          <Plus className="h-3.5 w-3.5 mr-1" /> Add to Order
+                        </Button>
+                      );
+                    }
+                    return (
+                      <div className="mt-2 flex items-center gap-1">
+                        <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => decrement(p.id)}>
+                          <Minus className="h-3.5 w-3.5" />
+                        </Button>
+                        <input
+                          type="number"
+                          value={inOrder}
+                          min={0}
+                          max={p.units_available}
+                          onChange={(e) => setQuantity(p.id, parseInt(e.target.value) || 0, meta)}
+                          className="h-8 flex-1 text-center text-sm rounded border border-input bg-background"
+                        />
+                        <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => increment(p.id, meta)}>
+                          <Plus className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
             );
           })}
         </div>
       </main>
+      <CatalogOrderBar />
     </div>
   );
 }

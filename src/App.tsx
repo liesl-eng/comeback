@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
+import { CatalogOrderProvider } from "@/contexts/CatalogOrderContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 import Index from "./pages/Index";
@@ -34,6 +35,7 @@ const App = () => {
         <CartProvider>
           
             <FavoritesProvider>
+              <CatalogOrderProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -76,6 +78,7 @@ const App = () => {
                 </Routes>
                 
               </BrowserRouter>
+              </CatalogOrderProvider>
             </FavoritesProvider>
           
         </CartProvider>
