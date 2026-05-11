@@ -12,7 +12,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Loader2, ShieldAlert, Download, Upload, Eye, CheckCircle, XCircle } from "lucide-react";
 import { BRAND_TABS, BrandTab, SheetRow, fetchSheetTab } from "@/lib/productSheet";
 import { categorizeProduct } from "@/lib/productCategory";
-import { findDuplicates, normalizeProductName, productKey } from "@/lib/duplicateDetection";
+import { findDuplicates, normalizeProductName } from "@/lib/duplicateDetection";
 
 
 interface BrandState {
@@ -302,41 +302,27 @@ export default function AdminProducts() {
       });
     }
 
-    // Merge in-batch duplicates by normalized (brand, name): sum units, prefer
-    // a row with an image, keep the lower price and the higher MSRP.
-    const merged = new Map<string, ProductImportRecord>();
-    for (const rec of records) {
-      const key = productKey(rec.brand, rec.name);
-      const existing = merged.get(key);
-      if (!existing) {
-        merged.set(key, rec);
-        continue;
-      }
-      existing.units_available = (existing.units_available ?? 0) + (rec.units_available ?? 0);
-      if (!existing.image_url && rec.image_url) {
-        existing.image_url = rec.image_url;
-        existing.image_filename = rec.image_filename;
-      }
-      if (rec.price != null && (existing.price == null || rec.price < existing.price)) {
-        existing.price = rec.price;
-      }
-      if (rec.msrp != null && (existing.msrp == null || rec.msrp > existing.msrp)) {
-        existing.msrp = rec.msrp;
-      }
-      skipped.push({ name: rec.name, reason: "merged into existing duplicate in import batch" });
-    }
-    const deduped = Array.from(merged.values());
+    // Preserve duplicate product rows in a sheet. The database requires brand + name
+    // to be unique for safe re-imports, so later same-name rows get a stable suffix
+    // instead of being merged/skipped.
+    const nameCounts = new Map<string, number>();
+    const importRecords = records.map((rec) => {
+      const key = `${rec.brand}|${normalizeProductName(rec.name)}`;
+      const count = (nameCounts.get(key) ?? 0) + 1;
+      nameCounts.set(key, count);
+      return count === 1 ? rec : { ...rec, name: `${rec.name} (#${count})` };
+    });
 
     patch(brand, {
       importing: true,
-      importProgress: { done: 0, total: deduped.length },
+      importProgress: { done: 0, total: importRecords.length },
       importReport: null,
     });
 
     const chunkSize = 100;
     let inserted = 0;
-    for (let i = 0; i < deduped.length; i += chunkSize) {
-      const chunk = deduped.slice(i, i + chunkSize);
+    for (let i = 0; i < importRecords.length; i += chunkSize) {
+      const chunk = importRecords.slice(i, i + chunkSize);
       const { error } = await supabase
         .from("products")
         .upsert(chunk, { onConflict: "brand,name" });
@@ -345,7 +331,7 @@ export default function AdminProducts() {
       } else {
         inserted += chunk.length;
       }
-      patch(brand, { importProgress: { done: i + chunk.length, total: deduped.length } });
+      patch(brand, { importProgress: { done: i + chunk.length, total: importRecords.length } });
     }
 
     patch(brand, {
