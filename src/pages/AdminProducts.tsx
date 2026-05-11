@@ -53,6 +53,18 @@ interface DupRow {
   image_url: string | null;
 }
 
+interface ProductImportRecord {
+  name: string;
+  brand: BrandTab;
+  category: string;
+  image_url: string | null;
+  image_filename: string | null;
+  price: number;
+  msrp: number | null;
+  units_available: number;
+  source_last_updated: string | null;
+}
+
 export default function AdminProducts() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<BrandTab>("Mercana");
@@ -198,8 +210,8 @@ export default function AdminProducts() {
       const rows = await fetchSheetTab(brand);
       patch(brand, { loading: false, rows });
       toast({ title: `Loaded ${rows.length} rows from "${brand}"` });
-    } catch (e: any) {
-      patch(brand, { loading: false, error: e.message });
+    } catch (e: unknown) {
+      patch(brand, { loading: false, error: e instanceof Error ? e.message : "Unable to load sheet" });
     }
   }
 
@@ -231,7 +243,7 @@ export default function AdminProducts() {
     const s = state[brand];
     if (!s.rows) return;
     const isMercana = brand === "Mercana";
-    const records: any[] = [];
+    const records: ProductImportRecord[] = [];
     const skipped: { name: string; reason: string }[] = [];
 
     // For Mercana, also include images already in the storage bucket from
@@ -241,8 +253,6 @@ export default function AdminProducts() {
       const folder = "mercana";
       let offset = 0;
       const pageSize = 1000;
-      // List can paginate; loop until exhausted.
-      // eslint-disable-next-line no-constant-condition
       while (true) {
         const { data, error } = await supabase.storage
           .from("product-images")
@@ -269,7 +279,9 @@ export default function AdminProducts() {
       if (isMercana) {
         if (r.imageFilename) {
           const key = r.imageFilename.toLowerCase();
-          imageUrl = s.uploadedFiles.get(key) ?? bucketFiles.get(key) ?? null;
+          imageUrl = s.uploadedFiles.get(key) ?? bucketFiles.get(key) ?? r.imageUrl;
+        } else {
+          imageUrl = r.imageUrl;
         }
       } else {
         imageUrl = r.imageUrl;
@@ -292,7 +304,7 @@ export default function AdminProducts() {
 
     // Merge in-batch duplicates by normalized (brand, name): sum units, prefer
     // a row with an image, keep the lower price and the higher MSRP.
-    const merged = new Map<string, any>();
+    const merged = new Map<string, ProductImportRecord>();
     for (const rec of records) {
       const key = productKey(rec.brand, rec.name);
       const existing = merged.get(key);
@@ -351,7 +363,7 @@ export default function AdminProducts() {
           <div>
             <h1 className="text-3xl font-bold">Product Import</h1>
             <p className="text-muted-foreground">
-              Import products from the Google Sheet. Mercana requires uploading images first.
+              Import products from the Google Sheet. Mercana can use sheet image URLs or uploaded images.
             </p>
           </div>
 
@@ -503,7 +515,7 @@ export default function AdminProducts() {
                       <CardHeader>
                         <CardTitle>2. Upload Mercana images</CardTitle>
                         <CardDescription>
-                          Filenames must match the "Image Filename" column (e.g. 0001_Product_Name.jpg).
+                          Optional when the sheet includes image URLs. Upload only if you need to replace missing or custom images.
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-3">
@@ -580,7 +592,7 @@ export default function AdminProducts() {
                       <CardContent className="space-y-3">
                         <Button
                           onClick={() => handleImport(brand)}
-                          disabled={s.importing || (isMercana && s.uploadedFiles.size === 0)}
+                          disabled={s.importing}
                         >
                           {s.importing ? (
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
