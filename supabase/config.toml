@@ -1,1 +1,7 @@
 project_id = "uwvxsoyctnrogpmweset"
+
+[functions.rehost-mercana-images]
+verify_jwt = false
+
+[functions.rehost-image-upload]
+verify_jwt = false
