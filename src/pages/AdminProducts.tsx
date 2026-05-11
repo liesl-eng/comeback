@@ -456,7 +456,7 @@ export default function AdminProducts() {
           </Card>
 
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as BrandTab)}>
-            <TabsList className="grid grid-cols-4 w-full">
+            <TabsList className="grid grid-cols-5 w-full">
               {BRAND_TABS.map((b) => (
                 <TabsTrigger key={b} value={b}>
                   {b}
