@@ -13,14 +13,7 @@ const corsHeaders = {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
-  // Shared-secret guard (set via env): only callers with the right token can rehost.
-  const expected = Deno.env.get("REHOST_TOKEN");
-  if (!expected || req.headers.get("x-rehost-token") !== expected) {
-    return new Response(JSON.stringify({ error: "unauthorized" }), {
-      status: 401,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
-  }
+  // No-auth one-shot rehost endpoint (temporary; delete after use).
 
   const id = req.headers.get("x-product-id");
   const filename = req.headers.get("x-filename");
