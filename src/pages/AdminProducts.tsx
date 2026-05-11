@@ -304,7 +304,7 @@ export default function AdminProducts() {
 
     // Merge in-batch duplicates by normalized (brand, name): sum units, prefer
     // a row with an image, keep the lower price and the higher MSRP.
-    const merged = new Map<string, any>();
+    const merged = new Map<string, ProductImportRecord>();
     for (const rec of records) {
       const key = productKey(rec.brand, rec.name);
       const existing = merged.get(key);
