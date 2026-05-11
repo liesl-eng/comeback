@@ -34,7 +34,7 @@ const Favorites = () => {
       }
       const { data } = await supabase
         .from("products")
-        .select("id,name,brand,image_url,price,msrp,units_available")
+        .select("id,name,brand,image_url,price,msrp,cost,units_available")
         .in("id", favorites);
       setItems((data ?? []).filter(isBuyerVisible));
       setLoading(false);
