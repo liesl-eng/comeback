@@ -62,7 +62,7 @@ export default function Catalog() {
       setLoading(true);
       const { data, error } = await supabase
         .from("products")
-        .select("id,name,brand,category,image_url,price,msrp,units_available")
+        .select("id,name,brand,category,image_url,price,msrp,cost,units_available")
         .order("price", { ascending: true, nullsFirst: false })
         .order("brand")
         .limit(2000);
