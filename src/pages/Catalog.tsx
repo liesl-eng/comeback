@@ -163,7 +163,7 @@ export default function Catalog() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.map((p) => {
             const sb = stockBadge(p.units_available);
-            const cb = comebackPrice(p.msrp, p.price);
+            const cb = comebackPrice(p.msrp, undefined, p.cost);
             return (
               <div key={p.id} className="border rounded-lg overflow-hidden bg-card flex flex-col">
                 <div className="relative aspect-square bg-muted flex items-center justify-center overflow-hidden">
