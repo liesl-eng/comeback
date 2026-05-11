@@ -53,6 +53,18 @@ interface DupRow {
   image_url: string | null;
 }
 
+interface ProductImportRecord {
+  name: string;
+  brand: BrandTab;
+  category: string;
+  image_url: string | null;
+  image_filename: string | null;
+  price: number;
+  msrp: number | null;
+  units_available: number;
+  source_last_updated: string | null;
+}
+
 export default function AdminProducts() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<BrandTab>("Mercana");
@@ -198,8 +210,8 @@ export default function AdminProducts() {
       const rows = await fetchSheetTab(brand);
       patch(brand, { loading: false, rows });
       toast({ title: `Loaded ${rows.length} rows from "${brand}"` });
-    } catch (e: any) {
-      patch(brand, { loading: false, error: e.message });
+    } catch (e: unknown) {
+      patch(brand, { loading: false, error: e instanceof Error ? e.message : "Unable to load sheet" });
     }
   }
 
@@ -231,7 +243,7 @@ export default function AdminProducts() {
     const s = state[brand];
     if (!s.rows) return;
     const isMercana = brand === "Mercana";
-    const records: any[] = [];
+    const records: ProductImportRecord[] = [];
     const skipped: { name: string; reason: string }[] = [];
 
     // For Mercana, also include images already in the storage bucket from
@@ -241,8 +253,6 @@ export default function AdminProducts() {
       const folder = "mercana";
       let offset = 0;
       const pageSize = 1000;
-      // List can paginate; loop until exhausted.
-      // eslint-disable-next-line no-constant-condition
       while (true) {
         const { data, error } = await supabase.storage
           .from("product-images")
