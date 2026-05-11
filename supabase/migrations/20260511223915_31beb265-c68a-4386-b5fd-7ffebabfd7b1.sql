@@ -1,0 +1,1 @@
+UPDATE products SET category = 'Accessories' WHERE name ILIKE '%pillow%' AND category != 'Accessories';
