@@ -15,6 +15,7 @@ interface Product {
   image_url: string | null;
   price: number | null;
   msrp: number | null;
+  cost: number | null;
   units_available: number;
 }
 
@@ -33,7 +34,7 @@ const Favorites = () => {
       }
       const { data } = await supabase
         .from("products")
-        .select("id,name,brand,image_url,price,msrp,units_available")
+        .select("id,name,brand,image_url,price,msrp,cost,units_available")
         .in("id", favorites);
       setItems((data ?? []).filter(isBuyerVisible));
       setLoading(false);
@@ -88,7 +89,7 @@ const Favorites = () => {
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
                   <div className="font-bold mt-1 flex items-baseline gap-2">
                     <span className="text-xs text-muted-foreground font-normal">Price</span>
-                    {formatComebackPrice(comebackPrice(p.msrp, p.price))}
+                    {formatComebackPrice(comebackPrice(p.msrp, undefined, p.cost))}
                   </div>
                 </div>
               </div>

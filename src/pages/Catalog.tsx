@@ -19,6 +19,7 @@ interface Product {
   image_url: string | null;
   price: number | null;
   msrp: number | null;
+  cost: number | null;
   units_available: number;
 }
 
@@ -61,7 +62,7 @@ export default function Catalog() {
       setLoading(true);
       const { data, error } = await supabase
         .from("products")
-        .select("id,name,brand,category,image_url,price,msrp,units_available")
+        .select("id,name,brand,category,image_url,price,msrp,cost,units_available")
         .order("price", { ascending: true, nullsFirst: false })
         .order("brand")
         .limit(2000);
@@ -74,7 +75,7 @@ export default function Catalog() {
   const searchQuery = searchParams.get("search") ?? "";
 
   const filtered = useMemo(() => {
-    // Global rule: only show items where comeback_price (MSRP × 0.45) > cost.
+    // Show all items — pricing formula guarantees no item is sold below cost.
     let list = products.filter(isBuyerVisible);
     if (searchQuery.trim()) {
       list = list.filter((p) => matchesSearchQuery(p.name, searchQuery));
@@ -83,8 +84,8 @@ export default function Catalog() {
     }
     const sorted = [...list].sort((a, b) => {
       if (sortBy.startsWith("price")) {
-        const ap = comebackPrice(a.msrp, a.price) ?? Infinity;
-        const bp = comebackPrice(b.msrp, b.price) ?? Infinity;
+        const ap = comebackPrice(a.msrp, undefined, a.cost) ?? Infinity;
+        const bp = comebackPrice(b.msrp, undefined, b.cost) ?? Infinity;
         return sortBy === "price-asc" ? ap - bp : bp - ap;
       }
       const aq = a.units_available ?? 0;
@@ -162,7 +163,7 @@ export default function Catalog() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.map((p) => {
             const sb = stockBadge(p.units_available);
-            const cb = comebackPrice(p.msrp, p.price);
+            const cb = comebackPrice(p.msrp, undefined, p.cost);
             return (
               <div key={p.id} className="border rounded-lg overflow-hidden bg-card flex flex-col">
                 <div className="relative aspect-square bg-muted flex items-center justify-center overflow-hidden">
