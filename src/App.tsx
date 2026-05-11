@@ -26,7 +26,32 @@ import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const PREVIEW_KEY = "comeback_preview_access";
+const PREVIEW_PASSWORD = "comeback2026";
+
+const hasPreviewAccess = () => {
+  if (typeof window === "undefined") return false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("preview") === PREVIEW_PASSWORD) {
+      localStorage.setItem(PREVIEW_KEY, "1");
+      return true;
+    }
+    return localStorage.getItem(PREVIEW_KEY) === "1";
+  } catch {
+    return false;
+  }
+};
+
+const App = () => {
+  if (!hasPreviewAccess()) {
+    return (
+      <HelmetProvider>
+        <ComingSoon />
+      </HelmetProvider>
+    );
+  }
+  return (
   <HelmetProvider>
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
