@@ -21,7 +21,7 @@ export function comebackPrice(
   else if (msrpFloor != null) result = msrpFloor;
   else if (marginFloor != null) result = marginFloor;
 
-  return result == null ? null : Math.round(result * 100) / 100;
+  return result == null ? null : Math.round(result);
 }
 
 // All items are buyer-visible — pricing formula guarantees no item is sold below cost.
