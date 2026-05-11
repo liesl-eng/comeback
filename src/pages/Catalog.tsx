@@ -10,6 +10,9 @@ import { matchesSearchQuery } from "@/lib/searchSynonyms";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { X } from "lucide-react";
 import { comebackPrice, isBuyerVisible, formatComebackPrice } from "@/lib/pricing";
+import { useCatalogOrder } from "@/contexts/CatalogOrderContext";
+import CatalogOrderBar from "@/components/CatalogOrderBar";
+import { Plus, Minus } from "lucide-react";
 
 interface Product {
   id: string;
@@ -43,6 +46,7 @@ export default function Catalog() {
   const [category, setCategory] = useState<string>(initialCat);
   const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "qty-asc" | "qty-desc">("price-asc");
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { lines, increment, decrement, setQuantity } = useCatalogOrder();
 
   useEffect(() => {
     const c = searchParams.get("category");
