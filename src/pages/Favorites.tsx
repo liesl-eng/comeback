@@ -15,6 +15,7 @@ interface Product {
   image_url: string | null;
   price: number | null;
   msrp: number | null;
+  cost: number | null;
   units_available: number;
 }
 
