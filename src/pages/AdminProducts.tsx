@@ -269,7 +269,9 @@ export default function AdminProducts() {
       if (isMercana) {
         if (r.imageFilename) {
           const key = r.imageFilename.toLowerCase();
-          imageUrl = s.uploadedFiles.get(key) ?? bucketFiles.get(key) ?? null;
+          imageUrl = s.uploadedFiles.get(key) ?? bucketFiles.get(key) ?? r.imageUrl;
+        } else {
+          imageUrl = r.imageUrl;
         }
       } else {
         imageUrl = r.imageUrl;
@@ -351,7 +353,7 @@ export default function AdminProducts() {
           <div>
             <h1 className="text-3xl font-bold">Product Import</h1>
             <p className="text-muted-foreground">
-              Import products from the Google Sheet. Mercana requires uploading images first.
+              Import products from the Google Sheet. Mercana can use sheet image URLs or uploaded images.
             </p>
           </div>
 
@@ -503,7 +505,7 @@ export default function AdminProducts() {
                       <CardHeader>
                         <CardTitle>2. Upload Mercana images</CardTitle>
                         <CardDescription>
-                          Filenames must match the "Image Filename" column (e.g. 0001_Product_Name.jpg).
+                          Optional when the sheet includes image URLs. Upload only if you need to replace missing or custom images.
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-3">
@@ -580,7 +582,7 @@ export default function AdminProducts() {
                       <CardContent className="space-y-3">
                         <Button
                           onClick={() => handleImport(brand)}
-                          disabled={s.importing || (isMercana && s.uploadedFiles.size === 0)}
+                          disabled={s.importing}
                         >
                           {s.importing ? (
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
