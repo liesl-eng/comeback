@@ -1,7 +1,7 @@
 // Buyer-facing pricing.
-// Formula: comeback_price = max(msrp * 0.45, cost / 0.85)
+// Formula: comeback_price = max(msrp * 0.45, cost * 1.20)
 //   - 55% off MSRP price floor
-//   - 15% margin floor (never sell below cost / 0.85)
+//   - 20% markup over cost margin floor
 // MSRP and cost are stored but never displayed to buyers.
 
 export function comebackPrice(
@@ -14,7 +14,7 @@ export function comebackPrice(
   const m = msrp == null ? null : Number(msrp);
 
   const msrpFloor = m != null && Number.isFinite(m) ? m * 0.45 : null;
-  const marginFloor = c != null && Number.isFinite(c) && c > 0 ? c / 0.85 : null;
+  const marginFloor = c != null && Number.isFinite(c) && c > 0 ? c * 1.20 : null;
 
   let result: number | null = null;
   if (msrpFloor != null && marginFloor != null) result = Math.max(msrpFloor, marginFloor);
@@ -33,12 +33,12 @@ export function isBuyerVisible(_p: { price?: number | null; msrp?: number | null
 export function pricingRuleLabel(
   msrp: number | null | undefined,
   cost: number | null | undefined,
-): "55% off MSRP" | "15% margin floor" | null {
+): "55% off MSRP" | "20% markup over cost" | null {
   const m = msrp == null ? null : Number(msrp);
   const c = cost == null ? null : Number(cost);
-  if (m == null || !Number.isFinite(m)) return c != null && Number.isFinite(c) ? "15% margin floor" : null;
+  if (m == null || !Number.isFinite(m)) return c != null && Number.isFinite(c) ? "20% markup over cost" : null;
   if (c == null || !Number.isFinite(c) || c <= 0) return "55% off MSRP";
-  return m * 0.45 > c / 0.85 ? "55% off MSRP" : "15% margin floor";
+  return m * 0.45 > c * 1.20 ? "55% off MSRP" : "20% markup over cost";
 }
 
 export function formatComebackPrice(n: number | null): string {
