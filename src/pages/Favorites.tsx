@@ -89,7 +89,7 @@ const Favorites = () => {
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
                   <div className="font-bold mt-1 flex items-baseline gap-2">
                     <span className="text-xs text-muted-foreground font-normal">Price</span>
-                    {formatComebackPrice(comebackPrice(p.msrp, p.price))}
+                    {formatComebackPrice(comebackPrice(p.msrp, undefined, p.cost))}
                   </div>
                 </div>
               </div>
