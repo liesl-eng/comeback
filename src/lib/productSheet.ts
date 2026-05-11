@@ -2,13 +2,14 @@
 
 export const PRODUCT_SHEET_ID = "1ItM29QVpYh85ESpMLWVJjg13RP-ACHkSPRcGtL21yl8";
 
-export type BrandTab = "Mercana" | "Modus Furniture" | "Arteriors Home" | "Ferm Living";
+export type BrandTab = "Mercana" | "Modus Furniture" | "Arteriors Home" | "Ferm Living" | "Fern";
 
 export const BRAND_TABS: BrandTab[] = [
   "Mercana",
   "Modus Furniture",
   "Arteriors Home",
   "Ferm Living",
+  "Fern",
 ];
 
 export interface SheetRow {
