@@ -234,6 +234,32 @@ export default function AdminProducts() {
     const records: any[] = [];
     const skipped: { name: string; reason: string }[] = [];
 
+    // For Mercana, also include images already in the storage bucket from
+    // previous upload sessions, so re-importing doesn't require re-uploading.
+    const bucketFiles = new Map<string, string>();
+    if (isMercana) {
+      const folder = "mercana";
+      let offset = 0;
+      const pageSize = 1000;
+      // List can paginate; loop until exhausted.
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        const { data, error } = await supabase.storage
+          .from("product-images")
+          .list(folder, { limit: pageSize, offset });
+        if (error || !data || data.length === 0) break;
+        for (const obj of data) {
+          if (!obj.name) continue;
+          const { data: pub } = supabase.storage
+            .from("product-images")
+            .getPublicUrl(`${folder}/${obj.name}`);
+          bucketFiles.set(obj.name.toLowerCase(), pub.publicUrl);
+        }
+        if (data.length < pageSize) break;
+        offset += pageSize;
+      }
+    }
+
     for (const r of s.rows) {
       if (r.price == null) {
         skipped.push({ name: r.name, reason: "missing price" });
@@ -242,7 +268,8 @@ export default function AdminProducts() {
       let imageUrl: string | null = null;
       if (isMercana) {
         if (r.imageFilename) {
-          imageUrl = s.uploadedFiles.get(r.imageFilename.toLowerCase()) ?? null;
+          const key = r.imageFilename.toLowerCase();
+          imageUrl = s.uploadedFiles.get(key) ?? bucketFiles.get(key) ?? null;
         }
       } else {
         imageUrl = r.imageUrl;
