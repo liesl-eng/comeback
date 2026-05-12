@@ -204,7 +204,7 @@ export default function CatalogOrderBar() {
               <CheckCircle2 className="h-14 w-14 text-accent mx-auto mb-3" />
               <DialogTitle className="text-xl mb-2">Quote Request Submitted!</DialogTitle>
               <p className="text-muted-foreground text-sm">We'll review your order and get back within 1–2 business days.</p>
-              <Button className="mt-5" onClick={() => { setSubmitOpen(false); setSubmitted(false); clear(); }}>Done</Button>
+              <Button className="mt-5" onClick={() => { setSubmitOpen(false); setSubmitted(false); clear(); setContact({ companyName: "", contactName: "", email: "", phone: "", notes: "" }); }}>Done</Button>
             </div>
           ) : (
             <>
