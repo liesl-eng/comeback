@@ -151,6 +151,20 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
           </div>
         </div>
 
+        {/* Mobile Search Bar */}
+        <form onSubmit={handleSearch} className="md:hidden pb-3">
+          <div className="relative w-full">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Find Your Goods"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-4 w-full text-sm"
+            />
+          </div>
+        </form>
+
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
