@@ -1,0 +1,1 @@
+UPDATE products SET category='Furniture' WHERE name ILIKE '%stool%';
