@@ -1,11 +1,11 @@
 export const PRODUCT_CATEGORIES = [
-  "Lighting",
-  "Mirrors",
   "Accessories",
+  "Mirrors",
+  "Lighting",
+  "Chairs",
   "Furniture",
   "Beds",
   "Sofas",
-  "Chairs",
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
