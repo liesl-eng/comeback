@@ -34,6 +34,37 @@ function stockBadge(units: number) {
   return { label: "In Stock", variant: "default" as const };
 }
 
+function QuantityInput({ value, max, onCommit }: { value: number; max: number; onCommit: (n: number) => void }) {
+  const [raw, setRaw] = useState<string>(String(value));
+  useEffect(() => { setRaw(String(value)); }, [value]);
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      pattern="[0-9]*"
+      value={raw}
+      onFocus={(e) => e.target.select()}
+      onClick={(e) => (e.target as HTMLInputElement).select()}
+      onChange={(e) => {
+        const v = e.target.value.replace(/[^0-9]/g, "");
+        setRaw(v);
+        if (v !== "") {
+          const n = Math.min(parseInt(v, 10), max);
+          if (n >= 1) onCommit(n);
+        }
+      }}
+      onBlur={() => {
+        const n = parseInt(raw, 10);
+        if (!raw || isNaN(n) || n < 1) onCommit(0);
+        else onCommit(Math.min(n, max));
+      }}
+      onKeyDown={(e) => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }}
+      className="h-8 flex-1 text-center text-sm font-semibold rounded border-2 border-accent/40 bg-background focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 cursor-text"
+      title="Click to edit quantity"
+    />
+  );
+}
+
 export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
