@@ -1,0 +1,1 @@
+UPDATE products SET category='Furniture' WHERE name ~* '(\maccent table\M|\mside table\M|\mend table\M|\mcoffee table\M|\mconsole table\M|\mdining table\M|\mtable\M)';
