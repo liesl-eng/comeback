@@ -10,10 +10,10 @@ export const PRODUCT_CATEGORIES = [
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
 
-const FURNITURE = ["nightstand", "bench", "console", "ottoman", "side table", "end table", "accent table", "coffee table", "dresser", "cabinet", "sideboard", "armoire", "wardrobe", "credenza", "buffet", "bookcase", "hutch", "table", "desk"];
+const FURNITURE = ["nightstand", "bench", "console", "ottoman", "stool", "side table", "end table", "accent table", "coffee table", "dresser", "cabinet", "sideboard", "armoire", "wardrobe", "credenza", "buffet", "bookcase", "hutch", "table", "desk"];
 const BEDS = ["bed", "headboard"];
 const SOFAS = ["sofa", "loveseat", "settee", "sectional"];
-const CHAIRS = ["chair", "stool", "armchair", "recliner"];
+const CHAIRS = ["chair", "armchair", "recliner"];
 const LIGHTING = ["lamp", "chandelier", "sconce", "pendant", "light", "lantern"];
 
 export function categorizeProduct(name: string): ProductCategory {
