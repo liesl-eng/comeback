@@ -228,8 +228,11 @@ export default function Catalog() {
                           value={inOrder}
                           min={0}
                           max={p.units_available}
+                          onFocus={(e) => e.target.select()}
+                          onClick={(e) => (e.target as HTMLInputElement).select()}
                           onChange={(e) => setQuantity(p.id, parseInt(e.target.value) || 0, meta)}
-                          className="h-8 flex-1 text-center text-sm rounded border border-input bg-background"
+                          className="h-8 flex-1 text-center text-sm font-semibold rounded border-2 border-accent/40 bg-background focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 cursor-text"
+                          title="Click to edit quantity"
                         />
                         <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => increment(p.id, meta)}>
                           <Plus className="h-3.5 w-3.5" />
