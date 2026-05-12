@@ -36,21 +36,19 @@ export default function CatalogOrderBar() {
 
   async function handleSubmit() {
     setSubmitting(true);
+    const orderItems = list
+      .map((l) => `${l.quantity} x ${l.name} (${l.brand}) @ ${fmt(l.unitPrice)} = ${fmt(l.quantity * l.unitPrice)}`)
+      .join("\n");
     const payload = {
-      lines: list.map((l) => ({
-        brand: l.brand,
-        product: l.name,
-        productId: l.productId,
-        quantity: l.quantity,
-        unitPrice: l.unitPrice,
-        lineTotal: l.quantity * l.unitPrice,
-      })),
-      brandTotals: totals.byBrand,
-      grandTotal: totals.grandTotal,
-      totalItems: totals.items,
-      contact,
-      timestamp: new Date().toISOString(),
-      source: "catalog-order-builder",
+      timestamp: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
+      company_name: contact.companyName,
+      contact_name: contact.contactName,
+      email: contact.email,
+      phone: contact.phone,
+      notes: contact.notes,
+      order_items: orderItems,
+      total_items: String(totals.items),
+      order_total: fmt(totals.grandTotal),
     };
     console.log("SUBMITTING CATALOG ORDER", payload);
     try {
