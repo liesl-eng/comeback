@@ -15,7 +15,7 @@ import { ShoppingCart, Trash2, CheckCircle2, AlertCircle, Minus, Plus } from "lu
 import { useCatalogOrder, BRAND_MOQ } from "@/contexts/CatalogOrderContext";
 import { cn } from "@/lib/utils";
 
-const CATALOG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/dfhkw36aa994g9qodvvbwvkkhlhj4dnk";
+const CATALOG_ORDER_WEBHOOK_URL = "https://hook.us2.make.com/tgsprcsyevdbcmahx6db65q8h8rvkmv2";
 
 const fmt = (n: number) => `$${Math.round(n).toLocaleString()}`;
 
