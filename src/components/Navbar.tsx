@@ -59,8 +59,8 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
             </div>
           </Link>
 
-          {/* Center: Search Bar */}
-          <form onSubmit={handleSearch} className="flex-1 max-w-md mx-2 md:mx-4">
+          {/* Center: Search Bar (desktop only) */}
+          <form onSubmit={handleSearch} className="hidden md:block flex-1 max-w-md mx-2 md:mx-4">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
