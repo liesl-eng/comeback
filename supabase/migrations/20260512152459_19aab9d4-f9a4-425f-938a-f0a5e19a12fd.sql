@@ -1,0 +1,1 @@
+UPDATE products SET category='Chairs' WHERE name ~* '\m(chair|armchair|recliner)\M';
