@@ -71,7 +71,7 @@ const EmailCaptureSection = () => {
   };
 
   return (
-    <section className="py-8 md:py-12 bg-accent/10 border-y border-accent/20">
+    <section id="email-capture" className="py-8 md:py-12 bg-accent/10 border-y border-accent/20 scroll-mt-20">
       <div className="container mx-auto px-4 max-w-3xl text-center">
         <h2 className="text-2xl md:text-4xl font-bold mb-3">Interested? Let's Talk Rugs.</h2>
         <p className="text-muted-foreground text-base md:text-lg mb-2 max-w-xl mx-auto">
