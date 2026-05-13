@@ -76,7 +76,7 @@ const EmailCaptureSection = () => {
       <div className="container mx-auto px-4 max-w-3xl text-center">
         <h2 className="text-2xl md:text-4xl font-bold mb-3">Interested? Let's Talk Rugs.</h2>
         <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-xl mx-auto">
-          Drop your email and we'll reach out with pricing, availability, and a program tailored to your business.
+          Drop in your email and we'll reach out with pricing and availability.
         </p>
         {done ? (
           <div className="inline-flex items-center gap-2 text-lg md:text-xl font-semibold text-foreground">
@@ -84,7 +84,7 @@ const EmailCaptureSection = () => {
             Thanks! We'll be in touch shortly.
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3 max-w-2xl mx-auto">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
             <Input
               type="email"
               required
@@ -94,16 +94,6 @@ const EmailCaptureSection = () => {
               maxLength={255}
               className="flex-1 h-11 bg-background"
             />
-            <Select value={businessType} onValueChange={setBusinessType}>
-              <SelectTrigger className="md:w-56 h-11 bg-background">
-                <SelectValue placeholder="Business type (optional)" />
-              </SelectTrigger>
-              <SelectContent>
-                {businessTypeOptions.map((opt) => (
-                  <SelectItem key={opt} value={opt}>{opt}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
             <Button
               type="submit"
               disabled={submitting}
