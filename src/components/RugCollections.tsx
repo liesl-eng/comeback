@@ -25,6 +25,20 @@ const ComingSoon = ({ className }: { className?: string }) => (
 
 const isMissingImage = (src: string) => !src || src === PLACEHOLDER_IMG;
 
+const SafeImage = ({ src, alt }: { src: string; alt: string }) => {
+  const [errored, setErrored] = useState(false);
+  if (errored || isMissingImage(src)) return <ComingSoon />;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className="w-full h-full object-cover"
+      loading="lazy"
+      onError={() => setErrored(true)}
+    />
+  );
+};
+
 /* Re-exports kept for backward compatibility with consumers like RugOrderBuilder. */
 export { rawSizeToBucket };
 export type { Collection, SubDesign, SizeBreakdown };
@@ -136,17 +150,9 @@ const RugCollections = () => {
                   >
                     {!isExpanded && (
                       <div className="h-52 overflow-hidden bg-muted">
-                        {isMissingImage(col.image) ? (
-                          <ComingSoon />
-                        ) : (
-                          <img
-                            src={col.image}
-                            alt={col.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        )}
+                        <SafeImage src={col.image} alt={col.name} />
                       </div>
+
                     )}
                     <CardContent className={cn("p-4", isExpanded ? "pt-4" : "")}>
                       <div className="flex items-center justify-between">
@@ -205,17 +211,9 @@ const RugCollections = () => {
                                       <Heart className={cn("h-4 w-4 transition-colors", saved ? "text-red-500 fill-red-500" : "text-muted-foreground hover:text-red-400")} />
                                     </button>
                                     <div className="h-40 overflow-hidden bg-muted">
-                                      {isMissingImage(design.image) ? (
-                                        <ComingSoon />
-                                      ) : (
-                                        <img
-                                          src={design.image}
-                                          alt={design.name}
-                                          className="w-full h-full object-cover"
-                                          loading="lazy"
-                                        />
-                                      )}
+                                      <SafeImage src={design.image} alt={design.name} />
                                     </div>
+
                                     <div className="p-3 space-y-2">
                                       <div className="flex items-center justify-between">
                                         <h4 className="font-medium text-sm">{design.name}</h4>
@@ -247,17 +245,9 @@ const RugCollections = () => {
                         ) : (
                           <div className="flex items-center gap-4 py-4">
                             <div className="h-32 w-32 shrink-0 overflow-hidden rounded-lg bg-muted">
-                              {isMissingImage(col.image) ? (
-                                <ComingSoon />
-                              ) : (
-                                <img
-                                  src={col.image}
-                                  alt={col.name}
-                                  className="w-full h-full object-cover"
-                                  loading="lazy"
-                                />
-                              )}
+                              <SafeImage src={col.image} alt={col.name} />
                             </div>
+
                             <div>
                               <h4 className="font-medium mb-1">{col.name}</h4>
                               <p className="text-sm text-muted-foreground">

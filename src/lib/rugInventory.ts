@@ -277,6 +277,7 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
     style: header.indexOf("style"),
     size: header.indexOf("size"),
     sizeCode: header.indexOf("size code"),
+    image: header.indexOf("image"),
   };
   // Inventory column is the 9th column (index 8) per the published sheet,
   // but its header is date-stamped — match by position fallback.
@@ -287,9 +288,17 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
     throw new Error("CSV missing required columns");
   }
 
-  // Aggregate: collection -> pattern -> sizeCode -> units
-  type PatternAgg = Map<string, number>; // sizeCode -> units
+  // Aggregate: collection -> pattern -> { sizes, image }
+  type PatternAgg = { sizes: Map<string, number>; image: string };
   const collMap = new Map<string, Map<string, PatternAgg>>();
+  const collImage = new Map<string, string>();
+
+  const cleanImg = (v: string): string => {
+    const s = (v || "").trim();
+    if (!s) return "";
+    if (/^https?:\/\//i.test(s) || s.startsWith("/")) return s;
+    return "";
+  };
 
   for (let i = 1; i < rows.length; i++) {
     const r = rows[i];
@@ -299,14 +308,17 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
     const sizeCode = (r[colIdx.sizeCode] || "").trim();
     const unitsStr = (r[invIdx] || "").trim();
     const units = parseInt(unitsStr.replace(/,/g, ""), 10);
+    const rowImage = colIdx.image >= 0 ? cleanImg(r[colIdx.image] || "") : "";
     if (!collection || !pattern || !sizeCode || !Number.isFinite(units) || units <= 0) continue;
     if (!SIZE_CODE_MAP[sizeCode]) continue; // unknown size, skip
 
     if (!collMap.has(collection)) collMap.set(collection, new Map());
     const patterns = collMap.get(collection)!;
-    if (!patterns.has(pattern)) patterns.set(pattern, new Map());
-    const sizes = patterns.get(pattern)!;
-    sizes.set(sizeCode, (sizes.get(sizeCode) || 0) + units);
+    if (!patterns.has(pattern)) patterns.set(pattern, { sizes: new Map(), image: "" });
+    const agg = patterns.get(pattern)!;
+    agg.sizes.set(sizeCode, (agg.sizes.get(sizeCode) || 0) + units);
+    if (!agg.image && rowImage) agg.image = rowImage;
+    if (!collImage.has(collection) && rowImage) collImage.set(collection, rowImage);
   }
 
   const collections: Collection[] = [];
@@ -315,11 +327,11 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
     const bucketSet = new Set<SizeBucket>();
     let totalUnits = 0;
 
-    for (const [patternName, sizeMap] of patternMap) {
+    for (const [patternName, agg] of patternMap) {
       // Merge size codes that map to same display label (e.g., 27 Roll + 31 Roll -> "Roll")
       const labelMap = new Map<string, { units: number; bucket: SizeBucket }>();
       let patternUnits = 0;
-      for (const [sizeCode, units] of sizeMap) {
+      for (const [sizeCode, units] of agg.sizes) {
         const m = SIZE_CODE_MAP[sizeCode];
         if (!m) continue;
         const existing = labelMap.get(m.label);
@@ -341,6 +353,7 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
         name: patternName,
         units: patternUnits,
         image:
+          agg.image ||
           PATTERN_IMAGES[`${collectionName}::${patternName}`] ||
           COLLECTION_IMAGES[collectionName] ||
           PLACEHOLDER_IMG,
@@ -357,7 +370,11 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
       name: collectionName,
       totalUnits,
       designCount: subDesigns.length,
-      image: COLLECTION_IMAGES[collectionName] || subDesigns[0].image || PLACEHOLDER_IMG,
+      image:
+        collImage.get(collectionName) ||
+        COLLECTION_IMAGES[collectionName] ||
+        subDesigns[0].image ||
+        PLACEHOLDER_IMG,
       sizeBuckets: [...bucketSet],
       subDesigns,
     });
