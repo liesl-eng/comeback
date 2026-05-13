@@ -59,7 +59,6 @@ const EmailCaptureSection = () => {
         body: JSON.stringify({
           email: email.trim(),
           timestamp: new Date().toISOString(),
-          timestamp: new Date().toISOString(),
           source: "rug-program-email-capture",
         }),
       });
