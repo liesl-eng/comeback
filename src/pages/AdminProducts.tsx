@@ -26,8 +26,9 @@ interface BrandState {
   // Import
   importing: boolean;
   importProgress: { done: number; total: number };
-  importReport: { ok: number; skipped: { name: string; reason: string }[] } | null;
+  importReport: { ok: number; skipped: { name: string; reason: string }[]; deleted?: number } | null;
   preview: boolean;
+  replaceMode: boolean;
 }
 
 const emptyState: BrandState = {
