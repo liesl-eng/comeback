@@ -22,9 +22,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, ShoppingCart } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight } from "lucide-react";
 import RugCollections from "@/components/RugCollections";
-import RugOrderBuilder from "@/components/RugOrderBuilder";
 import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
 
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
@@ -71,7 +70,7 @@ const EmailCaptureSection = () => {
   };
 
   return (
-    <section className="py-8 md:py-12 bg-accent/10 border-y border-accent/20">
+    <section id="email-capture" className="py-8 md:py-12 bg-accent/10 border-y border-accent/20 scroll-mt-20">
       <div className="container mx-auto px-4 max-w-3xl text-center">
         <h2 className="text-2xl md:text-4xl font-bold mb-3">Interested? Let's Talk Rugs.</h2>
         <p className="text-muted-foreground text-base md:text-lg mb-2 max-w-xl mx-auto">
@@ -290,11 +289,11 @@ const RugProgramInner = () => {
                 </Button>
                 <Button
                   size="lg"
-                  onClick={() => scrollTo("order-builder")}
+                  onClick={() => scrollTo("email-capture")}
                   variant="outline"
                   className="border-[hsl(43_65%_55%)] text-[hsl(43_65%_55%)] bg-transparent hover:bg-[hsl(43_65%_55%/0.1)] font-semibold text-base px-8"
                 >
-                  Build Your Order <ShoppingCart className="h-4 w-4 ml-2" />
+                  Get In Contact <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </div>
 
@@ -332,8 +331,8 @@ const RugProgramInner = () => {
         {/* ── COLLECTIONS ── */}
         <RugCollections />
 
-        {/* ── ORDER BUILDER ── */}
-        <RugOrderBuilder />
+
+
 
         {/* ── WHO IT'S FOR ── */}
         <section className="py-14 md:py-20 bg-muted/30">
@@ -437,30 +436,8 @@ const RugProgramInner = () => {
         </section>
       </main>
 
-      <footer id="get-a-quote" className="py-12 bg-primary text-primary-foreground scroll-mt-20">
+      <footer className="py-12 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center space-y-3">
-          {totalSaved > 0 && (
-            <div className="bg-primary-foreground/10 rounded-lg px-4 py-3 max-w-2xl mx-auto mb-4 text-left">
-              <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-1">
-                Your saved patterns ({totalSaved})
-              </p>
-              <p className="text-sm text-primary-foreground/80">
-                {savedSummary}
-              </p>
-              <p className="text-xs text-primary-foreground/50 mt-1">
-                Mention these in your email so we can include them in your quote.
-              </p>
-            </div>
-          )}
-          <p className="text-xl md:text-2xl font-semibold">
-            Get in contact:{" "}
-            <a
-              href={`mailto:liesl@comebackgoods.com${totalSaved > 0 ? `?subject=Rug%20Program%20Quote%20Request&body=Hi%2C%20I'm%20interested%20in%20the%20following%20patterns%3A%0A${encodeURIComponent(savedSummary)}%0A%0A` : ''}`}
-              className="text-accent hover:underline underline-offset-4"
-            >
-              liesl@comebackgoods.com
-            </a>
-          </p>
           <p className="text-sm text-primary-foreground/60">
             © 2025 Comeback Goods. Almost Perfect. Always Loved.
           </p>
