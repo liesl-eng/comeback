@@ -211,17 +211,9 @@ const RugCollections = () => {
                                       <Heart className={cn("h-4 w-4 transition-colors", saved ? "text-red-500 fill-red-500" : "text-muted-foreground hover:text-red-400")} />
                                     </button>
                                     <div className="h-40 overflow-hidden bg-muted">
-                                      {isMissingImage(design.image) ? (
-                                        <ComingSoon />
-                                      ) : (
-                                        <img
-                                          src={design.image}
-                                          alt={design.name}
-                                          className="w-full h-full object-cover"
-                                          loading="lazy"
-                                        />
-                                      )}
+                                      <SafeImage src={design.image} alt={design.name} />
                                     </div>
+
                                     <div className="p-3 space-y-2">
                                       <div className="flex items-center justify-between">
                                         <h4 className="font-medium text-sm">{design.name}</h4>
