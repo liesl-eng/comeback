@@ -334,6 +334,9 @@ const RugProgramInner = () => {
           </div>
         </section>
 
+        {/* ── EMAIL CAPTURE ── */}
+        <EmailCaptureSection />
+
         {/* ── COLLECTIONS ── */}
         <RugCollections />
 
