@@ -597,16 +597,32 @@ export default function AdminProducts() {
                         <CardTitle>{isMercana ? "4" : "3"}. Import</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
+                        <label className="flex items-start gap-2 text-sm border rounded p-3 bg-muted/30 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={s.replaceMode}
+                            onChange={(e) => patch(brand, { replaceMode: e.target.checked })}
+                            disabled={s.importing}
+                            className="mt-0.5"
+                          />
+                          <span>
+                            <strong>Replace mode</strong> — delete all existing <em>{brand}</em> products
+                            first, then import. Use this when the sheet is the source of truth and removed
+                            rows should disappear from the catalog. Leave unchecked to upsert (update existing,
+                            add new, keep removed rows).
+                          </span>
+                        </label>
                         <Button
                           onClick={() => handleImport(brand)}
                           disabled={s.importing}
+                          variant={s.replaceMode ? "destructive" : "default"}
                         >
                           {s.importing ? (
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                           ) : (
                             <Upload className="h-4 w-4 mr-2" />
                           )}
-                          Import all {s.rows.length} {brand} products
+                          {s.replaceMode ? "Replace" : "Import"} all {s.rows.length} {brand} products
                         </Button>
                         {s.importing && (
                           <div>
