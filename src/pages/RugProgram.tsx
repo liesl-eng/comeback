@@ -290,11 +290,11 @@ const RugProgramInner = () => {
                 </Button>
                 <Button
                   size="lg"
-                  onClick={() => scrollTo("order-builder")}
+                  onClick={() => scrollTo("email-capture")}
                   variant="outline"
                   className="border-[hsl(43_65%_55%)] text-[hsl(43_65%_55%)] bg-transparent hover:bg-[hsl(43_65%_55%/0.1)] font-semibold text-base px-8"
                 >
-                  Build Your Order <ShoppingCart className="h-4 w-4 ml-2" />
+                  Get In Contact <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </div>
 
