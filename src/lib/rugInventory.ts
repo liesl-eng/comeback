@@ -277,6 +277,7 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
     style: header.indexOf("style"),
     size: header.indexOf("size"),
     sizeCode: header.indexOf("size code"),
+    image: header.indexOf("image"),
   };
   // Inventory column is the 9th column (index 8) per the published sheet,
   // but its header is date-stamped — match by position fallback.
