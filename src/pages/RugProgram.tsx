@@ -30,6 +30,94 @@ import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
 // ⚠️ PASTE YOUR RUG PROGRAM WEBHOOK URL HERE ⚠️
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
 
+// ⚠️ PASTE YOUR EMAIL CAPTURE WEBHOOK URL HERE ⚠️
+const EMAIL_CAPTURE_WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_EMAIL_CAPTURE_WEBHOOK_URL";
+
+const businessTypeOptions = [
+  "Reseller/Thrift",
+  "Property Management",
+  "Short-Term Rental",
+  "Stager/Designer",
+  "Boutique Hotel",
+  "Other",
+];
+
+const EmailCaptureSection = () => {
+  const [email, setEmail] = useState("");
+  const [businessType, setBusinessType] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [done, setDone] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || submitting) return;
+    setSubmitting(true);
+    try {
+      await fetch(EMAIL_CAPTURE_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim(),
+          businessType: businessType || null,
+          timestamp: new Date().toISOString(),
+          source: "rug-program-email-capture",
+        }),
+      });
+    } catch (err) {
+      console.error("Email capture submit failed:", err);
+    } finally {
+      setDone(true);
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <section className="py-12 md:py-16 bg-accent/10 border-y border-accent/20">
+      <div className="container mx-auto px-4 max-w-3xl text-center">
+        <h2 className="text-2xl md:text-4xl font-bold mb-3">Interested? Let's Talk Rugs.</h2>
+        <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-xl mx-auto">
+          Drop your email and we'll reach out with pricing, availability, and a program tailored to your business.
+        </p>
+        {done ? (
+          <div className="inline-flex items-center gap-2 text-lg md:text-xl font-semibold text-foreground">
+            <CheckCircle2 className="h-6 w-6 text-accent" />
+            Thanks! We'll be in touch shortly.
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3 max-w-2xl mx-auto">
+            <Input
+              type="email"
+              required
+              placeholder="you@business.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              maxLength={255}
+              className="flex-1 h-11 bg-background"
+            />
+            <Select value={businessType} onValueChange={setBusinessType}>
+              <SelectTrigger className="md:w-56 h-11 bg-background">
+                <SelectValue placeholder="Business type (optional)" />
+              </SelectTrigger>
+              <SelectContent>
+                {businessTypeOptions.map((opt) => (
+                  <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button
+              type="submit"
+              disabled={submitting}
+              className="h-11 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold px-6"
+            >
+              {submitting ? "Sending..." : "Get in Touch"}
+            </Button>
+          </form>
+        )}
+      </div>
+    </section>
+  );
+};
+
 
 const volumeOptions = ["10–25 rugs/mo", "25–50 rugs/mo", "50–100 rugs/mo", "100+ rugs/mo", "Not sure yet"];
 const styleOptions = ["Traditional", "Modern", "Bohemian", "Solid/Neutral", "Geometric", "Shag", "Outdoor", "Runner"];
