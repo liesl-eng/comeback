@@ -397,6 +397,7 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
       image:
         collImage.get(collectionName) ||
         COLLECTION_IMAGES[collectionName] ||
+        PATTERN_NAME_IMAGES[collectionName.toLowerCase()] ||
         subDesigns[0].image ||
         PLACEHOLDER_IMG,
       sizeBuckets: [...bucketSet],
