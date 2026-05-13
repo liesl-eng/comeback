@@ -121,8 +121,13 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
             )}
           </div>
 
-          {/* Mobile: Favorites + Menu */}
+          {/* Mobile: Rug Program + Favorites + Menu */}
           <div className="flex md:hidden items-center gap-1">
+            <Link to="/rug-program">
+              <Button variant="highlight" size="sm" className="text-xs px-2">
+                Rug Program
+              </Button>
+            </Link>
             <Link to="/favorites">
               <Button
                 variant="ghost"
