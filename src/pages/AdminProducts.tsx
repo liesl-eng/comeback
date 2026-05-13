@@ -26,8 +26,9 @@ interface BrandState {
   // Import
   importing: boolean;
   importProgress: { done: number; total: number };
-  importReport: { ok: number; skipped: { name: string; reason: string }[] } | null;
+  importReport: { ok: number; skipped: { name: string; reason: string }[]; deleted?: number } | null;
   preview: boolean;
+  replaceMode: boolean;
 }
 
 const emptyState: BrandState = {
@@ -41,6 +42,7 @@ const emptyState: BrandState = {
   importProgress: { done: 0, total: 0 },
   importReport: null,
   preview: false,
+  replaceMode: false,
 };
 
 interface DupRow {
@@ -319,6 +321,20 @@ export default function AdminProducts() {
       importReport: null,
     });
 
+    let deletedCount = 0;
+    if (s.replaceMode) {
+      const { error: delErr, count } = await supabase
+        .from("products")
+        .delete({ count: "exact" })
+        .eq("brand", brand);
+      if (delErr) {
+        patch(brand, { importing: false });
+        toast({ title: "Replace failed", description: delErr.message, variant: "destructive" });
+        return;
+      }
+      deletedCount = count ?? 0;
+    }
+
     const chunkSize = 100;
     let inserted = 0;
     for (let i = 0; i < importRecords.length; i += chunkSize) {
@@ -336,9 +352,14 @@ export default function AdminProducts() {
 
     patch(brand, {
       importing: false,
-      importReport: { ok: inserted, skipped },
+      importReport: { ok: inserted, skipped, deleted: deletedCount },
     });
-    toast({ title: `Imported ${inserted} ${brand} products`, description: `${skipped.length} skipped` });
+    toast({
+      title: `Imported ${inserted} ${brand} products`,
+      description: s.replaceMode
+        ? `${deletedCount} old rows deleted · ${skipped.length} skipped`
+        : `${skipped.length} skipped`,
+    });
   }
 
   return (
@@ -576,16 +597,32 @@ export default function AdminProducts() {
                         <CardTitle>{isMercana ? "4" : "3"}. Import</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
+                        <label className="flex items-start gap-2 text-sm border rounded p-3 bg-muted/30 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={s.replaceMode}
+                            onChange={(e) => patch(brand, { replaceMode: e.target.checked })}
+                            disabled={s.importing}
+                            className="mt-0.5"
+                          />
+                          <span>
+                            <strong>Replace mode</strong> — delete all existing <em>{brand}</em> products
+                            first, then import. Use this when the sheet is the source of truth and removed
+                            rows should disappear from the catalog. Leave unchecked to upsert (update existing,
+                            add new, keep removed rows).
+                          </span>
+                        </label>
                         <Button
                           onClick={() => handleImport(brand)}
                           disabled={s.importing}
+                          variant={s.replaceMode ? "destructive" : "default"}
                         >
                           {s.importing ? (
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                           ) : (
                             <Upload className="h-4 w-4 mr-2" />
                           )}
-                          Import all {s.rows.length} {brand} products
+                          {s.replaceMode ? "Replace" : "Import"} all {s.rows.length} {brand} products
                         </Button>
                         {s.importing && (
                           <div>
@@ -599,6 +636,11 @@ export default function AdminProducts() {
                         )}
                         {s.importReport && (
                           <div className="text-sm space-y-2">
+                            {s.importReport.deleted ? (
+                              <p className="text-muted-foreground">
+                                Deleted <strong>{s.importReport.deleted}</strong> existing {brand} rows
+                              </p>
+                            ) : null}
                             <p>
                               <CheckCircle className="inline h-4 w-4 text-primary mr-1" />
                               <strong>{s.importReport.ok}</strong> imported successfully
