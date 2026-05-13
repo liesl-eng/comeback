@@ -321,6 +321,20 @@ export default function AdminProducts() {
       importReport: null,
     });
 
+    let deletedCount = 0;
+    if (s.replaceMode) {
+      const { error: delErr, count } = await supabase
+        .from("products")
+        .delete({ count: "exact" })
+        .eq("brand", brand);
+      if (delErr) {
+        patch(brand, { importing: false });
+        toast({ title: "Replace failed", description: delErr.message, variant: "destructive" });
+        return;
+      }
+      deletedCount = count ?? 0;
+    }
+
     const chunkSize = 100;
     let inserted = 0;
     for (let i = 0; i < importRecords.length; i += chunkSize) {
