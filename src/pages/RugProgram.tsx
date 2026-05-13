@@ -58,7 +58,7 @@ const EmailCaptureSection = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: email.trim(),
-          businessType: businessType || null,
+          timestamp: new Date().toISOString(),
           timestamp: new Date().toISOString(),
           source: "rug-program-email-capture",
         }),
