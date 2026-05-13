@@ -273,22 +273,22 @@ const RugProgramInner = () => {
 
           <div className="relative z-10 mx-auto px-6 md:px-12 lg:px-20 pt-6 pb-4 md:pt-10 md:pb-8 lg:pt-14 lg:pb-10">
             <div className="max-w-5xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 mb-6 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] text-base font-bold px-6 py-2.5 rounded-full">
+              <div className="inline-flex items-center gap-2 mb-4 bg-[hsl(30_50%_55%)] text-[hsl(210_55%_10%)] text-base font-bold px-6 py-2.5 rounded-full">
                 <Sparkles className="h-5 w-5" />
                 Comeback Rug Program
               </div>
-              <h1 className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[1.1] sm:leading-[0.95]">
+              <h1 className="mb-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-[1.1] sm:leading-[0.95]">
                 <span className="text-[hsl(0_0%_98%)]">Curated Rugs, </span>
                 <br className="sm:hidden" />
                 <span className="bg-gradient-to-r from-[hsl(43_65%_55%)] to-[hsl(30_50%_65%)] bg-clip-text text-transparent">
                   Big Savings
                 </span>
               </h1>
-              <p className="mb-10 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
+              <p className="mb-6 text-lg md:text-xl text-[hsl(0_0%_98%/0.75)] max-w-2xl mx-auto leading-relaxed">
                 Inspected, ready-to-display rug inventory... delivered on your schedule.
               </p>
               {/* Hero CTA buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
                 <Button
                   size="lg"
                   onClick={() => scrollTo("collections")}
@@ -306,7 +306,7 @@ const RugProgramInner = () => {
                 </Button>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <Button
                   size="lg"
                   variant="outline"
@@ -318,7 +318,7 @@ const RugProgramInner = () => {
               </div>
 
               {/* Hero bullet points */}
-              <ul className="flex flex-col gap-3 max-w-xl mx-auto text-left mb-8">
+              <ul className="flex flex-col gap-2 max-w-xl mx-auto text-left">
                 {[
                   ["Premium Rugs, Big Savings", "up to 60% off wholesale."],
                   ["Rugs You Can Count On", "graded and ready for display."],
