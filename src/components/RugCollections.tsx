@@ -25,6 +25,20 @@ const ComingSoon = ({ className }: { className?: string }) => (
 
 const isMissingImage = (src: string) => !src || src === PLACEHOLDER_IMG;
 
+const SafeImage = ({ src, alt }: { src: string; alt: string }) => {
+  const [errored, setErrored] = useState(false);
+  if (errored || isMissingImage(src)) return <ComingSoon />;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className="w-full h-full object-cover"
+      loading="lazy"
+      onError={() => setErrored(true)}
+    />
+  );
+};
+
 /* Re-exports kept for backward compatibility with consumers like RugOrderBuilder. */
 export { rawSizeToBucket };
 export type { Collection, SubDesign, SizeBreakdown };
