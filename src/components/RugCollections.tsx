@@ -245,17 +245,9 @@ const RugCollections = () => {
                         ) : (
                           <div className="flex items-center gap-4 py-4">
                             <div className="h-32 w-32 shrink-0 overflow-hidden rounded-lg bg-muted">
-                              {isMissingImage(col.image) ? (
-                                <ComingSoon />
-                              ) : (
-                                <img
-                                  src={col.image}
-                                  alt={col.name}
-                                  className="w-full h-full object-cover"
-                                  loading="lazy"
-                                />
-                              )}
+                              <SafeImage src={col.image} alt={col.name} />
                             </div>
+
                             <div>
                               <h4 className="font-medium mb-1">{col.name}</h4>
                               <p className="text-sm text-muted-foreground">
