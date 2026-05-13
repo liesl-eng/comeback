@@ -44,7 +44,7 @@ const businessTypeOptions = [
 
 const EmailCaptureSection = () => {
   const [email, setEmail] = useState("");
-  const [businessType, setBusinessType] = useState("");
+  
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
