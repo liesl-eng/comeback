@@ -173,6 +173,22 @@ const PATTERN_IMAGES: Record<string, string> = {
   "Maya::Tallulah": "https://cdn.shopify.com/s/files/1/0669/1123/products/MYA-37RS_S_01.jpg?v=1753642764",
 };
 
+/* ─── Pattern-name → local asset (matches by Style/pattern name only) ───
+ *  Used as a fallback when the live sheet's image column is empty so that
+ *  any pattern named e.g. "Melody" picks up /rugs/Melody.jpg automatically. */
+const PATTERN_NAME_IMAGES: Record<string, string> = {
+  melody: "/rugs/Melody.jpg",
+  eva: "/rugs/Eva.webp",
+  salem: "/rugs/Salem.jpg",
+  timeless: "/rugs/Timeless.webp",
+  nile: "/rugs/Nile.jpg",
+  opal: "/rugs/Opal.jpg",
+  farah: "/rugs/Farah.webp",
+  logan: "/rugs/Logan.webp",
+  cabana: "/rugs/Cabana.jpg",
+  celeste: "/rugs/Celeste.jpg",
+};
+
 /* ─── Size code → bucket + display label ─── */
 interface SizeMapping {
   bucket: SizeBucket;
@@ -355,6 +371,7 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
         image:
           agg.image ||
           PATTERN_IMAGES[`${collectionName}::${patternName}`] ||
+          PATTERN_NAME_IMAGES[patternName.toLowerCase()] ||
           COLLECTION_IMAGES[collectionName] ||
           PLACEHOLDER_IMG,
         sizes,
