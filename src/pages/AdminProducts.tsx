@@ -42,6 +42,7 @@ const emptyState: BrandState = {
   importProgress: { done: 0, total: 0 },
   importReport: null,
   preview: false,
+  replaceMode: false,
 };
 
 interface DupRow {
