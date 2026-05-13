@@ -150,17 +150,9 @@ const RugCollections = () => {
                   >
                     {!isExpanded && (
                       <div className="h-52 overflow-hidden bg-muted">
-                        {isMissingImage(col.image) ? (
-                          <ComingSoon />
-                        ) : (
-                          <img
-                            src={col.image}
-                            alt={col.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        )}
+                        <SafeImage src={col.image} alt={col.name} />
                       </div>
+
                     )}
                     <CardContent className={cn("p-4", isExpanded ? "pt-4" : "")}>
                       <div className="flex items-center justify-between">
