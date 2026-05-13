@@ -314,7 +314,7 @@ const RugProgramInner = () => {
                 {[
                   ["Premium Rugs, Big Savings", "up to 60% off wholesale."],
                   ["Rugs You Can Count On", "graded and ready for display."],
-                  ["Your Lot, Your Rules", "monthly or quarterly, swap, pause, or adjust anytime."],
+                  ["Your Lot, Your Rules", "deliveries you can swap, pause, or adjust anytime."],
                 ].map(([label, desc]) => (
                   <li key={label} className="flex items-start gap-3 text-[hsl(0_0%_98%/0.85)] text-base md:text-lg">
                     <CheckCircle2 className="h-5 w-5 mt-0.5 shrink-0 text-[hsl(43_65%_55%)]" />
