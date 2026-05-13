@@ -74,8 +74,11 @@ const EmailCaptureSection = () => {
     <section className="py-8 md:py-12 bg-accent/10 border-y border-accent/20">
       <div className="container mx-auto px-4 max-w-3xl text-center">
         <h2 className="text-2xl md:text-4xl font-bold mb-3">Interested? Let's Talk Rugs.</h2>
-        <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-xl mx-auto">
+        <p className="text-muted-foreground text-base md:text-lg mb-2 max-w-xl mx-auto">
           Drop in your email and we'll reach out with pricing and availability.
+        </p>
+        <p className="text-sm text-muted-foreground/80 italic mb-8">
+          (No spam. Just rugs.)
         </p>
         {done ? (
           <div className="inline-flex items-center gap-2 text-lg md:text-xl font-semibold text-foreground">
