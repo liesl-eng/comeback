@@ -636,6 +636,11 @@ export default function AdminProducts() {
                         )}
                         {s.importReport && (
                           <div className="text-sm space-y-2">
+                            {s.importReport.deleted ? (
+                              <p className="text-muted-foreground">
+                                Deleted <strong>{s.importReport.deleted}</strong> existing {brand} rows
+                              </p>
+                            ) : null}
                             <p>
                               <CheckCircle className="inline h-4 w-4 text-primary mr-1" />
                               <strong>{s.importReport.ok}</strong> imported successfully
