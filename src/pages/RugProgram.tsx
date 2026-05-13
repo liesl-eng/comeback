@@ -31,7 +31,7 @@ import textureWoven from "@/assets/rugs/texture-woven-hero.jpg";
 const WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_WEBHOOK_URL";
 
 // ⚠️ PASTE YOUR EMAIL CAPTURE WEBHOOK URL HERE ⚠️
-const EMAIL_CAPTURE_WEBHOOK_URL = "https://hook.us2.make.com/REPLACE_WITH_YOUR_EMAIL_CAPTURE_WEBHOOK_URL";
+const EMAIL_CAPTURE_WEBHOOK_URL = "https://hook.us2.make.com/rh6adihbukcjw82u1rf3nmacdx81ri5l";
 
 const businessTypeOptions = [
   "Reseller/Thrift",
