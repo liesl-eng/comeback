@@ -371,6 +371,7 @@ export const buildCollectionsFromCSV = (csv: string): Collection[] => {
         image:
           agg.image ||
           PATTERN_IMAGES[`${collectionName}::${patternName}`] ||
+          PATTERN_NAME_IMAGES[patternName.toLowerCase()] ||
           COLLECTION_IMAGES[collectionName] ||
           PLACEHOLDER_IMG,
         sizes,
