@@ -187,6 +187,13 @@ const PATTERN_NAME_IMAGES: Record<string, string> = {
   logan: "/rugs/Logan.webp",
   cabana: "/rugs/Cabana.jpg",
   celeste: "/rugs/Celeste.jpg",
+  verity: "/rugs/Verity.jpg",
+  gigi: "/rugs/Gigi.webp",
+  harlow: "/rugs/Harlow.jpg",
+  miro: "/rugs/Miro.jpg",
+  lia: "/rugs/Lia.jpg",
+  sydney: "/rugs/Sydney.webp",
+  kasper: "/rugs/Kasper.webp",
 };
 
 /* ─── Size code → bucket + display label ─── */
