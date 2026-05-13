@@ -438,9 +438,8 @@ const RugProgramInner = () => {
 
       <footer className="py-12 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center space-y-3">
-          <p className="text-sm text-primary-foreground/60">
-            © 2025 Comeback Goods. Almost Perfect. Always Loved.
-          </p>
+          <p className="text-sm text-primary-foreground/60">© 2026 Comeback Goods</p>
+          <p className="text-sm text-primary-foreground/60">Almost Perfect. Always Loved.</p>
         </div>
       </footer>
     </div>
