@@ -19,7 +19,7 @@ import {
 
 const ComingSoon = ({ className }: { className?: string }) => (
   <div className={cn("w-full h-full flex items-center justify-center bg-muted text-muted-foreground", className)}>
-    <span className="text-sm font-medium uppercase tracking-wider">Image Coming Soon</span>
+    <span className="text-lg md:text-xl font-semibold uppercase tracking-wider">Image Coming Soon</span>
   </div>
 );
 
