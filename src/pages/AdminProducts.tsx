@@ -352,9 +352,14 @@ export default function AdminProducts() {
 
     patch(brand, {
       importing: false,
-      importReport: { ok: inserted, skipped },
+      importReport: { ok: inserted, skipped, deleted: deletedCount },
     });
-    toast({ title: `Imported ${inserted} ${brand} products`, description: `${skipped.length} skipped` });
+    toast({
+      title: `Imported ${inserted} ${brand} products`,
+      description: s.replaceMode
+        ? `${deletedCount} old rows deleted · ${skipped.length} skipped`
+        : `${skipped.length} skipped`,
+    });
   }
 
   return (
