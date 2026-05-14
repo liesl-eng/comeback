@@ -184,6 +184,7 @@ export default function Catalog() {
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
                 className="h-9 rounded-md border border-input bg-background px-2 text-sm"
               >
+                <option value="featured">Featured</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="qty-asc">Quantity: Low to High</option>
