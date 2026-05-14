@@ -249,26 +249,28 @@ export default function AdminProducts() {
     const skipped: { name: string; reason: string }[] = [];
 
     // For Mercana, also include images already in the storage bucket from
-    // previous upload sessions, so re-importing doesn't require re-uploading.
+    // previous upload/rehost sessions, so re-importing doesn't require re-uploading.
     const bucketFiles = new Map<string, string>();
     if (isMercana) {
-      const folder = "mercana";
-      let offset = 0;
+      const folders = ["mercana", "mercana-rehost"];
       const pageSize = 1000;
-      while (true) {
-        const { data, error } = await supabase.storage
-          .from("product-images")
-          .list(folder, { limit: pageSize, offset });
-        if (error || !data || data.length === 0) break;
-        for (const obj of data) {
-          if (!obj.name) continue;
-          const { data: pub } = supabase.storage
+      for (const folder of folders) {
+        let offset = 0;
+        while (true) {
+          const { data, error } = await supabase.storage
             .from("product-images")
-            .getPublicUrl(`${folder}/${obj.name}`);
-          bucketFiles.set(obj.name.toLowerCase(), pub.publicUrl);
+            .list(folder, { limit: pageSize, offset });
+          if (error || !data || data.length === 0) break;
+          for (const obj of data) {
+            if (!obj.name) continue;
+            const { data: pub } = supabase.storage
+              .from("product-images")
+              .getPublicUrl(`${folder}/${obj.name}`);
+            bucketFiles.set(obj.name.toLowerCase(), pub.publicUrl);
+          }
+          if (data.length < pageSize) break;
+          offset += pageSize;
         }
-        if (data.length < pageSize) break;
-        offset += pageSize;
       }
     }
 
@@ -279,12 +281,9 @@ export default function AdminProducts() {
       }
       let imageUrl: string | null = null;
       if (isMercana) {
-        if (r.imageFilename) {
-          const key = r.imageFilename.toLowerCase();
-          imageUrl = s.uploadedFiles.get(key) ?? bucketFiles.get(key) ?? r.imageUrl;
-        } else {
-          imageUrl = r.imageUrl;
-        }
+        const sourceFilename = r.imageUrl?.split("/").pop()?.split("?")[0] ?? null;
+        const key = (r.imageFilename ?? sourceFilename)?.toLowerCase();
+        imageUrl = key ? s.uploadedFiles.get(key) ?? bucketFiles.get(key) ?? r.imageUrl : r.imageUrl;
       } else {
         imageUrl = r.imageUrl;
       }
