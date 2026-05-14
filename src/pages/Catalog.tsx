@@ -118,6 +118,12 @@ export default function Catalog() {
       list = list.filter((p) => p.category === category);
     }
     const sorted = [...list].sort((a, b) => {
+      // In Lighting, pin Ferm Living to the top
+      if (category === "Lighting" && !searchQuery.trim()) {
+        const aFerm = a.brand === "Ferm Living" ? 0 : 1;
+        const bFerm = b.brand === "Ferm Living" ? 0 : 1;
+        if (aFerm !== bFerm) return aFerm - bFerm;
+      }
       if (sortBy.startsWith("price")) {
         const ap = comebackPrice(a.msrp, undefined, a.cost) ?? Infinity;
         const bp = comebackPrice(b.msrp, undefined, b.cost) ?? Infinity;
