@@ -129,9 +129,12 @@ export default function Catalog() {
         const bp = comebackPrice(b.msrp, undefined, b.cost) ?? Infinity;
         return sortBy === "price-asc" ? ap - bp : bp - ap;
       }
-      const aq = a.units_available ?? 0;
-      const bq = b.units_available ?? 0;
-      return sortBy === "qty-asc" ? aq - bq : bq - aq;
+      if (sortBy === "qty-asc" || sortBy === "qty-desc") {
+        const aq = a.units_available ?? 0;
+        const bq = b.units_available ?? 0;
+        return sortBy === "qty-asc" ? aq - bq : bq - aq;
+      }
+      return 0;
     });
     return sorted;
   }, [products, category, sortBy, searchQuery]);
