@@ -75,7 +75,7 @@ export default function Catalog() {
     ? (urlCat as string)
     : PRODUCT_CATEGORIES[0];
   const [category, setCategory] = useState<string>(initialCat);
-  const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "qty-asc" | "qty-desc">("price-asc");
+  const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "qty-asc" | "qty-desc">("featured");
   const { isFavorite, toggleFavorite } = useFavorites();
   const { lines, increment, decrement, setQuantity } = useCatalogOrder();
 
@@ -129,9 +129,12 @@ export default function Catalog() {
         const bp = comebackPrice(b.msrp, undefined, b.cost) ?? Infinity;
         return sortBy === "price-asc" ? ap - bp : bp - ap;
       }
-      const aq = a.units_available ?? 0;
-      const bq = b.units_available ?? 0;
-      return sortBy === "qty-asc" ? aq - bq : bq - aq;
+      if (sortBy === "qty-asc" || sortBy === "qty-desc") {
+        const aq = a.units_available ?? 0;
+        const bq = b.units_available ?? 0;
+        return sortBy === "qty-asc" ? aq - bq : bq - aq;
+      }
+      return 0;
     });
     return sorted;
   }, [products, category, sortBy, searchQuery]);
@@ -181,6 +184,7 @@ export default function Catalog() {
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
                 className="h-9 rounded-md border border-input bg-background px-2 text-sm"
               >
+                <option value="featured">Featured</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="qty-asc">Quantity: Low to High</option>
