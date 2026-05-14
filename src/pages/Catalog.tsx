@@ -75,7 +75,7 @@ export default function Catalog() {
     ? (urlCat as string)
     : PRODUCT_CATEGORIES[0];
   const [category, setCategory] = useState<string>(initialCat);
-  const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "qty-asc" | "qty-desc">("price-asc");
+  const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "qty-asc" | "qty-desc">("featured");
   const { isFavorite, toggleFavorite } = useFavorites();
   const { lines, increment, decrement, setQuantity } = useCatalogOrder();
 
