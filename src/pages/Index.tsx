@@ -36,8 +36,9 @@ const Index = () => {
                 Savings.
               </h1>
               <p className="mb-2 md:mb-3 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
-                High quality home goods. Small batches.<br />
-                <span className="underline underline-offset-4 decoration-2">Priced below wholesale</span>.
+                We work directly with brands to source high quality, imperfect goods.
+                <br /><br />
+                Brands stay sustainable. Everyone else gets a great deal.
               </p>
               <div className="mb-6 md:mb-8" />
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
