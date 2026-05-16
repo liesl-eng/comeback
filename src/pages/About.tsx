@@ -26,8 +26,10 @@ const About = () => {
         <div className="max-w-3xl mx-auto">
           <h1 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8">About <span className="text-accent">Comeback Goods</span></h1>
           
-          <p className="text-lg md:text-xl text-foreground mb-6 md:mb-8">
-            <span className="font-bold">Comeback Goods</span> works directly with brands for high quality, slightly imperfect goods.
+          <p className="text-lg md:text-xl text-foreground mb-6 md:mb-8 leading-relaxed">
+            We work directly with brands to source high quality, imperfect goods.
+            <br /><br />
+            Brands stay sustainable. Everyone else gets a great deal.
           </p>
 
           <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Why buy from us?</h2>
