@@ -37,6 +37,8 @@ const Index = () => {
               </h1>
               <p className="mb-2 md:mb-3 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
                 We work with brands for their high quality, imperfect goods.
+                <br />
+                Brands stays sustainable. Everyone else gets great deals.
               </p>
               <div className="mb-6 md:mb-8" />
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
