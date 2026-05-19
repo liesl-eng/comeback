@@ -35,7 +35,7 @@ const Index = () => {
                 </span>{" "}
                 Savings.
               </h1>
-              <p className="mb-2 md:mb-3 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
+              <p className="mb-2 md:mb-3 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center leading-relaxed">
                 We work with brands for their high quality, imperfect goods.
                 <br />
                 Brands stays sustainable. Everyone else gets great deals.
