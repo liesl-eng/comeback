@@ -304,15 +304,14 @@ const RugOrderBuilder = () => {
                       <SelectContent>
                         {(() => {
                           if (!item.collection || !item.pattern) return SIZE_TIERS.map((tier) => (
-                            <SelectItem key={tier.id} value={tier.id}>{tier.label} — ${tier.price}</SelectItem>
+                            <SelectItem key={tier.id} value={tier.id}>{tier.label}</SelectItem>
                           ));
-                          // Filter to only sizes that exist for this collection+pattern
                           return SIZE_TIERS.filter((tier) => {
                             const units = lookupUnits(item.collection, item.pattern, tier.id);
                             return units !== null && units > 0;
                           }).map((tier) => (
                             <SelectItem key={tier.id} value={tier.id}>
-                              {tier.label} — ${tier.price}
+                              {tier.label}
                             </SelectItem>
                           ));
                         })()}
@@ -357,13 +356,8 @@ const RugOrderBuilder = () => {
                     })()}
                   </div>
 
-                  {/* Line Total */}
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-muted-foreground">Total</Label>
-                    <div className="h-10 flex items-center justify-end font-semibold text-sm">
-                      ${getLineTotal(item).toLocaleString()}
-                    </div>
-                  </div>
+                  {/* Remove (mobile-friendly placeholder for grid spacing) */}
+                  <div className="hidden md:block" />
 
                   {/* Remove */}
                   <div className="hidden md:flex items-end pb-0.5">
@@ -395,10 +389,6 @@ const RugOrderBuilder = () => {
                     <p className="text-xs text-muted-foreground">Total Items</p>
                     <p className="text-xl font-bold">{totalItems} rugs</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Order Total</p>
-                    <p className="text-xl font-bold">${orderTotal.toLocaleString()}</p>
-                  </div>
                 </div>
 
                 {/* Progress */}
@@ -410,7 +400,7 @@ const RugOrderBuilder = () => {
                     </p>
                   ) : (
                     <p className="text-sm text-muted-foreground">
-                      You need <span className="font-semibold text-foreground">${remaining.toLocaleString()}</span> more to meet the $6,000 minimum
+                      Keep building to meet the order minimum
                     </p>
                   )}
                 </div>
@@ -441,7 +431,7 @@ const RugOrderBuilder = () => {
           <DialogHeader>
             <DialogTitle>Submit Order Request</DialogTitle>
             <DialogDescription>
-              {totalItems} rugs · ${orderTotal.toLocaleString()} total
+              {totalItems} rugs
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 mt-2">
