@@ -81,21 +81,11 @@ export default function CatalogOrderBar() {
                     <p className="text-[10px] uppercase tracking-wide text-muted-foreground">Items</p>
                     <p className="text-lg font-bold leading-tight">{totals.items}</p>
                   </div>
-                  <div className="flex-shrink-0">
-                    <p className="text-[10px] uppercase tracking-wide text-muted-foreground">Total</p>
-                    <p className="text-lg font-bold leading-tight">{fmt(totals.grandTotal)}</p>
-                  </div>
                   <div className="flex-1 min-w-0 hidden md:block">
                     {topBrand && (
-                      <>
-                        <div className="flex items-center justify-between text-xs mb-1">
-                          <span className="truncate font-medium">{topBrand.brand}</span>
-                          <span className={cn("ml-2", topBrand.metMoq ? "text-accent font-semibold" : "text-muted-foreground")}>
-                            {fmt(topBrand.total)} / {fmt(BRAND_MOQ)}
-                          </span>
-                        </div>
-                        <Progress value={progressPct} className="h-2" />
-                      </>
+                      <div className="flex items-center text-xs">
+                        <span className="truncate font-medium">{topBrand.brand}</span>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -115,18 +105,7 @@ export default function CatalogOrderBar() {
                           <div key={b.brand} className="rounded-lg border p-3">
                             <div className="flex items-center justify-between mb-1.5">
                               <span className="font-semibold text-sm">{b.brand}</span>
-                              <span className={cn("text-xs font-medium flex items-center gap-1",
-                                b.metMoq ? "text-accent" : "text-muted-foreground")}>
-                                {b.metMoq ? <CheckCircle2 className="h-3.5 w-3.5" /> : <AlertCircle className="h-3.5 w-3.5" />}
-                                {fmt(b.total)} / {fmt(BRAND_MOQ)}
-                              </span>
                             </div>
-                            <Progress value={Math.min((b.total / BRAND_MOQ) * 100, 100)} className="h-1.5 mb-3" />
-                            {!b.metMoq && (
-                              <p className="text-[11px] text-muted-foreground mb-2">
-                                Add {fmt(BRAND_MOQ - b.total)} more to meet this brand's minimum.
-                              </p>
-                            )}
                             <div className="space-y-2">
                               {list.filter((l) => l.brand === b.brand).map((l) => (
                                 <div key={l.productId} className="flex items-center gap-2">
@@ -135,7 +114,6 @@ export default function CatalogOrderBar() {
                                   </div>
                                   <div className="flex-1 min-w-0">
                                     <p className="text-xs font-medium truncate">{l.name}</p>
-                                    <p className="text-[11px] text-muted-foreground">{fmt(l.unitPrice)} ea</p>
                                   </div>
                                   <div className="flex items-center gap-1">
                                     <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => decrement(l.productId)}>
@@ -174,10 +152,6 @@ export default function CatalogOrderBar() {
                         ))}
                         <div className="flex items-center justify-between pt-2 border-t">
                           <Button variant="ghost" size="sm" onClick={clear}>Clear order</Button>
-                          <div className="text-right">
-                            <p className="text-xs text-muted-foreground">Order total</p>
-                            <p className="text-lg font-bold">{fmt(totals.grandTotal)}</p>
-                          </div>
                         </div>
                       </div>
                     </SheetContent>
@@ -211,15 +185,9 @@ export default function CatalogOrderBar() {
               <DialogHeader>
                 <DialogTitle>Request Quote</DialogTitle>
                 <DialogDescription>
-                  {totals.items} items · {fmt(totals.grandTotal)} · {totals.byBrand.length} brand{totals.byBrand.length === 1 ? "" : "s"}
+                  {totals.items} items · {totals.byBrand.length} brand{totals.byBrand.length === 1 ? "" : "s"}
                 </DialogDescription>
               </DialogHeader>
-              {!totals.anyBrandMet && (
-                <div className="rounded-md border border-orange-500/40 bg-orange-500/10 p-3 text-xs text-orange-600 flex gap-2">
-                  <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                  <span>No brand has reached the $6,000 minimum yet. You can still submit, but final approval requires meeting MOQ per brand.</span>
-                </div>
-              )}
               <div className="space-y-3 mt-1">
                 <div className="space-y-1.5">
                   <Label>Company Name *</Label>

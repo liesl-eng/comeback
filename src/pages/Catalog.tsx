@@ -235,11 +235,6 @@ export default function Catalog() {
                 <div className="p-3 flex flex-col gap-1 flex-1">
                   <div className="text-xs text-muted-foreground">{p.brand}</div>
                   <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
-                  <div className="flex items-baseline gap-2 mt-1 flex-wrap">
-                    <span className="text-xs text-muted-foreground">Price</span>
-                    <span className="font-bold">{formatComebackPrice(cb)}</span>
-                    <span className="text-[10px] text-muted-foreground">Each</span>
-                  </div>
                   <div className="mt-auto pt-2 flex items-center justify-between gap-2">
                     <Badge variant={sb.variant} className="shrink-0">{sb.label}</Badge>
                     <span className="text-xs font-semibold text-foreground">{p.units_available > 100 ? "100+" : p.units_available} units</span>
