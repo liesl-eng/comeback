@@ -13,6 +13,11 @@ const config: ProgramConfig = {
     description:
       "Curated mirrors from premium brands at deep discounts. Inspected, ready-to-sell inventory delivered on your schedule.",
   },
+  // Brushed-silver / mirror-sheen background
+  heroBackground:
+    'linear-gradient(135deg, hsl(220 8% 18%) 0%, hsl(220 6% 32%) 35%, hsl(220 4% 58%) 55%, hsl(220 6% 38%) 75%, hsl(220 8% 22%) 100%)',
+  heroOverlay: false,
+  heroSheen: true,
   hero: {
     badgeText: "Comeback Mirror Program",
     titleLine1: "Curated Mirrors, ",
