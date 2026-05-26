@@ -19,6 +19,8 @@ import AdminProducts from "./pages/AdminProducts";
 import Catalog from "./pages/Catalog";
 import Auth from "./pages/Auth";
 import RugProgram from "./pages/RugProgram";
+import LightingProgram from "./pages/LightingProgram";
+import MirrorProgram from "./pages/MirrorProgram";
 import MeridianLamp from "./pages/MeridianLamp";
 import SizeGuide from "./pages/SizeGuide";
 import NotFound from "./pages/NotFound";
@@ -53,6 +55,10 @@ const App = () => {
                   <Route path="/pallet" element={<Navigate to="/catalog" replace />} />
                   <Route path="/cart" element={<Navigate to="/catalog" replace />} />
                   <Route path="/rug-program" element={<RugProgram />} />
+                  <Route path="/lighting-program" element={<LightingProgram />} />
+                  <Route path="/Lighting-Program" element={<Navigate to="/lighting-program" replace />} />
+                  <Route path="/mirror-program" element={<MirrorProgram />} />
+                  <Route path="/Mirror-Program" element={<Navigate to="/mirror-program" replace />} />
                   <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
                   <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/favorites" element={<Favorites />} />
