@@ -74,15 +74,8 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
           </form>
 
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-            <Link to="/catalog">
-              <Button variant="accent" size="sm">
-                Shop Catalog
-              </Button>
-            </Link>
-            <Link to="/rug-program">
-              <Button variant="highlight" size="sm">
-                Rug Program
-              </Button>
+            <Link to="/catalog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Shop Catalog
             </Link>
             <Link to="/favorites">
               <Button
