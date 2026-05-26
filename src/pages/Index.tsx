@@ -59,17 +59,22 @@ const Index = () => {
                 </Button>
               </div>
               
-              {/* Category buttons */}
+              {/* Program buttons */}
               <div className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3 justify-center">
-                {["Accessories", "Mirrors", "Lighting", "Chairs", "Furniture", "Beds", "Sofas"].map((category) => (
+                {[
+                  { label: "Rug Program", path: "/rug-program" },
+                  { label: "Lighting Program", path: "/lighting-program" },
+                  { label: "Mirror Program", path: "/mirror-program" },
+                  { label: "Other Products", path: "/catalog" },
+                ].map((program) => (
                   <Button
-                    key={category}
+                    key={program.label}
                     variant="outline"
                     size="sm"
                     className="bg-white/10 border-white/30 text-primary-foreground hover:bg-white/20 hover:text-primary-foreground backdrop-blur-sm"
-                    onClick={() => navigate(`/catalog?category=${encodeURIComponent(category)}`)}
+                    onClick={() => navigate(program.path)}
                   >
-                    {category}
+                    {program.label}
                   </Button>
                 ))}
               </div>
