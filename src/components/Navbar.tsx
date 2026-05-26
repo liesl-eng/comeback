@@ -163,13 +163,8 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
           <div className="md:hidden border-t py-4 space-y-4">
             <div className="flex flex-col gap-2">
               <Link to="/catalog" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="accent" className="w-full">
+                <Button variant="outline" className="w-full">
                   Shop Catalog
-                </Button>
-              </Link>
-              <Link to="/rug-program" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="highlight" className="w-full">
-                  Rug Program
                 </Button>
               </Link>
               <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
