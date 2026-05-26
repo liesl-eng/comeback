@@ -45,6 +45,12 @@ export interface ProgramConfig {
     desc: string;
     Icon: LucideIcon;
   }>;
+  /** Optional CSS background for the hero section. Defaults to the rug program gradient. */
+  heroBackground?: string;
+  /** Set to false to hide the default warm overlay (use when a custom heroBackground is set). */
+  heroOverlay?: boolean;
+  /** Set to true to add a mirror-like diagonal sheen + soft highlights over the hero. */
+  heroSheen?: boolean;
   faqs: Array<{ q: string; a: string }>;
   /** Minimum order quantity, in dollars. Used in FAQ copy and merch hooks. */
   moq: number;

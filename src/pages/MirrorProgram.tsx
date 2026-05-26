@@ -19,6 +19,11 @@ const config: ProgramConfig = {
     titleLine2: "Big Savings",
     subhead: "Inspected, ready-to-display mirror inventory... delivered on your schedule.",
     bullets: [
+  // Brushed-silver / mirror-sheen background
+  heroBackground:
+    'linear-gradient(135deg, hsl(220 8% 18%) 0%, hsl(220 6% 32%) 35%, hsl(220 4% 58%) 55%, hsl(220 6% 38%) 75%, hsl(220 8% 22%) 100%)',
+  heroOverlay: false,
+  heroSheen: true,
       ["Premium Mirrors, Big Savings", "up to 60% off wholesale."],
       ["Mirrors You Can Count On", "inspected and ready for display."],
       ["Your Lot, Your Rules", "deliveries you can swap, pause, or adjust anytime."],
