@@ -15,7 +15,7 @@ const config: ProgramConfig = {
   },
   // Brushed-silver / mirror-sheen background
   heroBackground:
-    'linear-gradient(135deg, hsl(220 8% 18%) 0%, hsl(220 6% 32%) 35%, hsl(220 4% 58%) 55%, hsl(220 6% 38%) 75%, hsl(220 8% 22%) 100%)',
+    'linear-gradient(135deg, hsl(220 6% 36%) 0%, hsl(220 5% 48%) 35%, hsl(220 4% 68%) 55%, hsl(220 5% 52%) 75%, hsl(220 6% 40%) 100%)',
   heroOverlay: false,
   heroSheen: true,
   hero: {
