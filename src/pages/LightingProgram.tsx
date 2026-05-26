@@ -13,6 +13,11 @@ const config: ProgramConfig = {
     description:
       "Curated lighting from premium brands at deep discounts. Inspected, ready-to-sell inventory delivered on your schedule.",
   },
+  // Soft blue "twilight glow" — evokes ambient lighting
+  heroBackground:
+    'radial-gradient(ellipse at 50% 30%, hsl(210 70% 78%) 0%, hsl(212 55% 62%) 35%, hsl(218 45% 45%) 70%, hsl(222 40% 32%) 100%)',
+  heroOverlay: false,
+  heroSheen: true,
   hero: {
     badgeText: "Comeback Lighting Program",
     titleLine1: "Curated Lighting, ",
