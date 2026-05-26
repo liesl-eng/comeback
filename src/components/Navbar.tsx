@@ -74,15 +74,8 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
           </form>
 
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-            <Link to="/catalog">
-              <Button variant="accent" size="sm">
-                Shop Catalog
-              </Button>
-            </Link>
-            <Link to="/rug-program">
-              <Button variant="highlight" size="sm">
-                Rug Program
-              </Button>
+            <Link to="/catalog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Shop Catalog
             </Link>
             <Link to="/favorites">
               <Button
@@ -121,13 +114,8 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
             )}
           </div>
 
-          {/* Mobile: Rug Program + Favorites + Menu */}
+          {/* Mobile: Favorites + Menu */}
           <div className="flex md:hidden items-center gap-1">
-            <Link to="/rug-program">
-              <Button variant="highlight" size="sm" className="text-xs px-2">
-                Rug Program
-              </Button>
-            </Link>
             <Link to="/favorites">
               <Button
                 variant="ghost"
@@ -175,13 +163,8 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
           <div className="md:hidden border-t py-4 space-y-4">
             <div className="flex flex-col gap-2">
               <Link to="/catalog" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="accent" className="w-full">
+                <Button variant="outline" className="w-full">
                   Shop Catalog
-                </Button>
-              </Link>
-              <Link to="/rug-program" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="highlight" className="w-full">
-                  Rug Program
                 </Button>
               </Link>
               <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
