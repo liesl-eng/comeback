@@ -163,8 +163,31 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
 
       <main>
         {/* ── HERO ── */}
-        <section className="relative overflow-hidden" style={{ background: 'var(--gradient-rug-hero)' }}>
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[hsl(30_50%_55%/0.08)]" />
+        <section
+          className="relative overflow-hidden"
+          style={{ background: config.heroBackground ?? 'var(--gradient-rug-hero)' }}
+        >
+          {config.heroOverlay !== false && (
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[hsl(30_50%_55%/0.08)]" />
+          )}
+          {config.heroSheen && (
+            <>
+              <div
+                className="absolute inset-0 pointer-events-none opacity-60 mix-blend-screen"
+                style={{
+                  background:
+                    'linear-gradient(115deg, hsl(0 0% 100% / 0) 30%, hsl(0 0% 100% / 0.18) 48%, hsl(0 0% 100% / 0.32) 50%, hsl(0 0% 100% / 0.18) 52%, hsl(0 0% 100% / 0) 70%)',
+                }}
+              />
+              <div
+                className="absolute inset-0 pointer-events-none opacity-40 mix-blend-overlay"
+                style={{
+                  background:
+                    'radial-gradient(ellipse at 20% 10%, hsl(0 0% 100% / 0.35), transparent 55%), radial-gradient(ellipse at 80% 90%, hsl(220 10% 20% / 0.4), transparent 60%)',
+                }}
+              />
+            </>
+          )}
 
           <div className="relative z-10 mx-auto px-6 md:px-12 lg:px-20 pt-6 pb-4 md:pt-10 md:pb-8 lg:pt-14 lg:pb-10">
             <div className="max-w-5xl mx-auto text-center">
