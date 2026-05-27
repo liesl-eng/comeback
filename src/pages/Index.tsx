@@ -40,27 +40,9 @@ const Index = () => {
                 <span className="block mt-6 md:mt-8">Brands stays sustainable. Everyone else gets a great deal.</span>
               </p>
               <div className="mb-6 md:mb-8" />
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-                <Button
-                  variant="accent"
-                  size="lg"
-                  className="gap-2"
-                  onClick={() => navigate("/catalog")}
-                >
-                  Shop Catalog
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  onClick={() => navigate("/about")}
-                >
-                  Learn More
-                </Button>
-              </div>
-              
-              {/* Program buttons */}
-              <div className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3 justify-center">
+
+              {/* Primary: Program buttons */}
+              <div className="flex flex-wrap gap-3 md:gap-4 justify-center">
                 {[
                   { label: "Rug Program", path: "/rug-program" },
                   { label: "Lighting Program", path: "/lighting-program" },
@@ -69,14 +51,34 @@ const Index = () => {
                 ].map((program) => (
                   <Button
                     key={program.label}
-                    variant="outline"
-                    size="sm"
-                    className="bg-white/10 border-white/30 text-primary-foreground hover:bg-white/20 hover:text-primary-foreground backdrop-blur-sm"
+                    variant="accent"
+                    size="lg"
+                    className="gap-2"
                     onClick={() => navigate(program.path)}
                   >
                     {program.label}
+                    <ArrowRight className="h-5 w-5" />
                   </Button>
                 ))}
+              </div>
+
+              {/* Secondary: Learn More + Shop Catalog */}
+              <div className="mt-5 md:mt-6 flex flex-wrap gap-3 justify-center items-center">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => navigate("/about")}
+                >
+                  Learn More
+                </Button>
+                <Button
+                  variant="link"
+                  size="sm"
+                  className="text-primary-foreground/90 hover:text-primary-foreground"
+                  onClick={() => navigate("/catalog")}
+                >
+                  Shop Catalog
+                </Button>
               </div>
             </div>
           </div>
