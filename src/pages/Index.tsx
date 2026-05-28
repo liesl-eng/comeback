@@ -28,6 +28,7 @@ const Index = () => {
           <div className="container relative mx-auto px-4 md:px-6 pt-14 pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="mb-4 md:mb-6 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95] text-center" style={{ textShadow: "3px 3px 0 hsl(0 0% 0% / 0.55)" }}>
+              <h1 className="mb-4 md:mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95] text-center" style={{ textShadow: "3px 3px 0 hsl(0 0% 0% / 0.55)" }}>
                 Tiny Imperfections.{" "}
                 <span className="relative inline-block">
                   <span className="relative z-10">Huge</span>
@@ -35,11 +36,10 @@ const Index = () => {
                 </span>{" "}
                 Savings.
               </h1>
-              <p className="mb-2 md:mb-3 text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
-                <span className="block">We work with brands for their high quality, imperfect goods.</span>
-                <span className="block mt-6 md:mt-8">Brands stays sustainable. Everyone else gets a great deal.</span>
+              <p className="mb-2 md:mb-3 text-2xl md:text-3xl lg:text-4xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
+                Sustainable sourcing. At a fraction of wholesale.
               </p>
-              <div className="mb-6 md:mb-8" />
+
 
               {/* Primary: Program buttons */}
               <div className="flex flex-wrap gap-3 md:gap-4 justify-center">
