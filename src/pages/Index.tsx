@@ -42,10 +42,10 @@ const Index = () => {
 
               {/* Primary: Program buttons */}
               <div className="flex flex-wrap gap-3 md:gap-4 justify-center">
+              {/* Primary: Program buttons */}
+              <div className="flex flex-wrap gap-3 md:gap-4 justify-center">
                 {[
                   { label: "Rug Program", path: "/rug-program" },
-                  { label: "Lighting Program", path: "/lighting-program" },
-                  { label: "Mirror Program", path: "/mirror-program" },
                   { label: "Other Products", path: "/catalog" },
                 ].map((program) => (
                   <Button
@@ -61,7 +61,7 @@ const Index = () => {
                 ))}
               </div>
 
-              {/* Secondary: Learn More + Shop Catalog */}
+              {/* Secondary: Learn More */}
               <div className="mt-5 md:mt-6 flex flex-wrap gap-3 justify-center items-center">
                 <Button
                   variant="secondary"
@@ -70,16 +70,8 @@ const Index = () => {
                 >
                   Learn More
                 </Button>
-                <Button
-                  variant="link"
-                  size="sm"
-                  className="text-primary-foreground/90 hover:text-primary-foreground"
-                  onClick={() => navigate("/catalog")}
-                >
-                  Shop Catalog
-                </Button>
               </div>
-            </div>
+
           </div>
         </section>
 
