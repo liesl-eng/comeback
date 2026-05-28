@@ -27,7 +27,6 @@ const Index = () => {
           </div>
           <div className="container relative mx-auto px-4 md:px-6 pt-14 pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="mb-4 md:mb-6 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95] text-center" style={{ textShadow: "3px 3px 0 hsl(0 0% 0% / 0.55)" }}>
               <h1 className="mb-4 md:mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95] text-center" style={{ textShadow: "3px 3px 0 hsl(0 0% 0% / 0.55)" }}>
                 Tiny Imperfections.{" "}
                 <span className="relative inline-block">
