@@ -41,9 +41,8 @@ const Index = () => {
 
 
               {/* Primary: Program buttons */}
-              <div className="flex flex-wrap gap-3 md:gap-4 justify-center">
-              {/* Primary: Program buttons */}
               <div className="mt-8 md:mt-10 flex flex-wrap gap-3 md:gap-4 justify-center">
+                {[
 
                   { label: "Rug Program", path: "/rug-program" },
                   { label: "Other Products", path: "/catalog" },
