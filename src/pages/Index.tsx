@@ -70,8 +70,9 @@ const Index = () => {
                   Learn More
                 </Button>
               </div>
-
+            </div>
           </div>
+
         </section>
 
         {/* Stats Banner */}
