@@ -8,7 +8,7 @@ const Index = () => {
         <img
           src={logo}
           alt="Comeback Goods"
-          className="h-14 sm:h-16 w-auto opacity-90"
+          className="h-20 sm:h-24 w-auto opacity-90"
         />
         <Package className="h-20 w-20 sm:h-24 sm:w-24 text-muted-foreground" strokeWidth={1} />
       </div>
