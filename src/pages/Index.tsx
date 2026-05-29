@@ -7,15 +7,12 @@ const Index = () => {
       <img
         src={logo}
         alt="Comeback Goods"
-        className="h-10 sm:h-12 w-auto mb-10 opacity-90"
+        className="h-14 sm:h-16 w-auto mb-12 opacity-90"
       />
       <Package className="h-20 w-20 sm:h-24 sm:w-24 text-muted-foreground mb-6" strokeWidth={1} />
       <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase text-foreground tracking-tighter leading-none">
         Restocking.
       </h1>
-      <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mt-4 font-medium">
-        Something good is coming. Check back soon.
-      </p>
     </div>
   );
 };
