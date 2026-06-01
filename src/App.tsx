@@ -16,6 +16,7 @@ import Favorites from "./pages/Favorites";
 import About from "./pages/About";
 import AdminImport from "./pages/AdminImport";
 import AdminProducts from "./pages/AdminProducts";
+import AdminImports from "./pages/AdminImports";
 import Catalog from "./pages/Catalog";
 import Auth from "./pages/Auth";
 import RugProgram from "./pages/RugProgram";
@@ -76,6 +77,14 @@ const App = () => {
                     element={
                       <ProtectedRoute>
                         <AdminImport />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/imports"
+                    element={
+                      <ProtectedRoute>
+                        <AdminImports />
                       </ProtectedRoute>
                     }
                   />

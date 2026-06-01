@@ -69,6 +69,7 @@ interface ProductImportRecord {
 
 export default function AdminProducts() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<BrandTab>("Mercana");
   const [state, setState] = useState<Record<BrandTab, BrandState>>(() => {
     const init: Record<string, BrandState> = {};
@@ -366,11 +367,16 @@ export default function AdminProducts() {
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold">Product Import</h1>
-            <p className="text-muted-foreground">
-              Import products from the Google Sheet. Mercana can use sheet image URLs or uploaded images.
-            </p>
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <h1 className="text-3xl font-bold">Product Import</h1>
+              <p className="text-muted-foreground">
+                Import products from the Google Sheet. Mercana can use sheet image URLs or uploaded images.
+              </p>
+            </div>
+            <Button variant="outline" onClick={() => navigate("/admin/imports")}>
+              Review scheduled imports
+            </Button>
           </div>
 
           <Card className="border-destructive/50">

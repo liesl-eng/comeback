@@ -1,115 +1,57 @@
-# Product Import System — Plan
+## Goal
 
-Before I write code, here's the proposed architecture. Confirm or adjust and I'll implement step by step.
+Daily sync no longer touches the live `products` table directly. Instead it writes each brand's fetched rows into a **staging area**, computes a **diff vs. live**, and waits for you to approve or reject per brand in the admin. Approved brands get a `replace=true` apply (delete + insert) into `products`. The homepage "Restocking" section keeps reading from `products` and stays live the entire time.
 
----
+## Flow
 
-## Step 1 — Wipe existing products
-
-The current "products" in your DB live in the `pallet_items` table (used by the Pallet flow). The Rug Program data lives in a Google Sheet (no DB rows). Catalog brand data (Arhaus, Hatch, etc.) is in static CSV files under `src/data/`.
-
-**Before deleting anything**, I will:
-1. Run a `SELECT COUNT(*), pallet_id` summary on `pallet_items` and show you the breakdown.
-2. Wait for your explicit "yes, delete" before running `DELETE FROM pallet_items` (and optionally `pallets`).
-
-Question: do you also want me to remove the static brand CSV files in `src/data/` (arhaus.csv, mercana.csv, modus_furniture.csv, etc.) and the components that read them? Those drive the current public catalog.
-
----
-
-## Step 2 — New database schema
-
-A clean `products` table (separate from `pallet_items`, which is a different B2B flow):
-
-```
-products
-  id              uuid pk
-  name            text
-  brand           text          -- "Mercana" | "Modus Furniture" | "Arteriors Home" | "Ferm Living"
-  image_url       text          -- public URL (Supabase Storage for Mercana, source URL for others)
-  image_filename  text          -- Mercana only, e.g. "0001_Product_Name.jpg"
-  price           numeric       -- cleaned from "$ XX.XX each"
-  msrp            numeric       -- cleaned from "$X,XXX"
-  units_available integer
-  source_last_updated timestamptz   -- from sheet
-  created_at      timestamptz default now()
-  updated_at      timestamptz default now()
-
-  unique (brand, name)          -- so re-imports upsert instead of duplicating
+```text
+Google Sheet  →  edge fn (staging mode)  →  product_import_runs + product_import_staging
+                                                      │
+                                       Admin /admin/imports reviews diff
+                                                      │
+                                  approve brand → apply edge fn → products (live)
+                                  reject brand  → run discarded, products untouched
 ```
 
-Indexes on `brand` and `units_available > 0`. RLS:
-- Public `SELECT` (catalog is public).
-- `INSERT/UPDATE/DELETE` restricted to `admin` role (reuses your existing `has_role` function).
+## Database (one migration)
 
-Plus a Supabase Storage bucket `product-images` (public read, admin write) to host the 756 Mercana images.
+- `product_import_runs` — one row per cron invocation per brand. Fields: `id`, `brand`, `started_at`, `finished_at`, `status` (`pending_review` | `approved` | `rejected` | `applied` | `failed`), `fetched_count`, `new_count`, `changed_count`, `removed_count`, `unchanged_count`, `error_message`.
+- `product_import_staging` — one row per fetched product within a run. Fields mirror `products` (`name`, `brand`, `category`, `image_url`, `image_filename`, `price`, `msrp`, `units_available`, `source_last_updated`) plus `run_id` and `diff_type` (`new` | `changed` | `removed` | `unchanged`).
+- RLS: read + write restricted to `has_role(auth.uid(), 'admin')`. Grants for `authenticated` + `service_role`. No `anon`.
 
----
+## Edge functions
 
-## Step 3 — Two image approaches
+**`sync-products-from-sheet` (modify):**
+- Drop the direct upsert to `products`.
+- For each brand: fetch sheet → create a `product_import_runs` row (`pending_review`) → insert staging rows → compute diff against current live `products` for that brand (match by normalized name) and stamp `diff_type` + counts. `removed` = live rows whose names aren't in the new sheet.
+- Returns a summary with run IDs.
 
-| Brand | Source | How it lands in `image_url` |
-|---|---|---|
-| Mercana | Local files matched by `Image Filename` column | Admin uploads files → stored in `product-images/mercana/<filename>` → public URL written to `products.image_url` |
-| Modus, Arteriors, Ferm Living | `Image URL` column from sheet | Copied as-is into `products.image_url` |
+**`apply-product-import` (new):**
+- Input: `{ run_id }`. Admin-auth required (validate JWT + `has_role` admin).
+- Verifies run is `pending_review` or `approved`. Wipes `products` for that brand, inserts staging rows except those marked `removed`, sets run to `applied`. On error → `failed`, products untouched.
 
-Mercana matching: filename in the sheet must exactly equal the uploaded file name (case-insensitive). Unmatched rows = skipped with a warning in the import report.
+**Cron:** keep `0 18 * * *` but call the sync function **without** `?replace=true` (since it now only stages). The replace-true behavior moves into the apply step.
 
----
+## Admin UI
 
-## Step 4 — Admin interface (`/admin/products`)
+New route `/admin/imports` (admin-gated):
+- List of recent runs grouped by date, with per-brand status pills and counts (`+12 new / 4 changed / 2 removed`).
+- Click a run → diff table: rows grouped by `diff_type`, showing name, price, units, image thumbnail; for `changed` show old vs. new side-by-side.
+- Per-run actions: **Approve & apply**, **Reject**. Bulk "Approve all pending" at top.
+- Add a small "Imports pending review: N" badge to the existing admin landing page so you notice runs.
 
-Gated behind the existing `admin` role check (same pattern as `/admin/import`). Layout:
+## Files
 
-```
-[Tab selector: Mercana | Modus Furniture | Arteriors Home | Ferm Living]
+- `supabase/migrations/<ts>_product_import_staging.sql` — tables, RLS, grants, indexes on `(brand, status)` and `(run_id)`.
+- `supabase/functions/sync-products-from-sheet/index.ts` — rewrite write path to staging + diff.
+- `supabase/functions/apply-product-import/index.ts` — new.
+- Cron update via insert tool: drop `?replace=true` from the URL.
+- `src/pages/AdminImports.tsx` — new review UI.
+- `src/App.tsx` — register `/admin/imports` route (ProtectedRoute + admin check).
+- `src/pages/AdminProducts.tsx` (or admin landing) — add pending-runs badge + link.
 
-Per tab:
-  ┌─────────────────────────────────────────────┐
-  │ 1. Fetch from Google Sheet  [Load Sheet]    │
-  │    → shows row count, last-updated info     │
-  ├─────────────────────────────────────────────┤
-  │ 2. (Mercana only) Upload images             │
-  │    [Drag-and-drop 756 files here]           │
-  │    → progress bar, X/756 uploaded           │
-  │    → match report: 740 matched, 16 missing  │
-  ├─────────────────────────────────────────────┤
-  │ 3. Preview first 5 products  [Preview]      │
-  │    → table with cleaned values + image      │
-  ├─────────────────────────────────────────────┤
-  │ 4. Import all  [Import 756 products]        │
-  │    → progress: "Importing 234/756..."       │
-  │    → final report: 740 ok, 16 skipped (csv) │
-  └─────────────────────────────────────────────┘
-```
+## Out of scope
 
-**Google Sheet access**: the sheet must be shared as "Anyone with the link → Viewer" so we can fetch each tab as CSV via `gviz/tq?tqx=out:csv&sheet=<TabName>`. No OAuth needed. If you'd rather keep the sheet private, we'd use the Google Sheets connector instead — let me know.
-
-**Data cleaning** (all client-side before insert):
-- `price`: regex strip `$`, commas, `each`, spaces → `parseFloat`
-- `msrp`: same
-- `units_available`: `parseInt`, default `0`
-- `"N/A"` / empty → `null` (or `0` for units)
-- Rows missing name or price → skipped, listed in error report
-
-**Import call**: chunked upserts of 100 rows via `supabase.from('products').upsert(..., { onConflict: 'brand,name' })`.
-
----
-
-## Step 5 — Public product display
-
-A new `/catalog` (or replace `/products`) page:
-- Grid of cards: image, name, brand, price, MSRP (strikethrough) + savings %, units badge ("In Stock" / "Low Stock <10" / "Out of Stock").
-- Brand filter chips at top (All / Mercana / Modus / Arteriors / Ferm Living).
-- Sorted: in-stock first, then by brand.
-
-Question: should this **replace** the current `/products` catalog (which reads the static CSVs), or live alongside it at a new route?
-
----
-
-## Open questions before I build
-
-1. **Delete scope** — wipe `pallet_items` only, or also remove the static brand CSVs + their UI?
-2. **Sheet sharing** — is the sheet public (anyone-with-link viewer)? If not, do you want me to set up the Google Sheets connector?
-3. **Catalog replacement** — does the new `/catalog` replace the existing `/products` page, or sit alongside it?
-
-Once you answer these (and approve the plan), I'll execute in this order: migration → storage bucket → admin import page → public catalog page → wire-up & QA.
+- Homepage "Restocking" section and all buyer-facing pages — untouched, keep reading live `products`.
+- Mercana flow — still admin-upload only, not part of staging.
+- Manual one-off fetches from the existing admin Fetch UI — leave as-is (still write straight to live) unless you want those gated too.

@@ -1,7 +1,10 @@
-// Fetches each brand tab from the public Google Sheet and upserts rows into
-// the `products` table. Designed for scheduled invocation (pg_cron) or manual
-// trigger. Mercana is intentionally excluded because it requires uploaded
-// images managed via the admin UI.
+// Fetches each brand tab from the public Google Sheet and writes results into
+// the import staging tables for admin review. Does NOT touch the live
+// `products` table — that only happens when an admin approves the run via the
+// `apply-product-import` function.
+//
+// Mercana is intentionally excluded because it requires uploaded images
+// managed via the admin UI.
 
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
@@ -125,6 +128,17 @@ async function fetchTab(tab: string): Promise<SheetRow[]> {
   return out;
 }
 
+function moneyEq(a: number | null | undefined, b: number | null | undefined): boolean {
+  const na = a == null ? null : Number(a);
+  const nb = b == null ? null : Number(b);
+  if (na == null && nb == null) return true;
+  if (na == null || nb == null) return false;
+  return Math.abs(na - nb) < 0.005;
+}
+function strEq(a: string | null | undefined, b: string | null | undefined): boolean {
+  return (a ?? null) === (b ?? null);
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
@@ -142,7 +156,6 @@ Deno.serve(async (req) => {
 
   const url = new URL(req.url);
   const brandsParam = url.searchParams.get("brands");
-  const replace = url.searchParams.get("replace") === "true";
   const brands = brandsParam ? brandsParam.split(",").map(s => s.trim()).filter(Boolean) : DEFAULT_BRANDS;
 
   const supabase = createClient(
@@ -155,57 +168,144 @@ Deno.serve(async (req) => {
 
   for (const brand of brands) {
     const brandReport: Record<string, unknown> = {};
+    // Create run row up-front so failures are visible in the admin
+    const { data: runRow, error: runErr } = await supabase
+      .from("product_import_runs")
+      .insert({ brand, status: "pending_review" })
+      .select("id").single();
+    if (runErr || !runRow) {
+      brandReport.error = `run insert failed: ${runErr?.message ?? "unknown"}`;
+      (summary.brands as Record<string, unknown>)[brand] = brandReport;
+      continue;
+    }
+    const runId = runRow.id;
+    brandReport.runId = runId;
+
     try {
       const rows = await fetchTab(brand);
       brandReport.fetched = rows.length;
 
-      const records = [];
+      // Dedupe names within the brand so we don't insert duplicate staging rows
+      const records: SheetRow[] = [];
       let skippedMissingPrice = 0;
       const nameCounts = new Map<string, number>();
       for (const r of rows) {
         if (r.price == null) { skippedMissingPrice++; continue; }
-        const key = `${brand}|${normalizeName(r.name)}`;
+        const key = normalizeName(r.name);
         const count = (nameCounts.get(key) ?? 0) + 1;
         nameCounts.set(key, count);
-        const name = count === 1 ? r.name : `${r.name} (#${count})`;
-        records.push({
-          name,
+        const displayName = count === 1 ? r.name : `${r.name} (#${count})`;
+        records.push({ ...r, name: displayName });
+      }
+
+      // Load current live products for this brand to diff against
+      const { data: liveRows, error: liveErr } = await supabase
+        .from("products")
+        .select("name, category, image_url, image_filename, price, msrp, units_available")
+        .eq("brand", brand);
+      if (liveErr) throw new Error(`load live failed: ${liveErr.message}`);
+      const liveByKey = new Map<string, typeof liveRows[number]>();
+      for (const l of liveRows ?? []) liveByKey.set(normalizeName(l.name), l);
+
+      const stagingRows: Record<string, unknown>[] = [];
+      const seenKeys = new Set<string>();
+      let newCount = 0, changedCount = 0, unchangedCount = 0;
+
+      for (const r of records) {
+        const key = normalizeName(r.name);
+        seenKeys.add(key);
+        const category = categorize(r.name);
+        const sourceTs = r.source_last_updated
+          ? new Date(r.source_last_updated.replace(" ", "T")).toISOString() : null;
+        const live = liveByKey.get(key);
+        let diff_type: "new" | "changed" | "unchanged";
+        if (!live) { diff_type = "new"; newCount++; }
+        else if (
+          moneyEq(live.price, r.price) &&
+          moneyEq(live.msrp, r.msrp) &&
+          (live.units_available ?? 0) === r.units_available &&
+          strEq(live.image_url, r.image_url) &&
+          strEq(live.image_filename, r.image_filename) &&
+          strEq(live.category, category)
+        ) { diff_type = "unchanged"; unchangedCount++; }
+        else { diff_type = "changed"; changedCount++; }
+
+        stagingRows.push({
+          run_id: runId,
+          diff_type,
+          name: r.name,
           brand,
-          category: categorize(r.name),
+          category,
           image_url: r.image_url,
           image_filename: r.image_filename,
           price: r.price,
           msrp: r.msrp,
           units_available: r.units_available,
-          source_last_updated: r.source_last_updated
-            ? new Date(r.source_last_updated.replace(" ", "T")).toISOString() : null,
+          source_last_updated: sourceTs,
+          previous_price: live?.price ?? null,
+          previous_msrp: live?.msrp ?? null,
+          previous_units_available: live?.units_available ?? null,
+          previous_image_url: live?.image_url ?? null,
         });
       }
 
-      let deleted = 0;
-      if (replace) {
-        const { error: delErr, count } = await supabase
-          .from("products").delete({ count: "exact" }).eq("brand", brand);
-        if (delErr) throw new Error(`delete failed: ${delErr.message}`);
-        deleted = count ?? 0;
+      // Removed: live rows not present in fetched set
+      let removedCount = 0;
+      for (const l of liveRows ?? []) {
+        const key = normalizeName(l.name);
+        if (seenKeys.has(key)) continue;
+        removedCount++;
+        stagingRows.push({
+          run_id: runId,
+          diff_type: "removed",
+          name: l.name,
+          brand,
+          category: l.category,
+          image_url: l.image_url,
+          image_filename: l.image_filename,
+          price: l.price,
+          msrp: l.msrp,
+          units_available: 0,
+          source_last_updated: null,
+          previous_price: l.price,
+          previous_msrp: l.msrp,
+          previous_units_available: l.units_available,
+          previous_image_url: l.image_url,
+        });
       }
 
-      let upserted = 0;
-      const errors: string[] = [];
+      // Insert staging in chunks
       const chunkSize = 200;
-      for (let i = 0; i < records.length; i += chunkSize) {
-        const chunk = records.slice(i, i + chunkSize);
-        const { error } = await supabase.from("products")
-          .upsert(chunk, { onConflict: "brand,name" });
-        if (error) errors.push(error.message);
-        else upserted += chunk.length;
+      for (let i = 0; i < stagingRows.length; i += chunkSize) {
+        const chunk = stagingRows.slice(i, i + chunkSize);
+        const { error } = await supabase.from("product_import_staging").insert(chunk);
+        if (error) throw new Error(`staging insert failed: ${error.message}`);
       }
+
+      await supabase.from("product_import_runs").update({
+        status: "pending_review",
+        finished_at: new Date().toISOString(),
+        fetched_count: records.length,
+        new_count: newCount,
+        changed_count: changedCount,
+        removed_count: removedCount,
+        unchanged_count: unchangedCount,
+        skipped_missing_price: skippedMissingPrice,
+      }).eq("id", runId);
+
+      brandReport.new = newCount;
+      brandReport.changed = changedCount;
+      brandReport.removed = removedCount;
+      brandReport.unchanged = unchangedCount;
       brandReport.skippedMissingPrice = skippedMissingPrice;
-      brandReport.deleted = deleted;
-      brandReport.upserted = upserted;
-      if (errors.length) brandReport.errors = errors;
     } catch (e) {
-      brandReport.error = e instanceof Error ? e.message : String(e);
+      const msg = e instanceof Error ? e.message : String(e);
+      brandReport.error = msg;
+      await supabase.from("product_import_runs").update({
+        status: "failed",
+        finished_at: new Date().toISOString(),
+        error_message: msg,
+      }).eq("id", runId);
     }
     (summary.brands as Record<string, unknown>)[brand] = brandReport;
   }

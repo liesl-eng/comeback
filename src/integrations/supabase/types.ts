@@ -65,6 +65,131 @@ export type Database = {
         }
         Relationships: []
       }
+      product_import_runs: {
+        Row: {
+          applied_at: string | null
+          applied_by: string | null
+          brand: string
+          changed_count: number
+          created_at: string
+          error_message: string | null
+          fetched_count: number
+          finished_at: string | null
+          id: string
+          new_count: number
+          removed_count: number
+          skipped_missing_price: number
+          started_at: string
+          status: string
+          unchanged_count: number
+          updated_at: string
+        }
+        Insert: {
+          applied_at?: string | null
+          applied_by?: string | null
+          brand: string
+          changed_count?: number
+          created_at?: string
+          error_message?: string | null
+          fetched_count?: number
+          finished_at?: string | null
+          id?: string
+          new_count?: number
+          removed_count?: number
+          skipped_missing_price?: number
+          started_at?: string
+          status?: string
+          unchanged_count?: number
+          updated_at?: string
+        }
+        Update: {
+          applied_at?: string | null
+          applied_by?: string | null
+          brand?: string
+          changed_count?: number
+          created_at?: string
+          error_message?: string | null
+          fetched_count?: number
+          finished_at?: string | null
+          id?: string
+          new_count?: number
+          removed_count?: number
+          skipped_missing_price?: number
+          started_at?: string
+          status?: string
+          unchanged_count?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      product_import_staging: {
+        Row: {
+          brand: string
+          category: string | null
+          created_at: string
+          diff_type: string
+          id: string
+          image_filename: string | null
+          image_url: string | null
+          msrp: number | null
+          name: string
+          previous_image_url: string | null
+          previous_msrp: number | null
+          previous_price: number | null
+          previous_units_available: number | null
+          price: number | null
+          run_id: string
+          source_last_updated: string | null
+          units_available: number
+        }
+        Insert: {
+          brand: string
+          category?: string | null
+          created_at?: string
+          diff_type: string
+          id?: string
+          image_filename?: string | null
+          image_url?: string | null
+          msrp?: number | null
+          name: string
+          previous_image_url?: string | null
+          previous_msrp?: number | null
+          previous_price?: number | null
+          previous_units_available?: number | null
+          price?: number | null
+          run_id: string
+          source_last_updated?: string | null
+          units_available?: number
+        }
+        Update: {
+          brand?: string
+          category?: string | null
+          created_at?: string
+          diff_type?: string
+          id?: string
+          image_filename?: string | null
+          image_url?: string | null
+          msrp?: number | null
+          name?: string
+          previous_image_url?: string | null
+          previous_msrp?: number | null
+          previous_price?: number | null
+          previous_units_available?: number | null
+          price?: number | null
+          run_id?: string
+          source_last_updated?: string | null
+          units_available?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_import_staging_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "product_import_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           brand: string
