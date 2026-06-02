@@ -90,6 +90,36 @@ const config: ProgramConfig = {
       a: "We source from a rotating mix of premium home brands. Everything meets our quality standards and is evaluated by us before we ship. We're happy to share current brand availability during your consultation.",
     },
   ],
+  showBackLink: true,
+  productGrid: {
+    eyebrow: "MIRROR PROGRAM",
+    heading: "Shop Mirrors",
+    subtext:
+      "Premium mirrors from Modus Furniture and Mercana — inspected, in stock, and priced 60% below retail.",
+    brands: [
+      {
+        label: "Modus Furniture",
+        displayBrand: "MODUS FURNITURE",
+        tab: "Modus Furniture",
+        filterName: (n) => /mirror/i.test(n),
+        fallback: [
+          { name: "Paragon Beveled Glass Mirror in White", msrp: 479, unitsAvailable: 61 },
+          { name: "Paragon Beveled Glass Mirror in Black", msrp: 479, unitsAvailable: 2 },
+          { name: "Paragon Mirror in Truffle", msrp: 529, unitsAvailable: 2 },
+          { name: "Lucerne Mirror in Vintage Coffee", msrp: 379, unitsAvailable: 2 },
+          { name: "Ella Mirror in Camel", msrp: 439, unitsAvailable: 4 },
+          { name: "City II Beveled Glass Mirror in Basalt Gray", msrp: 459, unitsAvailable: 2 },
+          { name: "Boho Chic Pattern Mirror Washed White", msrp: 479, unitsAvailable: 1 },
+        ],
+      },
+      {
+        label: "Mercana",
+        displayBrand: "MERCANA",
+        tab: "Mercana",
+        filterName: (n) => /mirror/i.test(n),
+      },
+    ],
+  },
 };
 
 const MirrorProgram = () => <ProgramMicrosite config={config} />;
