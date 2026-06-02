@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import StatsSection from "@/components/StatsSection";
+import ProgramsSection from "@/components/ProgramsSection";
+import { Link } from "react-router-dom";
 import ValuePropSection from "@/components/ValuePropSection";
 import BuyerSegmentSection from "@/components/BuyerSegmentSection";
 import { Button } from "@/components/ui/button";
