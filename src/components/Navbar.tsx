@@ -2,7 +2,7 @@ import { Search, Menu, X, Heart, LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
 import { useFavorites } from "@/contexts/FavoritesContext";
