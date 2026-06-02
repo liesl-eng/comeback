@@ -247,6 +247,9 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
           </div>
         </section>
 
+        {/* ── PRODUCT GRID (optional) ── */}
+        {config.productGrid && <ProgramProductGrid config={config.productGrid} />}
+
         {/* ── EMAIL CAPTURE ── */}
         <EmailCaptureSection
           source={config.slug}
