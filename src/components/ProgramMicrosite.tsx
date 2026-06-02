@@ -55,6 +55,10 @@ export interface ProgramConfig {
   faqs: Array<{ q: string; a: string }>;
   /** Minimum order quantity, in dollars. Used in FAQ copy and merch hooks. */
   moq: number;
+  /** Optional product grid rendered between hero and email capture. */
+  productGrid?: ProgramProductGridConfig;
+  /** Show "← All Programs" back link in the navbar. */
+  showBackLink?: boolean;
 }
 
 const EmailCaptureSection = ({ source, heading, subheading, italicLine }: {
