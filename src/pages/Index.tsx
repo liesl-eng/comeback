@@ -42,34 +42,40 @@ const Index = () => {
               </p>
 
 
-              {/* Primary: Program buttons */}
+              {/* Primary: Shop Programs + Get In Contact */}
               <div className="mt-8 md:mt-10 flex flex-wrap gap-3 md:gap-4 justify-center">
-                {[
-
-                  { label: "Rug Program", path: "/rug-program" },
-                  { label: "Other Products", path: "/catalog" },
-                ].map((program) => (
-                  <Button
-                    key={program.label}
-                    variant="accent"
-                    size="lg"
-                    className="gap-2"
-                    onClick={() => navigate(program.path)}
-                  >
-                    {program.label}
+                <Button
+                  variant="accent"
+                  size="lg"
+                  className="gap-2"
+                  onClick={() => {
+                    document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  Shop Programs
+                  <ArrowRight className="h-5 w-5" />
+                </Button>
+                <Button
+                  variant="accent"
+                  size="lg"
+                  className="gap-2"
+                  asChild
+                >
+                  <a href="mailto:hello@comebackgoods.com?subject=Comeback%20Goods%20Inquiry">
+                    Get In Contact
                     <ArrowRight className="h-5 w-5" />
-                  </Button>
-                ))}
+                  </a>
+                </Button>
               </div>
 
-              {/* Secondary: Learn More */}
+              {/* Secondary: How It Works */}
               <div className="mt-5 md:mt-6 flex flex-wrap gap-3 justify-center items-center">
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={() => navigate("/about")}
                 >
-                  Learn More
+                  How It Works
                 </Button>
               </div>
             </div>
