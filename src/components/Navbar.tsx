@@ -178,11 +178,18 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
         {mobileMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
             <div className="flex flex-col gap-2">
-              <Link to="/catalog" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full">
-                  Shop Catalog
-                </Button>
-              </Link>
+              {[
+                { to: "/mirrors", label: "Mirrors" },
+                { to: "/lighting", label: "Lighting" },
+                { to: "/rugs", label: "Rugs" },
+                { to: "/catalog", label: "Shop Catalog" },
+              ].map((item) => (
+                <Link key={item.to} to={item.to} onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="outline" className="w-full">
+                    {item.label}
+                  </Button>
+                </Link>
+              ))}
               <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="outline" className="w-full">
                   About
