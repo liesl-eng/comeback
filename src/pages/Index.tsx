@@ -126,10 +126,33 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-card py-8">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2026 Comeback Goods</p>
-          <p className="mt-1">Almost Perfect. Always Loved.</p>
+      <footer className="border-t bg-card py-10">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm mb-8">
+            <div>
+              <p className="font-bold text-foreground mb-3">Comeback Goods</p>
+              <p className="text-muted-foreground">Almost Perfect. Always Loved.</p>
+            </div>
+            <div>
+              <p className="font-bold text-foreground mb-3">Programs</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li><Link to="/mirrors" className="hover:text-accent transition-colors">Mirror Program</Link></li>
+                <li><Link to="/lighting" className="hover:text-accent transition-colors">Lighting Program</Link></li>
+                <li><Link to="/rugs" className="hover:text-accent transition-colors">Rug Program</Link></li>
+                <li><Link to="/catalog" className="hover:text-accent transition-colors">Full Catalog</Link></li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-bold text-foreground mb-3">Connect</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li><Link to="/about" className="hover:text-accent transition-colors">About / How It Works</Link></li>
+                <li><a href="mailto:hello@comebackgoods.com" className="hover:text-accent transition-colors">hello@comebackgoods.com</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t pt-6 text-center text-sm text-muted-foreground">
+            <p>© 2026 Comeback Goods</p>
+          </div>
         </div>
       </footer>
     </div>
