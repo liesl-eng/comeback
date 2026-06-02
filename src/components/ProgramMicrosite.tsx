@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, LucideIcon } from "lucide-react";
+import ProgramProductGrid, { ProgramProductGridConfig } from "@/components/ProgramProductGrid";
 
 const EMAIL_CAPTURE_WEBHOOK_URL = "https://hook.us2.make.com/rh6adihbukcjw82u1rf3nmacdx81ri5l";
 
@@ -54,6 +55,10 @@ export interface ProgramConfig {
   faqs: Array<{ q: string; a: string }>;
   /** Minimum order quantity, in dollars. Used in FAQ copy and merch hooks. */
   moq: number;
+  /** Optional product grid rendered between hero and email capture. */
+  productGrid?: ProgramProductGridConfig;
+  /** Show "← All Programs" back link in the navbar. */
+  showBackLink?: boolean;
 }
 
 const EmailCaptureSection = ({ source, heading, subheading, italicLine }: {
@@ -165,7 +170,7 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
         <meta name="twitter:description" content={config.seo.description} />
       </Helmet>
 
-      <ProgramNavbar programName={config.programName} />
+      <ProgramNavbar programName={config.programName} showBackLink={config.showBackLink} />
 
       <main>
         {/* ── HERO ── */}
@@ -241,6 +246,9 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
             </div>
           </div>
         </section>
+
+        {/* ── PRODUCT GRID (optional) ── */}
+        {config.productGrid && <ProgramProductGrid config={config.productGrid} />}
 
         {/* ── EMAIL CAPTURE ── */}
         <EmailCaptureSection

@@ -90,6 +90,35 @@ const config: ProgramConfig = {
       a: "We source from a rotating mix of premium home brands. Everything meets our quality standards and is evaluated by us before we ship. We're happy to share current brand availability during your consultation.",
     },
   ],
+  showBackLink: true,
+  productGrid: {
+    eyebrow: "LIGHTING PROGRAM",
+    heading: "Shop Lighting",
+    subtext:
+      "Designer lighting from Arteriors Home and Ferm Living — inspected, in stock, and priced 60% below retail.",
+    brands: [
+      {
+        label: "Arteriors Home",
+        displayBrand: "ARTERIORS HOME",
+        tab: "Arteriors Home",
+        filterName: (n) =>
+          /(lamp|sconce|chandelier|pendant|flush mount|floor lamp)/i.test(n),
+      },
+      {
+        label: "Ferm Living",
+        displayBrand: "FERM LIVING",
+        tab: "Ferm Living",
+        fallback: [
+          { name: "Meridian Lamp UL Cashmere", msrp: 265, unitsAvailable: 265 },
+          { name: "Meridian Lamp UL Black", msrp: 265, unitsAvailable: 265 },
+          { name: "Meridian Lamp UL Brushed Steel", msrp: 265, unitsAvailable: 265 },
+          { name: "Meridian Lamp UL Brass", msrp: 265, unitsAvailable: 265 },
+          { name: "Era Chandelier Black UL", msrp: 725, unitsAvailable: 725 },
+          { name: "Era Chandelier Eggshell UL", msrp: 725, unitsAvailable: 725 },
+        ],
+      },
+    ],
+  },
 };
 
 const LightingProgram = () => <ProgramMicrosite config={config} />;
