@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
 
 interface ProgramNavbarProps {
   programName: string;
+  /** Show a "← All Programs" link routing back to /#programs */
+  showBackLink?: boolean;
 }
 
-const ProgramNavbar = ({ programName }: ProgramNavbarProps) => {
+const ProgramNavbar = ({ programName, showBackLink }: ProgramNavbarProps) => {
   return (
     <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto px-4 md:px-6">
