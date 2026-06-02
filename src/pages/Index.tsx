@@ -86,6 +86,10 @@ const Index = () => {
         {/* Stats Banner */}
         <StatsSection />
 
+        {/* Programs Section */}
+        <ProgramsSection />
+
+
         {/* Stretch Your Budget headline */}
         <section className="pt-10 pb-1 md:pt-14 md:pb-2 bg-muted/30">
           <div className="container mx-auto px-4 text-center">
