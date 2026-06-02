@@ -56,9 +56,12 @@ const App = () => {
                   <Route path="/pallet" element={<Navigate to="/catalog" replace />} />
                   <Route path="/cart" element={<Navigate to="/catalog" replace />} />
                   <Route path="/rug-program" element={<RugProgram />} />
+                  <Route path="/rugs" element={<Navigate to="/rug-program" replace />} />
                   <Route path="/lighting-program" element={<LightingProgram />} />
+                  <Route path="/lighting" element={<Navigate to="/lighting-program" replace />} />
                   <Route path="/Lighting-Program" element={<Navigate to="/lighting-program" replace />} />
                   <Route path="/mirror-program" element={<MirrorProgram />} />
+                  <Route path="/mirrors" element={<Navigate to="/mirror-program" replace />} />
                   <Route path="/Mirror-Program" element={<Navigate to="/mirror-program" replace />} />
                   <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
                   <Route path="/size-guide" element={<SizeGuide />} />

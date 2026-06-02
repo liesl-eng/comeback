@@ -2,7 +2,7 @@ import { Search, Menu, X, Heart, LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import comebackLogo from "@/assets/comeback-goods-logo.png";
 import { useFavorites } from "@/contexts/FavoritesContext";
@@ -73,10 +73,26 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
             </div>
           </form>
 
-          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-            <Link to="/catalog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Shop Catalog
-            </Link>
+          <div className="hidden md:flex items-center gap-1 lg:gap-2 flex-shrink-0">
+            {[
+              { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
+              { to: "/lighting", label: "Lighting", match: ["/lighting", "/lighting-program"] },
+              { to: "/rugs", label: "Rugs", match: ["/rugs", "/rug-program"] },
+              { to: "/catalog", label: "Catalog", match: ["/catalog"] },
+            ].map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) => {
+                  const active = isActive || item.match.some((p) => window.location.pathname.startsWith(p));
+                  return `px-2 lg:px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                    active ? "text-accent" : "text-muted-foreground hover:text-foreground"
+                  }`;
+                }}
+              >
+                {item.label}
+              </NavLink>
+            ))}
             <Link to="/favorites">
               <Button
                 variant="ghost"
@@ -162,11 +178,18 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
         {mobileMenuOpen && (
           <div className="md:hidden border-t py-4 space-y-4">
             <div className="flex flex-col gap-2">
-              <Link to="/catalog" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full">
-                  Shop Catalog
-                </Button>
-              </Link>
+              {[
+                { to: "/mirrors", label: "Mirrors" },
+                { to: "/lighting", label: "Lighting" },
+                { to: "/rugs", label: "Rugs" },
+                { to: "/catalog", label: "Shop Catalog" },
+              ].map((item) => (
+                <Link key={item.to} to={item.to} onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="outline" className="w-full">
+                    {item.label}
+                  </Button>
+                </Link>
+              ))}
               <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="outline" className="w-full">
                   About

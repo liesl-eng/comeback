@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import StatsSection from "@/components/StatsSection";
+import ProgramsSection from "@/components/ProgramsSection";
+import { Link } from "react-router-dom";
 import ValuePropSection from "@/components/ValuePropSection";
 import BuyerSegmentSection from "@/components/BuyerSegmentSection";
 import { Button } from "@/components/ui/button";
@@ -40,34 +42,40 @@ const Index = () => {
               </p>
 
 
-              {/* Primary: Program buttons */}
+              {/* Primary: Shop Programs + Get In Contact */}
               <div className="mt-8 md:mt-10 flex flex-wrap gap-3 md:gap-4 justify-center">
-                {[
-
-                  { label: "Rug Program", path: "/rug-program" },
-                  { label: "Other Products", path: "/catalog" },
-                ].map((program) => (
-                  <Button
-                    key={program.label}
-                    variant="accent"
-                    size="lg"
-                    className="gap-2"
-                    onClick={() => navigate(program.path)}
-                  >
-                    {program.label}
+                <Button
+                  variant="accent"
+                  size="lg"
+                  className="gap-2"
+                  onClick={() => {
+                    document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  Shop Programs
+                  <ArrowRight className="h-5 w-5" />
+                </Button>
+                <Button
+                  variant="accent"
+                  size="lg"
+                  className="gap-2"
+                  asChild
+                >
+                  <a href="mailto:hello@comebackgoods.com?subject=Comeback%20Goods%20Inquiry">
+                    Get In Contact
                     <ArrowRight className="h-5 w-5" />
-                  </Button>
-                ))}
+                  </a>
+                </Button>
               </div>
 
-              {/* Secondary: Learn More */}
+              {/* Secondary: How It Works */}
               <div className="mt-5 md:mt-6 flex flex-wrap gap-3 justify-center items-center">
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={() => navigate("/about")}
                 >
-                  Learn More
+                  How It Works
                 </Button>
               </div>
             </div>
@@ -77,6 +85,10 @@ const Index = () => {
 
         {/* Stats Banner */}
         <StatsSection />
+
+        {/* Programs Section */}
+        <ProgramsSection />
+
 
         {/* Stretch Your Budget headline */}
         <section className="pt-10 pb-1 md:pt-14 md:pb-2 bg-muted/30">
@@ -114,10 +126,33 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-card py-8">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2026 Comeback Goods</p>
-          <p className="mt-1">Almost Perfect. Always Loved.</p>
+      <footer className="border-t bg-card py-10">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm mb-8">
+            <div>
+              <p className="font-bold text-foreground mb-3">Comeback Goods</p>
+              <p className="text-muted-foreground">Almost Perfect. Always Loved.</p>
+            </div>
+            <div>
+              <p className="font-bold text-foreground mb-3">Programs</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li><Link to="/mirrors" className="hover:text-accent transition-colors">Mirror Program</Link></li>
+                <li><Link to="/lighting" className="hover:text-accent transition-colors">Lighting Program</Link></li>
+                <li><Link to="/rugs" className="hover:text-accent transition-colors">Rug Program</Link></li>
+                <li><Link to="/catalog" className="hover:text-accent transition-colors">Full Catalog</Link></li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-bold text-foreground mb-3">Connect</p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li><Link to="/about" className="hover:text-accent transition-colors">About / How It Works</Link></li>
+                <li><a href="mailto:hello@comebackgoods.com" className="hover:text-accent transition-colors">hello@comebackgoods.com</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t pt-6 text-center text-sm text-muted-foreground">
+            <p>© 2026 Comeback Goods</p>
+          </div>
         </div>
       </footer>
     </div>
