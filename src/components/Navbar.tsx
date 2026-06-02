@@ -73,10 +73,26 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
             </div>
           </form>
 
-          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-            <Link to="/catalog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Shop Catalog
-            </Link>
+          <div className="hidden md:flex items-center gap-1 lg:gap-2 flex-shrink-0">
+            {[
+              { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
+              { to: "/lighting", label: "Lighting", match: ["/lighting", "/lighting-program"] },
+              { to: "/rugs", label: "Rugs", match: ["/rugs", "/rug-program"] },
+              { to: "/catalog", label: "Catalog", match: ["/catalog"] },
+            ].map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) => {
+                  const active = isActive || item.match.some((p) => window.location.pathname.startsWith(p));
+                  return `px-2 lg:px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                    active ? "text-accent" : "text-muted-foreground hover:text-foreground"
+                  }`;
+                }}
+              >
+                {item.label}
+              </NavLink>
+            ))}
             <Link to="/favorites">
               <Button
                 variant="ghost"
