@@ -78,6 +78,9 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
               { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
               { to: "/lighting", label: "Lighting", match: ["/lighting", "/lighting-program"] },
               { to: "/rugs", label: "Rugs", match: ["/rugs", "/rug-program"] },
+              { to: "/seating", label: "Seating", match: ["/seating"] },
+              { to: "/tables", label: "Tables", match: ["/tables"] },
+              { to: "/beds", label: "Beds", match: ["/beds"] },
               { to: "/catalog", label: "Catalog", match: ["/catalog"] },
             ].map((item) => (
               <NavLink
