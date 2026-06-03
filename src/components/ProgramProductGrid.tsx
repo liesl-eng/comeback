@@ -198,13 +198,13 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
   const showFallbackBanner = error && products.length > 0;
 
   return (
-    <section id={config.anchorId} className={(config.stickyHeader ? "pt-6 md:pt-8 " : "py-14 md:py-20 ") + "scroll-mt-20"}>
+    <section id={config.anchorId} className={(config.stickyHeader ? "pt-6 md:pt-8 pb-14 md:pb-20 " : "py-14 md:py-20 ") + "scroll-mt-20"}>
       <div className="container mx-auto px-4">
         {/* Header */}
         <div
           className={
             config.stickyHeader
-              ? "sticky top-16 md:top-20 z-40 -mx-4 px-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border pt-4 pb-4 mb-8"
+              ? "sticky top-16 md:top-20 z-40 -mx-4 px-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border pt-4 pb-4 mb-12 md:mb-16"
               : "text-center mb-8"
           }
         >
