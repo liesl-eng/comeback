@@ -59,6 +59,8 @@ export interface ProgramConfig {
   productGrid?: ProgramProductGridConfig;
   /** Show "← All Programs" back link in the navbar. */
   showBackLink?: boolean;
+  /** Hide the top hero section entirely. */
+  hideHero?: boolean;
 }
 
 const EmailCaptureSection = ({ source, heading, subheading, italicLine }: {
