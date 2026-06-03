@@ -13,6 +13,21 @@ const segments = [
 const BuyerSegmentSection = () => {
   const navigate = useNavigate();
 
+  const handleShopClick = () => {
+    const scrollToPrograms = () => {
+      const el = document.getElementById("programs");
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.scrollY + 220;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    };
+    if (window.location.pathname !== "/") {
+      navigate("/");
+      setTimeout(scrollToPrograms, 80);
+    } else {
+      scrollToPrograms();
+    }
+  };
+
   return (
     <section className="pt-4 pb-10 md:pt-6 md:pb-14 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -21,9 +36,9 @@ const BuyerSegmentSection = () => {
             variant="accent"
             size="lg"
             className="gap-2"
-            onClick={() => navigate("/#programs")}
+            onClick={handleShopClick}
           >
-            Shop Programs
+            Shop Catalog
             <ArrowRight className="h-5 w-5" />
           </Button>
         </div>
