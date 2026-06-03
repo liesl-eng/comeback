@@ -236,7 +236,69 @@ function SpaceRow({ space }: { space: OrderSpace }) {
   );
 }
 
+function ReviewSpaceAccordion({ space, subtotal }: { space: OrderSpace; subtotal: number }) {
+  const { removeItem, deleteSpace } = useBuildOrder();
+  const [open, setOpen] = useState(true);
+  return (
+    <Collapsible open={open} onOpenChange={setOpen} className="rounded-lg border">
+      <div className="flex items-center gap-2 p-3">
+        <CollapsibleTrigger asChild>
+          <Button variant="ghost" size="icon" className="h-7 w-7">
+            <ChevronDown className={cn("h-4 w-4 transition-transform", !open && "-rotate-90")} />
+          </Button>
+        </CollapsibleTrigger>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-sm truncate">{space.name}</p>
+          <p className="text-xs text-muted-foreground">
+            {space.items.length} item{space.items.length === 1 ? "" : "s"} · {fmtMoney(subtotal)}
+          </p>
+        </div>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-destructive">
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete {space.name}?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will remove {space.items.length} item{space.items.length === 1 ? "" : "s"} from your order.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => deleteSpace(space.id)}>Delete</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+      <CollapsibleContent>
+        <ul className="px-3 pb-3 space-y-1.5 text-xs">
+          {space.items.map((i) => (
+            <li key={i.id} className="flex items-center justify-between gap-2 rounded-md border border-border/60 px-2 py-1.5">
+              <span className="truncate flex-1 min-w-0">
+                <span className="text-accent font-semibold">{i.brand}</span> · {i.productName} ×{i.quantity}
+              </span>
+              <span className="font-medium flex-shrink-0">{fmtMoney(i.quantity * i.yourPrice)}</span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-muted-foreground hover:text-destructive flex-shrink-0"
+                onClick={() => removeItem(space.id, i.id)}
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
+
 export default function OrderBar() {
+
   const { state, totals, addSpace, clearOrder, setBuyerInfo } = useBuildOrder();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [submitOpen, setSubmitOpen] = useState(false);
