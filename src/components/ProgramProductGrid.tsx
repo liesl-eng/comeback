@@ -101,7 +101,13 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            toggleFavorite(itemId);
+            toggleFavorite(itemId, {
+              name: p.name,
+              brand: p.displayBrand,
+              imageUrl: p.imageUrl,
+              msrp: p.msrp,
+              price: yourPrice,
+            });
           }}
           className="absolute top-2 right-2 h-9 w-9 rounded-full bg-background/90 backdrop-blur border border-border shadow-sm flex items-center justify-center transition-colors hover:bg-background"
         >
