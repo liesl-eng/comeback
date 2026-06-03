@@ -59,6 +59,7 @@ interface Ctx {
   updateQty: (spaceId: string, itemId: string, qty: number) => void;
   removeItem: (spaceId: string, itemId: string) => void;
   addSpace: (name?: string) => string;
+  addSpaceWithItem: (name: string | undefined, item: Omit<OrderItem, "quantity">, qty?: number) => { id: string; name: string };
   renameSpace: (spaceId: string, name: string) => void;
   deleteSpace: (spaceId: string) => void;
   setBuyerInfo: (info: BuyerInfo) => void;
@@ -139,6 +140,19 @@ export function BuildOrderProvider({ children }: { children: ReactNode }) {
     return id;
   }, []);
 
+  const addSpaceWithItem: Ctx["addSpaceWithItem"] = useCallback((name, item, qty = 1) => {
+    const id = `space_${Date.now()}`;
+    let finalName = name?.trim() || "";
+    setState((prev) => {
+      const n = finalName || `Space ${prev.spaces.length + 1}`;
+      finalName = n;
+      const q = Math.min(qty, item.unitsAvailable || qty);
+      const newSpace: OrderSpace = { id, name: n, items: [{ ...item, quantity: q }] };
+      return { ...prev, spaces: [...prev.spaces, newSpace] };
+    });
+    return { id, name: finalName };
+  }, []);
+
   const renameSpace: Ctx["renameSpace"] = useCallback((spaceId, name) => {
     setState((prev) => ({
       ...prev,
@@ -196,7 +210,7 @@ export function BuildOrderProvider({ children }: { children: ReactNode }) {
   }, [state]);
 
   return (
-    <OrderCtx.Provider value={{ state, totals, addItem, updateQty, removeItem, addSpace, renameSpace, deleteSpace, setBuyerInfo, clearOrder }}>
+    <OrderCtx.Provider value={{ state, totals, addItem, updateQty, removeItem, addSpace, addSpaceWithItem, renameSpace, deleteSpace, setBuyerInfo, clearOrder }}>
       {children}
     </OrderCtx.Provider>
   );

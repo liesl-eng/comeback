@@ -104,7 +104,7 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
 }
 
 export default function AddToOrderButton({ item }: Props) {
-  const { state, addItem, addSpace } = useBuildOrder();
+  const { state, addItem, addSpaceWithItem } = useBuildOrder();
   const [open, setOpen] = useState(false);
   const [qty, setQty] = useState(1);
   const [selectedSpaceId, setSelectedSpaceId] = useState<string | null>(null);
@@ -144,9 +144,9 @@ export default function AddToOrderButton({ item }: Props) {
   };
 
   const handleCreateSpace = () => {
-    const name = newName.trim() || `Space ${state.spaces.length + 1}`;
-    const id = addSpace(name);
-    confirmAdd(id, name);
+    const { id, name } = addSpaceWithItem(newName, item, qty);
+    toast.success(`${qty} × ${item.productName} added to ${name}`);
+    resetAndClose();
   };
 
   return (
