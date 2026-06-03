@@ -19,9 +19,11 @@ interface SpaceOptionRowProps {
   count: number;
   active: boolean;
   onSelect: () => void;
+  showPencil?: boolean;
 }
 
-function SpaceOptionRow({ id, name, count, active, onSelect }: SpaceOptionRowProps) {
+
+function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: SpaceOptionRowProps) {
   const { renameSpace } = useBuildOrder();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(name);
@@ -85,16 +87,18 @@ function SpaceOptionRow({ id, name, count, active, onSelect }: SpaceOptionRowPro
         <span className="truncate">{name}</span>
         <span className="text-xs text-muted-foreground ml-2">{count}</span>
       </button>
-      <Button
-        type="button"
-        size="icon"
-        variant="ghost"
-        className="h-7 w-7 mr-1 text-muted-foreground hover:text-foreground"
-        title="Rename space"
-        onClick={(e) => { e.stopPropagation(); setEditing(true); }}
-      >
-        <Pencil className="h-3.5 w-3.5" />
-      </Button>
+      {showPencil && (
+        <Button
+          type="button"
+          size="icon"
+          variant="ghost"
+          className="h-7 w-7 mr-1 text-muted-foreground hover:text-foreground"
+          title="Rename space"
+          onClick={(e) => { e.stopPropagation(); setEditing(true); }}
+        >
+          <Pencil className="h-3.5 w-3.5" />
+        </Button>
+      )}
     </div>
   );
 }
@@ -200,6 +204,7 @@ export default function AddToOrderButton({ item }: Props) {
               count={s.items.length}
               active={s.id === selectedSpaceId}
               onSelect={() => setSelectedSpaceId(s.id)}
+              showPencil={state.spaces.length === 1 && s.name === "Space 1"}
             />
           ))}
         </div>
