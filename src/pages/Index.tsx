@@ -142,11 +142,11 @@ const Index = () => {
               <ul className="space-y-2 text-muted-foreground">
                 <li><Link to="/mirrors" className="hover:text-accent transition-colors">Mirrors</Link></li>
                 <li><Link to="/lighting" className="hover:text-accent transition-colors">Lighting</Link></li>
-                <li><Link to="/rugs" className="hover:text-accent transition-colors">Rugs</Link></li>
                 <li><Link to="/seating" className="hover:text-accent transition-colors">Seating</Link></li>
                 <li><Link to="/tables" className="hover:text-accent transition-colors">Tables</Link></li>
                 <li><Link to="/beds" className="hover:text-accent transition-colors">Beds</Link></li>
                 <li><Link to="/catalog" className="hover:text-accent transition-colors">Full Catalog</Link></li>
+                <li className="pt-2 border-t border-border/50 mt-2"><Link to="/rugs" className="hover:text-accent transition-colors font-medium">Rug Program</Link></li>
               </ul>
             </div>
             <div>
