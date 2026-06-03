@@ -74,7 +74,7 @@ function MoqProgressLight({ value, total, met }: { value: number; total: number;
 
 function SpaceRow({ space }: { space: OrderSpace }) {
   const { totals, updateQty, removeItem, renameSpace, deleteSpace } = useBuildOrder();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [draftName, setDraftName] = useState(space.name);
   const inputRef = useRef<HTMLInputElement>(null);
