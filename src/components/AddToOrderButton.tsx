@@ -144,9 +144,9 @@ export default function AddToOrderButton({ item }: Props) {
   };
 
   const handleCreateSpace = () => {
-    const name = newName.trim() || `Space ${state.spaces.length + 1}`;
-    const id = addSpace(name);
-    confirmAdd(id, name);
+    const { id, name } = addSpaceWithItem(newName, item, qty);
+    toast.success(`${qty} × ${item.productName} added to ${name}`);
+    resetAndClose();
   };
 
   return (
