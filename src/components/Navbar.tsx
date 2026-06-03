@@ -64,8 +64,8 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
 
           <div className="hidden md:flex items-center gap-1 lg:gap-2 flex-shrink-0">
             {[
-              { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
               { to: "/lighting", label: "Lighting", match: ["/lighting", "/lighting-program"] },
+              { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
               { to: "/seating", label: "Seating", match: ["/seating"] },
               { to: "/tables", label: "Tables", match: ["/tables"] },
               { to: "/beds", label: "Beds", match: ["/beds"] },
@@ -157,8 +157,8 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
           <div className="md:hidden border-t py-4 space-y-4">
             <div className="flex flex-col gap-2">
               {[
-                { to: "/mirrors", label: "Mirrors" },
                 { to: "/lighting", label: "Lighting" },
+                { to: "/mirrors", label: "Mirrors" },
                 { to: "/seating", label: "Seating" },
                 { to: "/tables", label: "Tables" },
                 { to: "/beds", label: "Beds" },
