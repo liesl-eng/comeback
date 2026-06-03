@@ -87,16 +87,18 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
         <span className="truncate">{name}</span>
         <span className="text-xs text-muted-foreground ml-2">{count}</span>
       </button>
-      <Button
-        type="button"
-        size="icon"
-        variant="ghost"
-        className="h-7 w-7 mr-1 text-muted-foreground hover:text-foreground"
-        title="Rename space"
-        onClick={(e) => { e.stopPropagation(); setEditing(true); }}
-      >
-        <Pencil className="h-3.5 w-3.5" />
-      </Button>
+      {showPencil && (
+        <Button
+          type="button"
+          size="icon"
+          variant="ghost"
+          className="h-7 w-7 mr-1 text-muted-foreground hover:text-foreground"
+          title="Rename space"
+          onClick={(e) => { e.stopPropagation(); setEditing(true); }}
+        >
+          <Pencil className="h-3.5 w-3.5" />
+        </Button>
+      )}
     </div>
   );
 }
