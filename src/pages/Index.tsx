@@ -4,6 +4,7 @@ import ProgramsSection from "@/components/ProgramsSection";
 import { Link } from "react-router-dom";
 import ValuePropSection from "@/components/ValuePropSection";
 import BuyerSegmentSection from "@/components/BuyerSegmentSection";
+import HomepageFaqs from "@/components/HomepageFaqs";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -105,6 +106,9 @@ const Index = () => {
 
         {/* Who It's For */}
         <BuyerSegmentSection />
+
+        {/* FAQ */}
+        <HomepageFaqs />
 
         {/* CTA Section */}
         <section className="py-6 md:py-10 bg-gradient-hero">
