@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { ArrowRight, CheckCircle2, Sparkles, ClipboardList, PackageSearch, CalendarClock, ChevronRight, LucideIcon } from "lucide-react";
 import ProgramProductGrid, { ProgramProductGridConfig } from "@/components/ProgramProductGrid";
+import Navbar from "@/components/Navbar";
 
 const EMAIL_CAPTURE_WEBHOOK_URL = "https://hook.us2.make.com/rh6adihbukcjw82u1rf3nmacdx81ri5l";
 
@@ -172,7 +173,7 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
         <meta name="twitter:description" content={config.seo.description} />
       </Helmet>
 
-      
+      <Navbar />
 
       <main>
         {/* ── HERO ── */}
