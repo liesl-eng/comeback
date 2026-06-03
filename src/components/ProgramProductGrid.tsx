@@ -127,7 +127,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
           {p.name}
         </h3>
         <p className="text-xs text-muted-foreground mb-3">
-          {p.unitsAvailable} in stock
+          {p.unitsAvailable >= 25 ? "25+ available" : `${p.unitsAvailable} in stock`}
         </p>
         <div className="mb-1 flex items-baseline gap-2">
           <span className="text-sm text-muted-foreground line-through">{formatUsd(p.msrp)}</span>
