@@ -97,23 +97,32 @@ function SpaceRow({ space }: { space: OrderSpace }) {
                 autoFocus
                 value={draftName}
                 onChange={(e) => setDraftName(e.target.value)}
+                onBlur={() => { renameSpace(space.id, draftName); setEditing(false); }}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") { renameSpace(space.id, draftName); setEditing(false); }
+                  if (e.key === "Enter") { e.preventDefault(); (e.target as HTMLInputElement).blur(); }
                   if (e.key === "Escape") { setDraftName(space.name); setEditing(false); }
                 }}
                 className="h-8 text-sm"
               />
-              <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => { renameSpace(space.id, draftName); setEditing(false); }}>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-8 w-8"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => { renameSpace(space.id, draftName); setEditing(false); }}
+              >
                 <Check className="h-4 w-4" />
               </Button>
             </div>
           ) : (
             <button
+              type="button"
               onClick={() => setEditing(true)}
-              className="flex items-center gap-1.5 text-left group"
+              className="flex items-center gap-1.5 text-left group w-full"
+              title="Click to rename"
             >
               <span className="font-semibold text-sm truncate">{space.name}</span>
-              <Pencil className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100" />
+              <Pencil className="h-3 w-3 text-muted-foreground opacity-60 group-hover:opacity-100 flex-shrink-0" />
             </button>
           )}
           <p className="text-xs text-muted-foreground">
