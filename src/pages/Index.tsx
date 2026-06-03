@@ -107,6 +107,9 @@ const Index = () => {
         {/* Who It's For */}
         <BuyerSegmentSection />
 
+        {/* FAQ */}
+        <HomepageFaqs />
+
         {/* CTA Section */}
         <section className="py-6 md:py-10 bg-gradient-hero">
           <div className="container mx-auto px-4 text-center">
