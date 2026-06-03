@@ -214,9 +214,20 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
               {config.eyebrow}
             </p>
           )}
-          <h2 className={(config.stickyHeader ? "text-2xl md:text-4xl text-center mb-3" : "text-3xl md:text-5xl text-center mb-4") + " font-bold"}>
-            {config.heading}
-          </h2>
+          <div className="relative flex items-center justify-center mb-3">
+            {config.stickyHeader && (
+              <Link
+                to="/#programs"
+                className="absolute left-0 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Back</span>
+              </Link>
+            )}
+            <h2 className={(config.stickyHeader ? "text-2xl md:text-4xl text-center" : "text-3xl md:text-5xl text-center mb-4") + " font-bold"}>
+              {config.heading}
+            </h2>
+          </div>
           {!config.stickyHeader && (
             <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto text-center">
               {config.subtext}
