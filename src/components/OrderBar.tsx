@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -77,9 +77,29 @@ function SpaceRow({ space }: { space: OrderSpace }) {
   const [open, setOpen] = useState(true);
   const [editing, setEditing] = useState(false);
   const [draftName, setDraftName] = useState(space.name);
+  const inputRef = useRef<HTMLInputElement>(null);
   const subtotal = totals.spaceSubtotal(space.id);
 
-  useEffect(() => setDraftName(space.name), [space.name]);
+  useEffect(() => {
+    if (!editing) setDraftName(space.name);
+  }, [space.name, editing]);
+
+  useEffect(() => {
+    if (editing && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [editing]);
+
+  const commit = () => {
+    renameSpace(space.id, draftName);
+    setEditing(false);
+  };
+
+  const cancel = () => {
+    setDraftName(space.name);
+    setEditing(false);
+  };
 
   return (
     <Collapsible open={open} onOpenChange={setOpen} className="rounded-lg border border-border bg-card">
@@ -92,16 +112,17 @@ function SpaceRow({ space }: { space: OrderSpace }) {
 
         <div className="flex-1 min-w-0">
           {editing ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
               <Input
-                autoFocus
+                ref={inputRef}
                 value={draftName}
                 onChange={(e) => setDraftName(e.target.value)}
-                onBlur={() => { renameSpace(space.id, draftName); setEditing(false); }}
+                onBlur={commit}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") { e.preventDefault(); (e.target as HTMLInputElement).blur(); }
-                  if (e.key === "Escape") { setDraftName(space.name); setEditing(false); }
+                  if (e.key === "Enter") { e.preventDefault(); commit(); }
+                  if (e.key === "Escape") { e.preventDefault(); cancel(); }
                 }}
+                onClick={(e) => e.stopPropagation()}
                 className="h-8 text-sm"
               />
               <Button
@@ -109,7 +130,7 @@ function SpaceRow({ space }: { space: OrderSpace }) {
                 variant="ghost"
                 className="h-8 w-8"
                 onMouseDown={(e) => e.preventDefault()}
-                onClick={() => { renameSpace(space.id, draftName); setEditing(false); }}
+                onClick={commit}
               >
                 <Check className="h-4 w-4" />
               </Button>
@@ -117,7 +138,7 @@ function SpaceRow({ space }: { space: OrderSpace }) {
           ) : (
             <button
               type="button"
-              onClick={() => setEditing(true)}
+              onClick={(e) => { e.stopPropagation(); setEditing(true); }}
               className="flex items-center gap-1.5 text-left group w-full"
               title="Click to rename"
             >
@@ -129,6 +150,7 @@ function SpaceRow({ space }: { space: OrderSpace }) {
             {space.items.length} item{space.items.length === 1 ? "" : "s"} · {fmtMoney(subtotal)}
           </p>
         </div>
+
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
