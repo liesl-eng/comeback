@@ -25,6 +25,10 @@ export interface ProgramProductGridConfig {
   subtext: string;
   brands: BrandSource[];      // 2 brand sources
   anchorId?: string;          // optional anchor id
+  /** Hide the eyebrow label above the heading. */
+  hideEyebrow?: boolean;
+  /** Make the header (heading + brand toggles) sticky below the navbar. */
+  stickyHeader?: boolean;
 }
 
 interface CardProduct {
