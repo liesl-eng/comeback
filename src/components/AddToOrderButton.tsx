@@ -23,7 +23,7 @@ interface SpaceOptionRowProps {
 }
 
 
-function SpaceOptionRow({ id, name, count, active, onSelect }: SpaceOptionRowProps) {
+function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: SpaceOptionRowProps) {
   const { renameSpace } = useBuildOrder();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(name);
