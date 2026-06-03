@@ -194,7 +194,7 @@ export default function AddToOrderButton({ item }: Props) {
         </p>
 
         {/* Space picker */}
-        <p className="text-sm font-semibold mb-2">Add to space</p>
+        <p className="text-sm font-semibold mb-2">Add to Space</p>
         <div className="space-y-1 max-h-44 overflow-y-auto mb-2">
           {state.spaces.map((s) => (
             <SpaceOptionRow
