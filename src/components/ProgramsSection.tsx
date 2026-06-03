@@ -1,19 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, RectangleVertical, Lightbulb, Layers, Armchair, Table2, BedDouble } from "lucide-react";
+import { ArrowRight, RectangleVertical, Lightbulb, Armchair, Table2, BedDouble } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const programs = [
-  {
-    icon: RectangleVertical,
-    title: "Mirrors",
-    desc:
-      "Wall mirrors, floor mirrors, and statement pieces from Modus Furniture and Mercana. Up to 98% below MSRP.",
-    badge: "Wall · Floor · Accent",
-    cta: "Shop Mirrors",
-    path: "/mirrors",
-    accent: "from-slate-300 via-slate-400 to-slate-500",
-  },
   {
     icon: Lightbulb,
     title: "Lighting",
@@ -25,14 +15,14 @@ const programs = [
     accent: "from-accent via-accent to-amber-600",
   },
   {
-    icon: Layers,
-    title: "Rugs",
+    icon: RectangleVertical,
+    title: "Mirrors",
     desc:
-      "Flatwoven closeout rugs from Well Woven. Individually rolled, tagged, and pallet-ready.",
-    badge: "500+ SKUs · In Stock",
-    cta: "Shop Rugs",
-    path: "/rugs",
-    accent: "from-primary via-primary to-slate-800",
+      "Wall mirrors, floor mirrors, and statement pieces from Modus Furniture and Mercana. Up to 98% below MSRP.",
+    badge: "Wall · Floor · Accent",
+    cta: "Shop Mirrors",
+    path: "/mirrors",
+    accent: "from-slate-300 via-slate-400 to-slate-500",
   },
   {
     icon: Armchair,
