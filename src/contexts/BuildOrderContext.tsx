@@ -210,7 +210,7 @@ export function BuildOrderProvider({ children }: { children: ReactNode }) {
   }, [state]);
 
   return (
-    <OrderCtx.Provider value={{ state, totals, addItem, updateQty, removeItem, addSpace, renameSpace, deleteSpace, setBuyerInfo, clearOrder }}>
+    <OrderCtx.Provider value={{ state, totals, addItem, updateQty, removeItem, addSpace, addSpaceWithItem, renameSpace, deleteSpace, setBuyerInfo, clearOrder }}>
       {children}
     </OrderCtx.Provider>
   );
