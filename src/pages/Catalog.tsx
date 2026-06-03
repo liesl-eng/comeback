@@ -226,7 +226,7 @@ export default function Catalog() {
                   <button
                     type="button"
                     aria-label={isFavorite(p.id) ? "Remove from favorites" : "Add to favorites"}
-                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(p.id); }}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(p.id, { name: p.name, brand: p.brand, imageUrl: p.image_url, msrp: p.msrp, price: cb ?? null }); }}
                     className="absolute top-2 right-2 h-8 w-8 rounded-full bg-background/90 hover:bg-background border flex items-center justify-center shadow-sm transition-colors"
                   >
                     <Heart className={`h-4 w-4 ${isFavorite(p.id) ? "fill-accent text-accent" : "text-muted-foreground"}`} />
