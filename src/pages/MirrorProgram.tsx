@@ -91,9 +91,12 @@ const config: ProgramConfig = {
     },
   ],
   showBackLink: true,
+  hideHero: true,
   productGrid: {
     eyebrow: "MIRROR PROGRAM",
     heading: "Shop Mirrors",
+    hideEyebrow: true,
+    stickyHeader: true,
     subtext:
       "Premium mirrors from Modus Furniture and Mercana — inspected, in stock, and priced 60% below retail.",
     brands: [
