@@ -137,6 +137,10 @@ export default function AddToOrderButton({ item }: Props) {
   };
 
   const handleConfirm = () => {
+    if (creating) {
+      handleCreateSpace();
+      return;
+    }
     if (!selectedSpaceId) return;
     const sp = state.spaces.find((s) => s.id === selectedSpaceId);
     if (!sp) return;
