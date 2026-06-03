@@ -104,7 +104,7 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
 }
 
 export default function AddToOrderButton({ item }: Props) {
-  const { state, addItem, addSpace } = useBuildOrder();
+  const { state, addItem, addSpaceWithItem } = useBuildOrder();
   const [open, setOpen] = useState(false);
   const [qty, setQty] = useState(1);
   const [selectedSpaceId, setSelectedSpaceId] = useState<string | null>(null);
