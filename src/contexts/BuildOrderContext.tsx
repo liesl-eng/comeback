@@ -140,6 +140,19 @@ export function BuildOrderProvider({ children }: { children: ReactNode }) {
     return id;
   }, []);
 
+  const addSpaceWithItem: Ctx["addSpaceWithItem"] = useCallback((name, item, qty = 1) => {
+    const id = `space_${Date.now()}`;
+    let finalName = name?.trim() || "";
+    setState((prev) => {
+      const n = finalName || `Space ${prev.spaces.length + 1}`;
+      finalName = n;
+      const q = Math.min(qty, item.unitsAvailable || qty);
+      const newSpace: OrderSpace = { id, name: n, items: [{ ...item, quantity: q }] };
+      return { ...prev, spaces: [...prev.spaces, newSpace] };
+    });
+    return { id, name: finalName };
+  }, []);
+
   const renameSpace: Ctx["renameSpace"] = useCallback((spaceId, name) => {
     setState((prev) => ({
       ...prev,
