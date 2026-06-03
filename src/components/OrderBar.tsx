@@ -396,11 +396,13 @@ export default function OrderBar() {
 
       {/* Order Drawer */}
       <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <SheetContent side="bottom" className="h-[75vh] flex flex-col p-0">
+        <SheetContent side="bottom" className="h-[92vh] max-h-[92vh] flex flex-col p-0">
           <SheetHeader className="p-5 border-b">
             <SheetTitle className="text-2xl font-bold">Your Order</SheetTitle>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
               <span>{totals.items} item{totals.items === 1 ? "" : "s"}</span>
+              <span>·</span>
+              <span>{state.spaces.length} space{state.spaces.length === 1 ? "" : "s"}</span>
               <span>·</span>
               <span className="font-semibold text-foreground">{fmtMoney(totals.grandTotal)} total</span>
             </div>
@@ -409,7 +411,7 @@ export default function OrderBar() {
             </div>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto p-5 space-y-3">
+          <div className="flex-1 min-h-0 overflow-y-auto p-5 space-y-3">
             {state.spaces.map((s) => <SpaceRow key={s.id} space={s} />)}
             <Button
               variant="outline"
@@ -419,6 +421,7 @@ export default function OrderBar() {
               <Plus className="h-4 w-4 mr-1.5" /> Add New Space
             </Button>
           </div>
+
 
           <div className="border-t bg-card p-5 space-y-2">
             <div className="flex items-center justify-between text-sm">
