@@ -172,7 +172,7 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
         <meta name="twitter:description" content={config.seo.description} />
       </Helmet>
 
-      <ProgramNavbar programName={config.programName} showBackLink={config.showBackLink} />
+      
 
       <main>
         {/* ── HERO ── */}
