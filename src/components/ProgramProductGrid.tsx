@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, ImageOff, ChevronLeft, Heart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { fetchSheetTab, BrandTab, SheetRow } from "@/lib/productSheet";
 import AddToOrderButton from "@/components/AddToOrderButton";
 import { useFavorites } from "@/contexts/FavoritesContext";
