@@ -26,6 +26,9 @@ import LightingProgram from "./pages/LightingProgram";
 import MirrorProgram from "./pages/MirrorProgram";
 import MeridianLamp from "./pages/MeridianLamp";
 import SizeGuide from "./pages/SizeGuide";
+import Seating from "./pages/Seating";
+import Tables from "./pages/Tables";
+import Beds from "./pages/Beds";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -68,6 +71,9 @@ const App = () => {
                   <Route path="/mirrors" element={<Navigate to="/mirror-program" replace />} />
                   <Route path="/Mirror-Program" element={<Navigate to="/mirror-program" replace />} />
                   <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
+                  <Route path="/seating" element={<Seating />} />
+                  <Route path="/tables" element={<Tables />} />
+                  <Route path="/beds" element={<Beds />} />
                   <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/favorites" element={<Favorites />} />
                   <Route path="/admin/products" element={<Navigate to="/admin" replace />} />

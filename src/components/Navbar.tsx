@@ -78,6 +78,9 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
               { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
               { to: "/lighting", label: "Lighting", match: ["/lighting", "/lighting-program"] },
               { to: "/rugs", label: "Rugs", match: ["/rugs", "/rug-program"] },
+              { to: "/seating", label: "Seating", match: ["/seating"] },
+              { to: "/tables", label: "Tables", match: ["/tables"] },
+              { to: "/beds", label: "Beds", match: ["/beds"] },
               { to: "/catalog", label: "Catalog", match: ["/catalog"] },
             ].map((item) => (
               <NavLink
@@ -182,6 +185,9 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
                 { to: "/mirrors", label: "Mirrors" },
                 { to: "/lighting", label: "Lighting" },
                 { to: "/rugs", label: "Rugs" },
+                { to: "/seating", label: "Seating" },
+                { to: "/tables", label: "Tables" },
+                { to: "/beds", label: "Beds" },
                 { to: "/catalog", label: "Shop Catalog" },
               ].map((item) => (
                 <Link key={item.to} to={item.to} onClick={() => setMobileMenuOpen(false)}>

@@ -1,37 +1,67 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, RectangleVertical, Lightbulb, Layers } from "lucide-react";
+import { ArrowRight, RectangleVertical, Lightbulb, Layers, Armchair, Table2, BedDouble } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const programs = [
   {
     icon: RectangleVertical,
-    title: "Mirror Program",
+    title: "Mirrors",
     desc:
       "Wall mirrors, floor mirrors, and statement pieces from Modus Furniture and Mercana. Up to 98% below MSRP.",
-    badge: "43 SKUs · In Stock",
+    badge: "Wall · Floor · Accent",
     cta: "Shop Mirrors",
     path: "/mirrors",
     accent: "from-slate-300 via-slate-400 to-slate-500",
   },
   {
     icon: Lightbulb,
-    title: "Lighting Program",
+    title: "Lighting",
     desc:
       "Table lamps, floor lamps, sconces, pendants, and chandeliers from Arteriors Home and Ferm Living. Up to 97% below MSRP.",
-    badge: "96 SKUs · In Stock",
+    badge: "Lamps · Sconces · Pendants",
     cta: "Shop Lighting",
     path: "/lighting",
     accent: "from-accent via-accent to-amber-600",
   },
   {
     icon: Layers,
-    title: "Rug Program",
+    title: "Rugs",
     desc:
       "Flatwoven closeout rugs from Well Woven. Individually rolled, tagged, and pallet-ready.",
     badge: "500+ SKUs · In Stock",
     cta: "Shop Rugs",
     path: "/rugs",
+    accent: "from-primary via-primary to-slate-800",
+  },
+  {
+    icon: Armchair,
+    title: "Seating",
+    desc:
+      "Dining chairs, accent chairs, and lounge seating from Modus Furniture, Arteriors Home, and Havenly.",
+    badge: "Chairs · Stools · Benches",
+    cta: "Shop Seating",
+    path: "/seating",
+    accent: "from-accent via-accent to-amber-600",
+  },
+  {
+    icon: Table2,
+    title: "Tables",
+    desc:
+      "Coffee tables, side tables, dining tables, and consoles from Modus Furniture and Arteriors Home.",
+    badge: "Coffee · Side · Dining",
+    cta: "Shop Tables",
+    path: "/tables",
+    accent: "from-slate-300 via-slate-400 to-slate-500",
+  },
+  {
+    icon: BedDouble,
+    title: "Beds",
+    desc:
+      "Beds, headboards, nightstands, and dressers from Modus Furniture. Up to 99% below MSRP.",
+    badge: "Beds · Headboards · Dressers",
+    cta: "Shop Beds",
+    path: "/beds",
     accent: "from-primary via-primary to-slate-800",
   },
 ];
@@ -54,7 +84,7 @@ const ProgramsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {programs.map((p) => (
             <Card
               key={p.title}

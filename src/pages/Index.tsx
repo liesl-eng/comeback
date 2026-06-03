@@ -140,9 +140,12 @@ const Index = () => {
             <div>
               <p className="font-bold text-foreground mb-3">Programs</p>
               <ul className="space-y-2 text-muted-foreground">
-                <li><Link to="/mirrors" className="hover:text-accent transition-colors">Mirror Program</Link></li>
-                <li><Link to="/lighting" className="hover:text-accent transition-colors">Lighting Program</Link></li>
-                <li><Link to="/rugs" className="hover:text-accent transition-colors">Rug Program</Link></li>
+                <li><Link to="/mirrors" className="hover:text-accent transition-colors">Mirrors</Link></li>
+                <li><Link to="/lighting" className="hover:text-accent transition-colors">Lighting</Link></li>
+                <li><Link to="/rugs" className="hover:text-accent transition-colors">Rugs</Link></li>
+                <li><Link to="/seating" className="hover:text-accent transition-colors">Seating</Link></li>
+                <li><Link to="/tables" className="hover:text-accent transition-colors">Tables</Link></li>
+                <li><Link to="/beds" className="hover:text-accent transition-colors">Beds</Link></li>
                 <li><Link to="/catalog" className="hover:text-accent transition-colors">Full Catalog</Link></li>
               </ul>
             </div>

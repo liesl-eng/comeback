@@ -130,7 +130,12 @@ export async function fetchSheetTab(tab: BrandTab): Promise<SheetRow[]> {
     out.push({
       name,
       brand: cleanStr(r[iBrand]) ?? tab,
-      imageUrl: iImageUrl >= 0 ? cleanStr(r[iImageUrl]) : null,
+      imageUrl: (() => {
+        const u = iImageUrl >= 0 ? cleanStr(r[iImageUrl]) : null;
+        if (!u) return null;
+        if (/defaultImage\.png/i.test(u)) return null;
+        return u;
+      })(),
       imageFilename: iImageFile >= 0 ? cleanStr(r[iImageFile]) : null,
       price: iPrice >= 0 ? cleanMoney(r[iPrice]) : null,
       msrp: iMsrp >= 0 ? cleanMoney(r[iMsrp]) : null,
