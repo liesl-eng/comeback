@@ -1,45 +1,21 @@
-import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { Button } from "@/components/ui/button";
-import { Heart, ArrowRight } from "lucide-react";
+import { Heart, ArrowRight, ImageOff, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Loader2 } from "lucide-react";
-import { comebackPrice, isBuyerVisible, formatComebackPrice } from "@/lib/pricing";
 
-interface Product {
-  id: string;
-  name: string;
-  brand: string;
-  image_url: string | null;
-  price: number | null;
-  msrp: number | null;
-  cost: number | null;
-  units_available: number;
+function formatUsd(n: number | null | undefined): string | null {
+  if (n == null || isNaN(n as number)) return null;
+  return `$${Math.round(n as number).toLocaleString("en-US")}`;
 }
 
 const Favorites = () => {
-  const { favorites } = useFavorites();
+  const { favorites, itemsData, removeFavorite } = useFavorites();
   const navigate = useNavigate();
-  const [items, setItems] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      if (favorites.length === 0) {
-        setItems([]);
-        setLoading(false);
-        return;
-      }
-      const { data } = await supabase
-        .from("products")
-        .select("id,name,brand,image_url,price,msrp,cost,units_available")
-        .in("id", favorites);
-      setItems((data ?? []).filter(isBuyerVisible));
-      setLoading(false);
-    })();
-  }, [favorites]);
+  const items = favorites
+    .map((id) => ({ id, data: itemsData[id] }))
+    .filter((x) => !!x.data);
 
   return (
     <div className="min-h-screen bg-background">
@@ -55,41 +31,57 @@ const Favorites = () => {
           </p>
         </div>
 
-        {loading ? (
-          <div className="flex justify-center py-16">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-        ) : items.length === 0 ? (
+        {items.length === 0 ? (
           <div className="text-center py-16">
             <Heart className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
             <h2 className="text-xl font-semibold mb-2">No favorites yet</h2>
             <p className="text-muted-foreground mb-6">
               Start saving products you love by clicking the heart icon.
             </p>
-            <Button variant="accent" onClick={() => navigate("/catalog")} className="gap-2">
-              Browse Catalog
+            <Button variant="accent" onClick={() => navigate("/")} className="gap-2">
+              Build Your Spaces
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {items.map((p) => (
-              <div key={p.id} className="border rounded-lg overflow-hidden bg-card">
-                <div className="aspect-square bg-muted">
-                  {p.image_url ? (
-                    <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground uppercase">
-                      Image Coming Soon
-                    </div>
-                  )}
+            {items.map(({ id, data }) => {
+              const price = formatUsd(data.price);
+              const msrp = formatUsd(data.msrp);
+              return (
+                <div key={id} className="border rounded-lg overflow-hidden bg-card flex flex-col group relative">
+                  <button
+                    type="button"
+                    aria-label="Remove from favorites"
+                    onClick={() => removeFavorite(id)}
+                    className="absolute top-2 right-2 z-10 h-8 w-8 rounded-full bg-background/90 border flex items-center justify-center hover:bg-background"
+                  >
+                    <X className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                  <div className="aspect-square bg-muted flex items-center justify-center">
+                    {data.imageUrl ? (
+                      <img src={data.imageUrl} alt={data.name} className="w-full h-full object-cover" loading="lazy" />
+                    ) : (
+                      <ImageOff className="h-10 w-10 text-muted-foreground/50" />
+                    )}
+                  </div>
+                  <div className="p-3 flex flex-col gap-1 flex-1">
+                    {data.brand && (
+                      <div className="text-[10px] font-bold tracking-widest text-accent uppercase">{data.brand}</div>
+                    )}
+                    <div className="font-medium leading-tight line-clamp-2">{data.name}</div>
+                    {(price || msrp) && (
+                      <div className="mt-auto pt-2 flex items-baseline gap-2">
+                        {msrp && price && (
+                          <span className="text-xs text-muted-foreground line-through">{msrp}</span>
+                        )}
+                        {price && <span className="text-sm font-bold text-foreground">{price}</span>}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="p-3">
-                  <div className="text-xs text-muted-foreground">{p.brand}</div>
-                  <div className="font-medium leading-tight line-clamp-2">{p.name}</div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>
