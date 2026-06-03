@@ -19,7 +19,9 @@ interface SpaceOptionRowProps {
   count: number;
   active: boolean;
   onSelect: () => void;
+  showPencil?: boolean;
 }
+
 
 function SpaceOptionRow({ id, name, count, active, onSelect }: SpaceOptionRowProps) {
   const { renameSpace } = useBuildOrder();
