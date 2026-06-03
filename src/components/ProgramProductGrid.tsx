@@ -199,69 +199,108 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
   const showFallbackBanner = error && products.length > 0;
 
   return (
-    <section id={config.anchorId} className={(config.stickyHeader ? "pt-6 md:pt-8 pb-14 md:pb-20 " : "py-14 md:py-20 ") + "scroll-mt-20"}>
-      <div className="container mx-auto px-4">
+    <section id={config.anchorId} className={(config.stickyHeader ? "pb-14 md:pb-20 " : "py-14 md:py-20 ") + "scroll-mt-20"}>
+      <div className={config.stickyHeader ? "" : "container mx-auto px-4"}>
         {/* Header */}
         <div
           className={
             config.stickyHeader
-              ? "sticky top-16 md:top-20 z-40 -mx-4 px-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border pt-4 pb-4 mb-12 md:mb-16"
+              ? "sticky top-16 md:top-20 z-40 bg-primary text-primary-foreground border-b border-primary/20 shadow-sm mb-8 md:mb-10"
               : "text-center mb-8"
           }
         >
-          {!config.hideEyebrow && (
-            <p className={(config.stickyHeader ? "text-center " : "") + "text-sm font-bold tracking-widest text-accent uppercase mb-3"}>
-              {config.eyebrow}
-            </p>
-          )}
-          <div className="relative flex items-center justify-center mb-3">
-            {config.stickyHeader && (
-              <Link
-                to="/#programs"
-                className="absolute left-0 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
-              >
-                <ChevronLeft className="h-4 w-4" />
-                <span className="hidden sm:inline">Back</span>
-              </Link>
-            )}
-            <h2 className={(config.stickyHeader ? "text-2xl md:text-4xl text-center" : "text-3xl md:text-5xl text-center mb-4") + " font-bold"}>
-              {config.heading}
-            </h2>
-          </div>
-          {!config.stickyHeader && (
-            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto text-center">
-              {config.subtext}
-            </p>
-          )}
-          {!config.stickyHeader && (
-            <p className="mt-3 text-xs text-muted-foreground text-center">
-              {lastUpdated
-                ? `Inventory last updated: ${lastUpdated}`
-                : "Updated daily at 2pm ET"}
-            </p>
-          )}
-
-          {/* Brand toggle */}
-          <div className={"flex justify-center gap-3 flex-wrap " + (config.stickyHeader ? "mt-2" : "mt-6 mb-10")}>
-            {config.brands.map((b, i) => {
-              const active = i === selected;
-              return (
-                <button
-                  key={b.label}
-                  onClick={() => setSelected(i)}
-                  className={
-                    "px-6 py-2.5 rounded-full font-semibold text-sm transition-colors border " +
-                    (active
-                      ? "bg-accent text-accent-foreground border-accent"
-                      : "bg-background text-foreground border-border hover:bg-muted")
-                  }
+          {config.stickyHeader ? (
+            <div className="container mx-auto px-4 py-3 md:py-4">
+              <div className="relative flex items-center justify-center gap-3">
+                <Link
+                  to="/#programs"
+                  className="absolute left-0 inline-flex items-center gap-1 text-sm text-primary-foreground/80 hover:text-accent transition-colors font-medium"
                 >
-                  {b.label}
-
-              </button>
-            );
-          })}
-          </div>
+                  <ChevronLeft className="h-4 w-4" />
+                  <span className="hidden sm:inline">Back</span>
+                </Link>
+                <h2 className="text-xl md:text-2xl font-bold text-center">
+                  {config.heading}
+                </h2>
+                <div className="hidden md:flex absolute right-0 items-center gap-2">
+                  {config.brands.map((b, i) => {
+                    const active = i === selected;
+                    return (
+                      <button
+                        key={b.label}
+                        onClick={() => setSelected(i)}
+                        className={
+                          "px-4 py-1.5 rounded-full font-semibold text-sm transition-colors border " +
+                          (active
+                            ? "bg-accent text-accent-foreground border-accent"
+                            : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
+                        }
+                      >
+                        {b.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex md:hidden justify-center gap-2 flex-wrap mt-3">
+                {config.brands.map((b, i) => {
+                  const active = i === selected;
+                  return (
+                    <button
+                      key={b.label}
+                      onClick={() => setSelected(i)}
+                      className={
+                        "px-4 py-1.5 rounded-full font-semibold text-sm transition-colors border " +
+                        (active
+                          ? "bg-accent text-accent-foreground border-accent"
+                          : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
+                      }
+                    >
+                      {b.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <>
+              {!config.hideEyebrow && (
+                <p className="text-sm font-bold tracking-widest text-accent uppercase mb-3">
+                  {config.eyebrow}
+                </p>
+              )}
+              <h2 className="text-3xl md:text-5xl text-center mb-4 font-bold">
+                {config.heading}
+              </h2>
+              <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto text-center">
+                {config.subtext}
+              </p>
+              <p className="mt-3 text-xs text-muted-foreground text-center">
+                {lastUpdated
+                  ? `Inventory last updated: ${lastUpdated}`
+                  : "Updated daily at 2pm ET"}
+              </p>
+              <div className="flex justify-center gap-3 flex-wrap mt-6 mb-10">
+                {config.brands.map((b, i) => {
+                  const active = i === selected;
+                  return (
+                    <button
+                      key={b.label}
+                      onClick={() => setSelected(i)}
+                      className={
+                        "px-6 py-2.5 rounded-full font-semibold text-sm transition-colors border " +
+                        (active
+                          ? "bg-accent text-accent-foreground border-accent"
+                          : "bg-background text-foreground border-border hover:bg-muted")
+                      }
+                    >
+                      {b.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </div>
 
         {showFallbackBanner && (
