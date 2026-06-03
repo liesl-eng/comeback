@@ -521,21 +521,9 @@ export default function OrderBar() {
                   {buyer.notes && <p className="text-muted-foreground italic mt-1">"{buyer.notes}"</p>}
                 </div>
                 {state.spaces.filter((s) => s.items.length > 0).map((s) => (
-                  <div key={s.id} className="rounded-lg border p-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-semibold text-sm">{s.name}</span>
-                      <span className="text-sm font-bold">{fmtMoney(totals.spaceSubtotal(s.id))}</span>
-                    </div>
-                    <ul className="space-y-1 text-xs">
-                      {s.items.map((i) => (
-                        <li key={i.id} className="flex justify-between gap-2">
-                          <span className="truncate"><span className="text-accent font-semibold">{i.brand}</span> · {i.productName} ×{i.quantity}</span>
-                          <span className="font-medium">{fmtMoney(i.quantity * i.yourPrice)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ReviewSpaceAccordion key={s.id} space={s} subtotal={totals.spaceSubtotal(s.id)} />
                 ))}
+
                 <div className="rounded-lg bg-muted p-3 flex items-center justify-between">
                   <span className="font-semibold">Grand Total</span>
                   <span className="text-xl font-bold">{fmtMoney(totals.grandTotal)}</span>
