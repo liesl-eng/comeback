@@ -1,15 +1,102 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Popover, PopoverContent, PopoverTrigger,
 } from "@/components/ui/popover";
-import { Plus, Minus, Check } from "lucide-react";
+import { Plus, Minus, Check, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { useBuildOrder, OrderItem } from "@/contexts/BuildOrderContext";
+import { cn } from "@/lib/utils";
 
 interface Props {
   item: Omit<OrderItem, "quantity">;
+}
+
+interface SpaceOptionRowProps {
+  id: string;
+  name: string;
+  count: number;
+  active: boolean;
+  onSelect: () => void;
+}
+
+function SpaceOptionRow({ id, name, count, active, onSelect }: SpaceOptionRowProps) {
+  const { renameSpace } = useBuildOrder();
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(name);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => { if (!editing) setDraft(name); }, [name, editing]);
+  useEffect(() => {
+    if (editing && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [editing]);
+
+  const commit = () => { renameSpace(id, draft); setEditing(false); };
+  const cancel = () => { setDraft(name); setEditing(false); };
+
+  if (editing) {
+    return (
+      <div
+        className="w-full flex items-center gap-1 px-2 py-1.5 rounded border border-accent bg-accent/10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={inputRef}
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onBlur={commit}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") { e.preventDefault(); commit(); }
+            if (e.key === "Escape") { e.preventDefault(); cancel(); }
+          }}
+          onClick={(e) => e.stopPropagation()}
+          className="h-7 text-sm flex-1"
+        />
+        <Button
+          type="button"
+          size="icon"
+          variant="ghost"
+          className="h-7 w-7"
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={commit}
+        >
+          <Check className="h-4 w-4" />
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        "w-full flex items-center gap-1 rounded border",
+        active ? "border-accent bg-accent/10" : "border-transparent hover:bg-muted",
+      )}
+    >
+      <button
+        type="button"
+        onClick={onSelect}
+        className="flex-1 min-w-0 text-left text-sm px-2 py-1.5 flex items-center justify-between"
+      >
+        <span className="truncate">{name}</span>
+        <span className="text-xs text-muted-foreground ml-2">{count}</span>
+      </button>
+      <Button
+        type="button"
+        size="icon"
+        variant="ghost"
+        className="h-7 w-7 mr-1 text-muted-foreground hover:text-foreground"
+        title="Rename space"
+        onClick={(e) => { e.stopPropagation(); setEditing(true); }}
+      >
+        <Pencil className="h-3.5 w-3.5" />
+      </Button>
+    </div>
+  );
 }
 
 export default function AddToOrderButton({ item }: Props) {
@@ -105,25 +192,16 @@ export default function AddToOrderButton({ item }: Props) {
         {/* Space picker */}
         <p className="text-sm font-semibold mb-2">Add to space</p>
         <div className="space-y-1 max-h-44 overflow-y-auto mb-2">
-          {state.spaces.map((s) => {
-            const active = s.id === selectedSpaceId;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setSelectedSpaceId(s.id)}
-                className={
-                  "w-full text-left text-sm px-2 py-1.5 rounded flex items-center justify-between border " +
-                  (active
-                    ? "border-accent bg-accent/10"
-                    : "border-transparent hover:bg-muted")
-                }
-              >
-                <span className="truncate">{s.name}</span>
-                <span className="text-xs text-muted-foreground">{s.items.length}</span>
-              </button>
-            );
-          })}
+          {state.spaces.map((s) => (
+            <SpaceOptionRow
+              key={s.id}
+              id={s.id}
+              name={s.name}
+              count={s.items.length}
+              active={s.id === selectedSpaceId}
+              onSelect={() => setSelectedSpaceId(s.id)}
+            />
+          ))}
         </div>
 
         <div className="border-t pt-2 mb-3">
