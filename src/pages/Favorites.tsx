@@ -38,7 +38,7 @@ const Favorites = () => {
             <p className="text-muted-foreground mb-6">
               Start saving products you love by clicking the heart icon.
             </p>
-            <Button variant="accent" onClick={() => navigate("/")} className="gap-2">
+            <Button variant="accent" onClick={() => navigate("/#programs")} className="gap-2">
               Build Your Spaces
               <ArrowRight className="h-4 w-4" />
             </Button>
