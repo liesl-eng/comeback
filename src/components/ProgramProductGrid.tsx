@@ -88,9 +88,31 @@ const ProductImage = ({ src, alt }: { src: string | null; alt: string }) => {
 const ProductCard = ({ p }: { p: CardProduct }) => {
   const yourPrice = calcYourPrice(p.msrp);
   const itemId = `${p.displayBrand}::${p.name}`.toLowerCase().replace(/\s+/g, "_");
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const favorited = isFavorite(itemId);
   return (
     <Card className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow">
-      <ProductImage src={p.imageUrl} alt={p.name} />
+      <div className="relative">
+        <ProductImage src={p.imageUrl} alt={p.name} />
+        <button
+          type="button"
+          aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+          aria-pressed={favorited}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFavorite(itemId);
+          }}
+          className="absolute top-2 right-2 h-9 w-9 rounded-full bg-background/90 backdrop-blur border border-border shadow-sm flex items-center justify-center transition-colors hover:bg-background"
+        >
+          <Heart
+            className={cn(
+              "h-5 w-5 transition-colors",
+              favorited ? "fill-accent text-accent" : "text-muted-foreground"
+            )}
+          />
+        </button>
+      </div>
       <div className="p-4 flex flex-col flex-1">
         <span className="text-xs font-bold tracking-widest text-accent uppercase mb-2">
           {p.displayBrand}
