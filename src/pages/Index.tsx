@@ -53,7 +53,7 @@ const Index = () => {
                     document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" });
                   }}
                 >
-                  Shop Programs
+                  Shop Catalog
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
