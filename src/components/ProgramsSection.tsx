@@ -58,7 +58,16 @@ const ProgramsSection = () => {
           {programs.map((p) => (
             <Card
               key={p.title}
-              className="relative overflow-hidden flex flex-col p-6 hover:shadow-hover transition-shadow"
+              role="link"
+              tabIndex={0}
+              onClick={() => navigate(p.path)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigate(p.path);
+                }
+              }}
+              className="relative overflow-hidden flex flex-col p-6 cursor-pointer hover:shadow-hover hover:-translate-y-0.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${p.accent}`} />
               <div className="p-3 rounded-full bg-accent/10 w-fit mb-4">
@@ -72,7 +81,7 @@ const ProgramsSection = () => {
               <Button
                 variant="accent"
                 className="w-full gap-2"
-                onClick={() => navigate(p.path)}
+                onClick={(e) => { e.stopPropagation(); navigate(p.path); }}
               >
                 {p.cta}
                 <ArrowRight className="h-4 w-4" />
