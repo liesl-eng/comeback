@@ -110,23 +110,6 @@ const Index = () => {
         {/* FAQ */}
         <HomepageFaqs />
 
-        {/* CTA Section */}
-        <section className="py-6 md:py-10 bg-gradient-hero">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="mb-6 md:mb-8 text-lg md:text-2xl font-bold text-primary-foreground">
-              Shop by SKU.
-            </h2>
-            <Button
-              variant="accent"
-              size="lg"
-              className="gap-2"
-              onClick={() => navigate("/catalog")}
-            >
-              Start Now
-              <ArrowRight className="h-5 w-5" />
-            </Button>
-          </div>
-        </section>
       </main>
 
       {/* Footer */}
@@ -145,7 +128,7 @@ const Index = () => {
                 <li><Link to="/seating" className="hover:text-accent transition-colors">Seating</Link></li>
                 <li><Link to="/tables" className="hover:text-accent transition-colors">Tables</Link></li>
                 <li><Link to="/beds" className="hover:text-accent transition-colors">Beds</Link></li>
-                <li><Link to="/catalog" className="hover:text-accent transition-colors">Full Catalog</Link></li>
+                
                 <li className="pt-2 border-t border-border/50 mt-2"><Link to="/rugs" className="hover:text-accent transition-colors font-medium">Rug Program</Link></li>
               </ul>
             </div>

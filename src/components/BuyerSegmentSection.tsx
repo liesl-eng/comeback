@@ -21,9 +21,9 @@ const BuyerSegmentSection = () => {
             variant="accent"
             size="lg"
             className="gap-2"
-            onClick={() => navigate("/catalog")}
+            onClick={() => navigate("/#programs")}
           >
-            Shop Catalog
+            Shop Programs
             <ArrowRight className="h-5 w-5" />
           </Button>
         </div>

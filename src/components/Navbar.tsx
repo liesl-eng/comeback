@@ -69,7 +69,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
               { to: "/seating", label: "Seating", match: ["/seating"] },
               { to: "/tables", label: "Tables", match: ["/tables"] },
               { to: "/beds", label: "Beds", match: ["/beds"] },
-              { to: "/catalog", label: "Catalog", match: ["/catalog"] },
+              
             ].map((item) => (
               <NavLink
                 key={item.to}
@@ -162,7 +162,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
                 { to: "/seating", label: "Seating" },
                 { to: "/tables", label: "Tables" },
                 { to: "/beds", label: "Beds" },
-                { to: "/catalog", label: "Shop Catalog" },
+                
               ].map((item) => (
                 <Link key={item.to} to={item.to} onClick={() => setMobileMenuOpen(false)}>
                   <Button variant="outline" className="w-full">
