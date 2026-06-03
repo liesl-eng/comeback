@@ -176,6 +176,7 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
 
       <main>
         {/* ── HERO ── */}
+        {!config.hideHero && (
         <section
           className="relative overflow-hidden"
           style={{ background: config.heroBackground ?? 'var(--gradient-rug-hero)' }}
@@ -248,6 +249,8 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
             </div>
           </div>
         </section>
+        )}
+
 
         {/* ── PRODUCT GRID (optional) ── */}
         {config.productGrid && <ProgramProductGrid config={config.productGrid} />}
