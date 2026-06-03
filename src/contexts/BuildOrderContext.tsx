@@ -59,6 +59,7 @@ interface Ctx {
   updateQty: (spaceId: string, itemId: string, qty: number) => void;
   removeItem: (spaceId: string, itemId: string) => void;
   addSpace: (name?: string) => string;
+  addSpaceWithItem: (name: string | undefined, item: Omit<OrderItem, "quantity">, qty?: number) => { id: string; name: string };
   renameSpace: (spaceId: string, name: string) => void;
   deleteSpace: (spaceId: string) => void;
   setBuyerInfo: (info: BuyerInfo) => void;
