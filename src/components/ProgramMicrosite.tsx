@@ -59,6 +59,8 @@ export interface ProgramConfig {
   productGrid?: ProgramProductGridConfig;
   /** Show "← All Programs" back link in the navbar. */
   showBackLink?: boolean;
+  /** Hide the top hero section entirely. */
+  hideHero?: boolean;
 }
 
 const EmailCaptureSection = ({ source, heading, subheading, italicLine }: {
@@ -174,6 +176,7 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
 
       <main>
         {/* ── HERO ── */}
+        {!config.hideHero && (
         <section
           className="relative overflow-hidden"
           style={{ background: config.heroBackground ?? 'var(--gradient-rug-hero)' }}
@@ -246,6 +249,8 @@ const ProgramMicrosite = ({ config }: { config: ProgramConfig }) => {
             </div>
           </div>
         </section>
+        )}
+
 
         {/* ── PRODUCT GRID (optional) ── */}
         {config.productGrid && <ProgramProductGrid config={config.productGrid} />}

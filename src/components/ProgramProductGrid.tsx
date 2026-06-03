@@ -25,6 +25,10 @@ export interface ProgramProductGridConfig {
   subtext: string;
   brands: BrandSource[];      // 2 brand sources
   anchorId?: string;          // optional anchor id
+  /** Hide the eyebrow label above the heading. */
+  hideEyebrow?: boolean;
+  /** Make the header (heading + brand toggles) sticky below the navbar. */
+  stickyHeader?: boolean;
 }
 
 interface CardProduct {
@@ -194,22 +198,58 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
   const showFallbackBanner = error && products.length > 0;
 
   return (
-    <section id={config.anchorId} className="py-14 md:py-20 scroll-mt-20">
+    <section id={config.anchorId} className={(config.stickyHeader ? "pt-6 md:pt-8 " : "py-14 md:py-20 ") + "scroll-mt-20"}>
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-8">
-          <p className="text-sm font-bold tracking-widest text-accent uppercase mb-3">
-            {config.eyebrow}
-          </p>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">{config.heading}</h2>
-          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-            {config.subtext}
-          </p>
-          <p className="mt-3 text-xs text-muted-foreground">
-            {lastUpdated
-              ? `Inventory last updated: ${lastUpdated}`
-              : "Updated daily at 2pm ET"}
-          </p>
+        <div
+          className={
+            config.stickyHeader
+              ? "sticky top-16 md:top-20 z-40 -mx-4 px-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border pt-4 pb-4 mb-8"
+              : "text-center mb-8"
+          }
+        >
+          {!config.hideEyebrow && (
+            <p className={(config.stickyHeader ? "text-center " : "") + "text-sm font-bold tracking-widest text-accent uppercase mb-3"}>
+              {config.eyebrow}
+            </p>
+          )}
+          <h2 className={(config.stickyHeader ? "text-2xl md:text-4xl text-center mb-3" : "text-3xl md:text-5xl text-center mb-4") + " font-bold"}>
+            {config.heading}
+          </h2>
+          {!config.stickyHeader && (
+            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto text-center">
+              {config.subtext}
+            </p>
+          )}
+          {!config.stickyHeader && (
+            <p className="mt-3 text-xs text-muted-foreground text-center">
+              {lastUpdated
+                ? `Inventory last updated: ${lastUpdated}`
+                : "Updated daily at 2pm ET"}
+            </p>
+          )}
+
+          {/* Brand toggle */}
+          <div className={"flex justify-center gap-3 flex-wrap " + (config.stickyHeader ? "mt-2" : "mt-6 mb-10")}>
+            {config.brands.map((b, i) => {
+              const active = i === selected;
+              return (
+                <button
+                  key={b.label}
+                  onClick={() => setSelected(i)}
+                  className={
+                    "px-6 py-2.5 rounded-full font-semibold text-sm transition-colors border " +
+                    (active
+                      ? "bg-accent text-accent-foreground border-accent"
+                      : "bg-background text-foreground border-border hover:bg-muted")
+                  }
+                >
+                  {b.label}
+
+              </button>
+            );
+          })}
+          </div>
         </div>
 
         {showFallbackBanner && (
@@ -218,26 +258,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
           </div>
         )}
 
-        {/* Brand toggle */}
-        <div className="flex justify-center gap-3 mb-10 flex-wrap">
-          {config.brands.map((b, i) => {
-            const active = i === selected;
-            return (
-              <button
-                key={b.label}
-                onClick={() => setSelected(i)}
-                className={
-                  "px-6 py-2.5 rounded-full font-semibold text-sm transition-colors border " +
-                  (active
-                    ? "bg-accent text-accent-foreground border-accent"
-                    : "bg-background text-foreground border-border hover:bg-muted")
-                }
-              >
-                {b.label}
-              </button>
-            );
-          })}
-        </div>
+
 
         {/* Grid */}
         {loading ? (

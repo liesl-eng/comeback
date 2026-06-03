@@ -91,9 +91,12 @@ const config: ProgramConfig = {
     },
   ],
   showBackLink: true,
+  hideHero: true,
   productGrid: {
     eyebrow: "LIGHTING PROGRAM",
     heading: "Shop Lighting",
+    hideEyebrow: true,
+    stickyHeader: true,
     subtext:
       "Designer lighting from Arteriors Home and Ferm Living — inspected, in stock, and priced 60% below retail.",
     brands: [
