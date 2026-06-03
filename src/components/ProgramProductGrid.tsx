@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, ImageOff } from "lucide-react";
-import { toast } from "sonner";
 import { fetchSheetTab, BrandTab, SheetRow } from "@/lib/productSheet";
+import AddToOrderButton from "@/components/AddToOrderButton";
 
 export interface BrandSource {
   /** Display label on the toggle pill */
@@ -80,6 +80,7 @@ const ProductImage = ({ src, alt }: { src: string | null; alt: string }) => {
 
 const ProductCard = ({ p }: { p: CardProduct }) => {
   const yourPrice = calcYourPrice(p.msrp);
+  const itemId = `${p.displayBrand}::${p.name}`.toLowerCase().replace(/\s+/g, "_");
   return (
     <Card className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow">
       <ProductImage src={p.imageUrl} alt={p.name} />
@@ -98,12 +99,17 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
           <span className="text-xl font-bold text-foreground">{formatUsd(yourPrice)}</span>
         </div>
         <p className="text-xs text-muted-foreground mb-4">60% below retail</p>
-        <Button
-          onClick={() => toast("Pallet coming soon!")}
-          className="mt-auto w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
-        >
-          Add to Pallet +
-        </Button>
+        <AddToOrderButton
+          item={{
+            id: itemId,
+            productName: p.name,
+            brand: p.displayBrand,
+            imageUrl: p.imageUrl,
+            msrp: p.msrp,
+            yourPrice,
+            unitsAvailable: p.unitsAvailable,
+          }}
+        />
       </div>
     </Card>
   );
