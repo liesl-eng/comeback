@@ -244,18 +244,46 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
         >
           {config.stickyHeader ? (
             <div className="container mx-auto px-4 py-3 md:py-4">
-              <div className="relative flex items-center justify-center gap-3">
+              <div className="relative flex items-center gap-3">
                 <Link
                   to="/#programs"
-                  className="absolute left-0 inline-flex items-center gap-1 text-sm text-primary-foreground/80 hover:text-accent transition-colors font-medium"
+                  className="flex-shrink-0 inline-flex items-center gap-1 text-sm text-primary-foreground/80 hover:text-accent transition-colors font-medium"
                 >
                   <ChevronLeft className="h-4 w-4" />
                   <span className="hidden sm:inline">Back</span>
                 </Link>
-                <h2 className="text-xl md:text-2xl font-bold text-center">
-                  {config.heading}
-                </h2>
-                <div className="hidden md:flex absolute right-0 items-center gap-2">
+
+                {/* Category nav pills - scrollable on mobile */}
+                <div className="relative flex-1 min-w-0">
+                  <div className="overflow-x-auto scrollbar-hide -mx-1 px-1">
+                    <div className="flex items-center justify-start md:justify-center gap-2 whitespace-nowrap">
+                      {CATEGORY_NAV.map((c) => {
+                        const active = c.match.some((p) => location.pathname.startsWith(p));
+                        return (
+                          <Link
+                            key={c.to}
+                            to={c.to}
+                            className={
+                              "px-4 py-1.5 rounded-full font-semibold text-sm transition-colors border flex-shrink-0 " +
+                              (active
+                                ? "bg-accent text-accent-foreground border-accent"
+                                : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
+                            }
+                          >
+                            {c.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  {/* Right-edge fade indicator (mobile/tablet only) */}
+                  <div
+                    aria-hidden
+                    className="lg:hidden pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-primary to-transparent"
+                  />
+                </div>
+
+                <div className="hidden md:flex flex-shrink-0 items-center gap-2">
                   {config.brands.map((b, i) => {
                     const active = i === selected;
                     return (
