@@ -110,6 +110,36 @@ const ProgramsSection = () => {
           ))}
         </div>
       </div>
+
+      {/* Rug Program band */}
+      <div className="mt-12 md:mt-16 bg-gradient-hero">
+        <div className="container mx-auto px-4 py-10 md:py-14">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-2">
+                Rug Program
+              </p>
+              <h3 className="text-2xl md:text-4xl font-bold text-primary-foreground mb-2">
+                Looking for rugs?
+              </h3>
+              <p className="text-primary-foreground/80 text-base md:text-lg">
+                Visit the Comeback Rug Program — curated closeout rugs, pallet-ready and delivered on your schedule.
+              </p>
+            </div>
+            <div className="flex-shrink-0">
+              <Button
+                variant="accent"
+                size="lg"
+                className="gap-2"
+                onClick={() => navigate("/rugs")}
+              >
+                Visit Rug Program
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
