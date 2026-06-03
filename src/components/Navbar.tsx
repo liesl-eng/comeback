@@ -183,7 +183,6 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
               {[
                 { to: "/mirrors", label: "Mirrors" },
                 { to: "/lighting", label: "Lighting" },
-                { to: "/rugs", label: "Rugs" },
                 { to: "/seating", label: "Seating" },
                 { to: "/tables", label: "Tables" },
                 { to: "/beds", label: "Beds" },
