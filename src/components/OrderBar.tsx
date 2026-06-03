@@ -238,7 +238,7 @@ function SpaceRow({ space }: { space: OrderSpace }) {
 
 function ReviewSpaceAccordion({ space, subtotal }: { space: OrderSpace; subtotal: number }) {
   const { removeItem, deleteSpace } = useBuildOrder();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <Collapsible open={open} onOpenChange={setOpen} className="rounded-lg border">
       <div className="flex items-center gap-2 p-3">
