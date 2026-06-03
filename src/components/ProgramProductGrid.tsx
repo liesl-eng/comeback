@@ -133,7 +133,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
           <span className="text-sm text-muted-foreground line-through">{formatUsd(p.msrp)}</span>
           <span className="text-xl font-bold text-foreground">{formatUsd(yourPrice)}</span>
         </div>
-        <p className="text-xs text-muted-foreground mb-4">60% below retail</p>
+        
         <AddToOrderButton
           item={{
             id: itemId,
