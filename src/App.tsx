@@ -9,6 +9,8 @@ import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import { CatalogOrderProvider } from "@/contexts/CatalogOrderContext";
+import { BuildOrderProvider } from "@/contexts/BuildOrderContext";
+import OrderBar from "@/components/OrderBar";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 import Index from "./pages/Index";
@@ -39,10 +41,12 @@ const App = () => {
           
             <FavoritesProvider>
               <CatalogOrderProvider>
+              <BuildOrderProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
                 <ScrollToTop />
+                <OrderBar />
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/auth" element={<Auth />} />
@@ -96,6 +100,7 @@ const App = () => {
                 </Routes>
                 
               </BrowserRouter>
+              </BuildOrderProvider>
               </CatalogOrderProvider>
             </FavoritesProvider>
           
