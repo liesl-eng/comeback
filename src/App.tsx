@@ -26,6 +26,9 @@ import LightingProgram from "./pages/LightingProgram";
 import MirrorProgram from "./pages/MirrorProgram";
 import MeridianLamp from "./pages/MeridianLamp";
 import SizeGuide from "./pages/SizeGuide";
+import Seating from "./pages/Seating";
+import Tables from "./pages/Tables";
+import Beds from "./pages/Beds";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
