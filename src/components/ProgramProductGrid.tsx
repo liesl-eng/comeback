@@ -303,42 +303,42 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
           )}
         </div>
 
-        {showFallbackBanner && (
-          <div className="max-w-2xl mx-auto mb-6 rounded-md border border-accent/30 bg-accent/10 px-4 py-2 text-center text-sm text-foreground">
-            Showing last known inventory. Live data updates daily at 2pm ET.
-          </div>
-        )}
+        <div className={config.stickyHeader ? "container mx-auto px-4" : ""}>
+          {showFallbackBanner && (
+            <div className="max-w-2xl mx-auto mb-6 rounded-md border border-accent/30 bg-accent/10 px-4 py-2 text-center text-sm text-foreground">
+              Showing last known inventory. Live data updates daily at 2pm ET.
+            </div>
+          )}
 
-
-
-        {/* Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-          </div>
-        ) : products.length === 0 ? (
-          <div className="text-center py-16 max-w-xl mx-auto">
-            <p className="text-muted-foreground mb-6">
-              Inventory updates daily at 2pm ET. Check back soon or get in touch.
-            </p>
-            <Button
-              asChild
-              className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
-            >
-              <a href="mailto:hello@comebackgoods.com">
-                Get In Contact <ArrowRight className="h-4 w-4 ml-2" />
-              </a>
-            </Button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((p, i) => (
-              <ProductCard key={`${p.displayBrand}-${p.name}-${i}`} p={p} />
-            ))}
-          </div>
-        )}
+          {/* Grid */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          ) : products.length === 0 ? (
+            <div className="text-center py-16 max-w-xl mx-auto">
+              <p className="text-muted-foreground mb-6">
+                Inventory updates daily at 2pm ET. Check back soon or get in touch.
+              </p>
+              <Button
+                asChild
+                className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
+              >
+                <a href="mailto:hello@comebackgoods.com">
+                  Get In Contact <ArrowRight className="h-4 w-4 ml-2" />
+                </a>
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {products.map((p, i) => (
+                <ProductCard key={`${p.displayBrand}-${p.name}-${i}`} p={p} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
