@@ -19,7 +19,7 @@ import About from "./pages/About";
 import AdminImport from "./pages/AdminImport";
 import AdminProducts from "./pages/AdminProducts";
 import AdminImports from "./pages/AdminImports";
-import Catalog from "./pages/Catalog";
+
 import Auth from "./pages/Auth";
 import RugProgram from "./pages/RugProgram";
 import LightingProgram from "./pages/LightingProgram";
@@ -54,22 +54,22 @@ const App = () => {
                   <Route path="/" element={<Index />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/catalog" element={<ProtectedRoute><Catalog /></ProtectedRoute>} />
-                  {/* Legacy redirects → catalog */}
-                  <Route path="/products" element={<Navigate to="/catalog" replace />} />
-                  <Route path="/product/:id" element={<Navigate to="/catalog" replace />} />
-                  <Route path="/pallets" element={<Navigate to="/catalog" replace />} />
-                  <Route path="/pallets/:palletId" element={<Navigate to="/catalog" replace />} />
-                  <Route path="/pallet" element={<Navigate to="/catalog" replace />} />
-                  <Route path="/cart" element={<Navigate to="/catalog" replace />} />
+                  <Route path="/catalog" element={<Navigate to="/" replace />} />
+                  {/* Legacy redirects */}
+                  <Route path="/products" element={<Navigate to="/" replace />} />
+                  <Route path="/product/:id" element={<Navigate to="/" replace />} />
+                  <Route path="/pallets" element={<Navigate to="/" replace />} />
+                  <Route path="/pallets/:palletId" element={<Navigate to="/" replace />} />
+                  <Route path="/pallet" element={<Navigate to="/" replace />} />
+                  <Route path="/cart" element={<Navigate to="/" replace />} />
                   <Route path="/rug-program" element={<RugProgram />} />
                   <Route path="/rugs" element={<Navigate to="/rug-program" replace />} />
-                  <Route path="/lighting-program" element={<LightingProgram />} />
-                  <Route path="/lighting" element={<Navigate to="/lighting-program" replace />} />
-                  <Route path="/Lighting-Program" element={<Navigate to="/lighting-program" replace />} />
-                  <Route path="/mirror-program" element={<MirrorProgram />} />
-                  <Route path="/mirrors" element={<Navigate to="/mirror-program" replace />} />
-                  <Route path="/Mirror-Program" element={<Navigate to="/mirror-program" replace />} />
+                  <Route path="/lighting" element={<LightingProgram />} />
+                  <Route path="/lighting-program" element={<Navigate to="/lighting" replace />} />
+                  <Route path="/Lighting-Program" element={<Navigate to="/lighting" replace />} />
+                  <Route path="/mirrors" element={<MirrorProgram />} />
+                  <Route path="/mirror-program" element={<Navigate to="/mirrors" replace />} />
+                  <Route path="/Mirror-Program" element={<Navigate to="/mirrors" replace />} />
                   <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
                   <Route path="/seating" element={<Seating />} />
                   <Route path="/tables" element={<Tables />} />
