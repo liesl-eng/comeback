@@ -229,7 +229,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
         <div
           className={
             config.stickyHeader
-              ? "sticky top-0 z-40 bg-primary text-primary-foreground border-b border-primary/20 shadow-sm mb-8 md:mb-10"
+              ? "sticky top-16 md:top-20 z-40 bg-primary text-primary-foreground border-b border-primary/20 shadow-sm mb-8 md:mb-10"
               : "text-center mb-8"
           }
         >
