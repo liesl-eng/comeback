@@ -144,12 +144,21 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   );
 };
 
+const CATEGORY_NAV = [
+  { label: "Lighting", to: "/lighting", match: ["/lighting"] },
+  { label: "Mirrors", to: "/mirrors", match: ["/mirrors", "/mirror-program"] },
+  { label: "Seating", to: "/seating", match: ["/seating"] },
+  { label: "Tables", to: "/tables", match: ["/tables"] },
+  { label: "Beds", to: "/beds", match: ["/beds"] },
+];
+
 const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) => {
   const [selected, setSelected] = useState(0);
   const [rowsByBrand, setRowsByBrand] = useState<Record<number, SheetRow[]>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     let cancelled = false;
