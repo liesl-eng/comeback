@@ -88,6 +88,7 @@ const AdminImports = () => {
     const { data, error } = await supabase
       .from("product_import_runs")
       .select("*")
+      .not("status", "in", "(applied,rejected)")
       .order("started_at", { ascending: false })
       .limit(100);
     if (error) {
