@@ -4,7 +4,7 @@ const Tables = () => (
   <CategoryPage
     category="Tables"
     title="Tables"
-    subtitle="Coffee tables, side tables, dining tables, and consoles — priced well below retail."
+    subtitle="Coffee tables, side tables, dining tables, and consoles — priced well below wholesale."
   />
 );
 
