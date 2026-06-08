@@ -154,16 +154,33 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
       )}
 
       <main className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-7xl">
-        <header className="mb-6 md:mb-8">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
-            {title}
-          </h1>
-          {subtitle ? (
-            <p className="mt-2 text-muted-foreground max-w-2xl">{subtitle}</p>
-          ) : null}
+        <header className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
+              {title}
+            </h1>
+            {subtitle ? (
+              <p className="mt-2 text-muted-foreground max-w-2xl">{subtitle}</p>
+            ) : null}
+          </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
+              Sort by:
+            </label>
+            <select
+              id="sort"
+              value={sortKey}
+              onChange={(e) => setSortKey(e.target.value as SortKey)}
+              className="border border-border bg-background text-foreground rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+            >
+              {SORT_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </header>
-
-
 
         {loading ? (
           <div className="py-24 text-center text-muted-foreground">Loading products…</div>
@@ -178,12 +195,14 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
             {visible.map((p, i) => {
               const pct = computeDiscountPct(p);
               const isMeridian = /meridian/i.test(p.name);
+              const productId = `${p.brand}::${p.name}`;
+              const fav = isFavorite(productId);
               return (
                 <article
                   key={`${p.brand}-${p.name}-${i}`}
                   className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className={cn("aspect-square overflow-hidden", isMeridian ? "bg-white p-6" : "bg-muted")}>
+                  <div className={cn("relative aspect-square overflow-hidden", isMeridian ? "bg-white p-6" : "bg-muted")}>
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
@@ -202,32 +221,55 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                         No image
                       </div>
                     )}
+                    <button
+                      type="button"
+                      aria-label={fav ? "Remove from favorites" : "Add to favorites"}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleFavorite(productId, {
+                          name: p.name,
+                          brand: p.brand,
+                          imageUrl: p.imageUrl,
+                          msrp: p.msrp,
+                          price: p.price,
+                        });
+                      }}
+                      className="absolute top-3 right-3 h-9 w-9 rounded-full bg-background/90 backdrop-blur border border-border shadow-sm flex items-center justify-center hover:bg-background transition-colors"
+                    >
+                      <Heart
+                        className={cn(
+                          "h-5 w-5 transition-colors",
+                          fav ? "fill-accent text-accent" : "text-foreground",
+                        )}
+                      />
+                    </button>
                   </div>
 
-                  <div className="p-4 flex flex-col gap-2 flex-1">
-                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                  <div className="p-5 flex flex-col gap-2 flex-1">
+                    <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
                       {p.brand}
                     </div>
-                    <h3 className="text-sm font-medium text-foreground line-clamp-2 min-h-[2.5rem]">
+                    <h3 className="text-lg font-semibold text-foreground line-clamp-2 min-h-[3.5rem] leading-snug">
                       {p.name}
                     </h3>
                     <div className="flex items-baseline gap-2 mt-auto pt-2">
-                      <span className="text-base font-semibold text-foreground">
+                      <span className="text-xl font-bold text-foreground">
                         {formatMoney(p.price)}
                       </span>
                       {p.msrp != null && (p.price == null || p.msrp > p.price) && (
-                        <span className="text-xs text-muted-foreground line-through">
+                        <span className="text-sm text-muted-foreground line-through">
                           {formatMoney(p.msrp)}
                         </span>
                       )}
                       {pct != null && pct > 0 && (
-                        <span className="ml-auto text-xs font-semibold text-accent">
+                        <span className="ml-auto text-sm font-semibold text-accent">
                           {pct}% off
                         </span>
                       )}
                     </div>
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-sm text-muted-foreground">
                       {p.unitsAvailable} {p.unitsAvailable === 1 ? "unit" : "units"} available
+
                     </div>
                   </div>
                 </article>
