@@ -1,10 +1,23 @@
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useCatalogProducts } from "@/hooks/useCatalogProducts";
 import { SheetRow } from "@/lib/productSheet";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { cn } from "@/lib/utils";
+
+type SortKey = "default" | "price-asc" | "price-desc" | "qty-asc" | "qty-desc";
+
+const SORT_OPTIONS: { value: SortKey; label: string }[] = [
+  { value: "default", label: "Featured" },
+  { value: "price-asc", label: "Price: Low to High" },
+  { value: "price-desc", label: "Price: High to Low" },
+  { value: "qty-asc", label: "Quantity: Low to High" },
+  { value: "qty-desc", label: "Quantity: High to Low" },
+];
+
 
 const CATEGORY_NAV: { name: "Lighting" | "Mirrors" | "Tables"; path: string }[] = [
   { name: "Lighting", path: "/lighting" },
