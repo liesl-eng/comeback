@@ -70,7 +70,7 @@ interface ProductImportRecord {
 export default function AdminProducts() {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<BrandTab>("Mercana");
+  const [activeTab, setActiveTab] = useState<BrandTab>(BRAND_TABS[0]);
   const [state, setState] = useState<Record<BrandTab, BrandState>>(() => {
     const init: Record<string, BrandState> = {};
     BRAND_TABS.forEach((b) => (init[b] = { ...emptyState, uploadedFiles: new Map() }));
