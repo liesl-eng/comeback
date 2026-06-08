@@ -110,7 +110,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   const isArteriors = /arteriors/i.test(p.displayBrand);
   const isFerm = /ferm/i.test(p.displayBrand);
   const softBg = isArteriors || isFerm;
-  const imageBg = softBg ? "bg-[hsl(35,25%,93%)]" : undefined;
+  const imageBg = softBg ? "bg-[#F5F0E8]" : undefined;
   return (
     <Card className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow">
       <div className="relative">
