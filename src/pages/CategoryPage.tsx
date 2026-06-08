@@ -222,7 +222,16 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                   key={`${p.brand}-${p.name}-${i}`}
                   className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className={cn("relative aspect-square overflow-hidden", isMeridian ? "bg-white p-6" : "bg-muted")}>
+                  <div
+                    className={cn(
+                      "relative aspect-square overflow-hidden",
+                      category === "Lighting"
+                        ? "bg-gradient-to-br from-muted/40 via-background to-muted/60 p-6"
+                        : isMeridian
+                          ? "bg-white p-6"
+                          : "bg-muted",
+                    )}
+                  >
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
