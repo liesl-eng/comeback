@@ -160,7 +160,6 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
                 { to: "/mirrors", label: "Mirrors" },
                 
                 { to: "/tables", label: "Tables" },
-                { to: "/beds", label: "Beds" },
                 
               ].map((item) => (
                 <Link key={item.to} to={item.to} onClick={() => setMobileMenuOpen(false)}>
