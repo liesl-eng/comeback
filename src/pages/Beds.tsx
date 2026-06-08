@@ -2,6 +2,7 @@ import ProgramMicrosite, { ProgramConfig } from "@/components/ProgramMicrosite";
 
 const BEDS_MOQ = 10000;
 const BEDS_NAME_RE = /(bed|headboard|nightstand|dresser|chest)/i;
+const BEDS_EXCLUDE_RE = /mirror/i;
 
 const config: ProgramConfig = {
   programName: "Beds",
