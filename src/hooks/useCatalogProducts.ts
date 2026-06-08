@@ -37,12 +37,13 @@ export function useCatalogProducts(): State {
   useEffect(() => {
     if (cache) return;
     let cancelled = false;
-    if (!inflight) inflight = fetchAllProducts();
+    if (!inflight) inflight = fetchAllProducts().then(applyOverrides);
     inflight
       .then((rows) => {
         cache = rows;
         if (!cancelled) setState({ products: rows, loading: false, error: null });
       })
+
       .catch((e) => {
         if (!cancelled)
           setState({
