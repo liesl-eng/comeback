@@ -105,7 +105,7 @@ const ProgramsSection = () => {
                 variant="accent"
                 size="lg"
                 className="gap-2"
-                onClick={() => navigate("/rugs")}
+                onClick={() => window.open("https://www.comebackrugs.com", "_blank", "noopener,noreferrer")}
               >
                 Visit Rug Program
                 <ArrowRight className="h-5 w-5" />
