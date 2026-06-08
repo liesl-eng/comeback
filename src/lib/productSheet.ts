@@ -141,7 +141,7 @@ export async function fetchSheetTab(tab: BrandTab): Promise<SheetRow[]> {
     if (!name) continue;
     out.push({
       name,
-      brand: cleanStr(r[iBrand]) ?? tab,
+      brand: ((cleanStr(r[iBrand]) ?? tab) === "Castlery" ? "Mopio" : (cleanStr(r[iBrand]) ?? tab)),
       imageUrl: (() => {
         const u = iImageUrl >= 0 ? cleanStr(r[iImageUrl]) : null;
         if (!u) return null;

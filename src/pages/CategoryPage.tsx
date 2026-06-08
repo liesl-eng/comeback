@@ -69,10 +69,24 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
 
   const visible = useMemo(() => {
     const base = activeBrand ? inCategory.filter((p) => p.brand === activeBrand) : inCategory;
-    if (sortKey === "default") return base;
     const arr = [...base];
     const num = (v: number | null | undefined, fallback: number) =>
       v == null || !Number.isFinite(v) ? fallback : v;
+    if (sortKey === "default") {
+      // Default: Arteriors Home with valid images first, then everything else.
+      arr.sort((a, b) => {
+        const score = (p: SheetRow) => {
+          const isArteriors = (p.brand ?? "").toLowerCase() === "arteriors home";
+          const hasImage = !!p.imageUrl;
+          if (isArteriors && hasImage) return 0;
+          if (isArteriors) return 1;
+          if (hasImage) return 2;
+          return 3;
+        };
+        return score(a) - score(b);
+      });
+      return arr;
+    }
     arr.sort((a, b) => {
       switch (sortKey) {
         case "price-asc":
@@ -89,6 +103,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
     });
     return arr;
   }, [inCategory, activeBrand, sortKey]);
+
 
 
   return (
