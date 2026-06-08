@@ -73,7 +73,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
     const num = (v: number | null | undefined, fallback: number) =>
       v == null || !Number.isFinite(v) ? fallback : v;
     if (sortKey === "default") {
-      // Default: Arteriors Home with valid images first, then everything else.
+      // Default: Arteriors Home with images first (price asc), then everything else by price asc.
       arr.sort((a, b) => {
         const score = (p: SheetRow) => {
           const isArteriors = (p.brand ?? "").toLowerCase() === "arteriors home";
@@ -83,10 +83,14 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           if (hasImage) return 2;
           return 3;
         };
-        return score(a) - score(b);
+        const sa = score(a);
+        const sb = score(b);
+        if (sa !== sb) return sa - sb;
+        return num(a.price, Infinity) - num(b.price, Infinity);
       });
       return arr;
     }
+
     arr.sort((a, b) => {
       switch (sortKey) {
         case "price-asc":
