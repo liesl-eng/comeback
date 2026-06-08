@@ -298,93 +298,89 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
         <div
           className={
             config.stickyHeader
-              ? "sticky top-16 md:top-20 z-40 bg-primary text-primary-foreground border-b border-primary/20 shadow-sm mb-8 md:mb-10"
+              ? "sticky top-16 md:top-20 z-40 shadow-sm mb-8 md:mb-10"
               : "text-center mb-8"
           }
         >
           {config.stickyHeader ? (
-            <div className="container mx-auto px-4 py-3 md:py-4">
-              <div className="relative flex items-center gap-3">
-                <Link
-                  to="/#programs"
-                  className="flex-shrink-0 inline-flex items-center gap-1 text-sm text-primary-foreground/80 hover:text-accent transition-colors font-medium"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  <span className="hidden sm:inline">Back</span>
-                </Link>
-
-                {/* Category nav pills - scrollable on mobile */}
-                <div className="relative flex-1 min-w-0">
-                  <div className="overflow-x-auto scrollbar-hide -mx-1 px-1">
-                    <div className="flex items-center justify-start md:justify-center gap-2 whitespace-nowrap">
-                      {CATEGORY_NAV.map((c) => {
-                        const active = c.match.some((p) => location.pathname.startsWith(p));
-                        return (
-                          <Link
-                            key={c.to}
-                            to={c.to}
-                            className={
-                              "px-4 py-1.5 rounded-full font-semibold text-sm transition-colors border flex-shrink-0 " +
-                              (active
-                                ? "bg-accent text-accent-foreground border-accent"
-                                : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
-                            }
-                          >
-                            {c.label}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  {/* Right-edge fade indicator (mobile/tablet only) */}
-                  <div
-                    aria-hidden
-                    className="lg:hidden pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-primary to-transparent"
-                  />
-                </div>
-
-                <div className="hidden md:flex flex-shrink-0 items-center gap-2">
-                  <span className="text-xs font-medium text-primary-foreground/60 mr-1">Brand:</span>
-                  {config.brands.map((b, i) => {
-                    const active = i === selected;
-                    return (
-                      <button
-                        key={b.label}
-                        onClick={() => selectBrand(i)}
-                        className={
-                          "px-3 py-1 rounded-full font-semibold text-xs transition-colors border " +
-                          (active
-                            ? "bg-accent text-accent-foreground border-accent"
-                            : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
-                        }
-                      >
-                        {b.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-              <div className="flex md:hidden justify-center items-center gap-2 flex-wrap mt-3">
-                <span className="text-xs font-medium text-primary-foreground/60">Brand:</span>
-                {config.brands.map((b, i) => {
-                  const active = i === selected;
-                  return (
-                    <button
-                      key={b.label}
-                      onClick={() => selectBrand(i)}
-                      className={
-                        "px-3 py-1 rounded-full font-semibold text-xs transition-colors border " +
-                        (active
-                          ? "bg-accent text-accent-foreground border-accent"
-                          : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
-                      }
+            <>
+              {/* Navy category bar */}
+              <div className="bg-primary text-primary-foreground border-b border-primary/20">
+                <div className="container mx-auto px-4 py-3 md:py-4">
+                  <div className="relative flex items-center gap-3">
+                    <Link
+                      to="/#programs"
+                      className="flex-shrink-0 inline-flex items-center gap-1 text-sm text-primary-foreground/80 hover:text-accent transition-colors font-medium"
                     >
-                      {b.label}
-                    </button>
-                  );
-                })}
+                      <ChevronLeft className="h-4 w-4" />
+                      <span className="hidden sm:inline">Back</span>
+                    </Link>
+
+                    {/* Category nav pills - scrollable on mobile */}
+                    <div className="relative flex-1 min-w-0">
+                      <div className="overflow-x-auto scrollbar-hide -mx-1 px-1">
+                        <div className="flex items-center justify-start md:justify-center gap-2 whitespace-nowrap">
+                          {CATEGORY_NAV.map((c) => {
+                            const active = c.match.some((p) => location.pathname.startsWith(p));
+                            return (
+                              <Link
+                                key={c.to}
+                                to={c.to}
+                                className={
+                                  "px-4 py-1.5 rounded-full font-semibold text-sm transition-colors border flex-shrink-0 " +
+                                  (active
+                                    ? "bg-accent text-accent-foreground border-accent"
+                                    : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
+                                }
+                              >
+                                {c.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      {/* Right-edge fade indicator (mobile/tablet only) */}
+                      <div
+                        aria-hidden
+                        className="lg:hidden pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-primary to-transparent"
+                      />
+                    </div>
+
+                    {/* Spacer to keep category pills visually centered on desktop */}
+                    <div className="hidden md:block flex-shrink-0 w-16" aria-hidden />
+                  </div>
+                </div>
               </div>
-            </div>
+
+              {/* Light gray brand-filter band */}
+              <div className="bg-muted border-b border-border">
+                <div className="container mx-auto px-4 py-2">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs font-medium text-muted-foreground mr-1">
+                      Filter by Brand:
+                    </span>
+                    {config.brands.map((b, i) => {
+                      const active = i === selected;
+                      return (
+                        <button
+                          key={b.label}
+                          onClick={() => selectBrand(i)}
+                          className={
+                            "px-3 py-1 rounded-md font-medium text-xs transition-colors border " +
+                            (active
+                              ? "bg-accent text-accent-foreground border-accent"
+                              : "bg-background text-foreground border-border hover:bg-background/80")
+                          }
+                        >
+                          {b.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </>
+
           ) : (
             <>
               {!config.hideEyebrow && (
