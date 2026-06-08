@@ -143,18 +143,22 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {visible.map((p, i) => {
               const pct = computeDiscountPct(p);
+              const isMeridian = /meridian/i.test(p.name);
               return (
                 <article
                   key={`${p.brand}-${p.name}-${i}`}
                   className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className="aspect-square bg-muted overflow-hidden">
+                  <div className={cn("aspect-square overflow-hidden", isMeridian ? "bg-white p-6" : "bg-muted")}>
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
                         alt={p.name}
                         loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                        className={cn(
+                          "w-full h-full group-hover:scale-[1.02] transition-transform duration-300",
+                          isMeridian ? "object-contain" : "object-cover",
+                        )}
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).style.display = "none";
                         }}
@@ -165,6 +169,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                       </div>
                     )}
                   </div>
+
                   <div className="p-4 flex flex-col gap-2 flex-1">
                     <div className="text-[11px] uppercase tracking-wider text-muted-foreground">
                       {p.brand}
