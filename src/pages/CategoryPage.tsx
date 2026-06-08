@@ -73,7 +73,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
     const num = (v: number | null | undefined, fallback: number) =>
       v == null || !Number.isFinite(v) ? fallback : v;
     if (sortKey === "default") {
-      // Default: Arteriors Home with valid images first, then everything else.
+      // Default: Arteriors Home with images first (price asc), then everything else by price asc.
       arr.sort((a, b) => {
         const score = (p: SheetRow) => {
           const isArteriors = (p.brand ?? "").toLowerCase() === "arteriors home";
@@ -83,10 +83,14 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           if (hasImage) return 2;
           return 3;
         };
-        return score(a) - score(b);
+        const sa = score(a);
+        const sb = score(b);
+        if (sa !== sb) return sa - sb;
+        return num(a.price, Infinity) - num(b.price, Infinity);
       });
       return arr;
     }
+
     arr.sort((a, b) => {
       switch (sortKey) {
         case "price-asc":
@@ -218,7 +222,16 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                   key={`${p.brand}-${p.name}-${i}`}
                   className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className={cn("relative aspect-square overflow-hidden", isMeridian ? "bg-white p-6" : "bg-muted")}>
+                  <div
+                    className={cn(
+                      "relative aspect-square overflow-hidden",
+                      category === "Lighting"
+                        ? "bg-gradient-to-br from-muted/40 via-background to-muted/60 p-6"
+                        : isMeridian
+                          ? "bg-white p-6"
+                          : "bg-muted",
+                    )}
+                  >
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
@@ -226,7 +239,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                         loading="lazy"
                         className={cn(
                           "w-full h-full group-hover:scale-[1.02] transition-transform duration-300",
-                          isMeridian ? "object-contain" : "object-cover",
+                          category === "Lighting" || isMeridian ? "object-contain" : "object-cover",
                         )}
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).style.display = "none";
