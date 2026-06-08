@@ -2,8 +2,8 @@ import ProgramMicrosite, { ProgramConfig } from "@/components/ProgramMicrosite";
 
 const SEATING_MOQ = 10000;
 
-const SEATING_NAME_RE_MODUS = /(chair|stool|bench|sofa|loveseat|settee|ottoman|sectional|chaise)/i;
-const SEATING_NAME_RE_ARTERIORS = /(chair|stool|bench|sofa|settee|ottoman)/i;
+const SEATING_NAME_RE_MODUS = /(chair|stool|bench|sofa|loveseat|settee|ottoman|sectional|chaise|lounge)/i;
+const SEATING_NAME_RE_ARTERIORS = /(chair|stool|bench|sofa|loveseat|settee|ottoman|sectional|chaise|lounge)/i;
 
 const config: ProgramConfig = {
   programName: "Seating",
