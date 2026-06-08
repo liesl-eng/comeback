@@ -217,7 +217,7 @@ Deno.serve(async (req) => {
       for (const r of records) {
         const key = normalizeName(r.name);
         seenKeys.add(key);
-        const category = categorize(r.name);
+        const category = r.category ?? categorize(r.name);
         const sourceTs = r.source_last_updated
           ? new Date(r.source_last_updated.replace(" ", "T")).toISOString() : null;
         const live = liveByKey.get(key);
