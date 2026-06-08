@@ -122,7 +122,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                   key={`${p.brand}-${p.name}-${i}`}
                   className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className="aspect-square bg-muted overflow-hidden">
+                  <div className="aspect-square overflow-hidden" style={{ backgroundColor: "#F5F0E8" }}>
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
