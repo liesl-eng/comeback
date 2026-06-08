@@ -20,6 +20,8 @@ export interface BrandSource {
   filterName?: (name: string) => boolean;
   /** Hardcoded fallback if CSV fails or returns nothing for this brand */
   fallback?: Array<{ name: string; msrp: number; unitsAvailable: number; imageUrl?: string | null }>;
+  /** Optional override for image URL keyed off product name. Returns a URL to use instead of the CSV image. */
+  imageOverride?: (name: string) => string | undefined;
 }
 
 export interface ProgramProductGridConfig {
@@ -220,7 +222,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
       displayBrand: brand.displayBrand,
       msrp: r.msrp as number,
       unitsAvailable: r.unitsAvailable,
-      imageUrl: r.imageUrl,
+      imageUrl: brand.imageOverride?.(r.name) ?? r.imageUrl,
     }));
     if (cards.length === 0 && brand.fallback && brand.fallback.length > 0) {
       cards = brand.fallback.map((f) => ({
@@ -228,7 +230,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
         displayBrand: brand.displayBrand,
         msrp: f.msrp,
         unitsAvailable: f.unitsAvailable,
-        imageUrl: f.imageUrl ?? null,
+        imageUrl: brand.imageOverride?.(f.name) ?? f.imageUrl ?? null,
       }));
     }
     cards.sort((a, b) => b.unitsAvailable - a.unitsAvailable);

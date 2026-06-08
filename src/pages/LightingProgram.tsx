@@ -1,5 +1,7 @@
 import ProgramMicrosite, { ProgramConfig } from "@/components/ProgramMicrosite";
 import { ClipboardList, PackageSearch, CalendarClock } from "lucide-react";
+import meridianBrushedSteel from "@/assets/lighting/meridian-brushed-steel.webp";
+import meridianBlack from "@/assets/lighting/meridian-black.jpg";
 
 const LIGHTING_MOQ = 4000; // adjust as needed
 
@@ -111,6 +113,11 @@ const config: ProgramConfig = {
         label: "Ferm Living",
         displayBrand: "FERM LIVING",
         tab: "Ferm Living",
+        imageOverride: (name) => {
+          if (/brushed\s*steel/i.test(name)) return meridianBrushedSteel;
+          if (/black/i.test(name)) return meridianBlack;
+          return undefined;
+        },
         fallback: [
           { name: "Meridian Lamp UL Cashmere", msrp: 265, unitsAvailable: 265 },
           { name: "Meridian Lamp UL Black", msrp: 265, unitsAvailable: 265 },
