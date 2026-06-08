@@ -195,40 +195,40 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                   </button>
                 );
               })}
+              <div className="ml-auto flex items-center gap-2">
+                <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
+                  Sort by:
+                </label>
+                <select
+                  id="sort"
+                  value={sortKey}
+                  onChange={(e) => setSortKey(e.target.value as SortKey)}
+                  className="border border-border bg-background text-foreground rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                  {SORT_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         )}
+
       </div>
 
 
       <main className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-7xl">
-        <header className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
-              {title}
-            </h1>
-            {subtitle ? (
-              <p className="mt-2 text-muted-foreground max-w-2xl">{subtitle}</p>
-            ) : null}
-          </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
-              Sort by:
-            </label>
-            <select
-              id="sort"
-              value={sortKey}
-              onChange={(e) => setSortKey(e.target.value as SortKey)}
-              className="border border-border bg-background text-foreground rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
-            >
-              {SORT_OPTIONS.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
-          </div>
+        <header className="mb-6 md:mb-8">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
+            {title}
+          </h1>
+          {subtitle ? (
+            <p className="mt-2 text-muted-foreground max-w-2xl">{subtitle}</p>
+          ) : null}
         </header>
+
 
         {loading ? (
           <div className="py-24 text-center text-muted-foreground">Loading products…</div>
