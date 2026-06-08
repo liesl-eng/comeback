@@ -22,7 +22,10 @@ import AdminProducts from "./pages/AdminProducts";
 import AdminImports from "./pages/AdminImports";
 
 import Auth from "./pages/Auth";
-import RugProgram from "./pages/RugProgram";
+const ExternalRedirect = ({ to }: { to: string }) => {
+  if (typeof window !== "undefined") window.location.replace(to);
+  return null;
+};
 import LightingProgram from "./pages/LightingProgram";
 import MirrorProgram from "./pages/MirrorProgram";
 import MeridianLamp from "./pages/MeridianLamp";
