@@ -130,60 +130,62 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
       </Helmet>
       <Navbar />
 
-      {/* Dark navy category bar */}
-      <div className="bg-[hsl(var(--primary))] text-primary-foreground">
-        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
-          <nav className="flex items-center gap-6 md:gap-10 h-12">
-            {CATEGORY_NAV.map((c) => {
-              const active = c.name === category;
-              return (
-                <Link
-                  key={c.name}
-                  to={c.path}
-                  className={cn(
-                    "text-sm md:text-base font-bold tracking-wide uppercase transition-colors",
-                    active
-                      ? "text-accent border-b-2 border-accent pb-1"
-                      : "text-primary-foreground/80 hover:text-primary-foreground",
-                  )}
-                >
-                  {c.name}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-      </div>
-
-      {/* Light gray brand filter band */}
-      {brands.length > 0 && (
-        <div className="bg-muted/60 border-b border-border">
-          <div className="container mx-auto px-4 md:px-6 max-w-7xl py-2 flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-muted-foreground mr-1">
-              Filter by Brand:
-            </span>
-            {brands.map((b) => {
-              const active = activeBrand === b;
-              return (
-                <button
-                  key={b}
-                  type="button"
-                  onClick={() => setActiveBrand(active ? null : b)}
-                  className={cn(
-                    "px-3 py-1 rounded-md text-sm font-medium border transition-colors",
-
-                    active
-                      ? "bg-accent text-accent-foreground border-accent"
-                      : "bg-transparent text-foreground border-border hover:border-accent/60",
-                  )}
-                >
-                  {b}
-                </button>
-              );
-            })}
+      <div className="sticky top-0 z-40 shadow-sm">
+        {/* Dark navy category bar */}
+        <div className="bg-[hsl(var(--primary))] text-primary-foreground">
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+            <nav className="flex items-center gap-6 md:gap-10 h-12">
+              {CATEGORY_NAV.map((c) => {
+                const active = c.name === category;
+                return (
+                  <Link
+                    key={c.name}
+                    to={c.path}
+                    className={cn(
+                      "text-sm md:text-base font-bold tracking-wide uppercase transition-colors",
+                      active
+                        ? "text-accent border-b-2 border-accent pb-1"
+                        : "text-primary-foreground/80 hover:text-primary-foreground",
+                    )}
+                  >
+                    {c.name}
+                  </Link>
+                );
+              })}
+            </nav>
           </div>
         </div>
-      )}
+
+        {/* Light gray brand filter band */}
+        {brands.length > 0 && (
+          <div className="bg-muted/95 backdrop-blur border-b border-border">
+            <div className="container mx-auto px-4 md:px-6 max-w-7xl py-2 flex flex-wrap items-center gap-2">
+              <span className="text-sm font-medium text-muted-foreground mr-1">
+                Filter by Brand:
+              </span>
+              {brands.map((b) => {
+                const active = activeBrand === b;
+                return (
+                  <button
+                    key={b}
+                    type="button"
+                    onClick={() => setActiveBrand(active ? null : b)}
+                    className={cn(
+                      "px-3 py-1 rounded-md text-sm font-medium border transition-colors",
+                      active
+                        ? "bg-accent text-accent-foreground border-accent"
+                        : "bg-background text-foreground border-border hover:border-accent/60",
+                    )}
+                  >
+                    {b}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
 
       <main className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-7xl">
         <header className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
