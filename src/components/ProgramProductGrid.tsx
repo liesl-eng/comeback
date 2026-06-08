@@ -65,7 +65,17 @@ const SkeletonCard = () => (
   </Card>
 );
 
-const ProductImage = ({ src, alt, bgClassName }: { src: string | null; alt: string; bgClassName?: string }) => {
+const ProductImage = ({
+  src,
+  alt,
+  bgClassName,
+  blendMultiply,
+}: {
+  src: string | null;
+  alt: string;
+  bgClassName?: string;
+  blendMultiply?: boolean;
+}) => {
   const [failed, setFailed] = useState(false);
   const bg = bgClassName ?? "bg-muted";
   if (!src || failed) {
@@ -81,12 +91,16 @@ const ProductImage = ({ src, alt, bgClassName }: { src: string | null; alt: stri
         src={src}
         alt={alt}
         loading="lazy"
-        className="w-full h-full object-cover"
+        className={cn(
+          "w-full h-full object-cover",
+          blendMultiply && "mix-blend-multiply"
+        )}
         onError={() => setFailed(true)}
       />
     </div>
   );
 };
+
 
 const ProductCard = ({ p }: { p: CardProduct }) => {
   const yourPrice = calcYourPrice(p.msrp);
