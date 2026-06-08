@@ -68,7 +68,6 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
               { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
               
               { to: "/tables", label: "Tables", match: ["/tables"] },
-              { to: "/beds", label: "Beds", match: ["/beds"] },
               
             ].map((item) => (
               <NavLink
@@ -161,7 +160,6 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
                 { to: "/mirrors", label: "Mirrors" },
                 
                 { to: "/tables", label: "Tables" },
-                { to: "/beds", label: "Beds" },
                 
               ].map((item) => (
                 <Link key={item.to} to={item.to} onClick={() => setMobileMenuOpen(false)}>
