@@ -68,7 +68,6 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
               { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
               
               { to: "/tables", label: "Tables", match: ["/tables"] },
-              { to: "/beds", label: "Beds", match: ["/beds"] },
               
             ].map((item) => (
               <NavLink
