@@ -1,9 +1,16 @@
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { useCatalogProducts } from "@/hooks/useCatalogProducts";
 import { SheetRow } from "@/lib/productSheet";
 import { cn } from "@/lib/utils";
+
+const CATEGORY_NAV: { name: "Lighting" | "Mirrors" | "Tables"; path: string }[] = [
+  { name: "Lighting", path: "/lighting" },
+  { name: "Mirrors", path: "/mirrors" },
+  { name: "Tables", path: "/tables" },
+];
 
 interface CategoryPageProps {
   category: "Lighting" | "Mirrors" | "Tables";
@@ -58,6 +65,60 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
       </Helmet>
       <Navbar />
 
+      {/* Dark navy category bar */}
+      <div className="bg-[hsl(var(--primary))] text-primary-foreground">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+          <nav className="flex items-center gap-6 md:gap-10 h-12">
+            {CATEGORY_NAV.map((c) => {
+              const active = c.name === category;
+              return (
+                <Link
+                  key={c.name}
+                  to={c.path}
+                  className={cn(
+                    "text-sm md:text-base font-bold tracking-wide uppercase transition-colors",
+                    active
+                      ? "text-accent border-b-2 border-accent pb-1"
+                      : "text-primary-foreground/80 hover:text-primary-foreground",
+                  )}
+                >
+                  {c.name}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+      </div>
+
+      {/* Light gray brand filter band */}
+      {brands.length > 0 && (
+        <div className="bg-muted/60 border-b border-border">
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl py-2 flex flex-wrap items-center gap-2">
+            <span className="text-xs font-medium text-muted-foreground mr-1">
+              Filter by Brand:
+            </span>
+            {brands.map((b) => {
+              const active = activeBrand === b;
+              return (
+                <button
+                  key={b}
+                  type="button"
+                  onClick={() => setActiveBrand(active ? null : b)}
+                  className={cn(
+                    "px-3 py-1 rounded-md text-xs font-medium border transition-colors",
+                    active
+                      ? "bg-accent text-accent-foreground border-accent"
+                      : "bg-transparent text-foreground border-border hover:border-accent/60",
+                  )}
+                >
+                  {b}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <main className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-7xl">
         <header className="mb-6 md:mb-8">
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
@@ -68,42 +129,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           ) : null}
         </header>
 
-        {/* Brand filter pills */}
-        {brands.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-8 sticky top-16 z-10 bg-background/95 backdrop-blur py-3 -mx-4 px-4 md:-mx-6 md:px-6 border-b">
-            <button
-              type="button"
-              onClick={() => setActiveBrand(null)}
-              className={cn(
-                "px-4 py-1.5 rounded-full text-sm font-medium border transition-colors",
-                activeBrand === null
-                  ? "bg-foreground text-background border-foreground"
-                  : "bg-background text-foreground border-border hover:border-foreground/40",
-              )}
-            >
-              All ({inCategory.length})
-            </button>
-            {brands.map((b) => {
-              const count = inCategory.filter((p) => p.brand === b).length;
-              const active = activeBrand === b;
-              return (
-                <button
-                  key={b}
-                  type="button"
-                  onClick={() => setActiveBrand(active ? null : b)}
-                  className={cn(
-                    "px-4 py-1.5 rounded-full text-sm font-medium border transition-colors",
-                    active
-                      ? "bg-foreground text-background border-foreground"
-                      : "bg-background text-foreground border-border hover:border-foreground/40",
-                  )}
-                >
-                  {b} ({count})
-                </button>
-              );
-            })}
-          </div>
-        )}
+
 
         {loading ? (
           <div className="py-24 text-center text-muted-foreground">Loading products…</div>
