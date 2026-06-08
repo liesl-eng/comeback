@@ -21,12 +21,9 @@ const Restocking = () => {
           <Package className="h-16 w-16 md:h-20 md:w-20 text-accent" strokeWidth={1.5} />
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground mb-4">
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight text-foreground">
           Restocking
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-md">
-          We're refreshing the catalog. Check back soon.
-        </p>
 
         <p className="mt-12 text-sm text-muted-foreground">
           Questions? <a href="mailto:hello@comebackgoods.com" className="text-accent hover:underline">hello@comebackgoods.com</a>
