@@ -112,7 +112,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   return (
     <Card className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow">
       <div className="relative">
-        <ProductImage src={p.imageUrl} alt={p.name} bgClassName={imageBg} />
+        <ProductImage src={p.imageUrl} alt={p.name} bgClassName={imageBg} blendMultiply={isArteriors} />
 
         <button
           type="button"
