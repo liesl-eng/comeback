@@ -90,7 +90,7 @@ const AdminImports = () => {
       .select("*")
       .not("status", "in", "(applied,rejected)")
       .order("started_at", { ascending: false })
-      .limit(100);
+      .limit(1);
     if (error) {
       toast({ title: "Failed to load runs", description: error.message, variant: "destructive" });
     } else {
