@@ -332,7 +332,6 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                   );
                 })}
               </div>
-              </div>
             </div>
           ) : (
             <>
