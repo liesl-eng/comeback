@@ -73,7 +73,15 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
     const num = (v: number | null | undefined, fallback: number) =>
       v == null || !Number.isFinite(v) ? fallback : v;
     if (sortKey === "default") {
-      // Default: Arteriors Home with images first (price asc), then everything else by price asc.
+      // Default: Arteriors Home (with images) first, then everything else by price asc.
+      // Within Hem, lead with Dusk lamps, then Kuu.
+      const hemRank = (p: SheetRow) => {
+        if ((p.brand ?? "").toLowerCase() !== "hem") return 99;
+        const n = p.name.toLowerCase();
+        if (n.includes("dusk")) return 0;
+        if (n.includes("kuu")) return 1;
+        return 2;
+      };
       arr.sort((a, b) => {
         const score = (p: SheetRow) => {
           const isArteriors = (p.brand ?? "").toLowerCase() === "arteriors home";
@@ -86,10 +94,14 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
         const sa = score(a);
         const sb = score(b);
         if (sa !== sb) return sa - sb;
+        const ha = hemRank(a);
+        const hb = hemRank(b);
+        if (ha !== hb) return ha - hb;
         return num(a.price, Infinity) - num(b.price, Infinity);
       });
       return arr;
     }
+
 
     arr.sort((a, b) => {
       switch (sortKey) {
