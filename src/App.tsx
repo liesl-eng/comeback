@@ -29,7 +29,7 @@ const ExternalRedirect = ({ to }: { to: string }) => {
 import LightingProgram from "./pages/LightingProgram";
 import MirrorProgram from "./pages/MirrorProgram";
 import MeridianLamp from "./pages/MeridianLamp";
-import SizeGuide from "./pages/SizeGuide";
+
 import Seating from "./pages/Seating";
 import Tables from "./pages/Tables";
 import Beds from "./pages/Beds";
@@ -114,8 +114,6 @@ const App = () => {
                       <Route path="/pallets/:palletId" element={<Navigate to="/" replace />} />
                       <Route path="/pallet" element={<Navigate to="/" replace />} />
                       <Route path="/cart" element={<Navigate to="/" replace />} />
-                      <Route path="/rug-program" element={<ExternalRedirect to="https://www.comebackrugs.com" />} />
-                      <Route path="/rugs" element={<ExternalRedirect to="https://www.comebackrugs.com" />} />
                       <Route path="/lighting" element={<LightingProgram />} />
                       <Route path="/lighting-program" element={<Navigate to="/lighting" replace />} />
                       <Route path="/Lighting-Program" element={<Navigate to="/lighting" replace />} />
@@ -127,7 +125,7 @@ const App = () => {
                       <Route path="/tables" element={<Tables />} />
                       <Route path="/beds" element={<Beds />} />
                       <Route path="/cabinets" element={<Cabinets />} />
-                      <Route path="/size-guide" element={<SizeGuide />} />
+                      
                       <Route path="/favorites" element={<Favorites />} />
                       <Route path="/admin/products" element={<Navigate to="/admin" replace />} />
                       <Route
