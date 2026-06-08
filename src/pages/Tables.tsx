@@ -38,15 +38,15 @@ const config: ProgramConfig = {
       "Coffee tables, side tables, dining tables, and consoles from Modus Furniture and Arteriors Home. Priced 60% below retail.",
     brands: [
       {
-        label: "Modus Furniture",
-        displayBrand: "MODUS FURNITURE",
-        tab: "Modus Furniture",
-        filterName: (n) => TABLES_NAME_RE.test(n),
-      },
-      {
         label: "Arteriors Home",
         displayBrand: "ARTERIORS HOME",
         tab: "Arteriors Home",
+        filterName: (n) => TABLES_NAME_RE.test(n),
+      },
+      {
+        label: "Modus Furniture",
+        displayBrand: "MODUS FURNITURE",
+        tab: "Modus Furniture",
         filterName: (n) => TABLES_NAME_RE.test(n),
       },
     ],
