@@ -181,13 +181,17 @@ const CATEGORY_NAV = [
   { label: "Beds", to: "/beds", match: ["/beds"] },
 ];
 
+type SortKey = "featured" | "price_asc" | "qty_desc";
+
 const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) => {
   const [selected, setSelected] = useState(0);
+  const [sortKey, setSortKey] = useState<SortKey>("featured");
   const [rowsByBrand, setRowsByBrand] = useState<Record<number, SheetRow[]>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const location = useLocation();
+
 
   useEffect(() => {
     let cancelled = false;
@@ -254,9 +258,16 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
         imageUrl: brand.imageOverride?.(f.name) ?? f.imageUrl ?? null,
       }));
     }
-    cards.sort((a, b) => b.unitsAvailable - a.unitsAvailable);
+    if (sortKey === "price_asc") {
+      cards.sort((a, b) => calcYourPrice(a.msrp) - calcYourPrice(b.msrp));
+    } else if (sortKey === "qty_desc") {
+      cards.sort((a, b) => b.unitsAvailable - a.unitsAvailable);
+    } else {
+      cards.sort((a, b) => b.unitsAvailable - a.unitsAvailable);
+    }
     return cards;
-  }, [config, rowsByBrand, selected]);
+  }, [config, rowsByBrand, selected, sortKey]);
+
 
   const showFallbackBanner = error && products.length > 0;
 
@@ -402,7 +413,31 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
             </div>
           )}
 
+          {!loading && products.length > 0 && (
+            <div className="flex items-center justify-between gap-3 mb-5">
+              <p className="text-sm text-muted-foreground">
+                {products.length} {products.length === 1 ? "item" : "items"}
+              </p>
+              <div className="flex items-center gap-2">
+                <label htmlFor="sort-select" className="text-xs font-medium text-muted-foreground">
+                  Sort by
+                </label>
+                <select
+                  id="sort-select"
+                  value={sortKey}
+                  onChange={(e) => setSortKey(e.target.value as SortKey)}
+                  className="h-9 rounded-md border border-border bg-background px-3 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-accent/40"
+                >
+                  <option value="featured">Featured</option>
+                  <option value="price_asc">Price: Low to High</option>
+                  <option value="qty_desc">Quantity: High to Low</option>
+                </select>
+              </div>
+            </div>
+          )}
+
           {/* Grid */}
+
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
