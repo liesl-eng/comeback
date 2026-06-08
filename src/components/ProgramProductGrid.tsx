@@ -258,9 +258,16 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
         imageUrl: brand.imageOverride?.(f.name) ?? f.imageUrl ?? null,
       }));
     }
-    cards.sort((a, b) => b.unitsAvailable - a.unitsAvailable);
+    if (sortKey === "price_asc") {
+      cards.sort((a, b) => calcYourPrice(a.msrp) - calcYourPrice(b.msrp));
+    } else if (sortKey === "qty_desc") {
+      cards.sort((a, b) => b.unitsAvailable - a.unitsAvailable);
+    } else {
+      cards.sort((a, b) => b.unitsAvailable - a.unitsAvailable);
+    }
     return cards;
-  }, [config, rowsByBrand, selected]);
+  }, [config, rowsByBrand, selected, sortKey]);
+
 
   const showFallbackBanner = error && products.length > 0;
 
