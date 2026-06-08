@@ -22,7 +22,10 @@ import AdminProducts from "./pages/AdminProducts";
 import AdminImports from "./pages/AdminImports";
 
 import Auth from "./pages/Auth";
-import RugProgram from "./pages/RugProgram";
+const ExternalRedirect = ({ to }: { to: string }) => {
+  if (typeof window !== "undefined") window.location.replace(to);
+  return null;
+};
 import LightingProgram from "./pages/LightingProgram";
 import MirrorProgram from "./pages/MirrorProgram";
 import MeridianLamp from "./pages/MeridianLamp";
@@ -111,8 +114,8 @@ const App = () => {
                       <Route path="/pallets/:palletId" element={<Navigate to="/" replace />} />
                       <Route path="/pallet" element={<Navigate to="/" replace />} />
                       <Route path="/cart" element={<Navigate to="/" replace />} />
-                      <Route path="/rug-program" element={<RugProgram />} />
-                      <Route path="/rugs" element={<Navigate to="/rug-program" replace />} />
+                      <Route path="/rug-program" element={<ExternalRedirect to="https://www.comebackrugs.com" />} />
+                      <Route path="/rugs" element={<ExternalRedirect to="https://www.comebackrugs.com" />} />
                       <Route path="/lighting" element={<LightingProgram />} />
                       <Route path="/lighting-program" element={<Navigate to="/lighting" replace />} />
                       <Route path="/Lighting-Program" element={<Navigate to="/lighting" replace />} />
