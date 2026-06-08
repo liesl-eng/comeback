@@ -239,7 +239,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                         loading="lazy"
                         className={cn(
                           "w-full h-full group-hover:scale-[1.02] transition-transform duration-300",
-                          isMeridian ? "object-contain" : "object-cover",
+                          category === "Lighting" || isMeridian ? "object-contain" : "object-cover",
                         )}
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).style.display = "none";
