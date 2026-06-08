@@ -222,7 +222,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
       displayBrand: brand.displayBrand,
       msrp: r.msrp as number,
       unitsAvailable: r.unitsAvailable,
-      imageUrl: r.imageUrl,
+      imageUrl: brand.imageOverride?.(r.name) ?? r.imageUrl,
     }));
     if (cards.length === 0 && brand.fallback && brand.fallback.length > 0) {
       cards = brand.fallback.map((f) => ({
@@ -230,7 +230,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
         displayBrand: brand.displayBrand,
         msrp: f.msrp,
         unitsAvailable: f.unitsAvailable,
-        imageUrl: f.imageUrl ?? null,
+        imageUrl: brand.imageOverride?.(f.name) ?? f.imageUrl ?? null,
       }));
     }
     cards.sort((a, b) => b.unitsAvailable - a.unitsAvailable);
