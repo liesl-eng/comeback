@@ -333,25 +333,6 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                 })}
               </div>
               </div>
-              <div className="flex md:hidden justify-center gap-2 flex-wrap mt-3">
-                {config.brands.map((b, i) => {
-                  const active = i === selected;
-                  return (
-                    <button
-                      key={b.label}
-                      onClick={() => setSelected(i)}
-                      className={
-                        "px-4 py-1.5 rounded-full font-semibold text-sm transition-colors border " +
-                        (active
-                          ? "bg-accent text-accent-foreground border-accent"
-                          : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
-                      }
-                    >
-                      {b.label}
-                    </button>
-                  );
-                })}
-              </div>
             </div>
           ) : (
             <>
