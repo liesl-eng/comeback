@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -191,6 +191,26 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
   const [error, setError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const location = useLocation();
+  const gridTopRef = useRef<HTMLDivElement | null>(null);
+  const isInitialBrand = useRef(true);
+
+  const selectBrand = (i: number) => {
+    setSelected(i);
+    // Scroll the grid top into view, accounting for the sticky header.
+    requestAnimationFrame(() => {
+      const el = gridTopRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top, behavior: "smooth" });
+    });
+  };
+
+  // Skip scroll on first render so page load doesn't jump.
+  useEffect(() => {
+    isInitialBrand.current = false;
+  }, []);
+
+
 
 
   useEffect(() => {
@@ -330,7 +350,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                     return (
                       <button
                         key={b.label}
-                        onClick={() => setSelected(i)}
+                        onClick={() => selectBrand(i)}
                         className={
                           "px-3 py-1 rounded-full font-semibold text-xs transition-colors border " +
                           (active
@@ -351,7 +371,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                   return (
                     <button
                       key={b.label}
-                      onClick={() => setSelected(i)}
+                      onClick={() => selectBrand(i)}
                       className={
                         "px-3 py-1 rounded-full font-semibold text-xs transition-colors border " +
                         (active
@@ -389,7 +409,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                   return (
                     <button
                       key={b.label}
-                      onClick={() => setSelected(i)}
+                      onClick={() => selectBrand(i)}
                       className={
                         "px-6 py-2.5 rounded-full font-semibold text-sm transition-colors border " +
                         (active
@@ -406,7 +426,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
           )}
         </div>
 
-        <div className={config.stickyHeader ? "container mx-auto px-4" : ""}>
+        <div ref={gridTopRef} className={config.stickyHeader ? "container mx-auto px-4 scroll-mt-32" : "scroll-mt-32"}>
           {showFallbackBanner && (
             <div className="max-w-2xl mx-auto mb-6 rounded-md border border-accent/30 bg-accent/10 px-4 py-2 text-center text-sm text-foreground">
               Showing last known inventory. Live data updates daily at 2pm ET.
