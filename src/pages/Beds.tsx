@@ -43,7 +43,7 @@ const config: ProgramConfig = {
         displayBrand: "MODUS FURNITURE",
         tab: "Modus Furniture",
         filterName: (n) =>
-          BEDS_NAME_RE.test(n),
+          BEDS_NAME_RE.test(n) && !BEDS_EXCLUDE_RE.test(n),
       },
     ],
   },
