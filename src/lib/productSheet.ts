@@ -18,7 +18,6 @@ export const BRAND_TABS: BrandTab[] = [
   "Arteriors Home",
   "Havenly",
   "Hem",
-  "Vesta",
   "Castlery",
 ];
 
