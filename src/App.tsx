@@ -14,6 +14,7 @@ import OrderBar from "@/components/OrderBar";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 import Index from "./pages/Index";
+import Restocking from "./pages/Restocking";
 import Favorites from "./pages/Favorites";
 import About from "./pages/About";
 import AdminImport from "./pages/AdminImport";
@@ -52,34 +53,7 @@ const App = () => {
                 <ScrollToTop />
                 <OrderBar />
                 <Routes>
-                  <Route path="/" element={<Index />} />
                   <Route path="/auth" element={<Auth />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/catalog" element={<Navigate to="/" replace />} />
-                  {/* Legacy redirects */}
-                  <Route path="/products" element={<Navigate to="/" replace />} />
-                  <Route path="/product/:id" element={<Navigate to="/" replace />} />
-                  <Route path="/pallets" element={<Navigate to="/" replace />} />
-                  <Route path="/pallets/:palletId" element={<Navigate to="/" replace />} />
-                  <Route path="/pallet" element={<Navigate to="/" replace />} />
-                  <Route path="/cart" element={<Navigate to="/" replace />} />
-                  <Route path="/rug-program" element={<RugProgram />} />
-                  <Route path="/rugs" element={<Navigate to="/rug-program" replace />} />
-                  <Route path="/lighting" element={<LightingProgram />} />
-                  <Route path="/lighting-program" element={<Navigate to="/lighting" replace />} />
-                  <Route path="/Lighting-Program" element={<Navigate to="/lighting" replace />} />
-                  <Route path="/mirrors" element={<MirrorProgram />} />
-                  <Route path="/mirror-program" element={<Navigate to="/mirrors" replace />} />
-                  <Route path="/Mirror-Program" element={<Navigate to="/mirrors" replace />} />
-                  <Route path="/rechargeable-table-lamps" element={<MeridianLamp />} />
-                  <Route path="/seating" element={<Seating />} />
-                  <Route path="/tables" element={<Tables />} />
-                  <Route path="/beds" element={<Beds />} />
-                  <Route path="/cabinets" element={<Cabinets />} />
-                  <Route path="/storage" element={<Navigate to="/cabinets" replace />} />
-                  <Route path="/size-guide" element={<SizeGuide />} />
-                  <Route path="/favorites" element={<Favorites />} />
-                  <Route path="/admin/products" element={<Navigate to="/admin" replace />} />
                   <Route
                     path="/admin"
                     element={
@@ -104,8 +78,8 @@ const App = () => {
                       </ProtectedRoute>
                     }
                   />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
+                  {/* All other routes show the Restocking placeholder */}
+                  <Route path="*" element={<Restocking />} />
                 </Routes>
                 
               </BrowserRouter>
