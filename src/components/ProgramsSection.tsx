@@ -25,16 +25,6 @@ const programs = [
     accent: "from-slate-300 via-slate-400 to-slate-500",
   },
   {
-    icon: Armchair,
-    title: "Seating",
-    desc:
-      "Dining chairs, accent chairs, and lounge seating from Modus Furniture, Arteriors Home, and Havenly.",
-    badge: "Chairs · Stools · Benches",
-    cta: "Shop Seating",
-    path: "/seating",
-    accent: "from-accent via-accent to-amber-600",
-  },
-  {
     icon: Table2,
     title: "Tables",
     desc:

@@ -66,7 +66,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
             {[
               { to: "/lighting", label: "Lighting", match: ["/lighting", "/lighting-program"] },
               { to: "/mirrors", label: "Mirrors", match: ["/mirrors", "/mirror-program"] },
-              { to: "/seating", label: "Seating", match: ["/seating"] },
+              
               { to: "/tables", label: "Tables", match: ["/tables"] },
               { to: "/beds", label: "Beds", match: ["/beds"] },
               
@@ -159,7 +159,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
               {[
                 { to: "/lighting", label: "Lighting" },
                 { to: "/mirrors", label: "Mirrors" },
-                { to: "/seating", label: "Seating" },
+                
                 { to: "/tables", label: "Tables" },
                 { to: "/beds", label: "Beds" },
                 
