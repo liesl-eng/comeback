@@ -9,16 +9,17 @@ export type BrandTab =
   | "Ferm Living"
   | "Havenly"
   | "Hem"
-  | "Vesta";
+  | "Vesta"
+  | "Castlery";
 
 export const BRAND_TABS: BrandTab[] = [
-  "Mercana",
   "Modus Furniture",
-  "Arteriors Home",
   "Ferm Living",
+  "Arteriors Home",
   "Havenly",
   "Hem",
   "Vesta",
+  "Castlery",
 ];
 
 export interface SheetRow {
@@ -28,7 +29,9 @@ export interface SheetRow {
   imageFilename: string | null;
   price: number | null;
   msrp: number | null;
+  discountPct: number | null;
   unitsAvailable: number;
+  category: string | null;
   sourceLastUpdated: string | null;
 }
 
@@ -84,6 +87,14 @@ function cleanMoney(raw: string | undefined): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+function cleanPct(raw: string | undefined): number | null {
+  if (!raw) return null;
+  const s = raw.trim();
+  if (!s || s.toUpperCase() === "N/A") return null;
+  const n = parseFloat(s.replace(/[%\s]/g, ""));
+  return Number.isFinite(n) ? n : null;
+}
+
 function cleanInt(raw: string | undefined): number {
   if (!raw) return 0;
   const s = raw.trim();
@@ -118,7 +129,9 @@ export async function fetchSheetTab(tab: BrandTab): Promise<SheetRow[]> {
   const iImageFile = idx("Image Filename");
   const iPrice = idx("Price");
   const iMsrp = idx("MSRP");
+  const iDiscount = idx("Discount %");
   const iUnits = idx("Units Available");
+  const iCategory = idx("Category");
   const iUpdated = idx("Last Updated");
 
   const out: SheetRow[] = [];
@@ -139,9 +152,21 @@ export async function fetchSheetTab(tab: BrandTab): Promise<SheetRow[]> {
       imageFilename: iImageFile >= 0 ? cleanStr(r[iImageFile]) : null,
       price: iPrice >= 0 ? cleanMoney(r[iPrice]) : null,
       msrp: iMsrp >= 0 ? cleanMoney(r[iMsrp]) : null,
+      discountPct: iDiscount >= 0 ? cleanPct(r[iDiscount]) : null,
       unitsAvailable: iUnits >= 0 ? cleanInt(r[iUnits]) : 0,
+      category: iCategory >= 0 ? cleanStr(r[iCategory]) : null,
       sourceLastUpdated: iUpdated >= 0 ? cleanStr(r[iUpdated]) : null,
     });
+  }
+  return out;
+}
+
+// Fetch all brand tabs in parallel and return a single merged product list.
+export async function fetchAllProducts(): Promise<SheetRow[]> {
+  const results = await Promise.allSettled(BRAND_TABS.map((t) => fetchSheetTab(t)));
+  const out: SheetRow[] = [];
+  for (const r of results) {
+    if (r.status === "fulfilled") out.push(...r.value);
   }
   return out;
 }
