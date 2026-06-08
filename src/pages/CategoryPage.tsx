@@ -9,6 +9,7 @@ interface CategoryPageProps {
   category: "Lighting" | "Mirrors" | "Tables";
   title: string;
   subtitle?: string;
+  cardBackground?: string;
 }
 
 function formatMoney(n: number | null): string {
@@ -27,7 +28,7 @@ function computeDiscountPct(row: SheetRow): number | null {
   return null;
 }
 
-const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
+const CategoryPage = ({ category, title, subtitle, cardBackground }: CategoryPageProps) => {
   const { products, loading, error } = useCatalogProducts();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
 
@@ -120,7 +121,11 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
               return (
                 <article
                   key={`${p.brand}-${p.name}-${i}`}
-                  className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                  className={cn(
+                    "group flex flex-col border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow",
+                    !cardBackground && "bg-card",
+                  )}
+                  style={cardBackground ? { backgroundColor: cardBackground } : undefined}
                 >
                   <div className="aspect-square overflow-hidden" style={{ backgroundColor: "#F5F0E8" }}>
                     {p.imageUrl ? (
