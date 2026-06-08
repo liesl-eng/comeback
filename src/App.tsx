@@ -29,6 +29,7 @@ import SizeGuide from "./pages/SizeGuide";
 import Seating from "./pages/Seating";
 import Tables from "./pages/Tables";
 import Beds from "./pages/Beds";
+import Cabinets from "./pages/Cabinets";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -74,6 +75,8 @@ const App = () => {
                   <Route path="/seating" element={<Seating />} />
                   <Route path="/tables" element={<Tables />} />
                   <Route path="/beds" element={<Beds />} />
+                  <Route path="/cabinets" element={<Cabinets />} />
+                  <Route path="/storage" element={<Navigate to="/cabinets" replace />} />
                   <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/favorites" element={<Favorites />} />
                   <Route path="/admin/products" element={<Navigate to="/admin" replace />} />

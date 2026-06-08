@@ -116,6 +116,12 @@ const config: ProgramConfig = {
         ],
       },
       {
+        label: "Arteriors Home",
+        displayBrand: "ARTERIORS HOME",
+        tab: "Arteriors Home",
+        filterName: (n) => /mirror/i.test(n),
+      },
+      {
         label: "Mercana",
         displayBrand: "MERCANA",
         tab: "Mercana",
