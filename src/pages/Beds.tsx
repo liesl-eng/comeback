@@ -2,6 +2,7 @@ import ProgramMicrosite, { ProgramConfig } from "@/components/ProgramMicrosite";
 
 const BEDS_MOQ = 10000;
 const BEDS_NAME_RE = /(bed|headboard|nightstand|dresser|chest)/i;
+const BEDS_EXCLUDE_RE = /mirror/i;
 
 const config: ProgramConfig = {
   programName: "Beds",
@@ -42,7 +43,7 @@ const config: ProgramConfig = {
         displayBrand: "MODUS FURNITURE",
         tab: "Modus Furniture",
         filterName: (n) =>
-          BEDS_NAME_RE.test(n),
+          BEDS_NAME_RE.test(n) && !BEDS_EXCLUDE_RE.test(n),
       },
     ],
   },
