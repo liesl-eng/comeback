@@ -85,8 +85,9 @@ const ProgramsSection = () => {
       </div>
 
       {/* Rug Program band */}
-      <div className="mt-12 md:mt-16 bg-gradient-hero">
-        <div className="container mx-auto px-4 py-10 md:py-14">
+      <div className="mt-12 md:mt-16 bg-gradient-hero max-w-6xl mx-4 md:mx-auto rounded-xl">
+        <div className="px-6 md:px-10 py-10 md:py-14">
+
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-2">
