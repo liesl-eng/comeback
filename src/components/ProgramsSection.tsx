@@ -21,7 +21,7 @@ const programs: Program[] = [
     title: "Rugs",
     desc: "Curated closeout rugs, pallet-ready and delivered on your schedule.",
     badge: "Rug Program",
-    cta: "Shop Rugs",
+    cta: "Explore the Program",
     path: "https://www.comebackrugs.com",
     accent: "from-accent via-accent to-amber-600",
     external: true,
