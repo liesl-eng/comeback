@@ -94,13 +94,23 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           if (hasImage) return 2;
           return 3;
         };
+        // For Lighting + Arteriors, lead with chandeliers within the lead group.
+        const leadTypeRank = (p: SheetRow) => {
+          if (category !== "Lighting") return 0;
+          if (!isLead(p)) return 0;
+          return /chandelier/i.test(p.name) ? 0 : 1;
+        };
         const sa = score(a);
         const sb = score(b);
         if (sa !== sb) return sa - sb;
+        const la = leadTypeRank(a);
+        const lb = leadTypeRank(b);
+        if (la !== lb) return la - lb;
         const ha = hemRank(a);
         const hb = hemRank(b);
         if (ha !== hb) return ha - hb;
         return num(a.price, Infinity) - num(b.price, Infinity);
+
       });
       return arr;
     }
