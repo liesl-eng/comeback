@@ -18,6 +18,7 @@ const DEFAULT_BRANDS = [
   "Havenly",
   "Hem",
   "Vesta",
+  "Castlery",
 ];
 
 // --- categorize (mirrors src/lib/productCategory.ts) ---
