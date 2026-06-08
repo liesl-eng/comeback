@@ -65,17 +65,18 @@ const SkeletonCard = () => (
   </Card>
 );
 
-const ProductImage = ({ src, alt }: { src: string | null; alt: string }) => {
+const ProductImage = ({ src, alt, bgClassName }: { src: string | null; alt: string; bgClassName?: string }) => {
   const [failed, setFailed] = useState(false);
+  const bg = bgClassName ?? "bg-muted";
   if (!src || failed) {
     return (
-      <div className="aspect-square w-full bg-muted flex items-center justify-center">
+      <div className={cn("aspect-square w-full flex items-center justify-center", bg)}>
         <ImageOff className="h-10 w-10 text-muted-foreground/50" />
       </div>
     );
   }
   return (
-    <div className="aspect-square w-full bg-muted overflow-hidden">
+    <div className={cn("aspect-square w-full overflow-hidden", bg)}>
       <img
         src={src}
         alt={alt}
@@ -92,10 +93,13 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   const itemId = `${p.displayBrand}::${p.name}`.toLowerCase().replace(/\s+/g, "_");
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorited = isFavorite(itemId);
+  const isArteriors = /arteriors/i.test(p.displayBrand);
+  const imageBg = isArteriors ? "bg-[hsl(35,25%,93%)]" : undefined;
   return (
     <Card className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow">
       <div className="relative">
-        <ProductImage src={p.imageUrl} alt={p.name} />
+        <ProductImage src={p.imageUrl} alt={p.name} bgClassName={imageBg} />
+
         <button
           type="button"
           aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
