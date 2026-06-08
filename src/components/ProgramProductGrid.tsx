@@ -20,6 +20,8 @@ export interface BrandSource {
   filterName?: (name: string) => boolean;
   /** Hardcoded fallback if CSV fails or returns nothing for this brand */
   fallback?: Array<{ name: string; msrp: number; unitsAvailable: number; imageUrl?: string | null }>;
+  /** Optional override for image URL keyed off product name. Returns a URL to use instead of the CSV image. */
+  imageOverride?: (name: string) => string | undefined;
 }
 
 export interface ProgramProductGridConfig {
