@@ -92,7 +92,7 @@ const Index = () => {
 
 
         {/* Stretch Your Budget headline */}
-        <section className="pt-10 pb-1 md:pt-14 md:pb-2 bg-muted/30">
+        <section className="pt-2 pb-1 md:pt-4 md:pb-2 bg-muted/30">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-2xl md:text-4xl font-bold mb-3">Stretch Your Budget, Not Your Standards.</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -100,6 +100,7 @@ const Index = () => {
             </p>
           </div>
         </section>
+
 
         {/* Value Prop Section */}
         <ValuePropSection />
@@ -118,16 +119,17 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm mb-8">
             <div>
               <p className="font-bold text-foreground mb-3">Comeback Goods</p>
-              <p className="text-muted-foreground">Almost Perfect. Always Loved.</p>
+              <p className="text-muted-foreground">Almost Perfect.</p>
             </div>
             <div>
-              <p className="font-bold text-foreground mb-3">Programs</p>
+              <p className="font-bold text-foreground mb-3">Categories</p>
               <ul className="space-y-2 text-muted-foreground">
                 <li><Link to="/mirrors" className="hover:text-accent transition-colors">Mirrors</Link></li>
                 <li><Link to="/lighting" className="hover:text-accent transition-colors">Lighting</Link></li>
                 
                 <li><Link to="/tables" className="hover:text-accent transition-colors">Tables</Link></li>
-                <li><Link to="/beds" className="hover:text-accent transition-colors">Beds</Link></li>
+                
+
                 
                 <li className="pt-2 border-t border-border/50 mt-2"><Link to="/rugs" className="hover:text-accent transition-colors font-medium">Rug Program</Link></li>
               </ul>
