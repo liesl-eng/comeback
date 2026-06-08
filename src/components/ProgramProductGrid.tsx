@@ -426,7 +426,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
           )}
         </div>
 
-        <div className={config.stickyHeader ? "container mx-auto px-4" : ""}>
+        <div ref={gridTopRef} className={config.stickyHeader ? "container mx-auto px-4 scroll-mt-32" : "scroll-mt-32"}>
           {showFallbackBanner && (
             <div className="max-w-2xl mx-auto mb-6 rounded-md border border-accent/30 bg-accent/10 px-4 py-2 text-center text-sm text-foreground">
               Showing last known inventory. Live data updates daily at 2pm ET.
