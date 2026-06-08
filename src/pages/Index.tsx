@@ -130,8 +130,6 @@ const Index = () => {
                 <li><Link to="/tables" className="hover:text-accent transition-colors">Tables</Link></li>
                 
 
-                
-                <li className="pt-2 border-t border-border/50 mt-2"><Link to="/rugs" className="hover:text-accent transition-colors font-medium">Rug Program</Link></li>
               </ul>
             </div>
             <div>

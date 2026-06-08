@@ -69,10 +69,10 @@ const MeridianLamp = () => {
 
       <main className="container mx-auto px-4 py-8 md:py-12">
         <button
-          onClick={() => navigate("/rug-program")}
+          onClick={() => navigate("/")}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
         >
-          <ArrowLeft className="h-4 w-4" /> Back to Rug Program
+          <ArrowLeft className="h-4 w-4" /> Back
         </button>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-10 max-w-4xl mx-auto">
