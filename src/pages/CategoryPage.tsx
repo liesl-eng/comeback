@@ -49,7 +49,9 @@ function computeDiscountPct(row: SheetRow): number | null {
 
 const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
   const { products, loading, error } = useCatalogProducts();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
+  const [sortKey, setSortKey] = useState<SortKey>("default");
 
   const inCategory = useMemo(
     () =>
@@ -65,10 +67,29 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
     return Array.from(set).sort((a, b) => a.localeCompare(b));
   }, [inCategory]);
 
-  const visible = useMemo(
-    () => (activeBrand ? inCategory.filter((p) => p.brand === activeBrand) : inCategory),
-    [inCategory, activeBrand],
-  );
+  const visible = useMemo(() => {
+    const base = activeBrand ? inCategory.filter((p) => p.brand === activeBrand) : inCategory;
+    if (sortKey === "default") return base;
+    const arr = [...base];
+    const num = (v: number | null | undefined, fallback: number) =>
+      v == null || !Number.isFinite(v) ? fallback : v;
+    arr.sort((a, b) => {
+      switch (sortKey) {
+        case "price-asc":
+          return num(a.price, Infinity) - num(b.price, Infinity);
+        case "price-desc":
+          return num(b.price, -Infinity) - num(a.price, -Infinity);
+        case "qty-asc":
+          return num(a.unitsAvailable, Infinity) - num(b.unitsAvailable, Infinity);
+        case "qty-desc":
+          return num(b.unitsAvailable, -Infinity) - num(a.unitsAvailable, -Infinity);
+        default:
+          return 0;
+      }
+    });
+    return arr;
+  }, [inCategory, activeBrand, sortKey]);
+
 
   return (
     <div className="min-h-screen bg-background">
