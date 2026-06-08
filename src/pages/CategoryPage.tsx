@@ -276,8 +276,8 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                         }}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground">
-                        No image
+                      <div className="w-full h-full flex items-center justify-center text-base md:text-lg font-medium text-muted-foreground text-center px-4">
+                        Image Coming Soon
                       </div>
                     )}
                     <button
