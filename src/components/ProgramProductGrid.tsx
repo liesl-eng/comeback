@@ -191,6 +191,26 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
   const [error, setError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const location = useLocation();
+  const gridTopRef = useRef<HTMLDivElement | null>(null);
+  const isInitialBrand = useRef(true);
+
+  const selectBrand = (i: number) => {
+    setSelected(i);
+    // Scroll the grid top into view, accounting for the sticky header.
+    requestAnimationFrame(() => {
+      const el = gridTopRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top, behavior: "smooth" });
+    });
+  };
+
+  // Skip scroll on first render so page load doesn't jump.
+  useEffect(() => {
+    isInitialBrand.current = false;
+  }, []);
+
+
 
 
   useEffect(() => {
