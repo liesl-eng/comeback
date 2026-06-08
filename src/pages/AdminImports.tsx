@@ -96,7 +96,14 @@ const AdminImports = () => {
     if (error) {
       toast({ title: "Failed to load runs", description: error.message, variant: "destructive" });
     } else {
-      setRuns((data ?? []) as ImportRun[]);
+      // Keep only the most recent run per brand (data is ordered desc by started_at)
+      const seen = new Set<string>();
+      const latestPerBrand = ((data ?? []) as ImportRun[]).filter((r) => {
+        if (seen.has(r.brand)) return false;
+        seen.add(r.brand);
+        return true;
+      });
+      setRuns(latestPerBrand);
     }
     setLoading(false);
   }
