@@ -143,7 +143,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
       {brands.length > 0 && (
         <div className="bg-muted/60 border-b border-border">
           <div className="container mx-auto px-4 md:px-6 max-w-7xl py-2 flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-muted-foreground mr-1">
+            <span className="text-sm font-medium text-muted-foreground mr-1">
               Filter by Brand:
             </span>
             {brands.map((b) => {
@@ -154,7 +154,8 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                   type="button"
                   onClick={() => setActiveBrand(active ? null : b)}
                   className={cn(
-                    "px-3 py-1 rounded-md text-xs font-medium border transition-colors",
+                    "px-3 py-1 rounded-md text-sm font-medium border transition-colors",
+
                     active
                       ? "bg-accent text-accent-foreground border-accent"
                       : "bg-transparent text-foreground border-border hover:border-accent/60",
