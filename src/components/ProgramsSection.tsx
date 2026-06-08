@@ -7,8 +7,7 @@ const programs = [
   {
     icon: Lightbulb,
     title: "Lighting",
-    desc:
-      "Table lamps, floor lamps, sconces, pendants, and chandeliers from Arteriors Home and Ferm Living. Up to 97% below MSRP.",
+    desc: "Table lamps, floor lamps, sconces, pendants, and chandeliers.",
     badge: "Lamps · Sconces · Pendants",
     cta: "Shop Lighting",
     path: "/lighting",
@@ -17,8 +16,7 @@ const programs = [
   {
     icon: RectangleVertical,
     title: "Mirrors",
-    desc:
-      "Wall mirrors, floor mirrors, and statement pieces from Modus Furniture and Mercana. Up to 98% below MSRP.",
+    desc: "Wall mirrors, floor mirrors, and statement pieces.",
     badge: "Wall · Floor · Accent",
     cta: "Shop Mirrors",
     path: "/mirrors",
@@ -27,24 +25,14 @@ const programs = [
   {
     icon: Table2,
     title: "Tables",
-    desc:
-      "Coffee tables, side tables, dining tables, and consoles from Modus Furniture and Arteriors Home.",
+    desc: "Coffee tables, side tables, dining tables, and consoles.",
     badge: "Coffee · Side · Dining",
     cta: "Shop Tables",
     path: "/tables",
     accent: "from-slate-300 via-slate-400 to-slate-500",
   },
-  {
-    icon: BedDouble,
-    title: "Beds",
-    desc:
-      "Beds, headboards, nightstands, and dressers from Modus Furniture. Up to 99% below MSRP.",
-    badge: "Beds · Headboards · Dressers",
-    cta: "Shop Beds",
-    path: "/beds",
-    accent: "from-primary via-primary to-slate-800",
-  },
 ];
+
 
 const ProgramsSection = () => {
   const navigate = useNavigate();
