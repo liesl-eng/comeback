@@ -38,7 +38,7 @@ const ProgramsSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="programs" className="pt-12 md:pt-20 pb-12 md:pb-20 bg-background scroll-mt-20">
+    <section id="programs" className="pt-2 md:pt-4 pb-12 md:pb-20 bg-background scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10 md:mb-12 max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -85,8 +85,9 @@ const ProgramsSection = () => {
       </div>
 
       {/* Rug Program band */}
-      <div className="mt-12 md:mt-16 bg-gradient-hero">
-        <div className="container mx-auto px-4 py-10 md:py-14">
+      <div className="mt-12 md:mt-16 bg-gradient-hero max-w-6xl mx-4 md:mx-auto rounded-xl">
+        <div className="px-6 md:px-10 py-10 md:py-14">
+
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-2">
