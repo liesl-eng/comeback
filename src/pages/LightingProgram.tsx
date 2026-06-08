@@ -114,6 +114,7 @@ const config: ProgramConfig = {
         displayBrand: "FERM LIVING",
         tab: "Ferm Living",
         imageOverride: (name) => {
+          if (!/meridian/i.test(name)) return undefined;
           if (/brushed\s*steel/i.test(name)) return meridianBrushedSteel;
           if (/black/i.test(name)) return meridianBlack;
           return undefined;
