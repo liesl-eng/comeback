@@ -108,11 +108,14 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorited = isFavorite(itemId);
   const isArteriors = /arteriors/i.test(p.displayBrand);
-  const imageBg = isArteriors ? "bg-[hsl(35,25%,93%)]" : undefined;
+  const isFerm = /ferm/i.test(p.displayBrand);
+  const softBg = isArteriors || isFerm;
+  const imageBg = softBg ? "bg-[hsl(35,25%,93%)]" : undefined;
   return (
     <Card className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow">
       <div className="relative">
-        <ProductImage src={p.imageUrl} alt={p.name} bgClassName={imageBg} blendMultiply={isArteriors} />
+        <ProductImage src={p.imageUrl} alt={p.name} bgClassName={imageBg} blendMultiply={softBg} />
+
 
         <button
           type="button"
