@@ -114,8 +114,8 @@ const App = () => {
                       <Route path="/pallets/:palletId" element={<Navigate to="/" replace />} />
                       <Route path="/pallet" element={<Navigate to="/" replace />} />
                       <Route path="/cart" element={<Navigate to="/" replace />} />
-                      <Route path="/rug-program" element={<RugProgram />} />
-                      <Route path="/rugs" element={<Navigate to="/rug-program" replace />} />
+                      <Route path="/rug-program" element={<ExternalRedirect to="https://www.comebackrugs.com" />} />
+                      <Route path="/rugs" element={<ExternalRedirect to="https://www.comebackrugs.com" />} />
                       <Route path="/lighting" element={<LightingProgram />} />
                       <Route path="/lighting-program" element={<Navigate to="/lighting" replace />} />
                       <Route path="/Lighting-Program" element={<Navigate to="/lighting" replace />} />
