@@ -50,16 +50,14 @@ const ProgramsSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="programs" className="pt-0 pb-12 md:pb-20 bg-background scroll-mt-20">
+    <section id="programs" className="pt-12 md:pt-20 pb-12 md:pb-20 bg-background scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10 md:mb-12 max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             Shop By Category
           </h2>
-          <p className="text-muted-foreground text-base md:text-lg">
-            Curated closeout inventory from premium brands — ready to order, priced below wholesale.
-          </p>
         </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {programs.map((p) => (
