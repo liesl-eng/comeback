@@ -94,6 +94,7 @@ interface SheetRow {
   name: string; brand: string; image_url: string | null;
   image_filename: string | null; price: number | null; msrp: number | null;
   units_available: number; source_last_updated: string | null;
+  category: string | null;
 }
 
 async function fetchTab(tab: string): Promise<SheetRow[]> {
@@ -107,7 +108,8 @@ async function fetchTab(tab: string): Promise<SheetRow[]> {
   const idx = (k: string) => header.findIndex(h => h === k.toLowerCase());
   const iName = idx("Name"), iBrand = idx("Brand"), iImg = idx("Image URL"),
         iFile = idx("Image Filename"), iPrice = idx("Price"), iMsrp = idx("MSRP"),
-        iUnits = idx("Units Available"), iUpd = idx("Last Updated");
+        iUnits = idx("Units Available"), iUpd = idx("Last Updated"),
+        iCat = idx("Category");
   const out: SheetRow[] = [];
   for (let i = 1; i < rows.length; i++) {
     const r = rows[i];
@@ -123,6 +125,7 @@ async function fetchTab(tab: string): Promise<SheetRow[]> {
       msrp: iMsrp >= 0 ? cleanMoney(r[iMsrp]) : null,
       units_available: iUnits >= 0 ? cleanInt(r[iUnits]) : 0,
       source_last_updated: iUpd >= 0 ? cleanStr(r[iUpd]) : null,
+      category: iCat >= 0 ? cleanStr(r[iCat]) : null,
     });
   }
   return out;
