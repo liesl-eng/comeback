@@ -1,9 +1,16 @@
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { useCatalogProducts } from "@/hooks/useCatalogProducts";
 import { SheetRow } from "@/lib/productSheet";
 import { cn } from "@/lib/utils";
+
+const CATEGORY_NAV: { name: "Lighting" | "Mirrors" | "Tables"; path: string }[] = [
+  { name: "Lighting", path: "/lighting" },
+  { name: "Mirrors", path: "/mirrors" },
+  { name: "Tables", path: "/tables" },
+];
 
 interface CategoryPageProps {
   category: "Lighting" | "Mirrors" | "Tables";
