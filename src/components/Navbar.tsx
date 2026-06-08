@@ -54,7 +54,7 @@ const Navbar = ({ cartItemCount }: NavbarProps) => {
                 Comeback Goods
               </span>
               <span className="text-xs sm:text-sm md:text-base text-muted-foreground font-medium">
-                Almost Perfect
+                Almost Perfect.
               </span>
             </div>
           </Link>
