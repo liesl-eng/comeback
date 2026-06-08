@@ -143,18 +143,30 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {visible.map((p, i) => {
               const pct = computeDiscountPct(p);
+              const softBg =
+                category === "Lighting" &&
+                (p.brand === "Arteriors Home" || p.brand === "Ferm Living");
               return (
                 <article
                   key={`${p.brand}-${p.name}-${i}`}
                   className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className="aspect-square bg-muted overflow-hidden">
+                  <div
+                    className={cn(
+                      "aspect-square overflow-hidden",
+                      softBg ? "" : "bg-muted",
+                    )}
+                    style={softBg ? { backgroundColor: "#F5F0E8" } : undefined}
+                  >
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
                         alt={p.name}
                         loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                        className={cn(
+                          "w-full h-full group-hover:scale-[1.02] transition-transform duration-300",
+                          softBg ? "object-contain p-4" : "object-cover",
+                        )}
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).style.display = "none";
                         }}
