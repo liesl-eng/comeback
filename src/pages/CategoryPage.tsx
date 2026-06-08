@@ -195,9 +195,27 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                   </button>
                 );
               })}
+              <div className="ml-auto flex items-center gap-2">
+                <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
+                  Sort by:
+                </label>
+                <select
+                  id="sort"
+                  value={sortKey}
+                  onChange={(e) => setSortKey(e.target.value as SortKey)}
+                  className="border border-border bg-background text-foreground rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                  {SORT_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         )}
+
       </div>
 
 
