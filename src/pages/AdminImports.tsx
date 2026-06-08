@@ -85,10 +85,13 @@ const AdminImports = () => {
 
   async function loadRuns() {
     setLoading(true);
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
     const { data, error } = await supabase
       .from("product_import_runs")
       .select("*")
       .not("status", "in", "(applied,rejected)")
+      .gte("started_at", startOfToday.toISOString())
       .order("started_at", { ascending: false })
       .limit(1);
     if (error) {
