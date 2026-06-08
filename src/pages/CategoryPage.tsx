@@ -130,7 +130,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
       </Helmet>
       <Navbar />
 
-      <div className="sticky top-0 z-40 shadow-sm">
+      <div className="sticky top-16 md:top-20 z-40 shadow-sm">
         {/* Dark navy category bar */}
         <div className="bg-[hsl(var(--primary))] text-primary-foreground">
           <div className="container mx-auto px-4 md:px-6 max-w-7xl">
