@@ -350,7 +350,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                     return (
                       <button
                         key={b.label}
-                        onClick={() => setSelected(i)}
+                        onClick={() => selectBrand(i)}
                         className={
                           "px-3 py-1 rounded-full font-semibold text-xs transition-colors border " +
                           (active
@@ -371,7 +371,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                   return (
                     <button
                       key={b.label}
-                      onClick={() => setSelected(i)}
+                      onClick={() => selectBrand(i)}
                       className={
                         "px-3 py-1 rounded-full font-semibold text-xs transition-colors border " +
                         (active
@@ -409,7 +409,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                   return (
                     <button
                       key={b.label}
-                      onClick={() => setSelected(i)}
+                      onClick={() => selectBrand(i)}
                       className={
                         "px-6 py-2.5 rounded-full font-semibold text-sm transition-colors border " +
                         (active
