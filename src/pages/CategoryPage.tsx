@@ -73,7 +73,10 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
     const num = (v: number | null | undefined, fallback: number) =>
       v == null || !Number.isFinite(v) ? fallback : v;
     if (sortKey === "default") {
-      // Default: Arteriors Home (with images) first, then everything else by price asc.
+      // Default lead brand varies by category. Mirrors → Modus, otherwise Arteriors Home.
+      const leadBrand = category === "Mirrors" ? "modus furniture" : "arteriors home";
+      const isLead = (p: SheetRow) =>
+        (p.brand ?? "").toLowerCase().includes(leadBrand.split(" ")[0]);
       // Within Hem, lead with Dusk lamps, then Kuu.
       const hemRank = (p: SheetRow) => {
         if ((p.brand ?? "").toLowerCase() !== "hem") return 99;
@@ -84,10 +87,10 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
       };
       arr.sort((a, b) => {
         const score = (p: SheetRow) => {
-          const isArteriors = (p.brand ?? "").toLowerCase() === "arteriors home";
+          const lead = isLead(p);
           const hasImage = !!p.imageUrl;
-          if (isArteriors && hasImage) return 0;
-          if (isArteriors) return 1;
+          if (lead && hasImage) return 0;
+          if (lead) return 1;
           if (hasImage) return 2;
           return 3;
         };
@@ -101,6 +104,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
       });
       return arr;
     }
+
 
 
     arr.sort((a, b) => {
