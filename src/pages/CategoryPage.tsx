@@ -311,7 +311,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                       )}
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      {p.unitsAvailable} {p.unitsAvailable === 1 ? "unit" : "units"} available
+                      {p.unitsAvailable > 25 ? "25+" : p.unitsAvailable} {p.unitsAvailable === 1 ? "unit" : "units"} available
 
                     </div>
                   </div>
