@@ -9,7 +9,6 @@ interface CategoryPageProps {
   category: "Lighting" | "Mirrors" | "Tables";
   title: string;
   subtitle?: string;
-  cardBackground?: string;
 }
 
 function formatMoney(n: number | null): string {
@@ -28,7 +27,7 @@ function computeDiscountPct(row: SheetRow): number | null {
   return null;
 }
 
-const CategoryPage = ({ category, title, subtitle, cardBackground }: CategoryPageProps) => {
+const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
   const { products, loading, error } = useCatalogProducts();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
 
@@ -121,19 +120,15 @@ const CategoryPage = ({ category, title, subtitle, cardBackground }: CategoryPag
               return (
                 <article
                   key={`${p.brand}-${p.name}-${i}`}
-                  className={cn(
-                    "group flex flex-col border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow",
-                    !cardBackground && "bg-card",
-                  )}
-                  style={cardBackground ? { backgroundColor: cardBackground } : undefined}
+                  className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className="aspect-square overflow-hidden" style={{ backgroundColor: "#F5F0E8" }}>
+                  <div className="aspect-square bg-muted overflow-hidden">
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
                         alt={p.name}
                         loading="lazy"
-                        className="w-full h-full object-contain p-4 group-hover:scale-[1.02] transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).style.display = "none";
                         }}
