@@ -155,7 +155,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
 const CATEGORY_NAV = [
   { label: "Lighting", to: "/lighting", match: ["/lighting"] },
   { label: "Mirrors", to: "/mirrors", match: ["/mirrors", "/mirror-program"] },
-  { label: "Seating", to: "/seating", match: ["/seating"] },
+  
   { label: "Tables", to: "/tables", match: ["/tables"] },
   { label: "Beds", to: "/beds", match: ["/beds"] },
 ];
