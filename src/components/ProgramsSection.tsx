@@ -18,9 +18,9 @@ type Program = {
 const programs: Program[] = [
   {
     icon: Layers,
-    title: "Rugs",
-    desc: "Curated closeout rugs, pallet-ready and delivered on your schedule.",
-    badge: "Rug Program",
+    title: "Rug Program",
+    desc: "High quality, new rugs — curated and delivered on your schedule.",
+    badge: "Curated Rugs",
     cta: "Explore the Program",
     path: "https://www.comebackrugs.com",
     accent: "from-accent via-accent to-amber-600",
