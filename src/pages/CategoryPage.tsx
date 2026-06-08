@@ -95,10 +95,12 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           return 3;
         };
         // For Lighting + Arteriors, lead with chandeliers within the lead group.
+        // For Tables + Arteriors, push stools to the end of the lead group.
         const leadTypeRank = (p: SheetRow) => {
-          if (category !== "Lighting") return 0;
           if (!isLead(p)) return 0;
-          return /chandelier/i.test(p.name) ? 0 : 1;
+          if (category === "Lighting") return /chandelier/i.test(p.name) ? 0 : 1;
+          if (category === "Tables") return /stool/i.test(p.name) ? 1 : 0;
+          return 0;
         };
         const sa = score(a);
         const sb = score(b);
