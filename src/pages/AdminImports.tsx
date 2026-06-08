@@ -92,8 +92,7 @@ const AdminImports = () => {
       .select("*")
       .not("status", "in", "(applied,rejected)")
       .gte("started_at", startOfToday.toISOString())
-      .order("started_at", { ascending: false })
-      .limit(1);
+      .order("started_at", { ascending: false });
     if (error) {
       toast({ title: "Failed to load runs", description: error.message, variant: "destructive" });
     } else {
