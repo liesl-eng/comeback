@@ -181,13 +181,17 @@ const CATEGORY_NAV = [
   { label: "Beds", to: "/beds", match: ["/beds"] },
 ];
 
+type SortKey = "featured" | "price_asc" | "qty_desc";
+
 const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) => {
   const [selected, setSelected] = useState(0);
+  const [sortKey, setSortKey] = useState<SortKey>("featured");
   const [rowsByBrand, setRowsByBrand] = useState<Record<number, SheetRow[]>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const location = useLocation();
+
 
   useEffect(() => {
     let cancelled = false;
