@@ -292,6 +292,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                 </div>
 
                 <div className="hidden md:flex flex-shrink-0 items-center gap-2">
+                  <span className="text-xs font-medium text-primary-foreground/60 mr-1">Brand:</span>
                   {config.brands.map((b, i) => {
                     const active = i === selected;
                     return (
@@ -299,7 +300,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                         key={b.label}
                         onClick={() => setSelected(i)}
                         className={
-                          "px-4 py-1.5 rounded-full font-semibold text-sm transition-colors border " +
+                          "px-3 py-1 rounded-full font-semibold text-xs transition-colors border " +
                           (active
                             ? "bg-accent text-accent-foreground border-accent"
                             : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
@@ -310,6 +311,27 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
                     );
                   })}
                 </div>
+              </div>
+              <div className="flex md:hidden justify-center items-center gap-2 flex-wrap mt-3">
+                <span className="text-xs font-medium text-primary-foreground/60">Brand:</span>
+                {config.brands.map((b, i) => {
+                  const active = i === selected;
+                  return (
+                    <button
+                      key={b.label}
+                      onClick={() => setSelected(i)}
+                      className={
+                        "px-3 py-1 rounded-full font-semibold text-xs transition-colors border " +
+                        (active
+                          ? "bg-accent text-accent-foreground border-accent"
+                          : "bg-transparent text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10")
+                      }
+                    >
+                      {b.label}
+                    </button>
+                  );
+                })}
+              </div>
               </div>
               <div className="flex md:hidden justify-center gap-2 flex-wrap mt-3">
                 {config.brands.map((b, i) => {
