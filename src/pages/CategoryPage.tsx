@@ -130,6 +130,8 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           return num(a.unitsAvailable, Infinity) - num(b.unitsAvailable, Infinity);
         case "qty-desc":
           return num(b.unitsAvailable, -Infinity) - num(a.unitsAvailable, -Infinity);
+        case "name-asc":
+          return (a.name ?? "").localeCompare(b.name ?? "");
         default:
           return 0;
       }
