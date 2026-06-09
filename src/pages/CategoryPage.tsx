@@ -48,7 +48,7 @@ function computeDiscountPct(row: SheetRow): number | null {
 }
 
 const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
-  const { products, loading, error } = useCatalogProducts();
+  const { products, loading, error, refreshedAt } = useCatalogProducts();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>("default");
