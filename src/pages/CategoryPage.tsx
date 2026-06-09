@@ -233,7 +233,9 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
 
 
         {loading ? (
-          <div className="py-24 text-center text-muted-foreground">Loading products…</div>
+          <div className="container mx-auto px-4 md:px-6 py-20 text-center">
+            <p className="font-display text-2xl text-primary">Loading live inventory…</p>
+          </div>
         ) : error ? (
           <div className="py-24 text-center text-destructive">{error}</div>
         ) : visible.length === 0 ? (
