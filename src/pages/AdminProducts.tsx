@@ -70,12 +70,78 @@ interface ProductImportRecord {
 export default function AdminProducts() {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [checkingRole, setCheckingRole] = useState(true);
   const [activeTab, setActiveTab] = useState<BrandTab>(BRAND_TABS[0]);
   const [state, setState] = useState<Record<BrandTab, BrandState>>(() => {
     const init: Record<string, BrandState> = {};
     BRAND_TABS.forEach((b) => (init[b] = { ...emptyState, uploadedFiles: new Map() }));
     return init as Record<BrandTab, BrandState>;
   });
+
+  useEffect(() => {
+    async function checkAdminRole() {
+      if (!user) {
+        setCheckingRole(false);
+        setIsAdmin(false);
+        return;
+      }
+      try {
+        const { data, error } = await supabase.rpc('has_role', {
+          _user_id: user.id,
+          _role: 'admin',
+        });
+        if (error) {
+          setIsAdmin(false);
+        } else {
+          setIsAdmin(data === true);
+        }
+      } catch {
+        setIsAdmin(false);
+      } finally {
+        setCheckingRole(false);
+      }
+    }
+    checkAdminRole();
+  }, [user]);
+
+  if (checkingRole) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="container mx-auto px-4 py-8 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </main>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="container mx-auto px-4 py-8">
+          <Card className="max-w-md mx-auto">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-destructive">
+                <ShieldAlert className="h-6 w-6" />
+                Access Denied
+              </CardTitle>
+              <CardDescription>
+                You do not have permission to access this page. Admin privileges are required.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={() => navigate('/')} variant="outline" className="w-full">
+                Return to Home
+              </Button>
+            </CardContent>
+          </Card>
+        </main>
+      </div>
+    );
+  }
 
   // Duplicate scanner state
   const [dupScanning, setDupScanning] = useState(false);
