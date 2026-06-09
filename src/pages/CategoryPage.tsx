@@ -8,10 +8,11 @@ import { SheetRow } from "@/lib/productSheet";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { cn } from "@/lib/utils";
 
-type SortKey = "default" | "price-asc" | "price-desc" | "qty-asc" | "qty-desc";
+type SortKey = "default" | "price-asc" | "price-desc" | "qty-asc" | "qty-desc" | "name-asc";
 
 const SORT_OPTIONS: { value: SortKey; label: string }[] = [
   { value: "default", label: "Featured" },
+  { value: "name-asc", label: "Name: A-Z" },
   { value: "price-asc", label: "Price: Low to High" },
   { value: "price-desc", label: "Price: High to Low" },
   { value: "qty-asc", label: "Quantity: Low to High" },
@@ -129,6 +130,8 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           return num(a.unitsAvailable, Infinity) - num(b.unitsAvailable, Infinity);
         case "qty-desc":
           return num(b.unitsAvailable, -Infinity) - num(a.unitsAvailable, -Infinity);
+        case "name-asc":
+          return (a.name ?? "").localeCompare(b.name ?? "");
         default:
           return 0;
       }
