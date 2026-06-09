@@ -21,10 +21,12 @@ type State = {
   products: SheetRow[];
   loading: boolean;
   error: string | null;
+  refreshedAt: Date | null;
 };
 
 // Module-level cache so all category pages share one fetch per session.
 let cache: SheetRow[] | null = null;
+let cacheRefreshedAt: Date | null = null;
 let inflight: Promise<SheetRow[]> | null = null;
 
 export function useCatalogProducts(): State {
@@ -32,6 +34,7 @@ export function useCatalogProducts(): State {
     products: cache ?? [],
     loading: !cache,
     error: null,
+    refreshedAt: cacheRefreshedAt,
   });
 
   useEffect(() => {
@@ -41,7 +44,9 @@ export function useCatalogProducts(): State {
     inflight
       .then((rows) => {
         cache = rows;
-        if (!cancelled) setState({ products: rows, loading: false, error: null });
+        cacheRefreshedAt = new Date();
+        if (!cancelled)
+          setState({ products: rows, loading: false, error: null, refreshedAt: cacheRefreshedAt });
       })
 
       .catch((e) => {
@@ -50,6 +55,7 @@ export function useCatalogProducts(): State {
             products: [],
             loading: false,
             error: e instanceof Error ? e.message : "Failed to load products",
+            refreshedAt: null,
           });
       });
     return () => {

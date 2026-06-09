@@ -48,7 +48,7 @@ function computeDiscountPct(row: SheetRow): number | null {
 }
 
 const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
-  const { products, loading, error } = useCatalogProducts();
+  const { products, loading, error, refreshedAt } = useCatalogProducts();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>("default");
@@ -228,6 +228,17 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           </h1>
           {subtitle ? (
             <p className="mt-2 text-muted-foreground max-w-2xl">{subtitle}</p>
+          ) : null}
+          {refreshedAt ? (
+            <p className="mt-2 text-xs uppercase tracking-widest text-accent font-semibold">
+              Inventory refreshed {refreshedAt.toLocaleString(undefined, {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+              })}.
+            </p>
           ) : null}
         </header>
 
