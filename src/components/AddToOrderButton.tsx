@@ -259,7 +259,7 @@ export default function AddToOrderButton({ item }: Props) {
               count={s.items.length}
               active={s.id === selectedSpaceId}
               onSelect={() => setSelectedSpaceId(s.id)}
-              showPencil={state.spaces.length === 1 && s.name === "Space 1"}
+              showPencil={s.id === selectedSpaceId}
             />
           ))}
         </div>
