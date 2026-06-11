@@ -253,7 +253,11 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {visible.map((p, i) => {
-              const pct = computeDiscountPct(p);
+              // Force 60% off MSRP across the catalog UI
+              const msrpForDisplay = p.msrp ?? p.price ?? null;
+              const displayPrice =
+                msrpForDisplay != null ? Math.round(msrpForDisplay * 0.4 * 100) / 100 : p.price;
+              const pct = msrpForDisplay != null ? 60 : computeDiscountPct(p);
               const isMeridian = /meridian/i.test(p.name);
               const productId = `${p.brand}::${p.name}`;
               const fav = isFavorite(productId);
