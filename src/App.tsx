@@ -21,6 +21,7 @@ import AdminImport from "./pages/AdminImport";
 import AdminProducts from "./pages/AdminProducts";
 import AdminImports from "./pages/AdminImports";
 import AdminAccessCodes from "./pages/AdminAccessCodes";
+import AdminOrders from "./pages/AdminOrders";
 import UnlockAccess from "./pages/UnlockAccess";
 
 import Auth from "./pages/Auth";
