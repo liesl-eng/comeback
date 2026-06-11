@@ -12,6 +12,8 @@ import comebackLogo from "@/assets/comeback-goods-logo.png";
 
 const Auth = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/pallets";
   const { signIn, signUp } = useAuth();
   const { toast } = useToast();
   
