@@ -327,26 +327,37 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                     <h3 className="text-lg font-semibold text-foreground line-clamp-2 min-h-[3.5rem] leading-snug">
                       {p.name}
                     </h3>
-                    <div className="flex items-baseline gap-2 mt-auto pt-2">
-                      <span className="text-xl font-bold text-foreground">
-                        {formatMoney(displayPrice)}
-                      </span>
-                      {msrpForDisplay != null && displayPrice != null && msrpForDisplay > displayPrice && (
-                        <span className="text-sm text-muted-foreground line-through">
-                          {formatMoney(msrpForDisplay)}
+                    {user ? (
+                      <div className="flex items-baseline gap-2 mt-auto pt-2">
+                        <span className="text-xl font-bold text-foreground">
+                          {formatMoney(displayPrice)}
                         </span>
-                      )}
-                      {pct != null && pct > 0 && (
-                        <span className="ml-auto text-sm font-semibold text-accent">
-                          {pct}% off
-                        </span>
-                      )}
-                    </div>
+                        {msrpForDisplay != null && displayPrice != null && msrpForDisplay > displayPrice && (
+                          <span className="text-sm text-muted-foreground line-through">
+                            {formatMoney(msrpForDisplay)}
+                          </span>
+                        )}
+                        {pct != null && pct > 0 && (
+                          <span className="ml-auto text-sm font-semibold text-accent">
+                            {pct}% off
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="mt-auto pt-2">
+                        <Link
+                          to={`/auth?redirect=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname + window.location.search : "/")}`}
+                          className="text-sm font-semibold text-accent underline underline-offset-4 hover:no-underline"
+                        >
+                          Sign in to see pricing
+                        </Link>
+                      </div>
+                    )}
                     <div className="text-sm text-muted-foreground">
                       {p.unitsAvailable > 25 ? "25+" : p.unitsAvailable} {p.unitsAvailable === 1 ? "unit" : "units"} available
 
                     </div>
-                    {p.unitsAvailable > 0 && displayPrice != null && (
+                    {user && p.unitsAvailable > 0 && displayPrice != null && (
                       <AddToOrderButton
                         item={{
                           id: productId,
