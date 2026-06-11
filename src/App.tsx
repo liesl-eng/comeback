@@ -20,6 +20,8 @@ import About from "./pages/About";
 import AdminImport from "./pages/AdminImport";
 import AdminProducts from "./pages/AdminProducts";
 import AdminImports from "./pages/AdminImports";
+import AdminAccessCodes from "./pages/AdminAccessCodes";
+import UnlockAccess from "./pages/UnlockAccess";
 
 import Auth from "./pages/Auth";
 const ExternalRedirect = ({ to }: { to: string }) => {
