@@ -107,6 +107,7 @@ const ProductImage = ({
 const ProductCard = ({ p }: { p: CardProduct }) => {
   const yourPrice = calcYourPrice(p.msrp);
   const itemId = `${p.displayBrand}::${p.name}`.toLowerCase().replace(/\s+/g, "_");
+  const cardId = `p-${itemId.replace(/[^a-z0-9]+/g, "-")}`;
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorited = isFavorite(itemId);
   const { user } = useAuth();
@@ -115,9 +116,10 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   const softBg = isArteriors || isFerm;
   const imageBg = softBg ? "bg-[#F5F0E8]" : undefined;
   return (
-    <Card className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow">
+    <Card id={cardId} className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow scroll-mt-24">
       <div className="relative">
         <ProductImage src={p.imageUrl} alt={p.name} bgClassName={imageBg} blendMultiply={softBg} />
+
 
 
         <button
@@ -177,7 +179,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
         ) : (
           <div className="mb-1">
             <Link
-              to={`/auth?redirect=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname + window.location.search : "/")}`}
+              to={`/auth?redirect=${encodeURIComponent((typeof window !== "undefined" ? window.location.pathname + window.location.search : "/") + `#${cardId}`)}`}
               className="text-sm font-semibold text-accent underline underline-offset-4 hover:no-underline"
             >
               Sign in to see pricing
@@ -227,6 +229,23 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
   useEffect(() => {
     isInitialBrand.current = false;
   }, []);
+
+  // Scroll to product card when redirected back with a #hash
+  useEffect(() => {
+    if (loading) return;
+    const hash = location.hash;
+    if (!hash) return;
+    const id = hash.replace(/^#/, "");
+    const t = window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("ring-2", "ring-accent");
+        window.setTimeout(() => el.classList.remove("ring-2", "ring-accent"), 2000);
+      }
+    }, 150);
+    return () => window.clearTimeout(t);
+  }, [loading, location.hash]);
 
 
 

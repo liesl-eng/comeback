@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useCatalogProducts } from "@/hooks/useCatalogProducts";
@@ -51,13 +51,34 @@ function computeDiscountPct(row: SheetRow): number | null {
   return null;
 }
 
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
 const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
   const { products, loading, error } = useCatalogProducts();
   const refreshedAt = useInventoryRefreshedAt();
   const { user } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const location = useLocation();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>("default");
+
+  useEffect(() => {
+    if (loading) return;
+    const hash = location.hash;
+    if (!hash) return;
+    const id = hash.replace(/^#/, "");
+    // Defer to allow grid to render
+    const t = window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("ring-2", "ring-accent");
+        window.setTimeout(() => el.classList.remove("ring-2", "ring-accent"), 2000);
+      }
+    }, 100);
+    return () => window.clearTimeout(t);
+  }, [loading, location.hash]);
+
 
   const inCategory = useMemo(
     () =>
@@ -262,11 +283,13 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
               const pct = msrpForDisplay != null ? 60 : computeDiscountPct(p);
               const isMeridian = /meridian/i.test(p.name);
               const productId = `${p.brand}::${p.name}`;
+              const cardId = `p-${slugify(productId)}`;
               const fav = isFavorite(productId);
               return (
                 <article
+                  id={cardId}
                   key={`${p.brand}-${p.name}-${i}`}
-                  className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                  className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow scroll-mt-24"
                 >
                   <div
                     className={cn(
@@ -346,7 +369,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                     ) : (
                       <div className="mt-auto pt-2">
                         <Link
-                          to={`/auth?redirect=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname + window.location.search : "/")}`}
+                          to={`/auth?redirect=${encodeURIComponent((typeof window !== "undefined" ? window.location.pathname + window.location.search : "/") + `#${cardId}`)}`}
                           className="text-sm font-semibold text-accent underline underline-offset-4 hover:no-underline"
                         >
                           Sign in to see pricing
