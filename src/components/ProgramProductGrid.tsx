@@ -9,6 +9,7 @@ import AddToOrderButton from "@/components/AddToOrderButton";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { cn } from "@/lib/utils";
 import { useInventoryRefreshedAt, formatInventoryRefreshed } from "@/hooks/useInventoryRefreshedAt";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface BrandSource {
   /** Display label on the toggle pill */
@@ -108,6 +109,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   const itemId = `${p.displayBrand}::${p.name}`.toLowerCase().replace(/\s+/g, "_");
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorited = isFavorite(itemId);
+  const { user } = useAuth();
   const isArteriors = /arteriors/i.test(p.displayBrand);
   const isFerm = /ferm/i.test(p.displayBrand);
   const softBg = isArteriors || isFerm;
@@ -153,22 +155,35 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
         <p className="text-xs text-muted-foreground mb-3">
           {p.unitsAvailable >= 25 ? "25+ available" : `${p.unitsAvailable} in stock`}
         </p>
-        <div className="mb-1 flex items-baseline gap-2">
-          <span className="text-sm text-muted-foreground line-through">{formatUsd(p.msrp)}</span>
-          <span className="text-xl font-bold text-foreground">{formatUsd(yourPrice)}</span>
-        </div>
-        
-        <AddToOrderButton
-          item={{
-            id: itemId,
-            productName: p.name,
-            brand: p.displayBrand,
-            imageUrl: p.imageUrl,
-            msrp: p.msrp,
-            yourPrice,
-            unitsAvailable: p.unitsAvailable,
-          }}
-        />
+        {user ? (
+          <>
+            <div className="mb-1 flex items-baseline gap-2">
+              <span className="text-sm text-muted-foreground line-through">{formatUsd(p.msrp)}</span>
+              <span className="text-xl font-bold text-foreground">{formatUsd(yourPrice)}</span>
+            </div>
+
+            <AddToOrderButton
+              item={{
+                id: itemId,
+                productName: p.name,
+                brand: p.displayBrand,
+                imageUrl: p.imageUrl,
+                msrp: p.msrp,
+                yourPrice,
+                unitsAvailable: p.unitsAvailable,
+              }}
+            />
+          </>
+        ) : (
+          <div className="mb-1">
+            <Link
+              to={`/auth?redirect=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname + window.location.search : "/")}`}
+              className="text-sm font-semibold text-accent underline underline-offset-4 hover:no-underline"
+            >
+              Sign in to see pricing
+            </Link>
+          </div>
+        )}
       </div>
     </Card>
   );
