@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,8 @@ import comebackLogo from "@/assets/comeback-goods-logo.png";
 
 const Auth = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/pallets";
   const { signIn, signUp } = useAuth();
   const { toast } = useToast();
   
@@ -48,7 +50,7 @@ const Auth = () => {
         title: "Welcome back!",
         description: "You have successfully logged in.",
       });
-      navigate("/pallets");
+      navigate(redirectTo);
     }
   };
 
@@ -96,7 +98,7 @@ const Auth = () => {
         title: "Account created!",
         description: "You can now access the pallet catalog.",
       });
-      navigate("/pallets");
+      navigate(redirectTo);
     }
   };
 
