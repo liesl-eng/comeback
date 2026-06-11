@@ -157,7 +157,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
         <p className="text-xs text-muted-foreground mb-3">
           {p.unitsAvailable >= 25 ? "25+ available" : `${p.unitsAvailable} in stock`}
         </p>
-        {user ? (
+        {user && isApproved ? (
           <>
             <div className="mb-1 flex items-baseline gap-2">
               <span className="text-sm text-muted-foreground line-through">{formatUsd(p.msrp)}</span>
@@ -176,6 +176,15 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
               }}
             />
           </>
+        ) : user && !isApproved ? (
+          <div className="mb-1">
+            <Link
+              to={`/unlock?redirect=${encodeURIComponent((typeof window !== "undefined" ? window.location.pathname + window.location.search : "/") + `#${cardId}`)}`}
+              className="text-sm font-semibold text-accent underline underline-offset-4 hover:no-underline"
+            >
+              Enter your access code to unlock pricing
+            </Link>
+          </div>
         ) : (
           <div className="mb-1">
             <Link
