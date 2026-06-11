@@ -50,7 +50,7 @@ const Auth = () => {
         title: "Welcome back!",
         description: "You have successfully logged in.",
       });
-      navigate(redirectTo);
+      navigate(`/unlock?redirect=${encodeURIComponent(redirectTo)}`);
     }
   };
 
@@ -98,7 +98,7 @@ const Auth = () => {
         title: "Account created!",
         description: "You can now access the pallet catalog.",
       });
-      navigate(redirectTo);
+      navigate(`/unlock?redirect=${encodeURIComponent(redirectTo)}`);
     }
   };
 

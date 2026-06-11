@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_codes: {
+        Row: {
+          assigned_to_email: string | null
+          code: string
+          created_at: string
+          id: string
+          status: string
+          updated_at: string
+          used_at: string | null
+          used_by_user_id: string | null
+        }
+        Insert: {
+          assigned_to_email?: string | null
+          code: string
+          created_at?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          used_at?: string | null
+          used_by_user_id?: string | null
+        }
+        Update: {
+          assigned_to_email?: string | null
+          code?: string
+          created_at?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          used_at?: string | null
+          used_by_user_id?: string | null
+        }
+        Relationships: []
+      }
       pallet_items: {
         Row: {
           category_name: string | null
@@ -288,7 +321,9 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_approved: { Args: { _user_id: string }; Returns: boolean }
       last_inventory_refreshed_at: { Args: never; Returns: string }
+      redeem_access_code: { Args: { _code: string }; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
