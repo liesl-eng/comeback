@@ -115,8 +115,8 @@ const Auth = () => {
           alt="Comeback Goods" 
           className="h-16 w-16 rounded-full object-cover mb-4"
         />
-        <h1 className="text-2xl font-bold text-foreground">Comeback Goods</h1>
-        <p className="text-muted-foreground">B2B Marketplace</p>
+        <h1 className="text-2xl font-bold text-foreground">Comeback Goods B2B</h1>
+        <p className="text-muted-foreground">Register to see pricing</p>
       </div>
 
       <Card className="w-full max-w-md">
