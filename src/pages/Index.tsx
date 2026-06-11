@@ -57,9 +57,9 @@ const Index = () => {
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <Button
-                  variant="accent"
+                  variant="outline"
                   size="lg"
-                  className="gap-2"
+                  className="gap-2 bg-transparent border-white text-white hover:bg-white/10 hover:text-white"
                   asChild
                 >
                   <a href="mailto:hello@comebackgoods.com?subject=Comeback%20Goods%20Inquiry">
