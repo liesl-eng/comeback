@@ -7,6 +7,7 @@ import { useCatalogProducts } from "@/hooks/useCatalogProducts";
 import { SheetRow } from "@/lib/productSheet";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { cn } from "@/lib/utils";
+import AddToOrderButton from "@/components/AddToOrderButton";
 
 type SortKey = "default" | "price-asc" | "price-desc" | "qty-asc" | "qty-desc" | "name-asc";
 
