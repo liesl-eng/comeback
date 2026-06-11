@@ -209,8 +209,17 @@ export default function AddToOrderButton({ item }: Props) {
             type="number"
             min={1}
             max={max}
-            value={qty}
-            onChange={(e) => setQty(clampQty(parseInt(e.target.value, 10) || 1))}
+            value={qtyInput}
+            onChange={(e) => {
+              const v = e.target.value;
+              setQtyInput(v);
+              const parsed = parseInt(v, 10);
+              if (!isNaN(parsed) && parsed >= 1 && parsed <= max) {
+                setQty(parsed);
+                setShowMaxWarning(false);
+              }
+            }}
+            onBlur={() => commitQty()}
             className="h-9 w-16 text-center"
           />
           <Button
@@ -218,15 +227,21 @@ export default function AddToOrderButton({ item }: Props) {
             variant="outline"
             size="icon"
             className="h-9 w-9"
-            onClick={() => setQty((q) => clampQty(q + 1))}
+            onClick={() => setQtyBoth(qty + 1)}
             disabled={qty >= max}
           >
             <Plus className="h-4 w-4" />
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground text-center mb-3">
-          {max} available
-        </p>
+        {showMaxWarning ? (
+          <p className="text-xs text-destructive text-center mb-3">
+            Max available: {max}
+          </p>
+        ) : (
+          <p className="text-xs text-muted-foreground text-center mb-3">
+            {max} available
+          </p>
+        )}
 
         {/* Space picker */}
         <p className="text-sm font-semibold mb-2">Add to Space</p>
