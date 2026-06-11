@@ -283,11 +283,13 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
               const pct = msrpForDisplay != null ? 60 : computeDiscountPct(p);
               const isMeridian = /meridian/i.test(p.name);
               const productId = `${p.brand}::${p.name}`;
+              const cardId = `p-${slugify(productId)}`;
               const fav = isFavorite(productId);
               return (
                 <article
+                  id={cardId}
                   key={`${p.brand}-${p.name}-${i}`}
-                  className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                  className="group flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow scroll-mt-24"
                 >
                   <div
                     className={cn(
