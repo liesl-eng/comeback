@@ -107,6 +107,7 @@ const ProductImage = ({
 const ProductCard = ({ p }: { p: CardProduct }) => {
   const yourPrice = calcYourPrice(p.msrp);
   const itemId = `${p.displayBrand}::${p.name}`.toLowerCase().replace(/\s+/g, "_");
+  const cardId = `p-${itemId.replace(/[^a-z0-9]+/g, "-")}`;
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorited = isFavorite(itemId);
   const { user } = useAuth();
@@ -115,9 +116,10 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   const softBg = isArteriors || isFerm;
   const imageBg = softBg ? "bg-[#F5F0E8]" : undefined;
   return (
-    <Card className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow">
+    <Card id={cardId} className="overflow-hidden flex flex-col hover:shadow-hover transition-shadow scroll-mt-24">
       <div className="relative">
         <ProductImage src={p.imageUrl} alt={p.name} bgClassName={imageBg} blendMultiply={softBg} />
+
 
 
         <button
