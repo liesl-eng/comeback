@@ -50,7 +50,7 @@ const Auth = () => {
         title: "Welcome back!",
         description: "You have successfully logged in.",
       });
-      navigate(redirectTo);
+      navigate(`/unlock?redirect=${encodeURIComponent(redirectTo)}`);
     }
   };
 
