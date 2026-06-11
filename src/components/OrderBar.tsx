@@ -27,6 +27,7 @@ import {
 import { toast } from "sonner";
 import { useBuildOrder, ORDER_MOQ, OrderSpace } from "@/contexts/BuildOrderContext";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 const fmtMoney = (n: number) =>
   `$${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
@@ -374,6 +375,53 @@ export default function OrderBar() {
     };
 
     try {
+      // Save order to database
+      try {
+        const { data: authData } = await supabase.auth.getUser();
+        const uid = authData.user?.id;
+        if (uid) {
+          const { data: orderRow, error: orderErr } = await supabase
+            .from("orders")
+            .insert({
+              user_id: uid,
+              company_name: buyer.companyName,
+              contact_name: buyer.contactName,
+              email: buyer.email,
+              phone: buyer.phone || null,
+              notes: buyer.notes || null,
+              total_items: totals.items,
+              order_total: totals.grandTotal,
+              order_total_msrp: totals.grandMsrp,
+              total_savings: totals.savings,
+              payload: payload as any,
+            })
+            .select("id")
+            .single();
+          if (orderErr) {
+            console.error("[OrderBar] order insert error", orderErr);
+          } else if (orderRow) {
+            const itemRows = spacesPayload.flatMap((s) =>
+              s.items.map((i) => ({
+                order_id: orderRow.id,
+                space_name: s.spaceName,
+                brand: i.brand,
+                product_name: i.productName,
+                quantity: i.quantity,
+                unit_price: i.yourPrice,
+                unit_msrp: i.msrp,
+                line_total: i.lineTotal,
+              }))
+            );
+            if (itemRows.length > 0) {
+              const { error: itemsErr } = await supabase.from("order_items").insert(itemRows);
+              if (itemsErr) console.error("[OrderBar] items insert error", itemsErr);
+            }
+          }
+        }
+      } catch (dbErr) {
+        console.error("[OrderBar] db save failed", dbErr);
+      }
+
       if (!url) {
         console.warn("[OrderBar] VITE_MAKE_WEBHOOK_URL not set. Payload:", payload);
       } else {

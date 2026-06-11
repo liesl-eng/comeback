@@ -21,6 +21,7 @@ import AdminImport from "./pages/AdminImport";
 import AdminProducts from "./pages/AdminProducts";
 import AdminImports from "./pages/AdminImports";
 import AdminAccessCodes from "./pages/AdminAccessCodes";
+import AdminOrders from "./pages/AdminOrders";
 import UnlockAccess from "./pages/UnlockAccess";
 
 import Auth from "./pages/Auth";
@@ -62,6 +63,7 @@ const App = () => {
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/unlock" element={<UnlockAccess />} />
                   <Route path="/admin/access-codes" element={<ProtectedRoute><AdminAccessCodes /></ProtectedRoute>} />
+                  <Route path="/admin/orders" element={<ProtectedRoute><AdminOrders /></ProtectedRoute>} />
                   <Route path="/about" element={<About />} />
                   <Route path="/catalog" element={<Navigate to="/" replace />} />
                   <Route path="/products" element={<Navigate to="/" replace />} />
