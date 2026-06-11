@@ -253,7 +253,11 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {visible.map((p, i) => {
-              const pct = computeDiscountPct(p);
+              // Force 60% off MSRP across the catalog UI
+              const msrpForDisplay = p.msrp ?? p.price ?? null;
+              const displayPrice =
+                msrpForDisplay != null ? Math.round(msrpForDisplay * 0.4 * 100) / 100 : p.price;
+              const pct = msrpForDisplay != null ? 60 : computeDiscountPct(p);
               const isMeridian = /meridian/i.test(p.name);
               const productId = `${p.brand}::${p.name}`;
               const fav = isFavorite(productId);
@@ -323,11 +327,11 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                     </h3>
                     <div className="flex items-baseline gap-2 mt-auto pt-2">
                       <span className="text-xl font-bold text-foreground">
-                        {formatMoney(p.price)}
+                        {formatMoney(displayPrice)}
                       </span>
-                      {p.msrp != null && (p.price == null || p.msrp > p.price) && (
+                      {msrpForDisplay != null && displayPrice != null && msrpForDisplay > displayPrice && (
                         <span className="text-sm text-muted-foreground line-through">
-                          {formatMoney(p.msrp)}
+                          {formatMoney(msrpForDisplay)}
                         </span>
                       )}
                       {pct != null && pct > 0 && (
@@ -340,15 +344,15 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                       {p.unitsAvailable > 25 ? "25+" : p.unitsAvailable} {p.unitsAvailable === 1 ? "unit" : "units"} available
 
                     </div>
-                    {p.unitsAvailable > 0 && p.price != null && (
+                    {p.unitsAvailable > 0 && displayPrice != null && (
                       <AddToOrderButton
                         item={{
                           id: productId,
                           productName: p.name,
                           brand: p.brand,
                           imageUrl: p.imageUrl ?? null,
-                          msrp: p.msrp ?? p.price,
-                          yourPrice: p.price,
+                          msrp: msrpForDisplay ?? displayPrice,
+                          yourPrice: displayPrice,
                           unitsAvailable: p.unitsAvailable,
                         }}
                       />
