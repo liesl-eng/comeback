@@ -47,6 +47,104 @@ export type Database = {
         }
         Relationships: []
       }
+      order_items: {
+        Row: {
+          brand: string | null
+          created_at: string
+          id: string
+          line_total: number
+          order_id: string
+          product_name: string | null
+          quantity: number
+          space_name: string | null
+          unit_msrp: number
+          unit_price: number
+        }
+        Insert: {
+          brand?: string | null
+          created_at?: string
+          id?: string
+          line_total?: number
+          order_id: string
+          product_name?: string | null
+          quantity?: number
+          space_name?: string | null
+          unit_msrp?: number
+          unit_price?: number
+        }
+        Update: {
+          brand?: string | null
+          created_at?: string
+          id?: string
+          line_total?: number
+          order_id?: string
+          product_name?: string | null
+          quantity?: number
+          space_name?: string | null
+          unit_msrp?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          company_name: string
+          contact_name: string
+          created_at: string
+          email: string
+          id: string
+          notes: string | null
+          order_total: number
+          order_total_msrp: number
+          payload: Json | null
+          phone: string | null
+          status: string
+          total_items: number
+          total_savings: number
+          user_id: string | null
+        }
+        Insert: {
+          company_name: string
+          contact_name: string
+          created_at?: string
+          email: string
+          id?: string
+          notes?: string | null
+          order_total?: number
+          order_total_msrp?: number
+          payload?: Json | null
+          phone?: string | null
+          status?: string
+          total_items?: number
+          total_savings?: number
+          user_id?: string | null
+        }
+        Update: {
+          company_name?: string
+          contact_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          notes?: string | null
+          order_total?: number
+          order_total_msrp?: number
+          payload?: Json | null
+          phone?: string | null
+          status?: string
+          total_items?: number
+          total_savings?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       pallet_items: {
         Row: {
           category_name: string | null
