@@ -200,7 +200,7 @@ export default function AddToOrderButton({ item }: Props) {
             variant="outline"
             size="icon"
             className="h-9 w-9"
-            onClick={() => setQty((q) => clampQty(q - 1))}
+            onClick={() => setQtyBoth(qty - 1)}
             disabled={qty <= 1}
           >
             <Minus className="h-4 w-4" />
