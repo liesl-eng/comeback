@@ -51,13 +51,34 @@ function computeDiscountPct(row: SheetRow): number | null {
   return null;
 }
 
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
 const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
   const { products, loading, error } = useCatalogProducts();
   const refreshedAt = useInventoryRefreshedAt();
   const { user } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const location = useLocation();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>("default");
+
+  useEffect(() => {
+    if (loading) return;
+    const hash = location.hash;
+    if (!hash) return;
+    const id = hash.replace(/^#/, "");
+    // Defer to allow grid to render
+    const t = window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("ring-2", "ring-accent");
+        window.setTimeout(() => el.classList.remove("ring-2", "ring-accent"), 2000);
+      }
+    }, 100);
+    return () => window.clearTimeout(t);
+  }, [loading, location.hash]);
+
 
   const inCategory = useMemo(
     () =>
