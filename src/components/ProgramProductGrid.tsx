@@ -230,6 +230,23 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
     isInitialBrand.current = false;
   }, []);
 
+  // Scroll to product card when redirected back with a #hash
+  useEffect(() => {
+    if (loading) return;
+    const hash = location.hash;
+    if (!hash) return;
+    const id = hash.replace(/^#/, "");
+    const t = window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("ring-2", "ring-accent");
+        window.setTimeout(() => el.classList.remove("ring-2", "ring-accent"), 2000);
+      }
+    }, 150);
+    return () => window.clearTimeout(t);
+  }, [loading, location.hash]);
+
 
 
 
