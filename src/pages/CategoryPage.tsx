@@ -56,7 +56,7 @@ const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").repla
 const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
   const { products, loading, error } = useCatalogProducts();
   const refreshedAt = useInventoryRefreshedAt();
-  const { user } = useAuth();
+  const { user, isApproved } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
   const location = useLocation();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
