@@ -110,7 +110,7 @@ const ProductCard = ({ p }: { p: CardProduct }) => {
   const cardId = `p-${itemId.replace(/[^a-z0-9]+/g, "-")}`;
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorited = isFavorite(itemId);
-  const { user } = useAuth();
+  const { user, isApproved } = useAuth();
   const isArteriors = /arteriors/i.test(p.displayBrand);
   const isFerm = /ferm/i.test(p.displayBrand);
   const softBg = isArteriors || isFerm;
