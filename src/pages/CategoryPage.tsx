@@ -8,6 +8,7 @@ import { SheetRow } from "@/lib/productSheet";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { cn } from "@/lib/utils";
 import AddToOrderButton from "@/components/AddToOrderButton";
+import { useInventoryRefreshedAt, formatInventoryRefreshed } from "@/hooks/useInventoryRefreshedAt";
 
 type SortKey = "default" | "price-asc" | "price-desc" | "qty-asc" | "qty-desc" | "name-asc";
 
@@ -50,7 +51,8 @@ function computeDiscountPct(row: SheetRow): number | null {
 }
 
 const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
-  const { products, loading, error, refreshedAt } = useCatalogProducts();
+  const { products, loading, error } = useCatalogProducts();
+  const refreshedAt = useInventoryRefreshedAt();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>("default");
@@ -230,18 +232,9 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
             {title}
           </h1>
-          {subtitle ? (
-            <p className="mt-2 text-muted-foreground max-w-2xl">{subtitle}</p>
-          ) : null}
           {refreshedAt ? (
             <p className="mt-2 text-xs uppercase tracking-widest text-accent font-semibold">
-              Inventory refreshed {refreshedAt.toLocaleString(undefined, {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-                hour: "numeric",
-                minute: "2-digit",
-              })}.
+              {formatInventoryRefreshed(refreshedAt)}
             </p>
           ) : null}
         </header>

@@ -288,6 +288,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      last_inventory_refreshed_at: { Args: never; Returns: string }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
