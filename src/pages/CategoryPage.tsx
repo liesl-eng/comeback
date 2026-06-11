@@ -7,6 +7,7 @@ import { useCatalogProducts } from "@/hooks/useCatalogProducts";
 import { SheetRow } from "@/lib/productSheet";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { cn } from "@/lib/utils";
+import AddToOrderButton from "@/components/AddToOrderButton";
 
 type SortKey = "default" | "price-asc" | "price-desc" | "qty-asc" | "qty-desc" | "name-asc";
 
@@ -346,6 +347,19 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                       {p.unitsAvailable > 25 ? "25+" : p.unitsAvailable} {p.unitsAvailable === 1 ? "unit" : "units"} available
 
                     </div>
+                    {p.unitsAvailable > 0 && p.price != null && (
+                      <AddToOrderButton
+                        item={{
+                          id: productId,
+                          productName: p.name,
+                          brand: p.brand,
+                          imageUrl: p.imageUrl ?? null,
+                          msrp: p.msrp ?? p.price,
+                          yourPrice: p.price,
+                          unitsAvailable: p.unitsAvailable,
+                        }}
+                      />
+                    )}
                   </div>
                 </article>
               );
