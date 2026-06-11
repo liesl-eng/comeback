@@ -327,11 +327,11 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                     </h3>
                     <div className="flex items-baseline gap-2 mt-auto pt-2">
                       <span className="text-xl font-bold text-foreground">
-                        {formatMoney(p.price)}
+                        {formatMoney(displayPrice)}
                       </span>
-                      {p.msrp != null && (p.price == null || p.msrp > p.price) && (
+                      {msrpForDisplay != null && displayPrice != null && msrpForDisplay > displayPrice && (
                         <span className="text-sm text-muted-foreground line-through">
-                          {formatMoney(p.msrp)}
+                          {formatMoney(msrpForDisplay)}
                         </span>
                       )}
                       {pct != null && pct > 0 && (
@@ -344,15 +344,15 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
                       {p.unitsAvailable > 25 ? "25+" : p.unitsAvailable} {p.unitsAvailable === 1 ? "unit" : "units"} available
 
                     </div>
-                    {p.unitsAvailable > 0 && p.price != null && (
+                    {p.unitsAvailable > 0 && displayPrice != null && (
                       <AddToOrderButton
                         item={{
                           id: productId,
                           productName: p.name,
                           brand: p.brand,
                           imageUrl: p.imageUrl ?? null,
-                          msrp: p.msrp ?? p.price,
-                          yourPrice: p.price,
+                          msrp: msrpForDisplay ?? displayPrice,
+                          yourPrice: displayPrice,
                           unitsAvailable: p.unitsAvailable,
                         }}
                       />
