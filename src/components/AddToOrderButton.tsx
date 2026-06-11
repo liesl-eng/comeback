@@ -107,6 +107,8 @@ export default function AddToOrderButton({ item }: Props) {
   const { state, addItem, addSpaceWithItem } = useBuildOrder();
   const [open, setOpen] = useState(false);
   const [qty, setQty] = useState(1);
+  const [qtyInput, setQtyInput] = useState("1");
+  const [showMaxWarning, setShowMaxWarning] = useState(false);
   const [selectedSpaceId, setSelectedSpaceId] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [newName, setNewName] = useState("");
@@ -114,42 +116,71 @@ export default function AddToOrderButton({ item }: Props) {
   const max = Math.max(1, item.unitsAvailable || 1);
   const clampQty = (n: number) => Math.max(1, Math.min(max, n));
 
+  const setQtyBoth = (n: number) => {
+    const c = clampQty(n);
+    setQty(c);
+    setQtyInput(String(c));
+  };
+
+  const commitQty = () => {
+    const parsed = parseInt(qtyInput, 10);
+    if (isNaN(parsed) || parsed < 1) {
+      setQtyBoth(1);
+      setShowMaxWarning(false);
+      return 1;
+    }
+    if (parsed > max) {
+      setQtyBoth(max);
+      setShowMaxWarning(true);
+      return max;
+    }
+    setQtyBoth(parsed);
+    setShowMaxWarning(false);
+    return parsed;
+  };
+
   const resetAndClose = () => {
     setOpen(false);
     setCreating(false);
     setNewName("");
     setQty(1);
+    setQtyInput("1");
+    setShowMaxWarning(false);
     setSelectedSpaceId(null);
   };
 
   const handleOpenChange = (next: boolean) => {
     if (next) {
       setQty(1);
+      setQtyInput("1");
+      setShowMaxWarning(false);
       setSelectedSpaceId(state.spaces.length === 1 ? state.spaces[0].id : null);
     }
     setOpen(next);
   };
 
-  const confirmAdd = (spaceId: string, spaceName: string) => {
-    addItem(spaceId, item, qty);
-    toast.success(`${qty} × ${item.productName} added to ${spaceName}`);
+  const confirmAdd = (spaceId: string, spaceName: string, finalQty: number) => {
+    addItem(spaceId, item, finalQty);
+    toast.success(`${finalQty} × ${item.productName} added to ${spaceName}`);
     resetAndClose();
   };
 
   const handleConfirm = () => {
+    const finalQty = commitQty();
     if (creating) {
-      handleCreateSpace();
+      handleCreateSpace(finalQty);
       return;
     }
     if (!selectedSpaceId) return;
     const sp = state.spaces.find((s) => s.id === selectedSpaceId);
     if (!sp) return;
-    confirmAdd(sp.id, sp.name);
+    confirmAdd(sp.id, sp.name, finalQty);
   };
 
-  const handleCreateSpace = () => {
-    const { id, name } = addSpaceWithItem(newName, item, qty);
-    toast.success(`${qty} × ${item.productName} added to ${name}`);
+  const handleCreateSpace = (overrideQty?: number) => {
+    const q = overrideQty ?? commitQty();
+    const { id, name } = addSpaceWithItem(newName, item, q);
+    toast.success(`${q} × ${item.productName} added to ${name}`);
     resetAndClose();
   };
 
