@@ -27,6 +27,7 @@ import {
 import { toast } from "sonner";
 import { useBuildOrder, ORDER_MOQ, OrderSpace } from "@/contexts/BuildOrderContext";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 const fmtMoney = (n: number) =>
   `$${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
