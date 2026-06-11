@@ -278,7 +278,7 @@ export default function AddToOrderButton({ item }: Props) {
                 size="icon"
                 variant="ghost"
                 className="h-8 w-8"
-                onClick={handleCreateSpace}
+                onClick={() => handleCreateSpace()}
               >
                 <Check className="h-4 w-4" />
               </Button>
