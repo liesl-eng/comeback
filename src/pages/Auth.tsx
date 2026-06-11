@@ -131,12 +131,6 @@ const Auth = () => {
           <TabsContent value="login">
             <form onSubmit={handleLogin}>
               <CardContent className="space-y-4">
-                <div className="text-center space-y-1">
-                  <h2 className="text-lg font-bold text-foreground">Comeback Pallet Program</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Curated pallets of home goods, up to 90% off MSRP
-                  </p>
-                </div>
                 <div className="space-y-2">
                   <Label htmlFor="login-email">Email</Label>
                   <Input
@@ -192,12 +186,6 @@ const Auth = () => {
           <TabsContent value="signup">
             <form onSubmit={handleSignup}>
               <CardContent className="space-y-4">
-                <div className="text-center space-y-1">
-                  <h2 className="text-lg font-bold text-foreground">Comeback Pallet Program</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Curated pallets of home goods, up to 90% off MSRP
-                  </p>
-                </div>
                 <div className="space-y-2">
                   <Label htmlFor="signup-email">Email</Label>
                   <Input
