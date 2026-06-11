@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -6,6 +6,9 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  isApproved: boolean;
+  approvalLoading: boolean;
+  refreshApproval: () => Promise<void>;
   signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
@@ -17,26 +20,53 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isApproved, setIsApproved] = useState(false);
+  const [approvalLoading, setApprovalLoading] = useState(false);
+
+  const checkApproval = useCallback(async (uid: string | undefined) => {
+    if (!uid) {
+      setIsApproved(false);
+      return;
+    }
+    setApprovalLoading(true);
+    try {
+      const { data, error } = await supabase.rpc("is_approved", { _user_id: uid });
+      if (error) {
+        setIsApproved(false);
+      } else {
+        setIsApproved(data === true);
+      }
+    } finally {
+      setApprovalLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    // Set up auth state listener BEFORE checking session
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+        // Defer Supabase call to avoid deadlocks
+        setTimeout(() => {
+          checkApproval(session?.user?.id);
+        }, 0);
       }
     );
 
-    // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
+      checkApproval(session?.user?.id);
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [checkApproval]);
+
+  const refreshApproval = useCallback(async () => {
+    await checkApproval(user?.id);
+  }, [checkApproval, user?.id]);
 
   const signUp = async (email: string, password: string) => {
     const { error } = await supabase.auth.signUp({
@@ -59,10 +89,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signOut = async () => {
     await supabase.auth.signOut();
+    setIsApproved(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isApproved, approvalLoading, refreshApproval, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
