@@ -8,6 +8,7 @@ import { fetchSheetTab, BrandTab, SheetRow } from "@/lib/productSheet";
 import AddToOrderButton from "@/components/AddToOrderButton";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { cn } from "@/lib/utils";
+import { useInventoryRefreshedAt, formatInventoryRefreshed } from "@/hooks/useInventoryRefreshedAt";
 
 export interface BrandSource {
   /** Display label on the toggle pill */
@@ -191,6 +192,7 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const inventoryRefreshedAt = useInventoryRefreshedAt();
   const location = useLocation();
   const gridTopRef = useRef<HTMLDivElement | null>(null);
   const isInitialBrand = useRef(true);
@@ -424,6 +426,11 @@ const ProgramProductGrid = ({ config }: { config: ProgramProductGridConfig }) =>
         </div>
 
         <div ref={gridTopRef} className={config.stickyHeader ? "container mx-auto px-4 scroll-mt-32" : "scroll-mt-32"}>
+          {config.stickyHeader && inventoryRefreshedAt && (
+            <p className="mt-4 mb-2 text-xs uppercase tracking-widest text-accent font-semibold">
+              {formatInventoryRefreshed(inventoryRefreshedAt)}
+            </p>
+          )}
           {showFallbackBanner && (
             <div className="max-w-2xl mx-auto mb-6 rounded-md border border-accent/30 bg-accent/10 px-4 py-2 text-center text-sm text-foreground">
               Showing last known inventory. Live data updates daily at 2pm ET.
