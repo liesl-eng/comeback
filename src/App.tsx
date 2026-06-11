@@ -14,7 +14,7 @@ import OrderBar from "@/components/OrderBar";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 import Index from "./pages/Index";
-import Restocking from "./pages/Restocking";
+
 import Favorites from "./pages/Favorites";
 import About from "./pages/About";
 import AdminImport from "./pages/AdminImport";
