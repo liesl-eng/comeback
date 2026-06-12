@@ -76,7 +76,7 @@ const Index = () => {
                   size="sm"
                   onClick={() => navigate("/about")}
                 >
-                  How It Works
+                  About Us
                 </Button>
               </div>
             </div>
