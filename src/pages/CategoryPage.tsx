@@ -215,6 +215,18 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
               <span className="text-sm font-medium text-muted-foreground mr-1">
                 Filter by Brand:
               </span>
+              <button
+                type="button"
+                onClick={() => setActiveBrand(null)}
+                className={cn(
+                  "px-3 py-1 rounded-md text-sm font-medium border transition-colors",
+                  activeBrand === null
+                    ? "bg-accent text-accent-foreground border-accent"
+                    : "bg-background text-foreground border-border hover:border-accent/60",
+                )}
+              >
+                All Brands
+              </button>
               {brands.map((b) => {
                 const active = activeBrand === b;
                 return (
