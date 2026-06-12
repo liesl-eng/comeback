@@ -25,31 +25,25 @@ const About = () => {
 
         <div className="max-w-3xl mx-auto">
           <h1 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8">About <span className="text-accent">Comeback Goods</span></h1>
-          
-          <p className="text-lg md:text-xl text-foreground mb-6 md:mb-8">
-            <span className="font-bold">Comeback Goods</span> works directly with brands for high quality, slightly imperfect goods.
-          </p>
 
-          <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Why buy from us?</h2>
-          
-          <div className="space-y-4 md:space-y-6 mb-8 md:mb-12">
-            <div className="border-l-4 border-primary pl-4 md:pl-6">
-              <p className="text-base md:text-lg text-muted-foreground">
-                <span className="font-semibold text-foreground">We work directly with brands.</span> No weird third-party middlemen here.
-              </p>
-            </div>
-            
-            <div className="border-l-4 border-primary pl-4 md:pl-6">
-              <p className="text-base md:text-lg text-muted-foreground">
-                <span className="font-semibold text-foreground">Our quality checks? Legit.</span> The same people who inspect the brand's products inspect ours.
-              </p>
-            </div>
-            
-            <div className="border-l-4 border-primary pl-4 md:pl-6">
-              <p className="text-base md:text-lg text-muted-foreground">
-                <span className="font-semibold text-foreground">You're saving a perfectly good products from limbo.</span> And getting an awesome deal.
-              </p>
-            </div>
+          <div className="space-y-4 md:space-y-6 mb-8 md:mb-12 text-base md:text-lg text-muted-foreground">
+            <p>
+              We connect serious buyers with name-brand home goods that didn't make it to retail — not because something's wrong with them, but because that's how supply chains work.
+            </p>
+            <p>
+              Overstock happens. Closeouts happen. A warehouse run of rugs with a minor weave variation gets pulled from a brand's catalog. That inventory doesn't disappear — it comes to us.
+            </p>
+          </div>
+
+          <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">What we do differently</h2>
+
+          <div className="space-y-4 md:space-y-6 mb-8 md:mb-12 text-base md:text-lg text-muted-foreground">
+            <p>
+              Comeback Goods was founded by someone who came up through logistics. We don't broker deals through middlemen — we plug directly into brand warehouses and authorized suppliers. That means consistent sourcing, real documentation, and no mystery about where the inventory came from.
+            </p>
+            <p>
+              Every item is inspected and condition-graded before it reaches your quote. You know exactly what you're getting — and so do your customers.
+            </p>
           </div>
 
           {/* Benefits Section */}
