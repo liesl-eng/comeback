@@ -23,14 +23,15 @@ const SORT_OPTIONS: { value: SortKey; label: string }[] = [
 ];
 
 
-const CATEGORY_NAV: { name: "Lighting" | "Mirrors" | "Tables"; path: string }[] = [
+const CATEGORY_NAV: { name: "All" | "Lighting" | "Mirrors" | "Tables"; path: string }[] = [
+  { name: "All", path: "/all" },
   { name: "Lighting", path: "/lighting" },
   { name: "Mirrors", path: "/mirrors" },
   { name: "Tables", path: "/tables" },
 ];
 
 interface CategoryPageProps {
-  category: "Lighting" | "Mirrors" | "Tables";
+  category: "All" | "Lighting" | "Mirrors" | "Tables";
   title: string;
   subtitle?: string;
 }
@@ -82,9 +83,11 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
 
   const inCategory = useMemo(
     () =>
-      products.filter(
-        (p) => (p.category ?? "").trim().toLowerCase() === category.toLowerCase(),
-      ),
+      category === "All"
+        ? products
+        : products.filter(
+            (p) => (p.category ?? "").trim().toLowerCase() === category.toLowerCase(),
+          ),
     [products, category],
   );
 
@@ -100,8 +103,12 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
     const num = (v: number | null | undefined, fallback: number) =>
       v == null || !Number.isFinite(v) ? fallback : v;
     if (sortKey === "default") {
-      // Default lead brand varies by category. Mirrors → Modus, otherwise Arteriors Home.
-      const leadBrand = category === "Mirrors" ? "modus furniture" : "arteriors home";
+      // Default lead brand varies by category.
+      // Note: Mopio products are stored under the "Castlery" brand in the sheet.
+      const leadBrand =
+        category === "Mirrors" ? "modus furniture"
+        : category === "Tables" ? "castlery"
+        : "arteriors home";
       const isLead = (p: SheetRow) =>
         (p.brand ?? "").toLowerCase().includes(leadBrand.split(" ")[0]);
       // Within Hem, lead with Dusk lamps, then Kuu.
