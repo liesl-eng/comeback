@@ -43,7 +43,7 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
   if (editing) {
     return (
       <div
-        className="w-full flex items-center gap-1 px-2 py-1 rounded border border-border bg-background"
+        className="w-full flex items-center gap-2 rounded border border-border bg-background px-3 py-2"
         onClick={(e) => e.stopPropagation()}
       >
         <Input
@@ -56,7 +56,7 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
             if (e.key === "Escape") { e.preventDefault(); cancel(); }
           }}
           onClick={(e) => e.stopPropagation()}
-          className="h-7 text-sm flex-1"
+          className="h-8 flex-1 border-0 bg-transparent px-0 text-sm shadow-none focus-visible:ring-0"
         />
         <Button
           type="button"
@@ -74,28 +74,31 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
 
   return (
     <div
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
       className={cn(
-        "w-full flex items-center gap-1 rounded border",
+        "w-full flex cursor-pointer items-center gap-2 rounded border px-3 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         active
           ? "border-accent bg-accent text-accent-foreground"
-          : "border-border bg-background hover:bg-muted",
+          : "border-border bg-background hover:bg-muted text-foreground",
       )}
     >
-      <button
-        type="button"
-        onClick={onSelect}
-        className="flex-1 min-w-0 text-left text-sm px-2 py-1.5 flex items-center justify-between"
-      >
-        <span className="truncate">{name}</span>
-        <span className={cn("text-xs ml-2", active ? "text-accent-foreground/80" : "text-muted-foreground")}>{count}</span>
-      </button>
+      <span className="min-w-0 flex-1 truncate">{name}</span>
+      <span className={cn("text-xs", active ? "text-accent-foreground/80" : "text-muted-foreground")}>{count}</span>
       {showPencil && (
         <Button
           type="button"
           size="icon"
           variant="ghost"
           className={cn(
-            "h-7 w-7 mr-1",
+            "h-7 w-7 flex-shrink-0",
             active ? "text-accent-foreground hover:text-accent-foreground hover:bg-accent-foreground/10" : "text-muted-foreground hover:text-foreground",
           )}
           title="Rename space"
