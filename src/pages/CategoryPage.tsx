@@ -103,8 +103,11 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
     const num = (v: number | null | undefined, fallback: number) =>
       v == null || !Number.isFinite(v) ? fallback : v;
     if (sortKey === "default") {
-      // Default lead brand varies by category. Mirrors → Modus, otherwise Arteriors Home.
-      const leadBrand = category === "Mirrors" ? "modus furniture" : "arteriors home";
+      // Default lead brand varies by category.
+      const leadBrand =
+        category === "Mirrors" ? "modus furniture"
+        : category === "Tables" ? "mopio"
+        : "arteriors home";
       const isLead = (p: SheetRow) =>
         (p.brand ?? "").toLowerCase().includes(leadBrand.split(" ")[0]);
       // Within Hem, lead with Dusk lamps, then Kuu.
