@@ -43,7 +43,7 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
   if (editing) {
     return (
       <div
-        className="w-full flex items-center gap-2 rounded border border-border bg-background px-3 py-2"
+        className="w-full flex items-center gap-1 px-2 py-1.5 rounded border border-accent bg-accent/10"
         onClick={(e) => e.stopPropagation()}
       >
         <Input
@@ -56,7 +56,7 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
             if (e.key === "Escape") { e.preventDefault(); cancel(); }
           }}
           onClick={(e) => e.stopPropagation()}
-          className="h-8 flex-1 border-0 bg-transparent px-0 text-sm shadow-none focus-visible:ring-0"
+          className="h-7 text-sm flex-1"
         />
         <Button
           type="button"
@@ -75,19 +75,19 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
   return (
     <div
       className={cn(
-        "w-full flex items-center rounded border text-sm transition-colors",
+        "w-full flex items-center gap-1 rounded border",
         active
           ? "border-accent bg-accent text-accent-foreground"
-          : "border-border bg-background hover:bg-muted text-foreground",
+          : "border-border bg-background hover:bg-muted",
       )}
     >
       <button
         type="button"
         onClick={onSelect}
-        className="flex min-w-0 flex-1 items-center gap-2 rounded-l px-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="flex-1 min-w-0 text-left text-sm px-2 py-1.5 flex items-center justify-between"
       >
-        <span className="min-w-0 flex-1 truncate">{name}</span>
-        <span className={cn("text-xs", active ? "text-accent-foreground/80" : "text-muted-foreground")}>{count}</span>
+        <span className="truncate">{name}</span>
+        <span className={cn("text-xs ml-2", active ? "text-accent-foreground/80" : "text-muted-foreground")}>{count}</span>
       </button>
       {showPencil && (
         <Button
@@ -95,11 +95,10 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
           size="icon"
           variant="ghost"
           className={cn(
-            "h-7 w-7 flex-shrink-0",
+            "h-7 w-7 mr-1",
             active ? "text-accent-foreground hover:text-accent-foreground hover:bg-accent-foreground/10" : "text-muted-foreground hover:text-foreground",
           )}
           title="Rename space"
-          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => { e.stopPropagation(); setEditing(true); }}
         >
           <Pencil className="h-3.5 w-3.5" />
