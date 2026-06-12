@@ -65,7 +65,7 @@ function SpaceRow({ id, name, count, active, onSelect }: SpaceRowProps) {
           variant="ghost"
           className="h-7 w-7 text-accent-foreground hover:bg-accent-foreground/10"
           onMouseDown={(e) => e.preventDefault()}
-          onClick={commit}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); commit(); }}
         >
           <Check className="h-4 w-4" />
         </Button>
