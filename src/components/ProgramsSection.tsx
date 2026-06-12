@@ -22,7 +22,7 @@ const programs: Program[] = [
     desc: "High quality, new rugs — curated and delivered on your schedule.",
     badge: "Curated Rugs",
     cta: "Explore the Program",
-    path: "https://www.comebackrugs.com",
+    path: "https://www.comebackrugs.com?from=b2b",
     accent: "from-accent via-accent to-amber-600",
     external: true,
     dark: true,
