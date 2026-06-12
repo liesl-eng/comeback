@@ -61,7 +61,7 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const location = useLocation();
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
-  const [sortKey, setSortKey] = useState<SortKey>("default");
+  const [sortKey, setSortKey] = useState<SortKey>("qty-desc");
 
   useEffect(() => {
     if (loading) return;
