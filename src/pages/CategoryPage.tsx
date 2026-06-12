@@ -83,9 +83,11 @@ const CategoryPage = ({ category, title, subtitle }: CategoryPageProps) => {
 
   const inCategory = useMemo(
     () =>
-      products.filter(
-        (p) => (p.category ?? "").trim().toLowerCase() === category.toLowerCase(),
-      ),
+      category === "All"
+        ? products
+        : products.filter(
+            (p) => (p.category ?? "").trim().toLowerCase() === category.toLowerCase(),
+          ),
     [products, category],
   );
 
