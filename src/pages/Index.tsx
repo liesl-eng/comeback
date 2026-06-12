@@ -28,9 +28,9 @@ const Index = () => {
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="container relative mx-auto px-4 md:px-6 pt-14 pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20">
+          <div className="container relative mx-auto px-4 md:px-6 pt-8 pb-6 md:pt-10 md:pb-8 lg:pt-12 lg:pb-10">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="mb-4 md:mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95] text-center" style={{ textShadow: "3px 3px 0 hsl(0 0% 0% / 0.55)" }}>
+              <h1 className="mb-3 md:mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase text-primary-foreground tracking-tight leading-[0.95] text-center" style={{ textShadow: "3px 3px 0 hsl(0 0% 0% / 0.55)" }}>
                 Tiny Imperfections.{" "}
                 <span className="relative inline-block">
                   <span className="relative z-10">Huge</span>
@@ -38,13 +38,13 @@ const Index = () => {
                 </span>{" "}
                 Savings.
               </h1>
-              <p className="mb-2 md:mb-3 text-2xl md:text-3xl lg:text-4xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
+              <p className="mb-2 text-lg md:text-xl lg:text-2xl text-primary-foreground/90 font-medium max-w-3xl mx-auto text-center">
                 Sustainable sourcing. At a fraction of wholesale.
               </p>
 
 
               {/* Primary: Shop Programs + Get In Contact */}
-              <div className="mt-8 md:mt-10 flex flex-wrap gap-3 md:gap-4 justify-center">
+              <div className="mt-5 md:mt-6 flex flex-wrap gap-3 md:gap-4 justify-center">
                 <Button
                   variant="accent"
                   size="lg"
@@ -70,7 +70,7 @@ const Index = () => {
               </div>
 
               {/* Secondary: How It Works */}
-              <div className="mt-5 md:mt-6 flex flex-wrap gap-3 justify-center items-center">
+              <div className="mt-3 md:mt-4 flex flex-wrap gap-3 justify-center items-center">
                 <Button
                   variant="secondary"
                   size="sm"
@@ -81,6 +81,7 @@ const Index = () => {
               </div>
             </div>
           </div>
+
 
         </section>
 
