@@ -74,24 +74,21 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
 
   return (
     <div
-      role="button"
-      tabIndex={0}
-      onClick={onSelect}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onSelect();
-        }
-      }}
       className={cn(
-        "w-full flex cursor-pointer items-center gap-2 rounded border px-3 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "w-full flex items-center rounded border text-sm transition-colors",
         active
           ? "border-accent bg-accent text-accent-foreground"
           : "border-border bg-background hover:bg-muted text-foreground",
       )}
     >
-      <span className="min-w-0 flex-1 truncate">{name}</span>
-      <span className={cn("text-xs", active ? "text-accent-foreground/80" : "text-muted-foreground")}>{count}</span>
+      <button
+        type="button"
+        onClick={onSelect}
+        className="flex min-w-0 flex-1 items-center gap-2 rounded-l px-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <span className="min-w-0 flex-1 truncate">{name}</span>
+        <span className={cn("text-xs", active ? "text-accent-foreground/80" : "text-muted-foreground")}>{count}</span>
+      </button>
       {showPencil && (
         <Button
           type="button"
@@ -102,6 +99,7 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
             active ? "text-accent-foreground hover:text-accent-foreground hover:bg-accent-foreground/10" : "text-muted-foreground hover:text-foreground",
           )}
           title="Rename space"
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => { e.stopPropagation(); setEditing(true); }}
         >
           <Pencil className="h-3.5 w-3.5" />
