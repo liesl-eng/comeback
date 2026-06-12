@@ -29,10 +29,20 @@ const IMAGE_OVERRIDES: { match: RegExp; url: string }[] = [
   { match: /^sterling table top/i, url: "https://mopio.com/cdn/shop/files/Oak_PNG.jpg" },
 ];
 
+// Category overrides — fix miscategorized products from the sheet.
+const CATEGORY_OVERRIDES: { match: RegExp; category: string }[] = [
+  // Mopio products that are tables but got auto-classified as Lighting.
+  { match: /^quin (coffee|side) table/i, category: "Tables" },
+];
+
 function applyOverrides(rows: SheetRow[]): SheetRow[] {
   return rows.map((r) => {
-    const ov = IMAGE_OVERRIDES.find((o) => o.match.test(r.name));
-    return ov ? { ...r, imageUrl: ov.url } : r;
+    const imgOv = IMAGE_OVERRIDES.find((o) => o.match.test(r.name));
+    const catOv = CATEGORY_OVERRIDES.find((o) => o.match.test(r.name));
+    let out = r;
+    if (imgOv) out = { ...out, imageUrl: imgOv.url };
+    if (catOv) out = { ...out, category: catOv.category };
+    return out;
   });
 }
 
