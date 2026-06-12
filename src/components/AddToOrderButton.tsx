@@ -43,7 +43,7 @@ function SpaceOptionRow({ id, name, count, active, onSelect, showPencil }: Space
   if (editing) {
     return (
       <div
-        className="w-full flex items-center gap-1 px-2 py-1.5 rounded border border-accent bg-accent/10"
+        className="w-full flex items-center gap-1 px-2 py-1 rounded border border-border bg-background"
         onClick={(e) => e.stopPropagation()}
       >
         <Input
